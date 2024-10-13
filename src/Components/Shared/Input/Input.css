@@ -1,0 +1,9 @@
+
+.form-control:focus {
+    background-color: #eee;
+    border-color: #418447;
+    box-shadow: 0 0 0 0.1rem #41844759;
+}
+.form-control.filled {
+    background-color: rgb(232 240 254) !important;
+}

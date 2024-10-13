@@ -1,0 +1,141 @@
+.logoContainer {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1;
+}
+
+.loginContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    border: #F2F2F2 1px solid;
+    border-radius: 10px;
+    padding: 30px;
+    margin: 100px auto;
+    gap: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+
+.loginContainer .formContainer {
+    width: 40%;
+    padding: 24px;
+}
+
+.formContainer .signinP {
+    color: #418447;
+    font-weight: 700;
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.formContainer .btnContainer {
+    text-align: center;
+}
+
+.formContainer button {
+    background-color: #418447;
+    color: #eee;
+    text-align: center;
+    margin: auto;
+    min-width: 25%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formContainer button:hover {
+    background-color: #eee;
+    color: #418447;
+    border: 1px solid #418447;
+
+}
+.forgot-password{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+@media (max-width: 950px) {
+    .animationContainer {
+        width: "400px";
+        height: "400px";
+    }
+
+    .animationContainer iframe {
+        width: 100%;
+    }
+
+    .formContainer .signinP {
+        font-size: 2rem;
+    }
+
+    .formContainer button {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 700px) {
+    .animationContainer {
+        width: "200px";
+        height: "200px";
+    }
+
+    .animationContainer iframe {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+    .loginContainer {
+        flex-direction: column;
+        gap: 0;
+        margin: 0 auto;
+        padding: 10px;
+        max-width: 100%;
+        align-items: center;
+        border: 0;
+    }
+
+    .animationContainer {
+        height: auto;
+        display: flex;
+        justify-content: center;
+        margin-top: 100px;
+    }
+
+    .animationContainer iframe {
+        width: 80%;
+        height: auto;
+        max-width: 500px;
+        max-height: 500px;
+    }
+    .loginContainer .formContainer {
+        width: 80%; 
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .formContainer .signinP {
+        font-size: 1.5rem;
+    }
+
+    .formContainer button {
+        font-size: 1rem;
+        margin-bottom: 0;
+    }
+
+    .loginContainer .form-control {
+        font-size: 0.85rem;
+        padding: 10px;
+        width: 100%;
+    }
+}
