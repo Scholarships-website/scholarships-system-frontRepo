@@ -1,6 +1,6 @@
 import React from 'react'
 import { createBrowserRouter, } from "react-router-dom";
-// import Login from '../Components/Shared/Login/Login';
+import Login from '../Components/Shared/Login/Login';
 import MainPage from '../Components/MainPage/MainPage';
 import StudentLayout from './StudentLayout';
 import StudentDashboard from '../Components/Student/StudentDashboard/StudentDashboard';
@@ -8,7 +8,7 @@ import AdminLayout from './AdminLayout';
 import Home from '../Components/Admin/DashHome/Home';
 import AdvertiserLayout from './AdvertiserLayout';
 import AdvertiserDashboard from '../Components/Advertiser/AdvertiserDashboard/AdvertiserDashboard';
-import ForgetPassword from '../Components/Shared/Login/ForgetPassword';
+import ForgetPassword from '../Components/Shared/Login/ForgetPass/ForgetPassword';
 import SignUp from '../Components/Shared/SignUp/SignUp';
 export const router = createBrowserRouter([
     {
@@ -58,10 +58,10 @@ export const router = createBrowserRouter([
         path: "/",
         element: <MainPage />,
     },
-    // {
-    //     path: '/login',
-    //     element: <Login />,
-    // },
+    {
+        path: '/login',
+        element: <Login />,
+    },
     {
         path: "forgot-password",
         element: <ForgetPassword />,

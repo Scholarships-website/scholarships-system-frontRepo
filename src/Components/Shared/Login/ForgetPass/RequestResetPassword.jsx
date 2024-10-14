@@ -1,0 +1,39 @@
+import React, { useState } from 'react';
+import axios from 'axios';
+import './ForgetPass.css';
+function RequestResetPassword({ onNext }) {
+    const [email, setEmail] = useState('');
+    const [error, setError] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            // Send email to backend API to trigger reset code
+            const response = await axios.post('http://localhost:5000/api/v1/auth/request-reset', { email });
+            if (response.data.success) {
+                onNext(email); // Go to next step
+            }
+        } catch (error) {
+            setError('Email not found or error occurred');
+        }
+    };
+
+    return (
+        <div className="forgot-password-container">
+            <form onSubmit={handleSubmit} className='forgot-password-form'>
+                <h3>Forgot Password</h3>
+                <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    required
+                />
+                {error && <p>{error}</p>}
+                <button type="submit">Send Code</button>
+            </form>
+        </div>
+    );
+}
+
+export default RequestResetPassword;

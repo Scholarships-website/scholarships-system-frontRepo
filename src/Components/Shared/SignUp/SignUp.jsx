@@ -177,7 +177,7 @@ export default function SignUp() {
                         <form className="registrationForm" id="registrationForm" onSubmit={formik.handleSubmit}>
                             {renderInputs}
                             <div className="col-md-12">
-                                <PhoneInput
+                                <PhoneInput className="phoneInput"
                                     value={formik.values.phoneNumber}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
