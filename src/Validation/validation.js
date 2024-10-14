@@ -13,13 +13,22 @@ export const loginScheme = Yup.object().shape({
 
 // Registration Validation Schema
 export const registrationScheme = Yup.object({
-   user_name: Yup.string().required('Username is required'),
+   user_name: Yup.string().required('username is required'),
    email: Yup.string().email('Invalid email format').required('Email is required'),
-   password: Yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+   password: Yup.string()
+      .min(8, 'Password must be at least 8 characters')
+      .matches(/^(?=.*[A-Za-z])(?=.*\d).{8,}$/, 'Password must contain at least one letter and one number')
+      .required('Password is required'),
+   confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password'), null], 'Passwords must match')  // Check if confirmPassword matches password
+      .required('Confirm Password is required'),
    first_name: Yup.string().required('First Name is required'),
    last_name: Yup.string().required('Last Name is required'),
-   phoneNumber: Yup.string().required('Phone number is required'),
+   phoneNumber: Yup.string()
+      .matches(/^\d{9}$/, 'Phone number must have 9 digits')
+      .required('Phone number is required'),
 });
+
 //  export const addTrainer = yup.object({
 //     email:yup.string().required('Email is required').email('Please enter a valid email address'),
 //     password:yup.string().required('Password is required').min(6,'your Password must have at least 6 characters').max(30,'your Password must have at most 30 characters'),

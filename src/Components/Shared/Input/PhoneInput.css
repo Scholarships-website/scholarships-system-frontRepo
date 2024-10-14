@@ -1,0 +1,39 @@
+.phone-input-container {
+    display: flex;
+    align-items: center;
+}
+
+.phone-input-container .country-code-dropdown {
+    width: 100px; 
+    padding: 8px;
+    margin-right: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px;
+    background-color: #fff; 
+}
+
+.phone-input-container .phone-number-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+}
+
+.phone-input-container .input-error {
+    border-color: rgba(var(--bs-danger-rgb));
+}
+
+.phone-number-input:focus {
+    background-color: #eee;
+    border-color: #418447;
+    box-shadow: 0 0 0 0.1rem #41844759;
+}
+.phone-number-input.filled {
+    background-color: rgb(232 240 254) !important;
+}
+.phone-input-container .text-danger {
+    --bs-text-opacity: 1;
+    color: rgba(var(--bs-danger-rgb), var(--bs-text-opacity)) !important;
+
+    margin-top: 0.25rem; /* Optional: adds a little spacing above the error message */
+}

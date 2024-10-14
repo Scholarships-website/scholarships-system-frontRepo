@@ -1,3 +1,13 @@
+.signup .logoContainer {
+    position: fixed;
+    top: 0px;
+    /* left: 20px; */
+    padding: 20px;
+    z-index: 9999;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+}
+
 .signup .registrationContainer {
     display: flex;
     align-items: center;
@@ -8,22 +18,23 @@
     padding: 30px;
     margin: 100px auto;
     gap: 20px;
-    /* position: fixed; */
-    /* top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0; */
+    background-color: '#fff';
 }
 
 .signup .formContainer {
     width: 40%;
     padding: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    /* Allow wrapping of input fields */
+    justify-content: space-between;
+    /* Space between the input pairs */
 }
 
 .formContainer .signupP {
     color: #418447;
     font-weight: 700;
-    font-size: 3rem;
+    font-size: 2rem;
     text-align: center;
     margin-bottom: 30px;
 }
@@ -42,3 +53,26 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border: 1px solid #418447;
 }
+
+.signup .formContainer .btnContainer {
+    text-align: center;
+}
+
+.signup .formContainer button {
+    background-color: #418447;
+    color: #eee;
+    text-align: center;
+    margin: auto;
+    min-width: 25%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup .formContainer button:hover {
+    background-color: #eee;
+    color: #418447;
+    border: 1px solid #418447;
+}
+
