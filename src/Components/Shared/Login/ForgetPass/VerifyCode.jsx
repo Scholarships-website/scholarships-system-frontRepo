@@ -19,20 +19,28 @@ function VerifyCode({ email, onNext }) {
     };
 
     return (
-        <div className="forgot-password-container">
-            <form onSubmit={handleSubmit} className='forgot-password-form'>
-            <h3>Verify Code</h3>
-            <input
-                type="text"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                placeholder="Enter the code sent to your email"
-                required
-            />
-            {error && <p>{error}</p>}
-            <button type="submit">Verify</button>
-        </form>
-        </div>
+        <>
+            <div className="logoContainer">
+                <img src="src/assets/img/logo.png" alt="logo" width="100px" />
+            </div>
+            <div className='forgetContainer'>
+                <iframe src="https://lottie.host/embed/a8117a62-076f-45f6-be6e-05d4c5d22eca/yorBJEf3zv.json" width="500px" height="500px"></iframe>
+                <div className="forgot-password-container">
+                    <form onSubmit={handleSubmit} className='forgot-password-form'>
+                        <h3>Verify Code</h3>
+                        <input
+                            type="text"
+                            value={code}
+                            onChange={(e) => setCode(e.target.value)}
+                            placeholder="Enter the code sent to your email"
+                            required
+                        />
+                        {error && <p>{error}</p>}
+                        <button type="submit">Verify</button>
+                    </form>
+                </div>
+            </div>
+        </>
     );
 }
 

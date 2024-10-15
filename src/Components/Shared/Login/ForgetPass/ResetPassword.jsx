@@ -26,28 +26,36 @@ function ResetPassword({ email }) {
     };
 
     return (
-        <div className="forgot-password-container">
-            <form onSubmit={handleSubmit} className='forgot-password-form'>
-                <h3>Reset Password</h3>
-                <input
-                    type="password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder="Enter new password"
-                    required
-                />
-                <input
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Confirm new password"
-                    required
-                />
-                {error && <p>{error}</p>}
-                {success && <p>{success}</p>}
-                <button type="submit">Reset Password</button>
-            </form>
-        </div>
+        <>
+            <div className="logoContainer">
+                <img src="src/assets/img/logo.png" alt="logo" width="100px" />
+            </div>
+            <div className='forgetContainer'>
+                <iframe src="https://lottie.host/embed/a8117a62-076f-45f6-be6e-05d4c5d22eca/yorBJEf3zv.json" width="500px" height="500px"></iframe>
+                <div className="forgot-password-container">
+                    <form onSubmit={handleSubmit} className='forgot-password-form'>
+                        <h3>Reset Password</h3>
+                        <input
+                            type="password"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            placeholder="Enter new password"
+                            required
+                        />
+                        <input
+                            type="password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            placeholder="Confirm new password"
+                            required
+                        />
+                        {error && <p>{error}</p>}
+                        {success && <p>{success}</p>}
+                        <button type="submit">Reset Password</button>
+                    </form>
+                </div>
+            </div>
+        </>
     );
 }
 
