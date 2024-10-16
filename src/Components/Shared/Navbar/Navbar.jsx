@@ -40,7 +40,7 @@ const Navbar = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <a href="#about-us" onClick={() => setMenuOpen(false)}>About Us</a>
+                    <a href="#about" onClick={() => setMenuOpen(false)}>About Us</a>
                 </li>
                 <li>
                     <NavLink to="/contact-us" activeClassName="active-link" onClick={() => setMenuOpen(false)}>
