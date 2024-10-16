@@ -1,0 +1,128 @@
+/* Navbar container */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 80px;
+    background-color: #fff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Wrapper for hamburger icon and logo */
+.navbar-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Adjust gap as needed */
+}
+
+/* Navbar logo */
+.navbar-logo img {
+    height: 50px;
+}
+
+/* Hide the nav-links by default for smaller screens */
+.navbar-links {
+    display: flex;
+    gap: 20px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    transition: max-height 0.3s ease;
+}
+
+.navbar-links a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    padding: 8px 12px;
+    font-weight: 500;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar-links a:hover {
+    color: #418447;
+    border-bottom: #418447 2px solid;
+}
+
+/* Active link style */
+.active-link {
+    color: #418447;
+    font-weight: 700;
+    border-bottom: 2px solid #418447;
+}
+
+/* Hamburger menu icon for small screens */
+.hamburger-icon {
+    display: none;  /* Hidden by default */
+    font-size: 28px;
+    cursor: pointer;
+}
+
+/* Navbar Auth Buttons */
+.navbar-auth {
+    display: flex;
+    gap: 15px;
+}
+
+.navbar-auth a, .navbar-auth button {
+    text-decoration: none;
+    background-color: #418447;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 25px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-auth button:hover,
+.navbar-auth a:hover {
+    background-color: #fff;
+    color: #418447;
+    border: 1px solid #418447;
+}
+
+/* Media Queries for Small Screens */
+@media (max-width: 830px) {
+    .navbar-links {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background-color: #fff;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        max-height: 0; /* Hidden by default */
+        overflow: hidden;
+    }
+
+    /* Show the nav-links when the menu is open */
+    .navbar-links.open {
+        max-height: 300px; /* Adjust this based on your menu's total height */
+    }
+
+    .hamburger-icon {
+        display: block;  /* Show hamburger icon on small screens */
+    }
+
+    .navbar-auth a, .navbar-auth button {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-auth a, .navbar-auth button {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+}
