@@ -63,3 +63,13 @@
     border: #F2F2F2 2px solid; 
     border-radius: 12px;
 }
+@media (max-width: 900px) {
+    .about-row {
+        display: flex;
+        flex-direction: column;
+    }
+    .about-section p {
+        font-size: 14px;
+        text-align:center;
+    }
+}
