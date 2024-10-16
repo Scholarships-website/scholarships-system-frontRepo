@@ -1,0 +1,30 @@
+.new-scholarships {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.new-scholarships h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.scholarship-cards {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.scholarship-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.scholarship-card:hover {
+    transform: scale(1.05);
+}

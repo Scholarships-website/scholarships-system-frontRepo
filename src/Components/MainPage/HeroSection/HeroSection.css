@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+.hero-section {
+    background: linear-gradient(to right, #1e3521, #418447, #2e5933);
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+    /* height: 100vh; */
+}
+
+.hero-content {
+    text-align: center;
+    max-width: 696px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-section h1 {
+    font-size: 48px;
+    font-family: "Cinzel", serif;
+    letter-spacing: 0.05em;
+    line-height: 1.3;
+}
+
+.hero-section p {
+    font-size: 20px;
+    margin: 20px 0;
+    font-family: "Nunito", sans-serif;
+
+}
+
+.hero-section .welcome {
+    font-size: 30px;
+    margin: 20px 0;
+    /* font-family: "Playwrite GB S", cursive; */
+    font-family: "Indie Flower", cursive;
+}
+
+.cta-button {
+    --tw-bg-opacity: 1;
+    --tw-text-opacity: 1;
+    background-color: rgb(112 37 23 / var(--tw-bg-opacity));
+    color: rgb(255 255 255 / var(--tw-text-opacity));
+    border-radius: 16px;
+    border: 1px solid rgb(112 37 23P);
+    font-family: Favorit Pro, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+    font-weight: 500;
+    letter-spacing: .01em;
+    line-height: 1.5;
+    padding: 12px 1.25rem;
+    transition-duration: .5s;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+    transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+    border: none;
+}
+
+.iconContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 50px;
+}
+
+.iconRow {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.cta-button:hover {
+    background-color: #356a3a;
+    border: solid 1px #fff;
+}
+
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 36px;
+    }
+
+    .hero-section p {
+        font-size: 16px;
+    }
+
+    .cta-button {
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 400px) {
+    .hero-section h1 {
+        font-size: 28px;
+    }
+
+    .hero-section p {
+        font-size: 14px;
+    }
+
+    .hero-section .welcome {
+        font-size: 20px;
+    }
+
+    .cta-button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    .iconContainer {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
