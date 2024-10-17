@@ -9,7 +9,7 @@ function RequestResetPassword({ onNext }) {
         e.preventDefault();
         try {
             // Send email to backend API to trigger reset code
-            const response = await axios.post('http://localhost:5000/api/v1/auth/request-reset', { email });
+            const response = await axios.post('http://localhost:3000/api/v1/forgotPassowrd', { email });
             if (response.data.success) {
                 onNext(email); // Go to next step
             }

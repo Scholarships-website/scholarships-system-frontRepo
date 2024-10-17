@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-// import { UserContext } from '../../../Context/UserContext';
+import { UserContext } from '../../../Context/UserContext';
 import { useFormik } from 'formik';
 import { loginScheme } from '../../../Validation/validation';
 import Input from '../Input/Input';
 import './Login.css';
 import axios from 'axios';
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
     const initialValues = {
@@ -14,6 +16,7 @@ export default function Login() {
     };
     const navigate = useNavigate();
     // let { userToken, setUserToken, userId, setUserId, userData, setUserData } = useContext(UserContext);
+    let { userToken, setUserToken} = useContext(UserContext);
 
     const [user, setUser] = useState({});
     // useEffect(() => {
@@ -29,23 +32,73 @@ export default function Login() {
     //         }
     //     }
     // }, [userToken, userData, navigate])
-    const onSubmit = async users => {
-        const { data } = await axios.post('https://localhost:5000/api/v1/students/login', users);
-        if (data.succeeded) {
-            // setUser(data.data)
-            // localStorage.setItem('userToken', data.data.token);
-            // setUserToken(data.data.token);
-            // if (data.data.userType == 0) {
-            //     navigate('/adminDashboard')
-            // }
-            // else if (data.data.userType == 1) {
-            //     navigate('/AdvertiserDashboard')
-            // }
-            // else if (data.data.userType == 2) {
-                navigate('/PalScolarships')
-            // }
+
+    const onSubmit = async (users) => {
+        try {
+            const { data } = await axios.post('http://localhost:3000/api/v1/login', users); 
+            if (data.message === 'login successful!') {
+                const role = data.user.role;
+                setUser(data.data);
+                localStorage.setItem('userToken', data.token);
+                setUserToken(data.token);
+                // Show success toast notification
+                toast.success('Logged in successfully!', {
+                    position: "bottom-right",
+                    autoClose: false,  
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
+    
+                // Delay navigation to allow toast to be seen
+                setTimeout(() => {
+                    switch (role) {
+                        case 'admin':
+                            navigate('/adminDashboard');
+                            break;
+                        case 'advertiser':
+                            navigate('/AdvertiserDashboard');
+                            break;
+                        case 'student':
+                            navigate('/');
+                            break;
+                        default:
+                            alert('Unknown user role');
+                    }
+                }, 2000); // Adjust this timeout to allow enough time to see the toast
+            } else {
+                toast.error('Login failed: ' + data.message, {
+                    position: "bottom-right",
+                    autoClose: false,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            toast.error(error.response.data.message, {
+                position: "bottom-right",
+                autoClose: false,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+            });
         }
-    }
+    };
+
 
     const formik = useFormik({
         initialValues: initialValues,
@@ -88,6 +141,19 @@ export default function Login() {
     };
     return (
         <>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition={Bounce}
+            />
             <div className="logoContainer">
                 <img src="src/assets/img/logo.png" alt="logo" width="100px" />
             </div>

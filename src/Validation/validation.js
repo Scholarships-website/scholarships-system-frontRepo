@@ -7,13 +7,12 @@ export const loginScheme = Yup.object().shape({
       .email('Please enter a valid email address'),
    password: Yup.string()
       .required('Password is required')
-      .min(6, 'Your password must have at least 6 characters')
-      .max(30, 'Your password must have at most 30 characters'),
+      .min(6, 'Your password must have at least 8 characters')
 });
 
 // Registration Validation Schema
 export const registrationScheme = Yup.object({
-   user_name: Yup.string().required('username is required'),
+   username: Yup.string().required('username is required'),
    email: Yup.string().email('Invalid email format').required('Email is required'),
    password: Yup.string()
       .min(8, 'Password must be at least 8 characters')

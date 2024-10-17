@@ -6,7 +6,7 @@ import 'aos/dist/aos.css';
 const AboutSection = () => {
   useEffect(() => {
     AOS.init({
-      duration: 1500, // animation duration
+      duration: 2000, // animation duration
       once: true, // whether animation should happen only once
     });
   }, []);

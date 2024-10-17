@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function SignUp() {
     const initialValues = {
-        user_name: '',
+        username: '',
         email: '',
         password: '',
         confirmPassword: '',
@@ -25,14 +25,19 @@ export default function SignUp() {
     const [student, setStudent] = useState({});
 
     const onSubmit = async (studentData) => {
-        const { confirmPassword, ...dataToSend } = studentData;
+        const { confirmPassword, countryCode, phoneNumber, ...dataToSend } = studentData;
+    
+        // Combine countryCode and phoneNumber into a single phone number
+        const fullPhoneNumber = `${countryCode}${phoneNumber}`;
+        const finalDataToSend = { ...dataToSend, phoneNumber: fullPhoneNumber }; // Set fullPhoneNumber into phoneNumber
+        console.log("Form is submitted:", finalDataToSend); // Check if this logs data when you submit
 
         try {
-            const { data } = await axios.post('http://localhost:5000/api/v1/students/register', dataToSend);
+            const { data } = await axios.post('http://localhost:3000/api/v1/students/register', finalDataToSend);
             if (data.message === 'Signup successful!') {
                 setStudent(data.data);
                 toast.success('Sign up successfully!!', {
-                    position: "top-right",
+                    position: "bottom-right",
                     autoClose: false,
                     hideProgressBar: false,
                     closeOnClick: true,
@@ -43,14 +48,14 @@ export default function SignUp() {
                     transition: Bounce,
                 });
                 setTimeout(() => {
-                    navigate('/PalScolarships');
+                    navigate('/login');
                 }, 3000);
             }
         } catch (error) {
             if (error.response && error.response.data && Array.isArray(error.response.data.errors)) {
                 error.response.data.errors.forEach(err => {
                     toast.error(err, {
-                        position: "top-right",
+                        position: "bottom-right",
                         autoClose: false,
                         hideProgressBar: false,
                         closeOnClick: true,
@@ -63,7 +68,7 @@ export default function SignUp() {
                 });
             } else {
                 toast.error("An unexpected error occurred", {
-                    position: "top-right",
+                    position: "bottom-right",
                     autoClose: false,
                     hideProgressBar: false,
                     closeOnClick: true,
@@ -76,6 +81,7 @@ export default function SignUp() {
             }
         }
     };
+    
 
     const formik = useFormik({
         initialValues,
@@ -86,10 +92,10 @@ export default function SignUp() {
     const inputs = [
         {
             type: 'text',
-            id: 'user_name',
-            name: 'user_name',
+            id: 'username',
+            name: 'username',
             title: 'username',
-            value: formik.values.user_name,
+            value: formik.values.username,
         },
         {
             type: 'email',
@@ -148,7 +154,7 @@ export default function SignUp() {
     const handleLoginNavigation = () => {
         navigate('/login'); // Adjust the path as needed
     };
-
+    console.log(formik.errors);
     return (
         <div className='signup'>
             <div className="logoContainer">
