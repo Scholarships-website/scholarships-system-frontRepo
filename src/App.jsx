@@ -4,6 +4,8 @@ import '../node_modules/bootstrap/dist/js/bootstrap.bundle.js';
 import { RouterProvider } from "react-router-dom";
 import { router } from './Layouts/Router.jsx';
 import UserContextProvider, { UserContext } from './Context/UserContext.jsx';  // Import the default and named exports
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 
 export default function App() {
   return (

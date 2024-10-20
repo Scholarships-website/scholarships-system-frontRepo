@@ -21,7 +21,7 @@ function RequestResetPassword({ onNext }) {
     return (
         <>
             <div className="logoContainer">
-                <img src="src/assets/img/logo.png" alt="logo" width="100px" />
+                <a href="/"><img src="src/assets/img/logo.png" alt="logo" width="100px" /></a>
             </div>
             <div className='forgetContainer'>
                 <iframe src="https://lottie.host/embed/a8117a62-076f-45f6-be6e-05d4c5d22eca/yorBJEf3zv.json" width="500px" height="500px"></iframe>

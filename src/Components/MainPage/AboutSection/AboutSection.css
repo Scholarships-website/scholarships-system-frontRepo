@@ -62,6 +62,14 @@
     align-items: center;
     border: #F2F2F2 2px solid; 
     border-radius: 12px;
+    background-color: #fff;
+    transform: translateY(-10px); 
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-item:hover {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2); 
 }
 @media (max-width: 900px) {
     .about-row {

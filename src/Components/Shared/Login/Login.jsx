@@ -155,7 +155,7 @@ export default function Login() {
                 transition={Bounce}
             />
             <div className="logoContainer">
-                <img src="src/assets/img/logo.png" alt="logo" width="100px" />
+                <a href="/"><img src="src/assets/img/logo.png" alt="logo" width="100px" /></a>
             </div>
             <section className="loginContainer" style={{ backgroundColor: '#fff' }} >
                 <div className="animationContainer">
