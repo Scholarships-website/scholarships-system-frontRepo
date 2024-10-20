@@ -38,6 +38,11 @@
     color: black;
     font-weight: 500;
 }
+.footer-content .links  {
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+}
 .footer-content .links a:hover {
     color:#418447;
     font-weight: 700;
@@ -55,4 +60,10 @@
     margin-top: 10px;
     color: #6c757d;
     font-size: 14px;
+}
+@media (max-width: 480px) {
+.footer .social {
+display: flex;
+flex-direction: column;
+}
 }

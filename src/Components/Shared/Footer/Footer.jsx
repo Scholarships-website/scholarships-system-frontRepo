@@ -21,21 +21,23 @@ const Footer = () => {
         </ul>
         <div className="social">
           <p>Follow PalScholarships on:</p>
-          <a href="https://twitter.com" aria-label="Twitter">
-          <FontAwesomeIcon icon={faTwitter} style={{color: "#418447",}} />
-          </a>
-          <a href="https://facebook.com" aria-label="Facebook">
-            <FontAwesomeIcon icon={faFacebook} style={{ color: "#418447" }} />
-          </a>
-          <a href="https://instagram.com" aria-label="Instagram">
-            <FontAwesomeIcon icon={faInstagram} style={{ color: "#418447" }} />
-          </a>
-          <a href="https://www.linkedin.com/" aria-label="Linked In">
-          <FontAwesomeIcon icon={faLinkedin} style={{color: "#418447",}} />
-          </a>
-          <a href="https://www.youtube.com/" aria-label="Youtube">
-          <FontAwesomeIcon icon={faYoutube} style={{color: "#418447",}} />
-          </a>
+          <div className="social-icon">
+            <a href="https://twitter.com" aria-label="Twitter">
+              <FontAwesomeIcon icon={faTwitter} style={{ color: "#418447", }} />
+            </a>
+            <a href="https://facebook.com" aria-label="Facebook">
+              <FontAwesomeIcon icon={faFacebook} style={{ color: "#418447" }} />
+            </a>
+            <a href="https://instagram.com" aria-label="Instagram">
+              <FontAwesomeIcon icon={faInstagram} style={{ color: "#418447" }} />
+            </a>
+            <a href="https://www.linkedin.com/" aria-label="Linked In">
+              <FontAwesomeIcon icon={faLinkedin} style={{ color: "#418447", }} />
+            </a>
+            <a href="https://www.youtube.com/" aria-label="Youtube">
+              <FontAwesomeIcon icon={faYoutube} style={{ color: "#418447", }} />
+            </a>
+          </div>
         </div>
         <p className='copyright'>&copy; 2024 PalScholarships. All rights reserved. </p>
       </div>

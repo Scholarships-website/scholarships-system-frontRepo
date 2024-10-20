@@ -16,6 +16,7 @@ function MainPage() {
                 <HeroSection />
                 <AboutSection />
                 <FeaturesSection />
+                <NewestScholarships/>
                 {/* <TestimonialsSection /> */}
                 <Footer />
             </section>

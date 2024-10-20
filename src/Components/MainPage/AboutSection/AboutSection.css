@@ -13,17 +13,20 @@
     letter-spacing: 7px !important;
     overflow: hidden;
     white-space: nowrap;
-    font-size: 48px;
+    font-size: 48px; /* You may want to adjust this in media queries */
+    max-width: 100%; /* Set max-width to ensure it doesn't overflow */
     animation: typewriter 4s steps(44) 1s infinite normal both,
         blinkTextCursor 500ms infinite;
+
 }
 
+/* Adjust the keyframes to work with max-width */
 @keyframes typewriter {
     0% {
         width: 0;
     }
     50% {
-        width: 710px;
+        width: 100%; /* Change to 100% for responsiveness */
     }
     100% {
         width: 0;
@@ -36,6 +39,19 @@
     }
     to {
         border-right-color: transparent;
+    }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .about-section h2 {
+        font-size: 36px; /* Adjust font size for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .about-section h2 {
+        font-size: 28px; /* Further adjust for mobile screens */
     }
 }
 

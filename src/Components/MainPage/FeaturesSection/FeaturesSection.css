@@ -162,7 +162,7 @@
     }
 }
 
-.slick-slide {
+.feature-section .slick-slide {
     display: flex;
     justify-content: center;
     padding: 0 15px;
