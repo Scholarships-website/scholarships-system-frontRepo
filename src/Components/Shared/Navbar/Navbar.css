@@ -69,9 +69,9 @@
     gap: 15px;
 }
 
-.navbar-auth a, .navbar-auth button {
+.navbar-auth a,.navbar .navbar-auth button {
+    background-color: #fff;
     text-decoration: none;
-    background-color: #418447;
     color: #fff;
     padding: 8px 16px;
     border: none;
@@ -86,7 +86,6 @@
 .navbar-auth button:hover,
 .navbar-auth a:hover {
     background-color: #fff;
-    color: #418447;
     border: 1px solid #418447;
 }
 

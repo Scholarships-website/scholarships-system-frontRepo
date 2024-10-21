@@ -5,6 +5,8 @@ import { UserContext } from '../../../Context/UserContext';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { faArrowRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -85,7 +87,6 @@ const Navbar = () => {
                             Search Scholarships
                         </NavLink>
                     </li>
-
                     <li>
                         <NavLink
                             to="/contact-us"
@@ -104,9 +105,11 @@ const Navbar = () => {
                                 to="/dashboard"
                                 className={({ isActive }) => (isActive ? 'active-link' : '')}
                             >
-                                Dashboard
+                                <FontAwesomeIcon icon={faUser} style={{color: "#418447",}} />
                             </NavLink>
-                            <button onClick={handleLogout}>Logout</button>
+                            <button onClick={handleLogout}>
+                            <FontAwesomeIcon icon={faArrowRightFromBracket} style={{color: "#418447",}} />
+                            </button>
                         </>
                     ) : (
                         <>

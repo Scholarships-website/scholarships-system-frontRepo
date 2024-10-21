@@ -10,6 +10,12 @@ import AdvertiserLayout from './AdvertiserLayout';
 import AdvertiserDashboard from '../Components/Advertiser/AdvertiserDashboard/AdvertiserDashboard';
 import ForgetPassword from '../Components/Shared/Login/ForgetPass/ForgetPassword';
 import SignUp from '../Components/Shared/SignUp/SignUp';
+import Advertiser from '../Components/Admin/Advertisers/Advertiser';
+import Students from '../Components/Admin/Students/Students';
+import AddAdvertiser from '../Components/Admin/Advertisers/AddAdvertiser';
+import EditAdvertiser from '../Components/Admin/Advertisers/EditAdvertiser';
+import Scholarships from '../Components/Admin/Scholarships/Scholarships';
+import RequestedScholarships from '../Components/Admin/Scholarships/RequestedScholarships';
 export const router = createBrowserRouter([
     {
         path: "/PalScolarships",
@@ -27,7 +33,7 @@ export const router = createBrowserRouter([
     },
 
     {
-        path: "/adminDashboard",
+        path: "/dashboard",
         element: <AdminLayout />,
         children: [
             {
@@ -35,8 +41,32 @@ export const router = createBrowserRouter([
                 element: <Home />
             },
             {
+                path: "advertisers",
+                element: <Advertiser />,
+            },
+            {
+                path: "students",
+                element: <Students />,
+            },
+            {
+                path: "scholarships",
+                element: <Scholarships />,
+            },
+            {
+                path: "addAdvertiser",
+                element: <AddAdvertiser />
+            },
+            {
+                path: "editAdvertiser/:id",
+                element: <EditAdvertiser />
+            },
+            // {
+            //     path: "editTraining/:id",
+            //     element: <EditTraining />
+            // },
+            {
                 path: "*",
-                element: <h2>page not found --- AdminDashboard</h2>,
+                element: <h2>page not found --- DashboardAdmin</h2>,
             },
         ],
     },

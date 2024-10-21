@@ -7,3 +7,6 @@
 .form-control.filled {
     background-color: rgb(232 240 254) !important;
 }
+.form-floating>label {
+    padding: 1rem 1.75rem;
+}

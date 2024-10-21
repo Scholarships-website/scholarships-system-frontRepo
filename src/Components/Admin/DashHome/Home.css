@@ -1,0 +1,40 @@
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    /* height: 100vh;  */
+} 
+
+/* .TMSImg {
+    width: 500px;
+    height: 500px;
+} */
+
+  
+@media screen and (max-width: 992px) {
+    .image-container{
+        padding-left: 0;
+    }
+   .TMSImg {
+    width: 350px;
+    height: 350px;
+   }
+  }
+  /* Small <= 768px */
+    
+  @media screen and (max-width: 768px) {
+    .TMSImg {
+        width: 250px;
+        height: 250px;
+       }
+  }
+  
+  /* Extra Small <= 576px */
+  
+  @media screen and (max-width: 576px) {
+    .TMSImg {
+        width: 150px;
+        height: 150px;
+       }
+  }
+  
