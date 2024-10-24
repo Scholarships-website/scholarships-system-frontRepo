@@ -28,7 +28,8 @@
     text-transform: uppercase;
     background: linear-gradient(to right, #418447 0%, hsl(0, 0%, 100%) 10%, #418447 20%);
     -webkit-background-clip: text;
-    background-clip: text; /* Added standard property */
+    background-clip: text;
+    /* Added standard property */
     -webkit-text-fill-color: transparent;
     animation: shine 3s infinite linear;
 }
@@ -51,7 +52,7 @@
 @media (max-width: 768px) {
     .newest-scholarships .section-title {
         font-size: 28px;
-        letter-spacing: 5px; 
+        letter-spacing: 5px;
     }
 }
 
@@ -120,7 +121,8 @@
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s ease;
-    margin-top: 10px;
+    margin-top: 25px;
+    text-decoration: none;
 }
 
 .search-btn:hover {
@@ -130,8 +132,8 @@
 }
 
 /* Customize slick arrows */
-.slick-prev,
-.slick-next {
+.newest-scholarships .slick-prev,
+.newest-scholarships .slick-next {
     width: 40px;
     height: 40px;
     color: white;
@@ -142,23 +144,23 @@
     align-items: center;
 }
 
-.slick-prev:before,
-.slick-next:before {
+.newest-scholarships .slick-prev:before,
+.newest-scholarships .slick-next:before {
     font-size: 30px;
     color: #333;
     opacity: 1;
 }
 
-.slick-prev {
+.newest-scholarships .slick-prev {
     left: -20px;
 }
 
-.slick-next {
+.newest-scholarships .slick-next {
     right: -20px;
 }
 
 /* Customize Slick dots to look like dashes */
-.slick-dots li button:before {
+.newest-scholarships .slick-dots li button:before {
     font-size: 20px;
     font-weight: 700;
     color: #49505775;
@@ -166,16 +168,16 @@
     opacity: 1;
 }
 
-.slick-dots li.slick-active button:before {
+.newest-scholarships .slick-dots li.slick-active button:before {
     color: black;
     font-weight: 900;
 }
 
-.slick-dots {
+.newest-scholarships .slick-dots {
     bottom: -30px;
 }
 
-.slick-dots li {
+.newest-scholarships .slick-dots li {
     margin: 0 10px;
 }
 
@@ -189,11 +191,11 @@
         gap: 10px;
     }
 
-    .slick-prev {
+    .newest-scholarships .slick-prev {
         left: -30px;
     }
 
-    .slick-next {
+    .newest-scholarships .slick-next {
         right: -30px;
     }
 

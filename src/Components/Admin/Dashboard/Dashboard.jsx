@@ -9,23 +9,32 @@ import { GrCloudComputer } from "react-icons/gr";
 import { FaWpforms } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightFromBracket, faBarsProgress, faCaretDown, faChevronDown, faComment, faPersonChalkboard, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket, faBarsProgress, faCaretDown, faChevronDown, faComment, faCommentDots, faComments, faMessage, faPersonChalkboard, faUser } from '@fortawesome/free-solid-svg-icons';
 import { AiOutlineForm } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../../Context/UserContext';
+import { useEffect } from 'react';
 
 function Dashboard({ openSidebarToggle, OpenSidebar }) {
     const navigate = useNavigate();
-    let { userToken, setUserToken } = useContext(UserContext);
-    if (!userToken) {
-        navigate('/login');
-        return null; // Prevent rendering of the component
-    }
+    const { userToken, setUserToken } = useContext(UserContext);
+
+    // useEffect(() => {
+    //     if (!userToken) {
+    //         navigate('/login');
+    //     }
+    // }, [userToken, navigate]);
+
     const logOut = () => {
         localStorage.removeItem('userToken');
         setUserToken(null);
         navigate('/login');
     }
+
+    if (!userToken) {
+        return null; // Prevent rendering of the component if not logged in
+    }
+
     return (
         <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive" : ""}>
             <div className='sidebar-title'>
@@ -44,23 +53,31 @@ function Dashboard({ openSidebarToggle, OpenSidebar }) {
                     <BsFillGrid3X3GapFill className='icon' /> Tables
                     <div className="items pt-4 ps-3">
                         <a href="/dashboard/students"  >
-                            <FontAwesomeIcon icon={faPersonChalkboard} /> Students
+                            <FontAwesomeIcon icon={faPersonChalkboard} /> <span>Students</span>
                         </a>
                     </div>
                     <div className="items pt-4 ps-3" >
                         <a href="/dashboard/advertisers" >
-                            <FontAwesomeIcon icon={faUser} /> Advertisers
+                            <FontAwesomeIcon icon={faUser} />
+                            <span>Advertisers</span>
                         </a>
                     </div>
                     <div className="items pt-4 ps-3" >
                         <a href="/dashboard/scholarships" >
-                            <FontAwesomeIcon icon={faBarsProgress} /> Scholarships
+                            <FontAwesomeIcon icon={faBarsProgress} />
+                            <span>Scholarships</span>
                         </a>
                     </div>
                     <div className="items pt-4 ps-3" >
                         <a href="/dashboard/feedbacks" >
-                            <FontAwesomeIcon icon={faComment} />
-                            Feedbacks
+                            <FontAwesomeIcon icon={faMessage} />
+                            <span>Website Feedbacks</span>
+                        </a>
+                    </div>
+                    <div className="items pt-4 ps-3" >
+                        <a href="/dashboard/comments" >
+                            <FontAwesomeIcon icon={faComments} />
+                            <span>Scholarships Comments</span>
                         </a>
                     </div>
                 </li>
@@ -73,7 +90,7 @@ function Dashboard({ openSidebarToggle, OpenSidebar }) {
                     </div> */}
                     <div className="items pt-4 ps-3" >
                         <a href="/dashboard/addAdvertiser" >
-                            <FontAwesomeIcon icon={faUser} /> Advertisers
+                            <FontAwesomeIcon icon={faUser} /> <span>Advertisers</span>
                         </a>
                     </div>
                     {/* <div className="items pt-4 ps-3" >
@@ -90,7 +107,8 @@ function Dashboard({ openSidebarToggle, OpenSidebar }) {
                 <li className='sidebar-list-item' >
                     <div className="items pt-4 ps-3" >
                         <button className='bg-transparent border-0 logout' onClick={logOut} >
-                            <FontAwesomeIcon icon={faArrowRightFromBracket} style={{ color: "#f0f3fa", }} /> Logout
+                            <FontAwesomeIcon icon={faArrowRightFromBracket} style={{ color: "#f0f3fa", }} />
+                            <span>Logout</span>
                         </button>
                     </div>
                 </li>

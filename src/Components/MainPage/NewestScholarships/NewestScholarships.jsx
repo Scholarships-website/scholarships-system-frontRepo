@@ -4,9 +4,22 @@ import { Link } from 'react-router-dom';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './NewestScholarships.css'; // You'll style it here
+import axios from 'axios';
 const NewestScholarships = () => {
   const [scholarships, setScholarships] = useState([]);
+  useEffect(() => {
+    // Fetch scholarships from the API
+    const fetchScholarships = async () => {
+        try {
+            const response = await axios.get('https://api.example.com/scholarships'); // Replace with your API endpoint
+            setScholarships(response.data); // Assuming the API returns an array of scholarships
+        } catch (error) {
+            console.error("Error fetching scholarships:", error);
+        }
+    };
 
+    fetchScholarships();
+}, []);
   // Example data until the API is ready
   const exampleData = [
     {
@@ -52,7 +65,7 @@ const NewestScholarships = () => {
     autoplay: false,
     arrows: true,
   };
-
+  const displayedScholarships = scholarships.slice(0, 4);
   return (
     <section className="newest-scholarships">
       <h2 className="section-title">Newest Scholarships</h2>
@@ -78,7 +91,7 @@ const NewestScholarships = () => {
         ))}
       </Slider>
       <div className="search-container">
-        <button className="search-btn">Search Scholarships</button>
+        <Link to='/search-scholarships' className="search-btn">Search Scholarships</Link>
       </div>
     </section>
   );

@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [activeSection, setActiveSection] = useState('home'); // Default to 'home'
     const { userToken, setUserToken } = useContext(UserContext);
     const navigate = useNavigate();
     const isLoggedIn = userToken !== null;
@@ -37,8 +38,32 @@ const Navbar = () => {
     };
 
     useEffect(() => {
-        // Any additional logic when userToken changes
-    }, [userToken]);
+        const handleScroll = () => {
+            const aboutSection = document.getElementById('about');
+            const homeSection = document.getElementById('home'); // Home section or top of the page
+            if (aboutSection) {
+                const aboutTop = aboutSection.getBoundingClientRect().top;
+                const aboutBottom = aboutSection.getBoundingClientRect().bottom;
+                const homeTop = window.scrollY; // Top of the page
+                // User is at the very top of the page (home section)
+                if (homeTop < 50) {
+                    setActiveSection('home');
+                }
+                // User is in the 'About Us' section
+                else if (aboutTop < window.innerHeight / 2 && aboutBottom > window.innerHeight / 2) {
+                    setActiveSection('about');
+                }
+                // User has scrolled past the 'About Us' section (back to 'home')
+                else if (aboutBottom < window.innerHeight / 2) {
+                    setActiveSection('home');
+                }
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     return (
         <>
@@ -69,14 +94,20 @@ const Navbar = () => {
                         <NavLink
                             exact="true"
                             to="/"
-                            className={({ isActive }) => (isActive ? 'active-link' : '')}
+                            className={activeSection === 'home' ? 'active-link' : ''}
                             onClick={() => setMenuOpen(false)}
                         >
                             Home
                         </NavLink>
                     </li>
                     <li>
-                        <a href="#about" onClick={() => setMenuOpen(false)}>About Us</a>
+                        <a
+                            href="#about"
+                            className={activeSection === 'about' ? 'active-link' : ''}
+                            onClick={() => setMenuOpen(false)}
+                        >
+                            About Us
+                        </a>
                     </li>
                     <li>
                         <NavLink
@@ -105,10 +136,10 @@ const Navbar = () => {
                                 to="/dashboard"
                                 className={({ isActive }) => (isActive ? 'active-link' : '')}
                             >
-                                <FontAwesomeIcon icon={faUser} style={{color: "#418447",}} />
+                                <FontAwesomeIcon icon={faUser} style={{ color: "#418447", }} />
                             </NavLink>
                             <button onClick={handleLogout}>
-                            <FontAwesomeIcon icon={faArrowRightFromBracket} style={{color: "#418447",}} />
+                                <FontAwesomeIcon icon={faArrowRightFromBracket} style={{ color: "#418447", }} />
                             </button>
                         </>
                     ) : (

@@ -14,12 +14,12 @@ export default function RequestedScholarships({ setScholarships }) {
     // Fetch requested scholarships from the API
     const fetchRequestedScholarships = async () => {
         try {
-            const { data } = await axios.get(`https://localhost:7107/api/RequestedScholarships`, {
+            const { data } = await axios.get(`http://localhost:3000/api/v1/admin/scholarhips/pending`, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                 },
             });
-            setRequestedScholarships(data.data);
+            setRequestedScholarships(data);
             setLoading(false);
         } catch (error) {
             console.log(error);
@@ -30,8 +30,8 @@ export default function RequestedScholarships({ setScholarships }) {
     // Handle accepting a scholarship
     const handleAccept = async (id) => {
         try {
-            const { data: acceptedScholarship } = await axios.post(
-                `https://localhost:7107/api/RequestedScholarships/${id}/accept`,
+            const { data: acceptedScholarship } = await axios.patch(
+                `http://localhost:3000/api/v1/admin/scholarships/accept/${id}`,
                 {},
                 {
                     headers: {
@@ -55,8 +55,8 @@ export default function RequestedScholarships({ setScholarships }) {
     // Handle rejecting a scholarship
     const handleReject = async (id) => {
         try {
-            await axios.post(
-                `https://localhost:7107/api/RequestedScholarships/${id}/reject`,
+            await axios.patch(
+                `http://localhost:3000/api/v1/admin/scholarships/reject/${id}`,
                 {},
                 {
                     headers: {
@@ -84,7 +84,7 @@ export default function RequestedScholarships({ setScholarships }) {
         <>
             <div className="requestedScholarships d-flex">
                 <div className="d-flex mt-3 mb-2 justify-content-between border-bottom py-3">
-                    <h1 className='ps-4 main-col test m-0'>Requested Scholarships</h1>
+                    <h1 className='ps-4 main-col test m-0'>Pending Scholarships</h1>
                 </div>                <div className="table-container ps-3">
                     {loading ? (
                         <Loading />
@@ -139,7 +139,7 @@ export default function RequestedScholarships({ setScholarships }) {
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="7">No Requested Scholarships</td>
+                                        <td colSpan="7">No Pending Scholarships</td>
                                     </tr>
                                 )}
                             </tbody>

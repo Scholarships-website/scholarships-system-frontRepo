@@ -16,6 +16,8 @@ import AddAdvertiser from '../Components/Admin/Advertisers/AddAdvertiser';
 import EditAdvertiser from '../Components/Admin/Advertisers/EditAdvertiser';
 import Scholarships from '../Components/Admin/Scholarships/Scholarships';
 import RequestedScholarships from '../Components/Admin/Scholarships/RequestedScholarships';
+import Feedbacks from '../Components/Admin/Feedbacks/Feedbacks';
+import Comments from '../Components/Admin/Comments/Comments';
 export const router = createBrowserRouter([
     {
         path: "/PalScolarships",
@@ -51,6 +53,14 @@ export const router = createBrowserRouter([
             {
                 path: "scholarships",
                 element: <Scholarships />,
+            },
+            {
+                path: "feedbacks",
+                element: <Feedbacks />,
+            },
+            {
+                path: "comments",
+                element: <Comments />,
             },
             {
                 path: "addAdvertiser",

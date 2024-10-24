@@ -15,9 +15,9 @@ export default function Scholarships() {
 
   const fetchScholarships = async () => {
     try {
-      const { data } = await axios.get(`https://localhost:7107/api/Scholarships`);
+      const { data } = await axios.get(`http://localhost:3000/api/v1/scholarships`);
       console.log(data);
-      setScholarships(data.data);
+      setScholarships(data);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -37,7 +37,7 @@ export default function Scholarships() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`https://localhost:7107/api/Scholarships/${id}`, {
+          await axios.delete(`http://localhost:3000/api/v1/scholarships/${id}`, {
             headers: {
               Authorization: `Bearer ${userToken}`, // Include Bearer token in headers
             },
@@ -64,22 +64,22 @@ export default function Scholarships() {
     fetchScholarships();
   }, []);
 
-  const [searchTerm, setSearchTerm] = useState('');
+  // const [searchTerm, setSearchTerm] = useState('');
 
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
+  // const handleSearch = (event) => {
+  //   setSearchTerm(event.target.value);
+  // };
 
-  const filteredScholarships = scholarships.filter((scholarship) => {
-    return scholarship.name.toLowerCase().includes(searchTerm.toLowerCase());
-  });
+  // const filteredScholarships = scholarships.filter((scholarship) => {
+  //   return scholarship.name.toLowerCase().includes(searchTerm.toLowerCase());
+  // });
 
   return (
     <>
       <div className="scholarships-admin">
         <div className=" mt-3 mb-2 justify-content-between border-bottom py-3">
           <h1 className='ps-4 main-col'>Scholarships</h1>
-          <form className="me-3 search-admin" role="search">
+          {/* <form className="me-3 search-admin" role="search">
           <FontAwesomeIcon icon={faMagnifyingGlass} style={{color: "#418447",}} />
             <input
               className="form-control me-5"
@@ -89,7 +89,7 @@ export default function Scholarships() {
               value={searchTerm}
               onChange={handleSearch}
             />
-          </form>
+          </form> */}
         </div>
 
         <div className="table-container ps-3">
@@ -106,9 +106,9 @@ export default function Scholarships() {
                 </tr>
               </thead>
               <tbody>
-                {filteredScholarships.length ? (
-                  filteredScholarships.map((scholarship, index) => (
-                    <tr key={scholarship.id}>
+                {scholarships.length ? (
+                  scholarships.map((scholarship, index) => (
+                    <tr key={scholarship._id}>
                       <th scope="row">{++index}</th>
                       <td>{scholarship.name}</td>
                       <td>{scholarship.description}</td>

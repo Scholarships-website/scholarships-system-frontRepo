@@ -1,5 +1,6 @@
 import React from 'react';
 import './HeroSection.css';
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
     return (
@@ -8,7 +9,7 @@ const HeroSection = () => {
                 <h1>Welcome to PalScholarships</h1>
                 <p className='welcome'>Your gateway to countless scholarship opportunities!</p>
                 <p>Whether you’re a high school graduate, an undergraduate, or seeking advanced studies, we are here to help you find scholarships that match your dreams and qualifications. With a user-friendly interface and powerful search tools, explore the scholarships that will bring you closer to your academic goals.</p>
-                <button className="cta-button">Search Scholarships Now</button>
+                <Link to='/search-scholarships' className="cta-button">Search Scholarships Now</Link>
                 <div className="iconContainer  -ml-8 lg:-ml-12 -mb-6">
                     <div className="iconRow pl-8 lg:pl-12 pb-6  md:items-start space-x-3 md:space-x-4">
                         <div className="flex items-center justify-center w-[24px] h-[24px] rounded-full ">

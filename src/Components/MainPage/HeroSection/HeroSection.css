@@ -26,7 +26,7 @@
 
 .hero-section p {
     font-size: 20px;
-    margin: 20px 0;
+    margin: 20px 0 70px;
     font-family: "Nunito", sans-serif;
 
 }
@@ -54,6 +54,8 @@
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
     transition-timing-function: cubic-bezier(.4, 0, .2, 1);
     border: none;
+    text-decoration: none;
+    margin-top: 20px;
 }
 
 .iconContainer {
@@ -62,7 +64,7 @@
     justify-content: center;
     align-items: center;
     gap: 15px;
-    margin-top: 50px;
+    margin-top: 75px;
 }
 
 .iconRow {

@@ -14,9 +14,9 @@ export default function Advertiser() {
 
   const fetchAdvertisers = async () => {
     try {
-      const { data } = await axios.get(`https://localhost:7107/api/advertiser`);
+      const { data } = await axios.get(`http://localhost:3000/api/v1/advertisers/`);
       console.log(data);
-      setAdvertiser(data.data);
+      setAdvertiser(data);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -36,7 +36,7 @@ export default function Advertiser() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`https://localhost:7107/api/Advertiser/${id}`);
+          await axios.delete(`http://localhost:3000/api/v1/advertisers/${id}`);
           setAdvertiser((prevAdvertiser) => prevAdvertiser.filter((advertiser) => advertiser.id !== id));
           Swal.fire("Deleted!", "The advertiser has been deleted.", "success");
         } catch (error) {
@@ -51,24 +51,24 @@ export default function Advertiser() {
     fetchAdvertisers();
   }, []);
 
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
+  // const handleSearch = (event) => {
+  //   setSearchTerm(event.target.value);
+  // };
 
-  const filteredAdvertiser = advertisers.filter((advertiser) => {
-    return (
-      advertiser.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      advertiser.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      advertiser.email.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  });
+  // const filteredAdvertiser = advertisers.filter((advertiser) => {
+  //   return (
+  //     advertiser.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //     advertiser.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //     advertiser.email.toLowerCase().includes(searchTerm.toLowerCase())
+  //   );
+  // });
 
   return (
     <>
       <div className="advertiser-admin">
         <div className=" mt-3 mb-2 justify-content-between border-bottom py-3">
           <h1 className='ps-4 main-col'>Advertisers</h1>
-          <form className="me-3 search-admin" role="search">
+          {/* <form className="me-3 search-admin" role="search">
           <FontAwesomeIcon icon={faMagnifyingGlass} style={{color: "#418447",}} />
             <input
               className="form-control me-5"
@@ -78,7 +78,7 @@ export default function Advertiser() {
               value={searchTerm}
               onChange={handleSearch}
             />
-          </form>
+          </form> */}
         </div>
         <div className="table-container ps-3">
           {loading ? (
@@ -88,19 +88,23 @@ export default function Advertiser() {
               <thead>
                 <tr className='bg-transparent '>
                   <th scope="col">#</th>
-                  <th scope="col">Advertiser name</th>
+                  <th scope="col">Advertiser Name</th>
+                  <th scope="col">Organization Name</th>
                   <th scope="col">Email</th>
+                  <th scope="col">Phone Number</th>
                   <th scope='col'>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {filteredAdvertiser.length ? (
-                  filteredAdvertiser.map((advertiser, index) => {
+                {advertisers.length ? (
+                  advertisers.map((advertiser, index) => {
                     return (
-                      <tr key={advertiser.id}>
+                      <tr key={advertiser._id}>
                         <th scope="row">{index + 1}</th>
-                        <td>{advertiser.name}</td>
-                        <td>{advertiser.email}</td>
+                        <td>{advertiser.user_id.username}</td>
+                        <td>{advertiser.organization_name}</td>
+                        <td>{advertiser.user_id.email}</td>
+                        <td>{advertiser.user_id.phoneNumber}</td>
                         <td>
                           <div className="dropdown">
                             <button className="border-0 bg-transparent dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -108,14 +112,14 @@ export default function Advertiser() {
                             </button>
                             <ul className="dropdown-menu">
                               <li className='d-flex justify-content-center align-items-center'>
-                                <Link className="dropdown-item text-warning" to={`/dashboard/editAdvertiser/${advertiser.id}`}>
+                                <Link className="dropdown-item text-warning" to={`/dashboard/editAdvertiser/${advertiser._id}`}>
                                   <FontAwesomeIcon icon={faPenToSquare} className='px-1' />Update
                                 </Link>
                               </li>
                               <li className='d-flex justify-content-center align-items-center'>
                                 <button
                                   className="dropdown-item text-danger"
-                                  onClick={() => deleteAdvertiser(advertiser.id)}
+                                  onClick={() => deleteAdvertiser(advertiser._id)}
                                 >
                                   <FontAwesomeIcon icon={faUserXmark} className='px-1' />Delete
                                 </button>

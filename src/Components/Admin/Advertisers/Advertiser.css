@@ -1,12 +1,20 @@
 .main-col {
     color: #418447 !important;
 }
-.addAdvertiser .addButton{
+
+.addAdvertiser .addButton {
     background-color: #418447;
     color: #f0f3fa;
 }
-.addAdvertiser .addButton:hover{
-    background-color: #f0f3fa ;
+
+.addAdvertiser .addButton:hover {
+    background-color: #f0f3fa;
     color: #418447;
     border: #418447 1px solid;
+}
+
+.add-advertiser {
+    text-align: center;
+    margin-top: 70px;
+
 }

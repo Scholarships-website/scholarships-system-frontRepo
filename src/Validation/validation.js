@@ -27,14 +27,36 @@ export const registrationScheme = Yup.object({
 });
 
 export const addAdvertiser = Yup.object({
-   email: Yup.string().required('Email is required').email('Please enter a valid email address'),
-   password: Yup.string().required('Password is required').min(6, 'your Password must have at least 6 characters').max(30, 'your Password must have at most 30 characters'),
-   name: Yup.string().required('name is required'),
-})
+   username: Yup.string()
+      .required('Username is required')
+      .min(3, 'Username must have at least 3 characters')
+      .max(20, 'Username must have at most 20 characters'),
+   email: Yup.string()
+      .required('Email is required')
+      .email('Please enter a valid email address'),
+   password: Yup.string()
+      .required('Password is required')
+      .min(6, 'Your password must have at least 6 characters')
+      .max(30, 'Your password must have at most 30 characters'),
+   organization_name: Yup.string()
+      .required('Organization name is required')
+      .min(3, 'Organization name must have at least 3 characters'),
+   phoneNumber: Yup.string()
+      .matches(/^\d{9}$/, 'Phone number must have 9 digits')
+      .required('Phone number is required'),
+});
 export const editAdvertiser = Yup.object({
-   email: Yup.string().required('Email is required').email('Please enter a valid email address'),
-   name: Yup.string().required('Name is required'),
-})
+   email: Yup.string()
+      .required('Email is required')
+      .email('Please enter a valid email address'),
+   username: Yup.string()
+      .required('Username is required')
+      .min(3, 'Username must have at least 3 characters')
+      .max(20, 'Username must have at most 20 characters'),
+   organization_name: Yup.string()
+      .required('Organization name is required')
+      .min(3, 'Organization name must have at least 3 characters'),
+});
 
 
 //  export const addTraining = yup.object({

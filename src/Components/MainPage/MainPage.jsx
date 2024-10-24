@@ -4,7 +4,7 @@ import NewestScholarships from './NewestScholarships/NewestScholarships'
 import Footer from '../Shared/Footer/Footer'
 import HeroSection from './HeroSection/HeroSection'
 import AboutSection from './AboutSection/AboutSection'
-import TestimonialsSection from './Testimonials/TestimonialsSection'
+import Feedback from './Feedback/Feedback'
 import FeaturesSection from './FeaturesSection/FeaturesSection'
 
 function MainPage() {
@@ -17,7 +17,7 @@ function MainPage() {
                 <AboutSection />
                 <FeaturesSection />
                 <NewestScholarships/>
-                {/* <TestimonialsSection /> */}
+                <Feedback />
                 <Footer />
             </section>
             

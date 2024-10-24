@@ -1,0 +1,292 @@
+@import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+.feedback-line{
+    color: #333;
+    margin-top: 2rem;
+}
+.feedback-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 2rem;
+}
+
+.feedback-title {
+    margin-top: 20px;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 3rem;
+    font-weight: bold;
+    font-family: "Bad Script", cursive;
+}
+
+.feedback-card {
+    border-radius: 8px;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.feedback-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.image-section {
+    margin-right: 1rem;
+}
+
+.profile-img {
+    width: 300px;
+    height: 300px;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1), 8px 10px 20px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+}
+
+.info-section {
+    display: flex;
+    border-left: 1px solid black;
+    padding: 20px 20px 20px 45px;
+    justify-content: flex-end;
+    flex-direction: column;
+    align-self: stretch;
+    margin-left: 2rem;
+}
+
+.profession {
+    font-style: italic;
+    color: #666;
+}
+
+.star {
+    color: #ccc;
+    font-size: 35px;
+}
+
+.star.filled {
+    color: black;
+}
+
+.speech-bubble {
+    position: relative;
+    padding: 20px;
+    background: #cccccc;
+    border-radius: 10px;
+    margin-bottom: 35px;
+    color: black;
+    font-family: Arial, sans-serif;
+}
+
+/* Style for the opening quote */
+.quote {
+    font-family: Georgia, serif;
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
+    margin-right: 10px;
+    display: block;
+
+}
+
+/* Style for the closing quote under the text */
+.quote.under {
+    display: block;
+    text-align: right;
+    margin-top: 0;
+    padding: 0;
+}
+
+/* Speech bubble triangle */
+.speech-bubble::after {
+    content: ' ';
+    border: 20px solid;
+    border-color: #cccccc transparent transparent #cccccc;
+    position: absolute;
+    bottom: -30px;
+    left: 30px;
+}
+
+
+.feedback-text {
+    margin-top: 2.5rem;
+}
+
+.feedback-text .text {
+    padding: 0 20px;
+    font-style: italic;
+    font-size: 1rem;
+}
+
+.slick-prev,
+.slick-next {
+    width: 40px;
+    height: 40px;
+    color: white;
+    border-radius: 50%;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feedback-container .slick-prev:before,
+.feedback-container .slick-next:before {
+    font-size: 30px;
+    color: #333;
+    opacity: 1;
+}
+
+.feedback-container .slick-prev {
+    left: 30px;
+}
+
+.feedback-container .slick-next {
+    right: 30px;
+}
+
+.feedback-container .slick-dots li button:before {
+    font-size: 50px;
+    font-weight: 700;
+    color: #49505775;
+    content: ".";
+    opacity: 1;
+}
+
+.feedback-container .slick-dots li.slick-active button:before {
+    color: #418447;
+    font-weight: 900;
+}
+
+
+
+.feedback-container .slick-dots li {
+    margin: 0 10px;
+}
+
+.write-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.write-btn {
+    padding: 0.75rem 1.5rem;
+    background-color: #418447;
+    border-radius: 50px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    text-decoration: none;
+}
+
+.write-btn:hover {
+    background-color: #fff;
+    color: #418447;
+    border: 1px solid #418447;
+}
+
+/* General Media Query for Tablets and Mobile */
+@media (max-width: 768px) {
+    .feedback-container {
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .feedback-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .feedback-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-img {
+        width: 200px;
+        height: 200px;
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+
+    .info-section {
+        border-left: none;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .speech-bubble {
+        padding: 15px;
+        font-size: 0.9rem;
+    }
+
+    .quote {
+        font-size: 25px;
+    }
+    .feedback-container .slick-prev {
+        left: 0;
+    }
+    
+    .feedback-container .slick-next {
+        right: 0;
+    }
+}
+
+
+/* Additional Media Query for Mobile (Max Width 480px) */
+@media (max-width: 480px) {
+    .feedback-container {
+        padding: 0.5rem;
+    }
+
+    .feedback-title {
+        font-size: 2rem;
+    }
+
+    .feedback-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .info-section {
+        border-left: none;
+        padding: 5px;
+        text-align: center;
+    }
+
+    .speech-bubble {
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+
+    .quote {
+        font-size: 20px;
+    }
+
+    .write-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    .feedback-container .slick-prev {
+        left: 0;
+    }
+    
+    .feedback-container .slick-next {
+        right: 0;
+    }
+}

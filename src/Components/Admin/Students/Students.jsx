@@ -13,9 +13,9 @@ export default function Students() {
 
   const fetchStudents = async () => {
     try {
-      const { data } = await axios.get(`https://localhost:7107/api/Students`);
+      const { data } = await axios.get(`http://localhost:3000/api/v1/students/`);
       console.log(data)
-      setStudents(data.data);
+      setStudents(data);
       setLoading(false)
     }
     catch (error) {
@@ -23,7 +23,7 @@ export default function Students() {
       setLoading(false)
     }
   };
-  const deletetStudent = async (id) => {
+  const deleteStudent = async (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -35,7 +35,7 @@ export default function Students() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`https://localhost:7107/api/Student/${id}`);
+          await axios.delete(`http://localhost:3000/api/v1/students/${id}`);
           // Remove the deleted Student from the students array
           setStudents((prevStudents) => prevStudents.filter((student) => student.id !== id));
           Swal.fire({
@@ -65,9 +65,9 @@ export default function Students() {
 
   const filteredStudents = students.filter((student) => {
     return (
-      student.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      student.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      student.email.toLowerCase().includes(searchTerm.toLowerCase())
+      student.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      student.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      student.user_id.email.toLowerCase().includes(searchTerm.toLowerCase()) 
     );
   });
   return (
@@ -76,7 +76,7 @@ export default function Students() {
         <div className=" mt-3 mb-2 justify-content-between border-bottom py-3">
           <h1 className='ps-4 main-col'>Students</h1>
           <form className="me-3 search-admin" role="search">
-          <FontAwesomeIcon icon={faMagnifyingGlass} style={{color: "#418447",}} />
+            <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#418447", }} />
             <input
               className="form-control me-5"
               type="search"
@@ -98,17 +98,19 @@ export default function Students() {
                   <th scope="col">First name</th>
                   <th scope="col">Last name</th>
                   <th scope="col">Email</th>
+                  <th scope="col">Phone Number</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredStudents.length ? (filteredStudents.map((student, index) => {
                   return (
-                    <tr key={student.id}>
+                    <tr key={student._id}>
                       <th scope="row">{++index}</th>
-                      <td>{student.firstName}</td>
-                      <td>{student.lastName}</td>
-                      <td>{student.email}</td>
+                      <td>{student.first_name}</td>
+                      <td>{student.last_name}</td>
+                      <td>{student.user_id.email}</td>
+                      <td>{student.user_id.phoneNumber}</td>
                       <td>
                         <div className="dropdown">
                           <button className="border-0 bg-transparent dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -116,7 +118,7 @@ export default function Students() {
                           </button>
                           <ul className="dropdown-menu">
                             <li className='d-flex justify-content-center align-items-center'>
-                              <button className="dropdown-item text-danger" onClick={() => deletetStudent(student.id)}>
+                              <button className="dropdown-item text-danger" onClick={() => deleteStudent(student._id)}>
                                 <FontAwesomeIcon icon={faUserXmark} className='px-1' />
                                 Delete
                               </button>
