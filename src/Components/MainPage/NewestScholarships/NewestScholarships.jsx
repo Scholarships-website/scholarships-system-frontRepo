@@ -43,7 +43,7 @@ const NewestScholarships = () => {
           <div className="scholarship-slide" key={scholarship._id}>
             <div className="scholarship-content">
               <div className="scholarship-info">
-                <h3>{scholarship.scholarship_name}</h3>
+                <h3>{scholarship.scholarsip_name}</h3>
                 <p className="scholarship-deadline">
                   <strong>Deadline:</strong>{' '}
                   {new Date(scholarship.End_Date).toLocaleDateString('en-GB', {
@@ -52,7 +52,7 @@ const NewestScholarships = () => {
                     year: 'numeric',
                   })}
                 </p>
-                <p className="scholarship-description">{scholarship.brief_description}</p>
+                <p className="scholarship-description">{scholarship.brief_descrition}</p>
                 <Link to="scholarship-detail" className="apply-btn">View Details</Link>
               </div>
               <div className="scholarship-image-container">
