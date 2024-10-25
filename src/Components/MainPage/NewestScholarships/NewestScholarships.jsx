@@ -3,86 +3,62 @@ import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import './NewestScholarships.css'; // You'll style it here
+import './NewestScholarships.css';
 import axios from 'axios';
+
 const NewestScholarships = () => {
   const [scholarships, setScholarships] = useState([]);
+
   useEffect(() => {
     // Fetch scholarships from the API
     const fetchScholarships = async () => {
-        try {
-            const response = await axios.get('https://api.example.com/scholarships'); // Replace with your API endpoint
-            setScholarships(response.data); // Assuming the API returns an array of scholarships
-        } catch (error) {
-            console.error("Error fetching scholarships:", error);
-        }
+      try {
+        const response = await axios.get('http://localhost:3000/api/v1/scholarships');
+        console.log(response.data);
+        setScholarships(response.data);
+      } catch (error) {
+        console.error("Error fetching scholarships:", error);
+      }
     };
 
     fetchScholarships();
-}, []);
-  // Example data until the API is ready
-  const exampleData = [
-    {
-      id: 1,
-      name: 'Scholarship A',
-      deadline: '2024-12-01',
-      image: 'https://via.placeholder.com/400',
-      description: 'A scholarship for undergraduate students in the field of computer science.',
-    },
-    {
-      id: 2,
-      name: 'Scholarship B',
-      deadline: '2024-11-15',
-      image: 'https://via.placeholder.com/400',
-      description: 'A scholarship for high school graduates pursuing engineering degrees.',
-    },
-    {
-      id: 3,
-      name: 'Scholarship C',
-      deadline: '2024-10-31',
-      image: 'https://via.placeholder.com/400',
-      description: 'A financial aid opportunity for medical students.',
-    },
-    {
-      id: 4,
-      name: 'Scholarship D',
-      deadline: '2024-12-20',
-      image: 'https://via.placeholder.com/400',
-      description: 'A scholarship for students excelling in business studies.',
-    },
-  ];
-
-  useEffect(() => {
-    setScholarships(exampleData);
   }, []);
 
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 1, // Display only one scholarship
+    slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: false,
     arrows: true,
   };
-  const displayedScholarships = scholarships.slice(0, 4);
+
   return (
     <section className="newest-scholarships">
       <h2 className="section-title">Newest Scholarships</h2>
       <Slider {...settings}>
-        {scholarships.map((scholarship) => (
-          <div className="scholarship-slide" key={scholarship.id}>
+        {/* slice to view just 5 items */}
+        {scholarships.slice(0, 5).map((scholarship) => (
+          <div className="scholarship-slide" key={scholarship._id}>
             <div className="scholarship-content">
               <div className="scholarship-info">
-                <h3>{scholarship.name}</h3>
-                <p className="scholarship-deadline"><strong>Deadline:</strong> {scholarship.deadline}</p>
-                <p className="scholarship-description">{scholarship.description}</p>
+                <h3>{scholarship.scholarship_name}</h3>
+                <p className="scholarship-deadline">
+                  <strong>Deadline:</strong>{' '}
+                  {new Date(scholarship.End_Date).toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                  })}
+                </p>
+                <p className="scholarship-description">{scholarship.brief_description}</p>
                 <Link to="scholarship-detail" className="apply-btn">View Details</Link>
               </div>
               <div className="scholarship-image-container">
                 <img
-                  src={scholarship.image}
-                  alt={scholarship.name}
+                  src='https://via.placeholder.com/400'
+                  alt={scholarship.scholarship_name}
                   className="scholarship-image"
                 />
               </div>
@@ -91,7 +67,7 @@ const NewestScholarships = () => {
         ))}
       </Slider>
       <div className="search-container">
-        <Link to='/search-scholarships' className="search-btn">Search Scholarships</Link>
+        <Link to='/search-scholarships' className="search-btn">View More Scholarships</Link>
       </div>
     </section>
   );

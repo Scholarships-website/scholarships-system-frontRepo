@@ -1,0 +1,263 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Potta+One&display=swap");
+
+* {
+    box-sizing: border-box;
+}
+
+.addFeedbackContainer {
+    font-size: 6.25vmax;
+}
+
+@media (max-width: 992px) {
+    .addFeedbackContainer {
+        font-size: 4.5vmax;
+    }
+}
+
+.addFeedbackContainer {
+    min-height: 100vh;
+    padding: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Space Grotesk", sans-serif;
+    color: #222;
+    background-image: radial-gradient(farthest-side, #afc8f9 90%, #fff0),
+        radial-gradient(farthest-side, #ddc1fb 90%, #fff0),
+        radial-gradient(circle at 0 0, #d5e0fa, #e5d5f6);
+    background-size: 7rem 7rem, 6rem 6rem, auto;
+    background-position: 30% 10%, 80% 90%, 0;
+    background-repeat: no-repeat;
+    backdrop-filter: blur(50px);
+}
+
+.addFeedbackContainer .wrapper {
+    width: 90%;
+    max-width: 700px;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 1;
+}
+
+.addFeedbackContainer .title {
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.addFeedbackContainer .content {
+    line-height: 1.6;
+    color: #555;
+    font-size: 1.5rem;
+}
+
+.addFeedbackContainer input[type="text"],
+.addFeedbackContainer input[type="email"],
+.addFeedbackContainer select {
+    width: 100%;
+    padding: 0.8rem;
+    font-family: inherit;
+    font-size: 1.3rem;
+    color: #333;
+    border: none;
+    border-radius: 0.3rem;
+    background-color: rgba(255, 255, 255, 0.3);
+    box-shadow: inset 2px 2px 8px rgba(0, 0, 0, 0.1), inset -2px -2px 8px rgba(255, 255, 255, 0.7);
+    transition: outline-color 0.2s, box-shadow 0.2s;
+}
+
+.addFeedbackContainer input:focus,
+.addFeedbackContainer select:focus {
+    outline-color: #418447;
+    box-shadow: inset 2px 2px 8px rgba(0, 0, 0, 0.3), inset -2px -2px 8px rgba(255, 255, 255, 0.8);
+}
+
+.rate-box {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 0.1rem;
+}
+
+.rate-box input {
+    display: none;
+}
+
+.rate-box input:hover~.star:before {
+    color: rgba(255, 204, 51, 0.5);
+}
+
+.rate-box input:active+.star:before {
+    transform: scale(0.9);
+}
+
+.rate-box input:checked~.star:before {
+    color: #ffcc33;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3), -3px -3px 8px rgba(255, 255, 255, 0.8);
+}
+
+.rate-box .star:before {
+    content: "★";
+    display: inline-block;
+    font-family: "Potta One", cursive;
+    font-size: 3rem;
+    cursor: pointer;
+    color: #0000;
+    text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.5);
+    background-color: #aaa;
+    background-clip: text;
+    -webkit-background-clip: text;
+    transition: all 0.3s;
+}
+
+.addFeedbackContainer textarea {
+    font-size: 1.5rem;
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    resize: none;
+    color: inherit;
+    font-family: inherit;
+    line-height: 1.5;
+    border-radius: 0.3rem;
+    box-shadow: inset 2px 2px 8px rgba(0, 0, 0, 0.1), inset -2px -2px 8px rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.addFeedbackContainer textarea::placeholder {
+    color: #aaa;
+}
+
+.addFeedbackContainer textarea:focus {
+    outline-color: #418447;
+}
+
+.addFeedbackContainer .submit-btn {
+    background-color: #418447;
+    text-decoration: none;
+    color: #fff;
+    padding: 8px 24px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: 600;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 25px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.addFeedbackContainer .submit-btn:hover {
+    background-color: #fff;
+    border: 1px solid #418447;
+    color: #418447;
+}
+
+.addFeedbackContainer .submit-btn:active {
+    transform: translate(2px, 2px);
+}
+.addFeedbackContainer .error {
+    color: #d9534f;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding-left: 0.7rem;
+    align-self: flex-start;
+}
+
+
+@media (max-width: 992px) {
+    .addFeedbackContainer {
+        font-size: 4.5vmax;
+        padding: 2rem;
+    }
+
+    .addFeedbackContainer .title {
+        font-size: 1.8rem;
+    }
+
+    .addFeedbackContainer .content,
+    .addFeedbackContainer input[type="text"],
+    .addFeedbackContainer input[type="email"],
+    .addFeedbackContainer select,
+    .addFeedbackContainer textarea,
+    .addFeedbackContainer .submit-btn {
+        font-size: 1.2rem;
+    }
+
+    .addFeedbackContainer .wrapper {
+        max-width: 600px;
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .addFeedbackContainer {
+        font-size: 5vmax;
+        padding: 1.5rem;
+    }
+
+    .addFeedbackContainer .wrapper {
+        width: 100%;
+        padding: 1.5rem;
+    }
+
+    .addFeedbackContainer .title {
+        font-size: 1.6rem;
+    }
+
+    .addFeedbackContainer .content,
+    .addFeedbackContainer input[type="text"],
+    .addFeedbackContainer input[type="email"],
+    .addFeedbackContainer select,
+    .addFeedbackContainer textarea,
+    .addFeedbackContainer .submit-btn {
+        font-size: 1rem;
+    }
+
+    .rate-box .star:before {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .addFeedbackContainer {
+        font-size: 4vmax;
+        padding: 1rem;
+    }
+
+    .addFeedbackContainer .wrapper {
+        padding: 1rem;
+        gap: 0.8rem;
+    }
+
+    .addFeedbackContainer .title {
+        font-size: 1.4rem;
+    }
+
+    .addFeedbackContainer .content,
+    .addFeedbackContainer input[type="text"],
+    .addFeedbackContainer input[type="email"],
+    .addFeedbackContainer select,
+    .addFeedbackContainer textarea,
+    .addFeedbackContainer .submit-btn {
+        font-size: 0.9rem;
+    }
+
+    .rate-box .star:before {
+        font-size: 2rem;
+    }
+
+    .addFeedbackContainer textarea {
+        padding: 0.8rem;
+    }
+
+    .addFeedbackContainer .submit-btn {
+        font-size: 1.2rem;
+        padding: 6px 20px;
+    }
+}

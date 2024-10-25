@@ -55,6 +55,9 @@
     font-weight: 700;
     border-bottom: 2px solid #418447;
 }
+.navbar-auth .icons {
+background-color: #fff ;
+}
 
 /* Hamburger menu icon for small screens */
 .hamburger-icon {
@@ -69,8 +72,8 @@
     gap: 15px;
 }
 
-.navbar-auth a,.navbar .navbar-auth button {
-    background-color: #fff;
+.navbar-auth a, .navbar-auth button {
+    background-color: #418447;
     text-decoration: none;
     color: #fff;
     padding: 8px 16px;
@@ -86,6 +89,7 @@
 .navbar-auth button:hover,
 .navbar-auth a:hover {
     background-color: #fff;
+    color: #418447;
     border: 1px solid #418447;
 }
 
@@ -124,4 +128,7 @@
         padding: 6px 10px;
         font-size: 12px;
     }
+}
+.testl{
+    background: #000;
 }

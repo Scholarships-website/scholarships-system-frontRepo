@@ -59,13 +59,13 @@ export default function EditAdvertiser() {
     },
     validationSchema: editAdvertiser,
     onSubmit,
-    enableReinitialize: true,  // Allow form to reinitialize when advertiser data changes
+    enableReinitialize: true, 
   });
 
   // Update Formik values when advertiser data is fetched
   useEffect(() => {
     if (advertiser) {
-      console.log('Setting Formik values:', advertiser); // Log the advertiser data being set
+      console.log('Setting Formik values:', advertiser); 
       formik.setValues({
         id: advertiser._id || '',
         username: advertiser.user_id.username || '',
@@ -73,15 +73,14 @@ export default function EditAdvertiser() {
         organization_name:advertiser.organization_name||'',
       });
     }
-  }, [advertiser, id]);  // Run this effect whenever advertiser data or id changes
+  }, [advertiser, id]);
 
-  // Show loading state until the advertiser data is fetched
   if (!advertiser) {
-    return <div>Loading...</div>;  // Display loading message
+    return <div>Loading...</div>;
   }
   return (
     <>
-      <h2 className='ps-4 pt-4'>Edit Advertiser Account "{advertiser.username}"</h2>
+      <h2 className='ps-4 pt-4'>Edit Advertiser Account "{advertiser.user_id.username}"</h2>
       <form onSubmit={formik.handleSubmit} className="row justify-content-center align-items-center w-75 ps-4 pt-5">
         <div className="form-item col-md-6">
           <label className="form-label ps-2" htmlFor="id">ID</label>
@@ -143,7 +142,7 @@ export default function EditAdvertiser() {
           ) : null}
         </div>
         <button
-          className='w-auto btn btn-outline-warning mt-4'
+          className='w-auto btn edit-btn mt-4'
           type="submit"
           disabled={formik.isSubmitting || Object.keys(formik.errors).length > 0 || Object.keys(formik.touched).length === 0}
         >

@@ -134,11 +134,11 @@ const Navbar = () => {
                         <>
                             <NavLink
                                 to="/dashboard"
-                                className={({ isActive }) => (isActive ? 'active-link' : '')}
+                                className='icons'
                             >
                                 <FontAwesomeIcon icon={faUser} style={{ color: "#418447", }} />
                             </NavLink>
-                            <button onClick={handleLogout}>
+                            <button onClick={handleLogout} className='icons' >
                                 <FontAwesomeIcon icon={faArrowRightFromBracket} style={{ color: "#418447", }} />
                             </button>
                         </>

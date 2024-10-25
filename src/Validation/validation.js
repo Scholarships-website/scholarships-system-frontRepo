@@ -57,7 +57,13 @@ export const editAdvertiser = Yup.object({
       .required('Organization name is required')
       .min(3, 'Organization name must have at least 3 characters'),
 });
-
+export const addFeedback = Yup.object({
+   name: Yup.string().required('Name is required'),
+   email: Yup.string().email('Invalid email address').required('Email is required'),
+   role: Yup.string().required('Role is required'),
+   feedback: Yup.string().required('Feedback is required'),
+   rating: Yup.number().required('Rating is required').min(1, 'Please select a rating'),
+});
 
 //  export const addTraining = yup.object({
 //    name:yup.string().required('name is required'),

@@ -18,6 +18,7 @@ import Scholarships from '../Components/Admin/Scholarships/Scholarships';
 import RequestedScholarships from '../Components/Admin/Scholarships/RequestedScholarships';
 import Feedbacks from '../Components/Admin/Feedbacks/Feedbacks';
 import Comments from '../Components/Admin/Comments/Comments';
+import AddFeedback from '../Components/MainPage/Feedback/AddFeedback';
 export const router = createBrowserRouter([
     {
         path: "/PalScolarships",
@@ -109,5 +110,9 @@ export const router = createBrowserRouter([
     {
         path: '/signup',
         element: <SignUp />,
+    },
+    {
+        path: '/add-feedback',
+        element: <AddFeedback />,
     },
 ]);

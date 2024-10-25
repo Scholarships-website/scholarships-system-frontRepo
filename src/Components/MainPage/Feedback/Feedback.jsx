@@ -65,7 +65,7 @@ const Feedback = () => {
     const fetchFeedbackData = async () => {
       try {
         // Uncomment the following lines to use the actual API
-        // const response = await fetch('https://api.example.com/feedbacks'); 
+        // const response = await fetch('http://localhost:3000/api/v1/feedbacks/'); 
         // if (!response.ok) {
         //   throw new Error('Network response was not ok');
         // }
