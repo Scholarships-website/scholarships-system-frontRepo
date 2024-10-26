@@ -13,9 +13,9 @@ export default function Feedbacks() {
 
     const fetchFeedbacks = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:3000/api/v1/feedbacks/`);
+            const { data } = await axios.get(`http://localhost:3000/api/v1/website/feedbacks`);
             console.log(data)
-            setFeedbacks(data.data);
+            setFeedbacks(data);
             setLoading(false)
         }
         catch (error) {
@@ -35,7 +35,7 @@ export default function Feedbacks() {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    await axios.delete(`http://localhost:3000/api/v1/feedback/${id}`);
+                    await axios.delete(`http://localhost:3000/api/v1/scholarships/feedbacks/${id}`);
                     // Remove the deleted Feedback
                     setFeedbacks((prevFeedbacks) => prevFeedbacks.filter((feedback) => feedback.id !== id));
                     Swal.fire({

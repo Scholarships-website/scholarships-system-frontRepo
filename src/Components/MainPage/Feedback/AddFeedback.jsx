@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import './AddFeedback.css';
 import Navbar from '../../Shared/Navbar/Navbar';
 import { addFeedback } from '../../../Validation/validation';
+import axios from 'axios';
 
 const AddFeedback = () => {
     const formik = useFormik({
@@ -16,12 +17,8 @@ const AddFeedback = () => {
         validationSchema: addFeedback,
         onSubmit: async (values, { resetForm }) => {
             try {
-                const response = await fetch('https://your-api-url.com/feedback', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(values),
-                });
-                if (response.ok) {
+                const response = await axios.post('http://localhost:3000/api/v1/scholarships/feedbacks', values);
+                if (response.status === 200) {
                     alert('Thank you for your feedback!');
                     resetForm();
                 } else {

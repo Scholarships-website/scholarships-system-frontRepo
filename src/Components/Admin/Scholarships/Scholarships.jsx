@@ -7,19 +7,29 @@ import { faEllipsisVertical, faUserXmark } from '@fortawesome/free-solid-svg-ico
 import Swal from 'sweetalert2';
 import { UserContext } from '../../../Context/UserContext';
 import RequestedScholarships from './RequestedScholarships'; // Import RequestedScholarships component
+import { PieChart } from '@mui/x-charts';
 
 export default function Scholarships() {
   const { userToken } = useContext(UserContext);
   const [scholarships, setScholarships] = useState([]);
+  const [pendingScholarships, setPendingScholarships] = useState([]);
+  const [rejectedScholarships, setRejectedScholarships] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [organizationNames, setOrganizationNames] = useState({});
 
   // Fetch all scholarships
   const fetchScholarships = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:3000/api/v1/scholarships`);
-      // console.log(data);
-      setScholarships(data);
+      const accepted = await axios.get(`http://localhost:3000/api/v1/scholarships`);
+      const pending = await axios.get(`http://localhost:3000/api/v1/admin/scholarhips/pending`);
+      const rejected = await axios.get(`http://localhost:3000/api/v1/admin/scholarhips/reject`);
+      // console.log(accepted.data);
+      // console.log(pending.data);
+      // console.log(rejected.data);
+      setScholarships(accepted.data);
+      setPendingScholarships(pending.data);
+      setRejectedScholarships(rejected.data);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -122,7 +132,7 @@ export default function Scholarships() {
                   <th scope="col">Scholarship Name</th>
                   <th scope="col">Description</th>
                   <th scope="col">Organization Name</th>
-                  <th scope="col">Key Personnel</th>
+                  {/* <th scope="col">Key Personnel</th> */}
                   <th scope="col">Submission Date</th>
                   <th scope="col">Action</th>
                 </tr>
@@ -135,7 +145,7 @@ export default function Scholarships() {
                       <td>{scholarship.scholarsip_name}</td>
                       <td>{scholarship.brief_descrition}</td>
                       <td>{organizationNames[scholarship._id] || 'Loading...'}</td>
-                      <td>{scholarship.key_personnel_details}</td>
+                      {/* <td>{scholarship.key_personnel_details}</td> */}
                       <td>
                         {new Date(scholarship.submission_date).toLocaleDateString('en-GB', {
                           day: '2-digit',
@@ -177,9 +187,26 @@ export default function Scholarships() {
             </table>
           )}
         </div>
-
         {/* Render RequestedScholarships component and pass down setScholarships */}
         <RequestedScholarships setScholarships={setScholarships} />
+        <div className="pieChartContainer">
+          <PieChart
+            series={[
+              {
+                data: [
+                  { id: 0, value: scholarships.length, label: 'Accepted Scholarships', color: '#4caf50' },
+                  { id: 1, value: pendingScholarships.length, label: 'Pending Scholarships', color: '#ff9800' },
+                  { id: 2, value: rejectedScholarships.length, label: 'Rejected Scholarships', color: '#f44336' },
+                ],
+              },
+            ]}
+            width={800}
+            height={400}
+            className="customPieChart"
+          />
+        </div>
+
+
       </div>
     </>
   );

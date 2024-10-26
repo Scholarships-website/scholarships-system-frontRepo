@@ -29,7 +29,7 @@ export default function EditAdvertiser() {
   const onSubmit = async (updatedData) => {
     try {
       const response = await axios.patch(
-        `http://localhost:3000/api/v1/advertisers/edit/${id}`,
+        `http://localhost:3000/api/v1/admin/advertisers/edit/${id}`,
         {
           id: updatedData.id,
           username: updatedData.username,

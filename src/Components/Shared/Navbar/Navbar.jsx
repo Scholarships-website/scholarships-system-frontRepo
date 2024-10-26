@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [activeSection, setActiveSection] = useState('home'); // Default to 'home'
+    const [activeSection, setActiveSection] = useState('');
     const { userToken, setUserToken } = useContext(UserContext);
     const navigate = useNavigate();
     const isLoggedIn = userToken !== null;

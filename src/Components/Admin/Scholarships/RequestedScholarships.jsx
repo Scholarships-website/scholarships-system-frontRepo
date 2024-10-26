@@ -20,7 +20,7 @@ export default function RequestedScholarships({ setScholarships }) {
           Authorization: `Bearer ${userToken}`,
         },
       });
-      console.log(data);
+      // console.log(data);
       setRequestedScholarships(data);
       setLoading(false);
     } catch (error) {
@@ -41,12 +41,6 @@ export default function RequestedScholarships({ setScholarships }) {
           },
         }
       );
-      // Remove the accepted scholarship from the requested list
-      // setRequestedScholarships((prevScholarships) =>
-      //   prevScholarships.filter((scholarship) => scholarship.id !== id)
-      // );
-      // Add the accepted scholarship to the main scholarships list
-      // setScholarships((prevScholarships) => [...prevScholarships, acceptedScholarship]);
       Swal.fire('Accepted!', 'The scholarship has been accepted.', 'success');
     } catch (error) {
       console.error('Error accepting scholarship:', error);
@@ -66,13 +60,9 @@ export default function RequestedScholarships({ setScholarships }) {
           },
         }
       );
-      // Remove the rejected scholarship from the requested list
-      // setRequestedScholarships((prevScholarships) =>
-      //   prevScholarships.filter((scholarship) => scholarship.id !== id)
-      // );
-      // Swal.fire('Rejected!', 'The scholarship has been rejected.', 'success');
+      Swal.fire('Rejected!', 'The scholarship has been rejected.', 'success');
     } catch (error) {
-      // console.error('Error rejecting scholarship:', error);
+      console.error('Error rejecting scholarship:', error);
       Swal.fire('Error!', 'There was a problem rejecting the scholarship.', 'error');
     }
   };
@@ -129,7 +119,7 @@ export default function RequestedScholarships({ setScholarships }) {
                   <th scope="col">Scholarship Name</th>
                   <th scope="col">Description</th>
                   <th scope="col">Organization Name</th>
-                  <th scope="col">Key Personnel</th>
+                  {/* <th scope="col">Key Personnel</th> */}
                   <th scope="col">Submission Date</th>
                   <th scope="col">Action</th>
                 </tr>
@@ -142,7 +132,7 @@ export default function RequestedScholarships({ setScholarships }) {
                       <td>{scholarship.scholarsip_name}</td>
                       <td>{scholarship.brief_descrition}</td>
                       <td>{organizationNames[scholarship._id] || 'Loading...'}</td>
-                      <td>{scholarship.key_personnel_details}</td>
+                      {/* <td>{scholarship.key_personnel_details}</td> */}
                       <td>
                         {new Date(scholarship.submission_date).toLocaleDateString('en-GB', {
                           day: '2-digit',

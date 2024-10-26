@@ -80,12 +80,16 @@
 /* Sidebar  */
 #sidebar {
   grid-area: sidebar;
-  height: 100%;
+  height: auto; /* Adjusts based on the sidebar content */
+  min-height: 100vh; /* Ensures it covers the viewport height initially */
   background-color: #418447;
   overflow-y: auto;
   transition: all 0.5s;
   -webkit-transition: all 0.5s;
+  position: sticky;
+  top: 0; /* Keeps it fixed at the top when scrolling */
 }
+
 
 .sidebar-brand {
   color: #f0f3fa;
@@ -268,4 +272,57 @@
   display: flex;
   gap: 10px;
   align-items: center;
+}
+
+.pieChartContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+.summary-container {
+  display: flex;
+  gap: 30px;
+  padding: 20px;
+  justify-content: center;
+}
+
+/* Card styling */
+.summary-card {
+  background-color: #f2f2f2;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for a subtle 3D effect */
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  width: 300px;
+  transition: transform 0.3s ease;
+}
+
+/* Hover effect for cards */
+.summary-card:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+}
+
+/* Heading styling */
+.summary-card h3 {
+  font-size: 1.2em;
+  color: #4a4a4a;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* Data count styling */
+.summary-card p:first-of-type {
+  font-size: 2em;
+  color: #395886; /* Use the primary color */
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+/* Change text styling */
+.summary-card p:last-of-type {
+  font-size: 0.9em;
+  color: #8a8a8a;
 }

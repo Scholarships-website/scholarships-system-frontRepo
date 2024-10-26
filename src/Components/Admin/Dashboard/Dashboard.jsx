@@ -36,84 +36,88 @@ function Dashboard({ openSidebarToggle, OpenSidebar }) {
     }
 
     return (
-        <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive" : ""}>
-            <div className='sidebar-title'>
-                <div className='sidebar-brand'>
-                    <a href="/">PalScholarships</a>
+        <div className="sidebar-container">
+            <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive" : ""}>
+                <div className='sidebar-title'>
+                    <div className='sidebar-brand'>
+                        <a href="/">PalScholarships</a>
+                    </div>
+                    <span className='icon close_icon' onClick={OpenSidebar}>X</span>
                 </div>
-                <span className='icon close_icon' onClick={OpenSidebar}>X</span>
-            </div>
-            <ul className='sidebar-list'>
-                <li className='sidebar-list-item' >
-                    <a href="/dashboard">
-                        <BsGrid1X2Fill className='icon' /> Dashboard
-                    </a>
-                </li>
-                <li className='sidebar-list-item' >
-                    <BsFillGrid3X3GapFill className='icon' /> Tables
-                    <div className="items pt-4 ps-3">
-                        <a href="/dashboard/students"  >
-                            <FontAwesomeIcon icon={faPersonChalkboard} /> <span>Students</span>
+                <ul className='sidebar-list'>
+                    <li className='sidebar-list-item' >
+                        <a href="/dashboard">
+                            <BsGrid1X2Fill className='icon' /> Dashboard
                         </a>
-                    </div>
-                    <div className="items pt-4 ps-3" >
-                        <a href="/dashboard/advertisers" >
-                            <FontAwesomeIcon icon={faUser} />
-                            <span>Advertisers</span>
-                        </a>
-                    </div>
-                    <div className="items pt-4 ps-3" >
-                        <a href="/dashboard/scholarships" >
-                            <FontAwesomeIcon icon={faBarsProgress} />
-                            <span>Scholarships</span>
-                        </a>
-                    </div>
-                    <div className="items pt-4 ps-3" >
-                        <a href="/dashboard/feedbacks" >
-                            <FontAwesomeIcon icon={faMessage} />
-                            <span>Website Feedbacks</span>
-                        </a>
-                    </div>
-                    <div className="items pt-4 ps-3" >
-                        <a href="/dashboard/comments" >
-                            <FontAwesomeIcon icon={faComments} />
-                            <span>Scholarships Comments</span>
-                        </a>
-                    </div>
-                </li>
-                <li className='sidebar-list-item' >
-                    <AiOutlineForm className='icon' /> Forms
-                    {/* <div className="items pt-4 ps-3">
+                    </li>
+                    <li className='sidebar-list-item' >
+                        <BsFillGrid3X3GapFill className='icon' /> Tables
+                        <div className="items pt-4 ps-3">
+                            <a href="/dashboard/students"  >
+                                <FontAwesomeIcon icon={faPersonChalkboard} /> <span>Students</span>
+                            </a>
+                        </div>
+                        <div className="items pt-4 ps-3" >
+                            <a href="/dashboard/advertisers" >
+                                <FontAwesomeIcon icon={faUser} />
+                                <span>Advertisers</span>
+                            </a>
+                        </div>
+                        <div className="items pt-4 ps-3" >
+                            <a href="/dashboard/scholarships" >
+                                <FontAwesomeIcon icon={faBarsProgress} />
+                                <span>Scholarships</span>
+                            </a>
+                        </div>
+                        <div className="items pt-4 ps-3" >
+                            <a href="/dashboard/feedbacks" >
+                                <FontAwesomeIcon icon={faMessage} />
+                                <span>Website Feedbacks</span>
+                            </a>
+                        </div>
+                        <div className="items pt-4 ps-3" >
+                            <a href="/dashboard/comments" >
+                                <FontAwesomeIcon icon={faComments} />
+                                <span>Scholarships Comments</span>
+                            </a>
+                        </div>
+                    </li>
+                    <li className='sidebar-list-item' >
+                        <AiOutlineForm className='icon' /> Forms
+                        {/* <div className="items pt-4 ps-3">
                         <a href="/dashboard/manageStudent"  >
                             <GoDotFill className='icon' /> <FontAwesomeIcon icon={faPersonChalkboard} /> Students
                         </a>
                     </div> */}
-                    <div className="items pt-4 ps-3" >
-                        <a href="/dashboard/addAdvertiser" >
-                            <FontAwesomeIcon icon={faUser} /> <span>Advertisers</span>
-                        </a>
-                    </div>
-                    {/* <div className="items pt-4 ps-3" >
+                        <div className="items pt-4 ps-3" >
+                            <a href="/dashboard/addAdvertiser" >
+                                <FontAwesomeIcon icon={faUser} /> <span>Advertisers</span>
+                            </a>
+                        </div>
+                        {/* <div className="items pt-4 ps-3" >
                         <a href="/dashboard/manageScholarships" >
                             <GoDotFill className='icon' /> <FontAwesomeIcon icon={faBarsProgress} /> Scholarships
                         </a>
                     </div> */}
-                    {/* <div className="items pt-4 ps-3" >
+                        {/* <div className="items pt-4 ps-3" >
                         <a href="/dashboard/manageFeedbacks" >
                             <GoDotFill className='icon' /> <FontAwesomeIcon icon={faBarsProgress} /> Feedbacks
                         </a>
                     </div> */}
-                </li>
-                <li className='sidebar-list-item' >
-                    <div className="items pt-4 ps-3" >
-                        <button className='bg-transparent border-0 logout' onClick={logOut} >
-                            <FontAwesomeIcon icon={faArrowRightFromBracket} style={{ color: "#f0f3fa", }} />
-                            <span>Logout</span>
-                        </button>
-                    </div>
-                </li>
-            </ul>
-        </aside>
+                    </li>
+                    <li className='sidebar-list-item' >
+                        <div className="items pt-4 ps-3" >
+                            <button className='bg-transparent border-0 logout' onClick={logOut} >
+                                <FontAwesomeIcon icon={faArrowRightFromBracket} style={{ color: "#f0f3fa", }} />
+                                <span>Logout</span>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </aside>
+        </div>
+
+
     )
 }
 
