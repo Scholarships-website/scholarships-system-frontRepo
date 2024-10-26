@@ -59,20 +59,26 @@ const Feedback = () => {
     autoplay: false,
     arrows: true,
   };
+//un comment this when the API is ready 
+  // const getFeedbacks = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await axios.get('http://localhost:3000/api/v1/website/feedbacks');
+  //     setFeedbacks(response.data);
+  //   } catch (err) {
+  //     setError(err.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  // useEffect(() => {
+  //   getFeedbacks();
+  // }, []);
 
   // Fetch feedback data from API
   useEffect(() => {
     const fetchFeedbackData = async () => {
       try {
-        // Uncomment the following lines to use the actual API
-        // const response = await fetch('http://localhost:3000/api/v1/feedbacks/'); 
-        // if (!response.ok) {
-        //   throw new Error('Network response was not ok');
-        // }
-        // const data = await response.json();
-        // setFeedbacks(data);
-
-        // Simulating data fetch by using sample data
         setFeedbacks(sampleFeedbacks);
       } catch (error) {
         setError(error.message);
@@ -80,7 +86,6 @@ const Feedback = () => {
         setLoading(false);
       }
     };
-
     fetchFeedbackData();
   }, []);
 
@@ -129,7 +134,7 @@ const Feedback = () => {
           ))}
         </Slider>
         <div className="write-container">
-          <Link to='/add-feedback' className="write-btn">Add Feedback</Link>
+          <Link to='/add-feedback' className="write-btn">Add Your Feedback</Link>
         </div>
       </div>
     </>

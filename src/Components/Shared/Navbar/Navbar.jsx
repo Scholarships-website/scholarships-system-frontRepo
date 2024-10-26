@@ -1,10 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import { UserContext } from '../../../Context/UserContext';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom';
 import { faArrowRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -15,10 +14,23 @@ const Navbar = () => {
     const navigate = useNavigate();
     const isLoggedIn = userToken !== null;
 
+    const handleAboutClick = () => {
+        setMenuOpen(false);
+        // Navigate to home page
+        navigate('/');
+        
+        // Use a timeout to allow the navigation to complete before scrolling
+        setTimeout(() => {
+            const aboutSection = document.getElementById('about');
+            if (aboutSection) {
+                aboutSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, 100); // Delay for navigation
+    };
+
     const handleLogout = () => {
         setUserToken(null);
         localStorage.removeItem('userToken');
-
         toast.success('Logged out successfully!', {
             position: "bottom-right",
             autoClose: 3000,
@@ -45,6 +57,7 @@ const Navbar = () => {
                 const aboutTop = aboutSection.getBoundingClientRect().top;
                 const aboutBottom = aboutSection.getBoundingClientRect().bottom;
                 const homeTop = window.scrollY; // Top of the page
+
                 // User is at the very top of the page (home section)
                 if (homeTop < 50) {
                     setActiveSection('home');
@@ -92,7 +105,6 @@ const Navbar = () => {
                 <ul className={`navbar-links ${menuOpen ? 'open' : ''}`}>
                     <li>
                         <NavLink
-                            exact="true"
                             to="/"
                             className={activeSection === 'home' ? 'active-link' : ''}
                             onClick={() => setMenuOpen(false)}
@@ -101,13 +113,13 @@ const Navbar = () => {
                         </NavLink>
                     </li>
                     <li>
-                        <a
-                            href="#about"
+                        <NavLink
+                            to="#about"
                             className={activeSection === 'about' ? 'active-link' : ''}
-                            onClick={() => setMenuOpen(false)}
+                            onClick={handleAboutClick}
                         >
                             About Us
-                        </a>
+                        </NavLink>
                     </li>
                     <li>
                         <NavLink
@@ -136,10 +148,10 @@ const Navbar = () => {
                                 to="/dashboard"
                                 className='icons'
                             >
-                                <FontAwesomeIcon icon={faUser} style={{ color: "#418447", }} />
+                                <FontAwesomeIcon icon={faUser} style={{ color: "#418447" }} />
                             </NavLink>
-                            <button onClick={handleLogout} className='icons' >
-                                <FontAwesomeIcon icon={faArrowRightFromBracket} style={{ color: "#418447", }} />
+                            <button onClick={handleLogout} className='icons'>
+                                <FontAwesomeIcon icon={faArrowRightFromBracket} style={{ color: "#418447" }} />
                             </button>
                         </>
                     ) : (
