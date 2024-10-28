@@ -84,26 +84,11 @@ function Dashboard({ openSidebarToggle, OpenSidebar }) {
                     </li>
                     <li className='sidebar-list-item' >
                         <AiOutlineForm className='icon' /> Forms
-                        {/* <div className="items pt-4 ps-3">
-                        <a href="/dashboard/manageStudent"  >
-                            <GoDotFill className='icon' /> <FontAwesomeIcon icon={faPersonChalkboard} /> Students
-                        </a>
-                    </div> */}
                         <div className="items pt-4 ps-3" >
                             <a href="/dashboard/addAdvertiser" >
                                 <FontAwesomeIcon icon={faUser} /> <span>Advertisers</span>
                             </a>
                         </div>
-                        {/* <div className="items pt-4 ps-3" >
-                        <a href="/dashboard/manageScholarships" >
-                            <GoDotFill className='icon' /> <FontAwesomeIcon icon={faBarsProgress} /> Scholarships
-                        </a>
-                    </div> */}
-                        {/* <div className="items pt-4 ps-3" >
-                        <a href="/dashboard/manageFeedbacks" >
-                            <GoDotFill className='icon' /> <FontAwesomeIcon icon={faBarsProgress} /> Feedbacks
-                        </a>
-                    </div> */}
                     </li>
                     <li className='sidebar-list-item' >
                         <div className="items pt-4 ps-3" >
@@ -116,8 +101,6 @@ function Dashboard({ openSidebarToggle, OpenSidebar }) {
                 </ul>
             </aside>
         </div>
-
-
     )
 }
 

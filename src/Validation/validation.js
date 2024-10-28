@@ -35,9 +35,9 @@ export const addAdvertiser = Yup.object({
       .required('Email is required')
       .email('Please enter a valid email address'),
    password: Yup.string()
-      .required('Password is required')
-      .min(6, 'Your password must have at least 6 characters')
-      .max(30, 'Your password must have at most 30 characters'),
+      .min(8, 'Password must be at least 8 characters')
+      .matches(/^(?=.*[A-Za-z])(?=.*\d).{8,}$/, 'Password must contain at least one letter and one number')
+      .required('Password is required'),
    organization_name: Yup.string()
       .required('Organization name is required')
       .min(3, 'Organization name must have at least 3 characters'),

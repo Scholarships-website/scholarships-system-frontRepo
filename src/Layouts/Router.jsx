@@ -15,7 +15,6 @@ import Students from '../Components/Admin/Students/Students';
 import AddAdvertiser from '../Components/Admin/Advertisers/AddAdvertiser';
 import EditAdvertiser from '../Components/Admin/Advertisers/EditAdvertiser';
 import Scholarships from '../Components/Admin/Scholarships/Scholarships';
-import RequestedScholarships from '../Components/Admin/Scholarships/RequestedScholarships';
 import Feedbacks from '../Components/Admin/Feedbacks/Feedbacks';
 import Comments from '../Components/Admin/Comments/Comments';
 import AddFeedback from '../Components/MainPage/Feedback/AddFeedback';

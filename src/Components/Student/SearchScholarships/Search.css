@@ -1,0 +1,266 @@
+.layout-container {
+    display: flex;
+    min-height: 100vh; 
+}
+.search-main-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex: 1; /* Take up remaining space */
+    padding: 20px; /* Add some padding */
+    overflow-y: auto; /* Allow scrolling if the content overflows */
+}
+
+.search-column {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    padding-right: 40px;
+    width: 100%;
+    justify-content: center;
+    align-self: flex-start;
+}
+
+.search-bar {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    align-self: flex-start;
+    width: 100%;
+}
+
+/* scholarship-list */
+
+.list-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+    padding-top: 50px;
+    padding-left: 20px;
+}
+
+.list-container .scholarship-item {
+    width: 350px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-header {
+    font-size: 20px;
+
+}
+
+.deatils-scholarship-link {
+    text-decoration: underline;
+    color: rgb(0, 0, 0, 0.6);
+}
+@media (max-width: 1024px) {
+    .list-container {
+        justify-content: center;
+        padding-left: 0;
+    }
+
+    .list-container .scholarship-item {
+        width: 45%; /* Adjust card width on medium screens */
+    }
+}
+
+@media (max-width: 600px) {
+    .search-column{
+        padding: 10px;
+        padding-right: 10;
+        padding-left:0 ;
+    }
+    .list-container {
+        flex-direction: column;
+        align-items: center;
+        /* gap: 20px; */
+    }
+    .search-main-container {
+        gap: 0;
+    }
+
+
+    .list-container .scholarship-item {
+        width: 100%; /* Full width for mobile screens */
+        height: auto; /* Adjust height for better mobile view */
+        gap: 10px;
+    }
+}
+/* pagination */
+.pagination-search {
+    margin: 50px auto;
+}
+
+/* sidebar */
+.sidebar-search {
+    padding: 20px;
+    background-color: #f4f4f4;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+}
+
+
+.sidebar-search h3 {
+    color: #418447;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.sidebar-search .MuiTypography-body1 {
+    color: #333;
+    font-weight: 500;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+}
+
+.sidebar-search .MuiFormControlLabel-root {
+    margin: 4px 0;
+}
+
+.sidebar-search .MuiFormControlLabel-label {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.sidebar-search .MuiCheckbox-root {
+    color: #418447;
+}
+
+.sidebar-search .MuiCheckbox-root.Mui-checked {
+    color: #2d5a33;
+}
+
+.sidebar-search .MuiFormControlLabel-root:hover .MuiFormControlLabel-label {
+    color: #418447;
+    /* border: #2d5a33 1px solid; */
+}
+
+.sidebar-search .MuiFormControlLabel-root {
+    padding-left: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-search .MuiFormControlLabel-label,
+.sidebar-search .MuiCheckbox-root {
+    transition: color 0.3s ease;
+}
+.sidebar-search-open{
+    padding: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    width: 220px;
+    font-family: Arial, sans-serif;
+}
+.sidebar-search-open h3 {
+    color: #418447;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.sidebar-search-open .MuiTypography-body1 {
+    color: #333;
+    font-weight: 500;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+}
+
+.sidebar-search-open .MuiFormControlLabel-root {
+    margin: 4px 0;
+}
+
+.sidebar-search-open .MuiFormControlLabel-label {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.sidebar-search-open .MuiCheckbox-root {
+    color: #418447;
+}
+
+.sidebar-search-open .MuiCheckbox-root.Mui-checked {
+    color: #2d5a33;
+}
+
+.sidebar-search-open .MuiFormControlLabel-root:hover .MuiFormControlLabel-label {
+    color: #418447;
+    /* border: #2d5a33 1px solid; */
+}
+
+.sidebar-search-open .MuiFormControlLabel-root {
+    padding-left: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-search-open .MuiFormControlLabel-label,
+.sidebar-search-open .MuiCheckbox-root {
+    transition: color 0.3s ease;
+}
+/* slider */
+.custom-slider .MuiSlider-thumb {
+    height: 20px;
+    width: 20px;
+    background-color: #ffffff;
+    border: 2px solid #418447;
+    box-shadow: 0px 0px 0px 8px #5c8f603a;
+}
+.custom-slider .MuiSlider-track {
+    color: #418447;
+    height: 8px;
+}
+.custom-slider .MuiSlider-rail {
+    opacity: 0.3;
+    background-color: #bfbfbf;
+    height: 8px;
+}
+.custom-slider .MuiSlider-mark {
+    background-color: #bfbfbf;
+    height: 8px;
+    width: 2px;
+}
+.custom-slider .MuiSlider-markLabel {
+    font-size: 12px;
+    color: #666666;
+}
+
+.sidebar-search {
+    display: none;
+}
+
+
+/* Show sidebar and hide hamburger icon on medium+ screens */
+@media (max-width: 830px) {
+    .sidebar-search {
+        display: none; /* Hide sidebar on small screens */
+    }
+
+    .hamburger-icon-side {
+        display: block; /* Show hamburger icon */
+    }
+}
+
+/* Custom styling for slider */
+.custom-slider .MuiSlider-root {
+    color: #638ECB; /* Change to your preferred color */
+}
+
+.custom-slider .MuiSlider-track {
+    height: 6px;
+}
+
+.custom-slider .MuiSlider-thumb {
+    height: 14px;
+    width: 14px;
+}
+

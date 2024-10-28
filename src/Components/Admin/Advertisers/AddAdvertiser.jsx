@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import Input from '../../Shared/Input/Input';
 import { addAdvertiser } from '../../../Validation/validation';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
 import { UserContext } from '../../../Context/UserContext';
 import './Advertiser.css'
 import PhoneInput from '../../Shared/Input/PhoneInput';
@@ -39,23 +39,35 @@ export default function AddAdvertiser() {
           },
         }
       );
-      if (data.succeeded) {
-        formik.resetForm();
-        toast.success(`Advertiser Added Successfully`, {
-          position: "top-right",
-          autoClose: true,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
+      formik.resetForm();
+      toast.success(`Advertiser Added Successfully`, {
+        position: "top-right",
+        autoClose: true,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setTimeout(() => {
         navigate('/dashboard/advertisers')
-      }
-    } catch (error) {
+      }, 2000);
+    }
+    catch (error) {
       console.error('Error submitting form:', error);
       console.log('Error response:', error.response);
+      toast.error('add advertiser failed: ' + error.response.data, {
+        position: "bottom-right",
+        autoClose: false,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     }
   };
   const formik = useFormik({
@@ -108,25 +120,41 @@ export default function AddAdvertiser() {
   )
   return (
     <>
-      <h2 className='ps-4 pt-4 add-advertiser'>Add Advertiser</h2>
-      <form onSubmit={formik.handleSubmit} className="row justify-content-center align-items-center w-75 p-5 pt-5 gap-3 addForm " style={{margin: 'auto'}}>
-        {renderInputs}
-        <div className="col-md-6">
-          <PhoneInput className="phoneInput row justify-content-center align-items-center w-75 p-5 pt-5 gap-3"
-            value={formik.values.phoneNumber}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            errors={formik.errors}
-            touched={formik.touched}
-            countryCode={formik.values.countryCode} // Pass the country code to the PhoneInput
-          />
-        </div>
-        <div className="row justify-content-center align-items-center addAdvertiser">
-          <button className='w-auto addButton btn' type="submit"
-            disabled={formik.isSubmitting || Object.keys(formik.errors).length > 0 || Object.keys(formik.touched).length === 0}>Add
-          </button>
-        </div>
-      </form >
+      <div className="add-container">
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition={Bounce}
+        />
+        <h2 className='ps-4 pt-4 add-advertiser'>Add Advertiser</h2>
+        <form onSubmit={formik.handleSubmit} className="row justify-content-center align-items-center w-75 p-5 pt-5 gap-3 addForm " style={{ margin: 'auto' }}>
+          {renderInputs}
+          <div className="col-md-6">
+            <PhoneInput className="phoneInput row justify-content-center align-items-center w-75 p-5 pt-5 gap-3"
+              value={formik.values.phoneNumber}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              errors={formik.errors}
+              touched={formik.touched}
+              countryCode={formik.values.countryCode} // Pass the country code to the PhoneInput
+            />
+          </div>
+          <div className="row justify-content-center align-items-center addAdvertiser">
+            <button className='w-auto addButton btn' type="submit"
+              disabled={formik.isSubmitting || Object.keys(formik.errors).length > 0 || Object.keys(formik.touched).length === 0}>Add
+            </button>
+          </div>
+        </form >
+      </div>
+
     </>
   )
 }

@@ -8,6 +8,7 @@ import axios from 'axios';
 import './SignUp.css';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Skeleton } from '@mui/material';
 
 export default function SignUp() {
     const initialValues = {
@@ -20,13 +21,20 @@ export default function SignUp() {
         phoneNumber: '',  // Full phone number including country code
         countryCode: '+970', // Default country code
     };
+    const [isLoading, setIsLoading] = useState(true);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 1000);
+        return () => clearTimeout(timer);
+    }, []);
 
     const navigate = useNavigate();
     const [student, setStudent] = useState({});
 
     const onSubmit = async (studentData) => {
         const { confirmPassword, countryCode, phoneNumber, ...dataToSend } = studentData;
-    
+
         // Combine countryCode and phoneNumber into a single phone number
         const fullPhoneNumber = `${countryCode}${phoneNumber}`;
         const finalDataToSend = { ...dataToSend, phoneNumber: fullPhoneNumber }; // Set fullPhoneNumber into phoneNumber
@@ -81,7 +89,7 @@ export default function SignUp() {
             }
         }
     };
-    
+
 
     const formik = useFormik({
         initialValues,
@@ -174,9 +182,13 @@ export default function SignUp() {
                 transition={Bounce}
             />
             <section className="registrationContainer">
-                <div className="animationContainer">
-                    <iframe src="https://lottie.host/embed/6bd501ce-91ab-47aa-bad8-a61ec42174e8/zwZupXfoO0.json" width='500px' height='500px'></iframe>
-                </div>
+                {isLoading ?
+                    (<Skeleton variant="rounded" width={500} height={500} />) :
+                    (<div className="animationContainer">
+                        <iframe src="https://lottie.host/embed/6bd501ce-91ab-47aa-bad8-a61ec42174e8/zwZupXfoO0.json" width='500px' height='500px'></iframe>
+                    </div>)
+                }
+
                 <div className="formContainer" style={{ borderRadius: 25 }}>
                     <div className="card-body">
                         <p className='signupP'>Create your account</p>

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './ForgetPass.css';
+import { Skeleton } from '@mui/material';
 function ResetPassword({ email }) {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -24,15 +25,24 @@ function ResetPassword({ email }) {
             setError('Error resetting password');
         }
     };
-
+    const [isLoading, setIsLoading] = useState(true);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 1000);
+        return () => clearTimeout(timer);
+    }, []);
     return (
         <>
             <div className="logoContainer">
                 <a href="/"><img src="src/assets/img/logo.png" alt="logo" width="100px" /></a>
             </div>
             <div className='forgetContainer'>
-                <iframe src="https://lottie.host/embed/a8117a62-076f-45f6-be6e-05d4c5d22eca/yorBJEf3zv.json" width="500px" height="500px"></iframe>
-                <div className="forgot-password-container">
+            {isLoading ?
+                    (<Skeleton variant="rounded" width={500} height={500} />) :
+                    (<iframe src="https://lottie.host/embed/a8117a62-076f-45f6-be6e-05d4c5d22eca/yorBJEf3zv.json" width="500px" height="500px">
+                    </iframe>)
+                }                <div className="forgot-password-container">
                     <form onSubmit={handleSubmit} className='forgot-password-form'>
                         <h3>Reset Password</h3>
                         <input

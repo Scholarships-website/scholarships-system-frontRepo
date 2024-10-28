@@ -8,34 +8,22 @@ import './Login.css';
 import axios from 'axios';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Skeleton } from '@mui/material';
 
 export default function Login() {
+    const [isLoading, setIsLoading] = useState(true);
     const initialValues = {
         email: '',
         password: '',
     };
     const navigate = useNavigate();
     // let { userToken, setUserToken, userId, setUserId, userData, setUserData } = useContext(UserContext);
-    let { userToken, setUserToken} = useContext(UserContext);
+    let { userToken, setUserToken } = useContext(UserContext);
 
     const [user, setUser] = useState({});
-    // useEffect(() => {
-    //     if (userToken) {
-    //         if (userData.userType == 0) {
-    //             navigate('/adminDashboard')
-    //         }
-    //         else if (userData.userType == 1) {
-    //             navigate('/AdvertiserDashboard')
-    //         }
-    //         else if (userData.userType == 2) {
-    //             navigate('/PalScolarships')
-    //         }
-    //     }
-    // }, [userToken, userData, navigate])
-
     const onSubmit = async (users) => {
         try {
-            const { data } = await axios.post('http://localhost:3000/api/v1/login', users); 
+            const { data } = await axios.post('http://localhost:3000/api/v1/login', users);
             if (data.message === 'login successful!') {
                 const role = data.user.role;
                 setUser(data.data);
@@ -44,7 +32,7 @@ export default function Login() {
                 // Show success toast notification
                 toast.success('Logged in successfully!', {
                     position: "bottom-right",
-                    autoClose: false,  
+                    autoClose: false,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -53,7 +41,7 @@ export default function Login() {
                     theme: "light",
                     transition: Bounce,
                 });
-    
+
                 // Delay navigation to allow toast to be seen
                 setTimeout(() => {
                     switch (role) {
@@ -139,6 +127,12 @@ export default function Login() {
     const handleForgotPassword = () => {
         navigate('/forgot-password'); // Navigate to the forgot password page
     };
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 1000);
+        return () => clearTimeout(timer);
+    }, []);
     return (
         <>
             <ToastContainer
@@ -158,9 +152,12 @@ export default function Login() {
                 <a href="/"><img src="src/assets/img/logo.png" alt="logo" width="100px" /></a>
             </div>
             <section className="loginContainer" style={{ backgroundColor: '#fff' }} >
-                <div className="animationContainer">
-                    <iframe src="https://lottie.host/embed/b60b1f1f-181c-4ace-9378-52ccead1d285/9IAC16aUWY.json" width="500px" height="500px" />
-                </div>
+                {isLoading ? (
+                    <Skeleton variant="rounded" width={500} height={500} />
+                ) : (
+                    <div className="animationContainer">
+                        <iframe src="https://lottie.host/embed/b60b1f1f-181c-4ace-9378-52ccead1d285/9IAC16aUWY.json" width="500px" height="500px" />
+                    </div>)}
                 <div className="formContainer style={{ borderRadius: 25 }}">
                     <div className="card-body">
                         <p className='signinP'>Sign in</p>
