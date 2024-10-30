@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import Navbar from '../../Shared/Navbar/Navbar'
+import Navbar from '../Shared/Navbar/Navbar'
 import * as React from 'react';
 import { useState } from 'react';
 import Sidebar from './Sidebar'
@@ -27,6 +27,7 @@ const SearchScholarships = () => {
             setScholarships(response.data);
             setFilteredScholarships(response.data);
         };
+        window.scrollTo(0, 0);
         fetchScholarships();
     }, []);
 

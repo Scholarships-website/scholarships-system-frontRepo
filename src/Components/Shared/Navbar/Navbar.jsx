@@ -99,7 +99,7 @@ const Navbar = () => {
                         ☰
                     </div>
                     <NavLink to="/" className="navbar-logo">
-                        <img src="src/assets/img/logo.png" alt="Logo" />
+                        <img src="/assets/img/logo.png" alt="Logo" />
                     </NavLink>
                 </div>
                 <ul className={`navbar-links ${menuOpen ? 'open' : ''}`}>

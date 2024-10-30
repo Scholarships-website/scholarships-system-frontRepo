@@ -72,7 +72,7 @@ const NewestScholarships = () => {
                     })}
                   </p>
                   <p className="scholarship-description">{scholarship.brief_descrition}</p>
-                  <Link to="scholarship-detail" className="apply-btn">View Details</Link>
+                  <Link to={`/scholarship-detail/${scholarship._id}`} className="apply-btn">View Details</Link>
                 </div>
                 <div className="scholarship-image-container">
                   <img

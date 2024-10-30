@@ -17,8 +17,9 @@ import EditAdvertiser from '../Components/Admin/Advertisers/EditAdvertiser';
 import Scholarships from '../Components/Admin/Scholarships/Scholarships';
 import Feedbacks from '../Components/Admin/Feedbacks/Feedbacks';
 import Comments from '../Components/Admin/Comments/Comments';
-import AddFeedback from '../Components/MainPage/Feedback/AddFeedback';
-import SearchScholarships from '../Components/Student/SearchScholarships/SearchScholarships';
+import AddFeedback from '../Components/AddFeedback/AddFeedback';
+import SearchScholarships from '../Components/SearchScholarships/SearchScholarships';
+import ScholarshipDetail from '../Components/ScholarshipDetail/ScholarshipDetail';
 export const router = createBrowserRouter([
     {
         path: "/PalScolarships",
@@ -118,5 +119,9 @@ export const router = createBrowserRouter([
     {
         path: '/search-scholarships',
         element: <SearchScholarships />,
+    },
+    {
+        path: '/scholarship-detail/:id',
+        element: <ScholarshipDetail />,
     },
 ]);

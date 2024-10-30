@@ -9,12 +9,12 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-content">
         <NavLink to="/" className="navbar-logo">
-          <img src="src/assets/img/logo.png" alt="Logo" />
+          <img src="/assets/img/logo.png" alt="Logo" />
         </NavLink>
         <ul className='links'>
           <li><Link to="/">Home</Link></li>
           <li><a href="#about">About</a></li>
-          <li><Link to="/scholarships">Scholarships</Link></li>
+          <li><Link to="/search-scholarships">Scholarships</Link></li>
           <li><Link to="/contact">Contact</Link></li>
           <li><Link to="#">Privacy Policy</Link></li>
           <li><Link to="#">Terms of Use</Link></li>

@@ -82,7 +82,7 @@ const ScholarshipList = ({ scholarships }) => {
                                 <IconButton aria-label="add to favorites">
                                     <FavoriteIcon />
                                 </IconButton>
-                                <Link to='/scholarship-detail' className='deatils-scholarship-link '>View Details</Link>
+                                <Link to={`/scholarship-detail/${scholarship._id}`} className="details-scholarship-link">View Details</Link>
                             </CardActions>
                         </Card>
                     ))

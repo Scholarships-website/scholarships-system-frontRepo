@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import './AddFeedback.css';
-import Navbar from '../../Shared/Navbar/Navbar';
-import { addFeedback } from '../../../Validation/validation';
+import Navbar from '../Shared/Navbar/Navbar';
+import { addFeedback } from '../../Validation/validation';
 import axios from 'axios';
 
 const AddFeedback = () => {
@@ -29,7 +29,9 @@ const AddFeedback = () => {
             }
         },
     });
-
+    useEffect(() => {
+        window.scrollTo(0, 0); // Scroll to the top on component mount
+    }, []);
     return (
         <>
             <Navbar />
