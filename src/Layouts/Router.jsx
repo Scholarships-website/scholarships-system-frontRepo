@@ -1,5 +1,6 @@
-import React from 'react'
-import { createBrowserRouter, } from "react-router-dom";
+// src/router.js
+import React from 'react';
+import { createBrowserRouter } from "react-router-dom";
 import Login from '../Components/Shared/Login/Login';
 import MainPage from '../Components/MainPage/MainPage';
 import StudentLayout from './StudentLayout';
@@ -20,9 +21,12 @@ import Comments from '../Components/Admin/Comments/Comments';
 import AddFeedback from '../Components/AddFeedback/AddFeedback';
 import SearchScholarships from '../Components/SearchScholarships/SearchScholarships';
 import ScholarshipDetail from '../Components/ScholarshipDetail/ScholarshipDetail';
+import Contact from '../Components/Contact/Contact';
+import DashboardLayoutBasic from '../Components/Admin/Dash/DashboardLayoutBasic';
+
 export const router = createBrowserRouter([
     {
-        path: "/PalScolarships",
+        path: "/PalScholarships",
         element: <StudentLayout />,
         children: [
             {
@@ -31,18 +35,63 @@ export const router = createBrowserRouter([
             },
             {
                 path: "*",
-                element: <h2>page not found --- Student dashboard</h2>,
-            }
+                element: <h2>Page not found — Student Dashboard</h2>,
+            },
         ],
     },
-
     {
-        path: "/dashboard",
-        element: <AdminLayout />,
+        path: "/AdvertiserDashboard",
+        element: <AdvertiserLayout />,
         children: [
             {
                 path: "",
-                element: <Home />
+                element: <AdvertiserDashboard />,
+            },
+            {
+                path: "*",
+                element: <h2>Page not found — Advertiser Dashboard</h2>,
+            },
+        ],
+    },
+    {
+        path: "/",
+        element: <MainPage />,
+    },
+    {
+        path: '/login',
+        element: <Login />,
+    },
+    {
+        path: '/forgot-password',
+        element: <ForgetPassword />,
+    },
+    {
+        path: '/signup',
+        element: <SignUp />,
+    },
+    {
+        path: '/add-feedback',
+        element: <AddFeedback />,
+    },
+    {
+        path: '/search-scholarships',
+        element: <SearchScholarships />,
+    },
+    {
+        path: '/scholarship-detail/:id',
+        element: <ScholarshipDetail />,
+    },
+    {
+        path: '/contact-us',
+        element: <Contact />,
+    },
+    {
+        path: '/dashboard',
+        element: <AdminLayout/>,
+        children: [
+            {
+                path: "",
+                element: <Home />,
             },
             {
                 path: "advertisers",
@@ -66,62 +115,16 @@ export const router = createBrowserRouter([
             },
             {
                 path: "addAdvertiser",
-                element: <AddAdvertiser />
+                element: <AddAdvertiser />,
             },
             {
                 path: "editAdvertiser/:id",
-                element: <EditAdvertiser />
-            },
-            // {
-            //     path: "editTraining/:id",
-            //     element: <EditTraining />
-            // },
-            {
-                path: "*",
-                element: <h2>page not found --- DashboardAdmin</h2>,
-            },
-        ],
-    },
-    {
-        path: "/AdvertiserDashboard",
-        element: <AdvertiserLayout />,
-        children: [
-            {
-                path: "",
-                element: <AdvertiserDashboard />,
+                element: <EditAdvertiser />,
             },
             {
                 path: "*",
-                element: <h2>page not found --- Advertiser dashboard</h2>,
-            }
+                element: <h2>Page not found — Dashboard Admin</h2>,
+            },
         ],
-    },
-    {
-        path: "/",
-        element: <MainPage />,
-    },
-    {
-        path: '/login',
-        element: <Login />,
-    },
-    {
-        path: "forgot-password",
-        element: <ForgetPassword />,
-    },
-    {
-        path: '/signup',
-        element: <SignUp />,
-    },
-    {
-        path: '/add-feedback',
-        element: <AddFeedback />,
-    },
-    {
-        path: '/search-scholarships',
-        element: <SearchScholarships />,
-    },
-    {
-        path: '/scholarship-detail/:id',
-        element: <ScholarshipDetail />,
     },
 ]);

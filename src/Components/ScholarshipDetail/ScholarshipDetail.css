@@ -218,8 +218,6 @@
     font-size: 1rem;
     color: #555;
     text-align: left;
-    /* display: block; */
-    /* margin-top: 10px; */
 }
 
 .similar-scholarship-item a {
@@ -351,7 +349,7 @@
 
     .similar-scholarship-item {
         width: 90%;
-        margin: 0 auto; /* Center the items */
+        margin: 0 auto;
     }
     .similar-scholarships .slick-initialized .slick-slide{
         display: flex;

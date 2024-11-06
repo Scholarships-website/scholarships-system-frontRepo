@@ -1,0 +1,67 @@
+.scholarships-admin .expand-icon {
+    display: none;
+}
+
+.scholarships-admin .action .dropdown {
+    display: inline-block;
+}
+
+@media (max-width: 850px) {
+
+    .scholarships-admin .expand-icon {
+        display: inline-block;
+    }
+
+    .scholarships-admin .action .dropdown {
+        display: none;
+    }
+
+    .scholarships-admin .d-md-table-cell {
+        display: none !important;
+    }
+
+    .scholarships-admin .expanded-row {
+        display: table-row;
+    }
+
+    .scholarships-admin .dropdown-menu .dropdown-item {
+        width: 100%;
+    }
+
+    .scholarships-admin .table {
+        width: 90%;
+    }
+
+    .scholarships-admin .table th,
+    .scholarships-admin .table td {
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 851px) {
+
+    .scholarships-admin .expand-icon,
+    .scholarships-admin .expanded-row-content {
+        display: none;
+    }
+}
+
+.scholarships-admin .expanded-delete {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: flex-start;
+    padding: 0;
+}
+
+@media (max-width: 850px) {
+    .pieChartContainer {
+        width: 300px;
+        margin: auto;
+    }
+    .pieChartContainer .css-66gjpw-MuiResponsiveChart-container>svg{
+        width: 75%; 
+        height: 100%;
+    }
+}

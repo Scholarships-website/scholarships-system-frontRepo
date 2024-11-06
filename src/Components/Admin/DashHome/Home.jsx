@@ -101,11 +101,10 @@ export default function Home() {
     fetchData();
   }, []);
 
-  const colors = ['#008FFB', '#00E396', '#FEB019']; // Define your color array
+  const colors = ['#008FFB', '#00E396', '#FEB019'];
 
   return (
     <div className="home-container">
-      {/* Skeleton for Lottie animation */}
       <div className="image-container">
         {loading ? (
           <Skeleton variant="rectangular" width={500} height={500} />

@@ -5,22 +5,21 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './NewestScholarships.css';
 import axios from 'axios';
-import Skeleton from '@mui/material/Skeleton'; // Import the Skeleton component
+import Skeleton from '@mui/material/Skeleton'; 
 
 const NewestScholarships = () => {
   const [scholarships, setScholarships] = useState([]);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchScholarships = async () => {
       try {
         const response = await axios.get('http://localhost:3000/api/v1/scholarships');
-        console.log(response.data);
         setScholarships(response.data);
       } catch (error) {
         console.error("Error fetching scholarships:", error);
       } finally {
-        setLoading(false); // Set loading to false once data is fetched
+        setLoading(false);
       }
     };
 
@@ -41,7 +40,7 @@ const NewestScholarships = () => {
     <section className="newest-scholarships">
       <h2 className="section-title">Newest Scholarships</h2>
       <Slider {...settings}>
-        {loading ? ( // Render skeletons if loading
+        {loading ? ( 
           Array.from(new Array(5)).map((_, index) => (
             <div className="scholarship-slide" key={index}>
               <div className="scholarship-content">

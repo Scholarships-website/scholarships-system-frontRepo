@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Input from '../../Shared/Input/Input';
 import { editAdvertiser } from '../../../Validation/validation';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
-
+import Loading from '../../Shared/Loading/Loading'
 export default function EditAdvertiser() {
   const { id } = useParams();
   console.log(id);
@@ -87,7 +87,7 @@ export default function EditAdvertiser() {
   }, [advertiser, id]);
 
   if (!advertiser) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
   return (
     <>
@@ -111,7 +111,7 @@ export default function EditAdvertiser() {
             <label className="form-label ps-2" htmlFor="id">ID</label>
             <input
               type="text"
-              className="form-control mb-4"
+              className="form-control "
               id="id"
               name="id"
               value={formik.values.id}  // Bind to Formik values
@@ -121,7 +121,7 @@ export default function EditAdvertiser() {
               disabled
             />
           </div>
-          <div className="form-item col-md-6">
+          <div className="form-item col-md-6 my-3">
             <label className="form-label ps-2" htmlFor="username">Username</label>
             <input
               type="text"
@@ -136,7 +136,7 @@ export default function EditAdvertiser() {
               <div className="text-danger">{formik.errors.username}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-6">
+          <div className="form-item col-md-6 my-3">
             <label className="form-label ps-2" htmlFor="email">Email</label>
             <input
               type="email"
@@ -151,7 +151,7 @@ export default function EditAdvertiser() {
               <div className="text-danger">{formik.errors.email}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-6">
+          <div className="form-item col-md-6 my-3">
             <label className="form-label ps-2" htmlFor="organization_name">Organization Name</label>
             <input
               type="text"
@@ -167,7 +167,7 @@ export default function EditAdvertiser() {
             ) : null}
           </div>
           <button
-            className='w-auto btn edit-btn mt-4'
+            className='w-auto btn edit-btn my-4'
             type="submit"
             disabled={formik.isSubmitting || Object.keys(formik.errors).length > 0 || Object.keys(formik.touched).length === 0}
           >

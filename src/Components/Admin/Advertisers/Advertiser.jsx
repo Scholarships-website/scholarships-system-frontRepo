@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import '../Dashboard.css'
 import axios from 'axios';
-import Loading from '../../Shared/Loading/Loading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisVertical, faMagnifyingGlass, faPenToSquare, faUserXmark, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisVertical, faMagnifyingGlass, faPenToSquare, faUserXmark, faSortUp, faSortDown, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { Pagination, Skeleton } from '@mui/material'; // Import Skeleton
+import { Pagination, Skeleton, useMediaQuery } from '@mui/material';
 
 const sortByKey = (object, key) => {
   return key.split('.').reduce((o, k) => (o ? o[k] : null), object);
@@ -21,7 +20,8 @@ export default function Advertiser() {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: '', direction: 'ascending' });
-  const itemsPerPage = 10;
+  const [expandedRow, setExpandedRow] = useState(null);
+  const itemsPerPage = 7;
 
   const fetchAdvertisers = async () => {
     try {
@@ -104,10 +104,15 @@ export default function Advertiser() {
       />
     );
   };
+  const handleExpandRow = (index) => {
+    setExpandedRow(expandedRow === index ? null : index);
+  };
+  const isSmallScreen = useMediaQuery('(max-width:768px)');
+
   return (
     <>
       <div className="advertiser-admin">
-        <div className=" mt-3 mb-2 justify-content-between border-bottom py-3">
+        <div className="mb-2 justify-content-between pb-3">
           <h1 className='ps-4 main-col'>Advertisers</h1>
           <form className="me-3 search-admin" role="search">
             <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#418447", }} />
@@ -121,7 +126,7 @@ export default function Advertiser() {
             />
           </form>
         </div>
-        <div className="table-container ps-3">
+        <div className="table-container">
           {loading ? (
             <table className="table table-hover bg-transparent">
               <thead>
@@ -129,84 +134,116 @@ export default function Advertiser() {
                   <th scope="col">#</th>
                   <th scope="col">Advertiser Name</th>
                   <th scope="col">Organization Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Phone Number</th>
+                  <th scope="col" className="sortable-column d-none d-md-table-cell">Email</th>
+                  <th scope="col" className="sortable-column d-none d-md-table-cell">Phone Number</th>
                   <th scope='col'>Action</th>
                 </tr>
               </thead>
               <tbody>
-              {Array.from({ length: itemsPerPage }).map((_, index) => (
-                <tr key={index}>
-                  <th scope="row"><Skeleton variant="text" width={20} /></th>
-                  <td><Skeleton variant="text" width="80%" /></td>
-                  <td><Skeleton variant="text" width="80%" /></td>
-                  <td><Skeleton variant="text" width="80%" /></td>
-                  <td><Skeleton variant="text" width="80%" /></td>
-                  <td><Skeleton variant="rectangular" width={50} height={20} /></td>
-                </tr>
-              ))}
+                {Array.from({ length: itemsPerPage }).map((_, index) => (
+                  <tr key={index}>
+                    <th scope="row"><Skeleton variant="text" width={20} /></th>
+                    <td><Skeleton variant="text" width="80%" /></td>
+                    <td><Skeleton variant="text" width="80%" /></td>
+                    <td><Skeleton variant="text" width="80%" /></td>
+                    <td><Skeleton variant="text" width="80%" /></td>
+                    <td><Skeleton variant="rectangular" width={50} height={20} /></td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           ) : (
             <>
-            <table className="table table-hover bg-transparent">
-              <thead>
-                <tr className='bg-transparent '>
-                  <th scope="col">#</th>
-                  <th scope="col" onClick={() => handleSort('user_id.username')} className="sortable-column">Advertiser Name {renderSortIcon('user_id.username')}</th>
-                  <th scope="col" onClick={() => handleSort('organization_name')} className="sortable-column">Organization Name {renderSortIcon('organization_name')}</th>
-                  <th scope="col" onClick={() => handleSort('user_id.email')} className="sortable-column">Email {renderSortIcon('user_id.email')}</th>
-                  <th scope="col" onClick={() => handleSort('user_id.phoneNumber')} className="sortable-column">Phone Number {renderSortIcon('user_id.phoneNumber')}</th>
-                  <th scope='col'>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {paginatedAdvertisers.length ? (
-                  paginatedAdvertisers.map((advertiser, index) => (
-                      <tr key={advertiser._id}>
-                        <th scope="row">{index + 1}</th>
-                        <td>{advertiser.user_id.username}</td>
-                        <td>{advertiser.organization_name}</td>
-                        <td>{advertiser.user_id.email}</td>
-                        <td>{advertiser.user_id.phoneNumber}</td>
-                        <td>
-                          <div className="dropdown">
-                            <button className="border-0 bg-transparent dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              <FontAwesomeIcon icon={faEllipsisVertical} />
-                            </button>
-                            <ul className="dropdown-menu">
-                              <li className='d-flex justify-content-center align-items-center'>
-                                <Link className="dropdown-item text-warning" to={`/dashboard/editAdvertiser/${advertiser._id}`}>
-                                  <FontAwesomeIcon icon={faPenToSquare} className='px-1' />Update
-                                </Link>
-                              </li>
-                              <li className='d-flex justify-content-center align-items-center'>
-                                <button
-                                  className="dropdown-item text-danger"
-                                  onClick={() => deleteAdvertiser(advertiser._id)}
-                                >
-                                  <FontAwesomeIcon icon={faUserXmark} className='px-1' />Delete
-                                </button>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                      </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="7">No Advertisers</td>
+              <table className="table table-hover bg-transparent">
+                <thead>
+                  <tr className='bg-transparent '>
+                    <th scope="col">#</th>
+                    <th scope="col" onClick={() => handleSort('user_id.username')} className="sortable-column">Advertiser Name {renderSortIcon('user_id.username')}</th>
+                    <th scope="col" onClick={() => handleSort('organization_name')} className="sortable-column">Organization Name {renderSortIcon('organization_name')}</th>
+                    <th scope="col" onClick={() => handleSort('user_id.email')} className="sortable-column d-none d-md-table-cell">Email {renderSortIcon('user_id.email')}</th>
+                    <th scope="col" onClick={() => handleSort('user_id.phoneNumber')} className="sortable-column d-none d-md-table-cell">Phone Number {renderSortIcon('user_id.phoneNumber')}</th>
+                    <th scope='col'>Action</th>
                   </tr>
-                )}
-              </tbody>
-            </table>
-            <Pagination
-              count={Math.ceil(filteredAdvertiser.length / itemsPerPage)}
-              page={currentPage}
-              onChange={handleChangePage}
-              className='pagination-search'
-              size="large"
-            />
+                </thead>
+                <tbody>
+                  {paginatedAdvertisers.length ? (
+                    paginatedAdvertisers.map((advertiser, index) => (
+                      <React.Fragment key={advertiser._id}>
+                        <tr onClick={() => handleExpandRow(index)}>
+                          <th scope="row">{(currentPage - 1) * itemsPerPage + index + 1}</th>
+                          <td>{advertiser.user_id.username}</td>
+                          <td >{advertiser.organization_name}</td>
+                          <td className="d-none d-md-table-cell">{advertiser.user_id.email}</td>
+                          <td className="d-none d-md-table-cell">{advertiser.user_id.phoneNumber}</td>
+                          <td className="action d-none d-md-table-cell">
+                            <div className="dropdown">
+                              <button className="border-0 bg-transparent dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <FontAwesomeIcon icon={faEllipsisVertical} />
+                              </button>
+                              <ul className="dropdown-menu">
+                                <li className='d-flex justify-content-center align-items-center'>
+                                  <Link className="dropdown-item text-warning" to={`/dashboard/editAdvertiser/${advertiser._id}`}>
+                                    <FontAwesomeIcon icon={faPenToSquare} className='px-1' />Update
+                                  </Link>
+                                </li>
+                                <li className='d-flex justify-content-center align-items-center'>
+                                  <button
+                                    className="dropdown-item text-danger"
+                                    onClick={() => deleteAdvertiser(advertiser._id)}
+                                  >
+                                    <FontAwesomeIcon icon={faUserXmark} className='px-1' />Delete
+                                  </button>
+                                </li>
+                              </ul>
+                            </div>
+                          </td>
+                          <td>
+                            <FontAwesomeIcon
+                              icon={faChevronDown}
+                              className={`expand-icon ${expandedRow === index ? 'expanded' : ''}`}
+                            />
+                          </td>
+                        </tr>
+                        {/* Expandable row - shown only on smaller screens */}
+                        {expandedRow === index && isSmallScreen && (
+                          <tr className="expanded-row expanded-row-content">
+                            <td colSpan="4" className="full-width-expanded">
+                              <div><strong>Email:</strong> {advertiser.user_id.email}</div>
+                              <div><strong>Phone:</strong> {advertiser.user_id.phoneNumber}</div>
+                              <div className="dropdown d-md-none drop-down-buttons">
+                                <ul className='expanded-delete'>
+                                  <li className='d-flex justify-content-center align-items-center'>
+                                    <Link className="dropdown-item text-warning" to={`/dashboard/editAdvertiser/${advertiser._id}`}>
+                                      <FontAwesomeIcon icon={faPenToSquare} className='px-1' />Update
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <button className="dropdown-item text-danger" onClick={() => deleteStudent(student._id)}>
+                                      <FontAwesomeIcon icon={faUserXmark} className="px-1" />
+                                      Delete
+                                    </button>
+                                  </li>
+                                </ul>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </React.Fragment>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="7">No Advertisers</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+              <Pagination
+                count={Math.ceil(filteredAdvertiser.length / itemsPerPage)}
+                page={currentPage}
+                onChange={handleChangePage}
+                className='pagination-search'
+                size="large"
+              />
             </>
           )}
         </div>

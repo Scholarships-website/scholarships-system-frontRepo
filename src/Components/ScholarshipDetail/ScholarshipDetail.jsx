@@ -19,7 +19,7 @@ const ScholarshipDetail = () => {
     const [scholarship, setScholarship] = useState(null);
     const [loading, setLoading] = useState(true);
     const [similarScholarships, setSimilarScholarships] = useState([]);
-    const [similarLoading, setSimilarLoading] = useState(true); // New loading state
+    const [similarLoading, setSimilarLoading] = useState(true);
 
     useEffect(() => {
         const fetchScholarship = async () => {
@@ -38,9 +38,9 @@ const ScholarshipDetail = () => {
 
     useEffect(() => {
         const fetchSimilarScholarships = async () => {
-            setSimilarLoading(true); // Set loading to true when fetching starts
+            setSimilarLoading(true); 
             try {
-                const response = await axios.get('http://localhost:3000/api/v1/scholarships'); // Assuming this endpoint returns all scholarships
+                const response = await axios.get('http://localhost:3000/api/v1/scholarships'); 
                 const filteredScholarships = response.data.filter(item =>
                     (item.type === scholarship?.type ||
                         item.Place_of_Study === scholarship?.Place_of_Study ||
@@ -52,7 +52,7 @@ const ScholarshipDetail = () => {
                 console.error('Error fetching similar scholarships:', error);
             }
             finally {
-                setSimilarLoading(false); // Set loading to false after fetching completes
+                setSimilarLoading(false);
             }
         };
 
@@ -155,7 +155,6 @@ const ScholarshipDetail = () => {
                     <h2>Similar Scholarships</h2>
                     <Slider {...sliderSettings}>
                         {similarLoading  ? (
-                            // Display skeletons while loading
                             Array.from({ length: 3 }).map((_, index) => (
                                 <Card key={index} className='similar-scholarship-item'>
                                 <Skeleton variant="rounded" height={200} />
@@ -169,7 +168,6 @@ const ScholarshipDetail = () => {
                             </Card>
                             ))
                         ) : similarScholarships.length > 0 ? (
-                            // Render actual data when loading is false
                             similarScholarships.map(scholarship => (
                                 <Card key={scholarship._id} className=' similar-scholarship-item'>
                                     <h2 height="100px" className='card-header' style={{ color: '#418447' }}>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import '../Dashboard.css'
 import axios from 'axios';
-import Loading from '../../Shared/Loading/Loading';
+// import Loading from '../../Shared/Loading/Loading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical, faMagnifyingGlass, faPenToSquare, faUserXmark } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
@@ -10,20 +10,20 @@ import ReportedComments from './ReportedComments';
 
 export default function Comments() {
     let [comments, setComments] = useState([]);
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
 
-    const fetchComments = async () => {
-        try {
-            const { data } = await axios.get(`http://localhost:3000/api/v1/feedbacks/`);
-            console.log(data)
-            setComments(data.data);
-            setLoading(false)
-        }
-        catch (error) {
-            console.log(error);
-            setLoading(false)
-        }
-    };
+    // const fetchComments = async () => {
+    //     try {
+    //         const { data } = await axios.get(`http://localhost:3000/api/v1/feedbacks/`);
+    //         console.log(data)
+    //         setComments(data);
+    //         setLoading(false)
+    //     }
+    //     catch (error) {
+    //         console.log(error);
+    //         setLoading(false)
+    //     }
+    // };
     const deleteComment = async (id) => {
         Swal.fire({
             title: "Are you sure?",
@@ -55,24 +55,24 @@ export default function Comments() {
             }
         });
     };
-    useEffect(() => {
-        fetchComments();
-    }, []);
+    // useEffect(() => {
+    //     fetchComments();
+    // }, []);
 
-    const filteredComments = comments.filter((comment) => {
-        return (
-            comment.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            comment.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            comment.email.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-    });
+    // const filteredComments = comments.filter((comment) => {
+    //     return (
+    //         comment.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //         comment.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //         comment.email.toLowerCase().includes(searchTerm.toLowerCase())
+    //     );
+    // });
     return (
         <>
             <div className="student-admin">
                 <div className=" mt-3 mb-2 justify-content-between border-bottom py-3">
                     <h1 className='ps-4 main-col'>Comments on Scholarships</h1>
                 </div>
-                <div className="table-container ps-3">
+                {/* <div className="table-container ps-3">
                     {loading ? (
                         <Loading />
                     ) : (
@@ -88,7 +88,7 @@ export default function Comments() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredComments.length ? (filteredComments.map((comment, index) => {
+                                {comments.length ? (comments.map((comment, index) => {
                                     return (
                                         <tr key={comment.id}>
                                             <th scope="row">{++index}</th>
@@ -118,7 +118,7 @@ export default function Comments() {
                                 </tr>}
                             </tbody>
                         </table>)}
-                </div>
+                </div> */}
                 <ReportedComments/>
             </div>
         </>

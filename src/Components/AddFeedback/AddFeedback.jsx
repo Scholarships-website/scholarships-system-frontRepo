@@ -6,18 +6,17 @@ import { addFeedback } from '../../Validation/validation';
 import axios from 'axios';
 
 const AddFeedback = () => {
+        // let { userToken, setUserToken, userId, setUserId, userData, setUserData } = useContext(UserContext);
     const formik = useFormik({
         initialValues: {
-            name: '',
-            email: '',
-            role: 'student',
-            feedback: '',
+            // usrid:userId,
+            content: '',
             rating: '',
         },
         validationSchema: addFeedback,
         onSubmit: async (values, { resetForm }) => {
             try {
-                const response = await axios.post('http://localhost:3000/api/v1/scholarships/feedbacks', values);
+                const response = await axios.post('http://localhost:3000/api/v1/feedbacks/', values);
                 if (response.status === 200) {
                     alert('Thank you for your feedback!');
                     resetForm();
@@ -79,13 +78,13 @@ const AddFeedback = () => {
                     </div>
                     {formik.touched.rating && formik.errors.rating ? <div className="error">{formik.errors.rating}</div> : null}
                     <textarea
-                        name="feedback"
+                        name="content"
                         cols="30"
                         rows="6"
                         placeholder="Tell us about your experience!"
-                        {...formik.getFieldProps('feedback')}
+                        {...formik.getFieldProps('content')}
                     ></textarea>
-                    {formik.touched.feedback && formik.errors.feedback ? <div className="error">{formik.errors.feedback}</div> : null}
+                    {formik.touched.content && formik.errors.content ? <div className="error">{formik.errors.content}</div> : null}
                     <button type="submit" className="submit-btn">
                         Send
                     </button>

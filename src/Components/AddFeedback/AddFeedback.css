@@ -25,13 +25,6 @@
     font-family: "Space Grotesk", sans-serif;
     color: #222;
     background: linear-gradient(135deg, #d7e8ff, #e1f0e9, #fce7e7);
-    /* background-image: radial-gradient(farthest-side, #afc8f9 90%, #fff0),
-        radial-gradient(farthest-side, #ddc1fb 90%, #fff0),
-        radial-gradient(circle at 0 0, #d5e0fa, #e5d5f6); */
-    /* background-size: 7rem 7rem, 6rem 6rem, auto; */
-    /* background-position: 30% 10%, 80% 90%, 0; */
-    /* background-repeat: no-repeat;
-    backdrop-filter: blur(50px); */
 }
 
 .addFeedbackContainer .wrapper {

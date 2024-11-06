@@ -4,13 +4,11 @@
 .feature-section {
     position: relative;
     background: linear-gradient(135deg, #d7e8ff, #e1f0e9, #fce7e7);
-    /* Calmer pastel gradient colors */
     background-size: cover;
     background-position: center;
     padding: 60px 0;
     height: 600px;
     overflow: hidden;
-    /* Prevent animation overflow */
 }
 
 .feature-section .bg {
@@ -20,24 +18,20 @@
     border-radius: 50%;
     opacity: 0.3;
     filter: blur(40px);
-    /* More blur for a soft effect */
 }
 
 .feature-section .bg:nth-child(2) {
     box-shadow: 0 0 200vmax 200vmax rgba(65, 132, 71, 0.4);
-    /* Lighter version of #418447 */
     animation: hueCalm 20s linear infinite, moveCalm1 30s ease-in-out infinite;
 }
 
 .feature-section .bg:nth-child(3) {
     box-shadow: 0 0 200vmax 200vmax rgba(65, 132, 71, 0.3);
-    /* Lighter version of #418447 */
     animation: hueCalm 25s linear infinite, moveCalm2 35s ease-in-out infinite;
 }
 
 .feature-section .bg:nth-child(4) {
     box-shadow: 0 0 200vmax 200vmax rgba(65, 132, 71, 0.3);
-    /* Lighter version of #418447 */
     animation: hueCalm 30s linear infinite, moveCalm3 40s ease-in-out infinite;
     opacity: 0.25;
 }

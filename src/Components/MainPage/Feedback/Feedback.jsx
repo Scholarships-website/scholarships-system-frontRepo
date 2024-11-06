@@ -1,144 +1,117 @@
 import React, { useEffect, useState } from 'react';
 import './Feedback.css'; // Custom styles for the card
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faQuoteRight } from '@fortawesome/free-solid-svg-icons';
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
+import { Avatar, Skeleton } from '@mui/material';
+import axios from 'axios';
 
 const Feedback = () => {
   const [feedbacks, setFeedbacks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Sample feedback data
-  const sampleFeedbacks = [
-    {
-      name: "John Doe",
-      profession: "Software Engineer",
-      feedback: "This platform has been incredibly helpful for finding scholarships!",
-      rating: 5,
-      imageUrl: "https://via.placeholder.com/150"
-    },
-    {
-      name: "Jane Smith",
-      profession: "Graphic Designer",
-      feedback: "The application process is straightforward and easy to navigate.",
-      rating: 4,
-      imageUrl: "https://via.placeholder.com/150"
-    },
-    {
-      name: "Alice Johnson",
-      profession: "Web Developer",
-      feedback: "I love how I can manage my profile and bookmark my favorite scholarships.",
-      rating: 5,
-      imageUrl: "https://via.placeholder.com/150"
-    },
-    {
-      name: "Bob Brown",
-      profession: "Data Scientist",
-      feedback: "A fantastic resource for students looking for funding opportunities.",
-      rating: 4,
-      imageUrl: "https://via.placeholder.com/150"
-    },
-    {
-      name: "Charlie Green",
-      profession: "Marketing Specialist",
-      feedback: "Highly recommend this service to any student!",
-      rating: 5,
-      imageUrl: "https://via.placeholder.com/150"
-    }
-  ];
-
   // Slider settings for react-slick
   const sliderSettings = {
     dots: true,
     infinite: false,
-    speed: 500, // Speed of the transition
+    speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: false,
     arrows: true,
   };
-//un comment this when the API is ready 
-  // const getFeedbacks = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const response = await axios.get('http://localhost:3000/api/v1/website/feedbacks');
-  //     setFeedbacks(response.data);
-  //   } catch (err) {
-  //     setError(err.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-  // useEffect(() => {
-  //   getFeedbacks();
-  // }, []);
-
-  // Fetch feedback data from API
+  const getFeedbacks = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get('http://localhost:3000/api/v1/feedbacks');
+      setFeedbacks(response.data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchFeedbackData = async () => {
-      try {
-        setFeedbacks(sampleFeedbacks);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchFeedbackData();
+    getFeedbacks();
   }, []);
 
-  if (loading) {
-    return <div>Loading feedback...</div>;
-  }
-
-  if (error) {
-    return <div>Error fetching feedback: {error}</div>;
-  }
 
   return (
     <>
-    <hr className='feedback-line' />
+<div>
+      <hr className='feedback-line' />
       <div className="feedback-container">
         <h2 className='feedback-title'>Users Feedback</h2>
         <Slider {...sliderSettings}>
-          {feedbacks.map((item, index) => (
-            <div key={index} className="feedback-card">
-              <div className="feedback-content">
-                <div className="feedback-row">
-                  <div className="image-section">
-                    <img src={item.imageUrl} alt={`${item.name}`} className="profile-img" />
-                  </div>
-                  <div className="info-section">
-                    <h3>{item.name}</h3>
-                    <p className="profession">{item.profession}</p>
-                    <div className="rating">
-                      {[...Array(5)].map((_, starIndex) => (
-                        <span key={starIndex} className={starIndex < item.rating ? "star filled" : "star"}>
-                          ★
-                        </span>
-                      ))}
+          {loading ? (
+            Array.from({ length: 5 }).map((_, index) => (
+              <div key={index} className="feedback-card">
+                <div className="feedback-content">
+                  <div className="feedback-row">
+                    <div className="image-section">
+                      <Skeleton variant="circular" width={60} height={60} />
+                    </div>
+                    <div className="info-section">
+                      <Skeleton variant="text" width="100px" />
+                      <Skeleton variant="text" width="150px" />
                     </div>
                   </div>
-                </div>
-                <div className="feedback-text">
-                  <p className="speech-bubble">
-                    <span className="quote">“</span>
-                    <span className="text">{item.feedback}</span>
-                    <span className="quote under">”</span>
-                  </p>
+                  <div className="feedback-text">
+                    <Skeleton variant="rounded" width="300px" height="100px" />
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            feedbacks.slice(0, 5).map((item, index) => (
+              <div key={index} className="feedback-card">
+                <div className="feedback-content">
+                  <div className="feedback-row">
+                    <div className="image-section">
+                      <div className="avatar-container">
+                        <Avatar
+                          className="active-avatar"
+                          sx={{
+                            bgcolor: 'primary.main',
+                            color: 'white',
+                            width: 60,
+                            height: 60,
+                            fontSize: 24,
+                          }}
+                        >
+                          {item.user_Account_id.username[0].toUpperCase()}
+                        </Avatar>
+                      </div>
+                    </div>
+                    <div className="info-section">
+                      <h3>{item.user_Account_id.username}</h3>
+                      <div className="rating">
+                        {[...Array(5)].map((_, starIndex) => (
+                          <span key={starIndex} className={starIndex < item.rating ? "star filled" : "star"}>
+                            ★
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="feedback-text">
+                    <p className="speech-bubble">
+                      <span className="quote">“</span>
+                      <span className="text">{item.content}</span>
+                      <span className="quote under">”</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
         </Slider>
         <div className="write-container">
           <Link to='/add-feedback' className="write-btn">Add Your Feedback</Link>
         </div>
       </div>
+    </div>
     </>
-
   );
 };
 

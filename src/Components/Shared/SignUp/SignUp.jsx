@@ -166,7 +166,7 @@ export default function SignUp() {
     return (
         <div className='signup'>
             <div className="logoContainer">
-                <a href="/"><img src="src/assets/img/logo.png" alt="logo" width="100px" /></a>
+                <a href="/"><img src="assets/img/logo.png" alt="logo" width="100px" /></a>
             </div>
             <ToastContainer
                 position="top-right"

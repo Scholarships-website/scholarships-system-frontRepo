@@ -6,9 +6,9 @@
     display: flex;
     flex-direction: row;
     gap: 20px;
-    flex: 1; /* Take up remaining space */
-    padding: 20px; /* Add some padding */
-    overflow-y: auto; /* Allow scrolling if the content overflows */
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto; 
 }
 
 .search-column {
@@ -67,7 +67,7 @@
     }
 
     .list-container .scholarship-item {
-        width: 45%; /* Adjust card width on medium screens */
+        width: 45%; 
     }
 }
 
@@ -80,7 +80,6 @@
     .list-container {
         flex-direction: column;
         align-items: center;
-        /* gap: 20px; */
     }
     .search-main-container {
         gap: 0;
@@ -88,8 +87,8 @@
 
 
     .list-container .scholarship-item {
-        width: 100%; /* Full width for mobile screens */
-        height: auto; /* Adjust height for better mobile view */
+        width: 100%; 
+        height: auto; 
         gap: 10px;
     }
 }
@@ -142,7 +141,6 @@
 
 .sidebar-search .MuiFormControlLabel-root:hover .MuiFormControlLabel-label {
     color: #418447;
-    /* border: #2d5a33 1px solid; */
 }
 
 .sidebar-search .MuiFormControlLabel-root {
@@ -194,7 +192,6 @@
 
 .sidebar-search-open .MuiFormControlLabel-root:hover .MuiFormControlLabel-label {
     color: #418447;
-    /* border: #2d5a33 1px solid; */
 }
 
 .sidebar-search-open .MuiFormControlLabel-root {
@@ -242,17 +239,17 @@
 /* Show sidebar and hide hamburger icon on medium+ screens */
 @media (max-width: 830px) {
     .sidebar-search {
-        display: none; /* Hide sidebar on small screens */
+        display: none;
     }
 
     .hamburger-icon-side {
-        display: block; /* Show hamburger icon */
+        display: block;
     }
 }
 
 /* Custom styling for slider */
 .custom-slider .MuiSlider-root {
-    color: #638ECB; /* Change to your preferred color */
+    color: #638ECB; 
 }
 
 .custom-slider .MuiSlider-track {

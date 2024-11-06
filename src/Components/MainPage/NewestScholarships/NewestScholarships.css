@@ -29,7 +29,6 @@
     background: linear-gradient(to right, #418447 0%, hsl(0, 0%, 100%) 10%, #418447 20%);
     -webkit-background-clip: text;
     background-clip: text;
-    /* Added standard property */
     -webkit-text-fill-color: transparent;
     animation: shine 3s infinite linear;
 }
@@ -185,9 +184,7 @@
 @media (max-width: 768px) {
     .scholarship-content {
         flex-direction: column-reverse;
-        /* Stack elements vertically */
         align-items: center;
-        /* Align items to the start */
         gap: 10px;
     }
 
@@ -201,9 +198,7 @@
 
     .scholarship-image-container {
         margin-left: 0;
-        /* Reset margin for smaller screens */
         margin-top: 1rem;
-        /* Add some space between image and text */
     }
 
     .scholarship-image-container img {
@@ -214,31 +209,25 @@
 
     .section-title {
         font-size: 1.5rem;
-        /* Smaller font size */
     }
 
     .scholarship-info {
         max-width: 100%;
-        /* Use full width */
     }
 
     .apply-btn {
         width: 100%;
-        /* Full-width button */
         text-align: center;
-        /* Center text */
     }
 
     .search-btn {
         width: 100%;
-        /* Full-width button */
     }
 }
 
 @media (max-width: 480px) {
     .section-title {
         font-size: 1.3rem;
-        /* Even smaller font size */
     }
 
     .scholarship-image-container img {
@@ -248,11 +237,9 @@
 
     .scholarship-info h3 {
         font-size: 1.5rem;
-        /* Adjust title font size */
     }
 
     .scholarship-info p {
         font-size: 0.9rem;
-        /* Smaller paragraph text */
     }
 }

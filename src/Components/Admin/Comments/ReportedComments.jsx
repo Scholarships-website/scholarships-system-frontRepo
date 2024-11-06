@@ -1,61 +1,61 @@
 import React, { useEffect, useState } from 'react'
 import '../Dashboard.css'
 import axios from 'axios';
-import Loading from '../../Shared/Loading/Loading';
+// import Loading from '../../Shared/Loading/Loading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical, faMagnifyingGlass, faPenToSquare, faUserXmark } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 
 export default function ReportedComments() {
     let [reportedComments, setReportedComments] = useState([]);
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
 
-    const fetchReportedComments = async () => {
-        try {
-            const { data } = await axios.get(`http://localhost:3000/api/v1/feedbacks/`);
-            console.log(data)
-            setReportedComments(data);
-            setLoading(false)
-        }
-        catch (error) {
-            console.log(error);
-            setLoading(false)
-        }
-    };
-    const deleteReportedComment = async (id) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    await axios.delete(`http://localhost:3000/api/v1/feedback/${id}`);
-                    // Remove the deleted comment
-                    setReportedComments((prevReportedComments) => ReportedComments.filter((reportedComment) => reportedComments.id !== id));
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "comment has been deleted.",
-                        icon: "success",
-                    });
-                } catch (error) {
-                    console.error("Error deleting comment:", error);
-                    Swal.fire({
-                        title: "Error!",
-                        text: "There was a problem deleting the comment.",
-                        icon: "error",
-                    });
-                }
-            }
-        });
-    };
-    useEffect(() => {
-        fetchReportedComments();
-    }, []);
+    // const fetchReportedComments = async () => {
+    //     try {
+    //         const { data } = await axios.get(`http://localhost:3000/api/v1/feedbacks/`);
+    //         console.log(data)
+    //         setReportedComments(data);
+    //         setLoading(false)
+    //     }
+    //     catch (error) {
+    //         console.log(error);
+    //         setLoading(false)
+    //     }
+    // };
+    // const deleteReportedComment = async (id) => {
+    //     Swal.fire({
+    //         title: "Are you sure?",
+    //         text: "You won't be able to revert this!",
+    //         icon: "warning",
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#3085d6",
+    //         cancelButtonColor: "#d33",
+    //         confirmButtonText: "Yes, delete it!",
+    //     }).then(async (result) => {
+    //         if (result.isConfirmed) {
+    //             try {
+    //                 await axios.delete(`http://localhost:3000/api/v1/feedback/${id}`);
+    //                 // Remove the deleted comment
+    //                 setReportedComments((prevReportedComments) => ReportedComments.filter((reportedComment) => reportedComments.id !== id));
+    //                 Swal.fire({
+    //                     title: "Deleted!",
+    //                     text: "comment has been deleted.",
+    //                     icon: "success",
+    //                 });
+    //             } catch (error) {
+    //                 console.error("Error deleting comment:", error);
+    //                 Swal.fire({
+    //                     title: "Error!",
+    //                     text: "There was a problem deleting the comment.",
+    //                     icon: "error",
+    //                 });
+    //             }
+    //         }
+    //     });
+    // };
+    // useEffect(() => {
+    //     fetchReportedComments();
+    // }, []);
 
 
     return (
@@ -64,7 +64,7 @@ export default function ReportedComments() {
                 <div className=" mt-3 mb-2 justify-content-between border-bottom py-3">
                     <h2 className='ps-4 main-col'>Reported Comments</h2>
                 </div>
-                <div className="table-container ps-3">
+                {/* <div className="table-container ps-3">
                     {loading ? (
                         <Loading />
                     ) : (
@@ -110,7 +110,7 @@ export default function ReportedComments() {
                                 </tr>}
                             </tbody>
                         </table>)}
-                </div>
+                </div> */}
             </div>
         </>
     )

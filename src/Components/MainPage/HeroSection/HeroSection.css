@@ -7,7 +7,6 @@
     color: white;
     padding: 100px 20px;
     text-align: center;
-    /* height: 100vh; */
 }
 
 .hero-content {
@@ -34,7 +33,6 @@
 .hero-section .welcome {
     font-size: 30px;
     margin: 20px 0;
-    /* font-family: "Playwrite GB S", cursive; */
     font-family: "Indie Flower", cursive;
 }
 

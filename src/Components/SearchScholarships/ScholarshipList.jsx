@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
@@ -17,17 +15,15 @@ const ScholarshipList = ({ scholarships }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Simulate data fetching delay
         const timer = setTimeout(() => {
             setLoading(false);
-        }, 2000); // Adjust this delay as needed
+        }, 2000); 
         return () => clearTimeout(timer);
     }, []);
 
     return (
         <div className="list-container">
             {loading ? (
-                // Skeletons displayed during loading
                 Array.from(new Array(3)).map((_, index) => (
                     <Card key={index} className='scholarship-item'>
                         <Skeleton variant="text" height={40} width="60%" />
@@ -42,7 +38,6 @@ const ScholarshipList = ({ scholarships }) => {
                     </Card>
                 ))
             ) : (
-                // Actual scholarship data displayed after loading
                 scholarships.length === 0 ? (
                     <Typography>No scholarships found</Typography>
                 ) : (

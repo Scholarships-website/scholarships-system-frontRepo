@@ -1,17 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap');
 
-/* body {
-  margin: 0;
-  padding: 0;
-  background-color: #fff !important;
-  font-family: "Afacad Flux", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
-  font-variation-settings:
-    "slnt" 0;
-  color: #418447;
-} */
 
 .icon {
   vertical-align: middle;
@@ -40,8 +28,11 @@
 
 .close_icon {
   color: #f0f3fa;
-  margin-left: 30px;
+  margin-right: 30px;
   margin-top: 10px;
+  cursor: pointer;
+  font-size: 24px;
+  color: #f0f3fa;
   cursor: pointer;
 }
 
@@ -82,16 +73,13 @@
 #sidebar {
   grid-area: sidebar;
   height: auto;
-  /* Adjusts based on the sidebar content */
   min-height: 100vh;
-  /* Ensures it covers the viewport height initially */
   background-color: #418447;
   overflow-y: auto;
   transition: all 0.5s;
   -webkit-transition: all 0.5s;
   position: sticky;
   top: 0;
-  /* Keeps it fixed at the top when scrolling */
 }
 
 
@@ -147,15 +135,20 @@
 }
 
 .sidebar-responsive {
-  display: inline !important;
-  position: absolute;
-  /*
-      we want the z-index of the sidebar higher so that
-      the charts are not showing over the sidebar 
-      on small screens
-    */
-  z-index: 12 !important;
+  display: flex !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: #418447;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  overflow-y: auto;
+  transition: transform 0.5s ease;
+  padding: 20px;
 }
+
 
 /* End Sidebar  */
 
@@ -292,7 +285,6 @@
   align-items: center;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .summary-container {
@@ -306,7 +298,6 @@
 .summary-card {
   background-color: #f2f2f2;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  /* Soft shadow for a subtle 3D effect */
   border-radius: 8px;
   padding: 20px;
   text-align: center;
@@ -332,7 +323,6 @@
 .summary-card p:first-of-type {
   font-size: 2em;
   color: #395886;
-  /* Use the primary color */
   margin: 10px 0;
   font-weight: bold;
 }
@@ -342,11 +332,6 @@
   font-size: 0.9em;
   color: #8a8a8a;
 }
-
-/* .sortable-column {
-  display: flex;
-  align-items: center;
-} */
 
 .sortable-column .sort-icon {
   visibility: hidden;
@@ -365,9 +350,74 @@
   /* Darker color for active sort */
 }
 
-.student-admin .pagination-search,.advertiser-admin .pagination-search,.scholarships-admin .pagination-search{
+.student-admin .pagination-search,
+.advertiser-admin .pagination-search,
+.scholarships-admin .pagination-search {
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
   margin-right: 50px;
+}
+
+/* table media query */
+.student-admin .expand-icon,.advertiser-admin .expand-icon {
+  display: none;
+}
+
+.student-admin .action .dropdown,.advertiser-admin .action .dropdown {
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+
+  .student-admin .expand-icon,.advertiser-admin .expand-icon {
+    display: inline-block;
+  }
+
+  .student-admin .action .dropdown,.advertiser-admin .action .dropdown {
+    display: none;
+  }
+
+  .student-admin .d-md-table-cell,.advertiser-admin .d-md-table-cell {
+    display: none;
+  }
+
+  .student-admin .expanded-row,.advertiser-admin .expanded-row {
+    display: table-row;
+  }
+
+  .student-admin .dropdown-menu .dropdown-item,.advertiser-admin .dropdown-menu .dropdown-item {
+    width: 100%;
+  }
+
+  .student-admin .table,.advertiser-admin .table {
+    width: 90%;
+  }
+
+  .student-admin .table th,
+  .student-admin .table td,
+  .advertiser-admin .table th,
+  .advertiser-admin .table td {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 769px) {
+
+  .student-admin .expand-icon,
+  .student-admin .expanded-row-content,
+  .advertiser-admin .expand-icon,
+  .advertiser-admin .expanded-row-content {
+    display: none;
+  }
+}
+
+.student-admin .expanded-delete,
+.advertiser-admin .expanded-delete {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: flex-start;
+  padding: 0;
 }

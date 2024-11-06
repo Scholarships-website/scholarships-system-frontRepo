@@ -17,7 +17,7 @@ const SearchScholarships = () => {
     const [filteredScholarships, setFilteredScholarships] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [page, setPage] = useState(1);
-    const [limit] = useState(9); // items per page, adjust as needed
+    const [limit] = useState(9); 
     const [isClicked, setIsClicked] = useState(false);
 
     useEffect(() => {
@@ -36,7 +36,7 @@ const SearchScholarships = () => {
         setSearchTerm(value);
 
         const filtered = scholarships.filter((scholarship) =>
-            scholarship.scholarsip_name.toLowerCase().includes(value) // Assuming scholarships have a 'name' property
+            scholarship.scholarsip_name.toLowerCase().includes(value) 
         );
         setFilteredScholarships(filtered);
     };
@@ -49,7 +49,6 @@ const SearchScholarships = () => {
     };
     const handleIconClick = () => {
         setIsClicked(true);
-        // Add search logic here if needed
     };
     return (
         <>
@@ -81,7 +80,7 @@ const SearchScholarships = () => {
                                 sx={{
                                     '& .MuiOutlinedInput-root': {
                                         '& fieldset': {
-                                            borderColor: isClicked ? '#418447' : 'gray', // Border color change
+                                            borderColor: isClicked ? '#418447' : 'gray', 
                                         },
                                         '&:hover fieldset': {
                                             borderColor: isClicked ? '#418447' : 'gray',
@@ -91,7 +90,7 @@ const SearchScholarships = () => {
                                         },
                                     },
                                     '& .MuiInputLabel-root': {
-                                        color: isClicked ? '#418447' : 'gray', // Label color change
+                                        color: isClicked ? '#418447' : 'gray', 
                                     },
                                     '& .MuiInputLabel-root.Mui-focused': {
                                         color: isClicked ? '#418447' : 'gray',

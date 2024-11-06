@@ -83,8 +83,7 @@ const Sidebar = ({ scholarships, setFilteredScholarships }) => {
     };
 
     return (
-        <div className='sidebar'>
-            {/* Hamburger Icon for Small Screens */}
+        <div className='sidebarSearch'>
             <IconButton
                 className="hamburger-icon-side"
                 onClick={toggleSidebar}
@@ -92,7 +91,6 @@ const Sidebar = ({ scholarships, setFilteredScholarships }) => {
             >
                 <Menu />
             </IconButton>
-            {/* Sidebar Drawer */}
             <Drawer
                 open={isSidebarOpen}
                 onClose={toggleSidebar}
@@ -116,7 +114,7 @@ const Sidebar = ({ scholarships, setFilteredScholarships }) => {
                                 key={index}
                                 control={
                                     <Checkbox
-                                        checked={filters.Place_of_Study.includes(place)} // Updated to check the active state
+                                        checked={filters.Place_of_Study.includes(place)} 
                                         onChange={() => handleFilterChange('Place_of_Study', place)}
                                     />
                                 }
@@ -135,7 +133,7 @@ const Sidebar = ({ scholarships, setFilteredScholarships }) => {
                                 key={index}
                                 control={
                                     <Checkbox
-                                        checked={filters.language_Of_Study.includes(language)} // Updated to check the active state
+                                        checked={filters.language_Of_Study.includes(language)} 
                                         onChange={() => handleFilterChange('language_Of_Study', language)}
                                     />
                                 }
@@ -154,7 +152,7 @@ const Sidebar = ({ scholarships, setFilteredScholarships }) => {
                                 key={index}
                                 control={
                                     <Checkbox
-                                        checked={filters.type.includes(type)} // Updated to check the active state
+                                        checked={filters.type.includes(type)} 
                                         onChange={() => handleFilterChange('type', type)}
                                     />
                                 }
