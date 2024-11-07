@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { extendTheme, styled } from '@mui/material/styles';
+import { createTheme, extendTheme, styled } from '@mui/material/styles';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
@@ -13,33 +13,15 @@ import Scholarships from '../Scholarships/Scholarships';
 import Feedbacks from '../Feedbacks/Feedbacks';
 import Comments from '../Comments/Comments';
 import AddAdvertiser from '../Advertisers/AddAdvertiser';
-import { Box, Stack, Typography } from '@mui/material';
 import { UserContext } from '../../../Context/UserContext';
 
 import './Dash.css'
 
-
-function LogoutButton() {
-    const { setUserToken } = React.useContext(UserContext);
-    const navigate = useNavigate();
-
-    const handleLogout = () => {
-        console.log("Logging out...");
-        localStorage.removeItem('userToken');  // Remove token
-        setUserToken(null);  // Update context
-        navigate('/login');  // Navigate to login page
-    };
-
-    return (
-        <Box onClick={handleLogout} sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-            <FontAwesomeIcon icon={faSignOutAlt} />
-            <Typography variant="body1" sx={{ ml: 1 }}>Logout</Typography>
-        </Box>
-    );
-}
-const demoTheme = extendTheme({
+const demoTheme = createTheme({
+    cssVariables: {
+        colorSchemeSelector: 'data-toolpad-color-scheme',
+    },
     colorSchemes: { light: true, dark: true },
-    colorSchemeSelector: 'class',
     breakpoints: {
         values: {
             xs: 0,
@@ -51,20 +33,6 @@ const demoTheme = extendTheme({
     },
 });
 
-// function useDemoRouter(initialPath) {
-
-//     const [pathname, setPathname] = React.useState(initialPath);
-
-//     const router = React.useMemo(() => {
-//         return {
-//             pathname,
-//             searchParams: new URLSearchParams(),
-//             navigate: (path) => setPathname(String(path)),
-//         };
-//     }, [pathname]);
-
-//     return router;
-// }
 function CustomBranding() {
     const location = useLocation();
     React.useEffect(() => {
@@ -82,8 +50,8 @@ function CustomBranding() {
     return null;
 }
 function DashboardLayoutBasic(props) {
+    const { window } = props;
     const { setUserToken } = React.useContext(UserContext);
-
     const navigate = useNavigate();
     const location = useLocation();
     const NAVIGATION = [
@@ -152,24 +120,45 @@ function DashboardLayoutBasic(props) {
     ];
     const currentNavItem = NAVIGATION.find((item) => location.pathname === item.segment);
 
-    React.useEffect(() => {
-        const toolbarDiv = document.querySelector('.MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular.css-1dbvo5e-MuiToolbar-root');
-
-        if (toolbarDiv && !toolbarDiv.querySelector('.logout-button')) {
-            toolbarDiv.innerHTML += `
-            <div class="logout-button" style="display: flex; align-items: center; cursor: pointer; margin-left: auto;">
-            <i class="fa-solid fa-right-from-bracket"></i>
-        </div>
-            `;
-
-            // Add event listener to handle logout on button click
-            toolbarDiv.querySelector('.logout-button').addEventListener('click', () => {
-                localStorage.removeItem('userToken');
-                setUserToken(null);
-                navigate('/login');
-            });
-        }
-    }, [navigate, setUserToken]);
+    const CustomToolbar = () => {
+        const { setUserToken } = React.useContext(UserContext);
+        const navigate = useNavigate();
+        React.useEffect(() => {
+            // Select the toolbar more specifically if possible
+            const toolbarDiv = document.querySelector('.MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular.css-1dbvo5e-MuiToolbar-root');
+            
+            // Only add logout button if it's not already there
+            if (toolbarDiv && !toolbarDiv.querySelector('.logout-button')) {
+                // Create the logout button
+                const logoutButton = document.createElement('div');
+                logoutButton.classList.add('logout-button');
+                logoutButton.style.display = 'flex';
+                logoutButton.style.alignItems = 'center';
+                logoutButton.style.cursor = 'pointer';
+                logoutButton.style.marginLeft = 'auto';
+                const icon = document.createElement('i');
+                icon.classList.add('fa-solid', 'fa-right-from-bracket');
+                icon.style.color='#757575';
+                logoutButton.appendChild(icon);
+                // Append logout button to the toolbar
+                toolbarDiv.appendChild(logoutButton);
+                // Add event listener to the logout button
+                const handleLogout = () => {
+                    localStorage.removeItem('userToken');
+                    setUserToken(null);
+                    navigate('/login');
+                };
+                logoutButton.addEventListener('click', handleLogout);
+                // Cleanup: Remove event listener and button when the component unmounts
+                return () => {
+                    logoutButton.removeEventListener('click', handleLogout);
+                    toolbarDiv.removeChild(logoutButton);
+                };
+            }
+        }, [navigate, setUserToken]);
+        return null;
+    };
+    
     return (
         <AppProvider
             navigation={NAVIGATION.map((item) => ({
@@ -181,6 +170,7 @@ function DashboardLayoutBasic(props) {
             window={props.window ? props.window() : undefined}
         >
             <DashboardLayout>
+                <CustomToolbar/>
                 <CustomBranding />
                 <PageContainer>
                     {currentNavItem?.content || <Outlet />}

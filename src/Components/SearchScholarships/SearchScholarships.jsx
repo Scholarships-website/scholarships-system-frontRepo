@@ -17,15 +17,24 @@ const SearchScholarships = () => {
     const [filteredScholarships, setFilteredScholarships] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [page, setPage] = useState(1);
-    const [limit] = useState(9); 
+    const [limit] = useState(9);
     const [isClicked, setIsClicked] = useState(false);
+    const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
         const fetchScholarships = async () => {
-            const response = await axios.get(`http://localhost:3000/api/v1/scholarships`);
-            console.log(response.data);
-            setScholarships(response.data);
-            setFilteredScholarships(response.data);
+            setLoading(true);
+            try {
+                const response = await axios.get(`http://localhost:3000/api/v1/scholarships`);
+                setScholarships(response.data);
+                setFilteredScholarships(response.data);
+            }
+            catch (error) {
+                console.error("Error fetching scholarships:", error);
+            } finally {
+                setLoading(false);
+            }
         };
         window.scrollTo(0, 0);
         fetchScholarships();
@@ -36,7 +45,7 @@ const SearchScholarships = () => {
         setSearchTerm(value);
 
         const filtered = scholarships.filter((scholarship) =>
-            scholarship.scholarsip_name.toLowerCase().includes(value) 
+            scholarship.scholarsip_name.toLowerCase().includes(value)
         );
         setFilteredScholarships(filtered);
     };
@@ -80,7 +89,7 @@ const SearchScholarships = () => {
                                 sx={{
                                     '& .MuiOutlinedInput-root': {
                                         '& fieldset': {
-                                            borderColor: isClicked ? '#418447' : 'gray', 
+                                            borderColor: isClicked ? '#418447' : 'gray',
                                         },
                                         '&:hover fieldset': {
                                             borderColor: isClicked ? '#418447' : 'gray',
@@ -90,7 +99,7 @@ const SearchScholarships = () => {
                                         },
                                     },
                                     '& .MuiInputLabel-root': {
-                                        color: isClicked ? '#418447' : 'gray', 
+                                        color: isClicked ? '#418447' : 'gray',
                                     },
                                     '& .MuiInputLabel-root.Mui-focused': {
                                         color: isClicked ? '#418447' : 'gray',
@@ -98,8 +107,7 @@ const SearchScholarships = () => {
                                 }}
                             />
                         </div>
-                        <ScholarshipList scholarships={displayedScholarships} />
-                        <Pagination
+                        <ScholarshipList scholarships={displayedScholarships} loading={loading} />                        <Pagination
                             count={totalPages}
                             page={page}
                             onChange={handlePageChange}

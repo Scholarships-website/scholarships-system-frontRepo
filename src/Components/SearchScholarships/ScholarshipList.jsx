@@ -11,15 +11,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Link } from 'react-router-dom';
 import './search.css';
 
-const ScholarshipList = ({ scholarships }) => {
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 2000); 
-        return () => clearTimeout(timer);
-    }, []);
+const ScholarshipList = ({ scholarships, loading }) => {
 
     return (
         <div className="list-container">
