@@ -1,36 +1,85 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useFormik } from 'formik';
 import './AddFeedback.css';
 import Navbar from '../Shared/Navbar/Navbar';
-import { addFeedback } from '../../Validation/validation';
 import axios from 'axios';
+import { UserContext } from '../../Context/UserContext';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+import { addFeedback } from '../../Validation/validation';
 
 const AddFeedback = () => {
-        // let { userToken, setUserToken, userId, setUserId, userData, setUserData } = useContext(UserContext);
+    const {userData, roleId } = useContext(UserContext);
+
+    useEffect(() => {
+        window.scrollTo(0, 0); // Scroll to the top on component mount
+    }, []);
+
     const formik = useFormik({
         initialValues: {
-            // usrid:userId,
+            id: roleId || '',
+            name: userData?.username || '', 
+            email: userData?.email || '', 
+            role: userData?.role || 'Student',
             content: '',
             rating: '',
         },
         validationSchema: addFeedback,
         onSubmit: async (values, { resetForm }) => {
+            console.log('Submitting:', values);
             try {
-                const response = await axios.post('http://localhost:3000/api/v1/feedbacks/', values);
-                if (response.status === 200) {
-                    alert('Thank you for your feedback!');
+                const response = await axios.post('http://localhost:3000/api/v1/feedbacks/', {
+                    id: values.id,
+                    content: values.content,
+                    rating: values.rating,
+                });
+                console.log(response.data);
+                toast.success('website feedback is created successfully!', {
+                    position: "bottom-right",
+                    autoClose: false,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
+                setTimeout(() => {
                     resetForm();
-                } else {
-                    alert('Failed to submit feedback. Please try again.');
-                }
+                }, 1000);
             } catch (error) {
-                alert('An error occurred. Please try again later.');
+                console.log(error);
+                console.error('Feedback error:', error);
+                toast.error(error.message, {
+                    position: "bottom-right",
+                    autoClose: false,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
             }
         },
     });
+
+    // Update formik's once roleId is available
     useEffect(() => {
-        window.scrollTo(0, 0); // Scroll to the top on component mount
-    }, []);
+        if (roleId && userData) {
+            formik.setFieldValue('id', roleId);
+            formik.setFieldValue('name', userData.username || '');
+            formik.setFieldValue('email', userData.email || '');
+            formik.setFieldValue('role',userData.role || 'Student');
+        }
+    }, [roleId, userData]);
+
+    if (!roleId || !userData) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <>
             <Navbar />
@@ -40,6 +89,7 @@ const AddFeedback = () => {
                     <div className="content">
                         We highly value your feedback! Kindly take a moment to rate your experience and provide us with your valuable feedback.
                     </div>
+                    {/* Name */}
                     <input
                         type="text"
                         name="name"
@@ -47,6 +97,7 @@ const AddFeedback = () => {
                         {...formik.getFieldProps('name')}
                     />
                     {formik.touched.name && formik.errors.name ? <div className="error">{formik.errors.name}</div> : null}
+                    {/* Email */}
                     <input
                         type="email"
                         name="email"
@@ -54,29 +105,33 @@ const AddFeedback = () => {
                         {...formik.getFieldProps('email')}
                     />
                     {formik.touched.email && formik.errors.email ? <div className="error">{formik.errors.email}</div> : null}
-
+                    {/* Role */}
                     <select name="role" {...formik.getFieldProps('role')}>
                         <option value="student">Student</option>
                         <option value="advertiser">Advertiser</option>
                     </select>
                     {formik.touched.role && formik.errors.role ? <div className="error">{formik.errors.role}</div> : null}
-
+                    {/* Rating */}
                     <div className="rate-box">
-                        {[...Array(5)].map((_, i) => (
-                            <React.Fragment key={i}>
-                                <input
-                                    type="radio"
-                                    id={`star${i}`}
-                                    name="rating"
-                                    value={i + 1}
-                                    checked={formik.values.rating === String(i + 1)}
-                                    onChange={() => formik.setFieldValue('rating', String(i + 1))}
-                                />
-                                <label className="star" htmlFor={`star${i}`}></label>
-                            </React.Fragment>
-                        ))}
+                        {[...Array(5)].map((_, i) => {
+                            const starValue = (5-i).toString(); // Create star value 1 to 5
+                            return (
+                                <React.Fragment key={starValue}>
+                                    <input
+                                        type="radio"
+                                        id={`star${starValue}`}
+                                        name="rating"
+                                        value={starValue}
+                                        checked={formik.values.rating === starValue}  // Compare Formik value to determine which radio button is checked
+                                        onChange={() => formik.setFieldValue('rating', starValue)}  // Update Formik field value when a star is clicked
+                                    />
+                                    <label className="star" htmlFor={`star${starValue}`}></label>
+                                </React.Fragment>
+                            );
+                        })}
                     </div>
                     {formik.touched.rating && formik.errors.rating ? <div className="error">{formik.errors.rating}</div> : null}
+                    {/* Feedback Content */}
                     <textarea
                         name="content"
                         cols="30"
@@ -85,6 +140,7 @@ const AddFeedback = () => {
                         {...formik.getFieldProps('content')}
                     ></textarea>
                     {formik.touched.content && formik.errors.content ? <div className="error">{formik.errors.content}</div> : null}
+                    {/* Submit Button */}
                     <button type="submit" className="submit-btn">
                         Send
                     </button>

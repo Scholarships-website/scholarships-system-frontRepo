@@ -6,6 +6,7 @@ import Input from '../../Shared/Input/Input';
 import { editAdvertiser } from '../../../Validation/validation';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import Loading from '../../Shared/Loading/Loading'
+
 export default function EditAdvertiser() {
   const { id } = useParams();
   console.log(id);

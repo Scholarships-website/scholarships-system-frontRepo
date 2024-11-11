@@ -1,9 +1,12 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import AdvertiserDashboard from '../Components/Advertiser/AdvertiserDashboard/AdvertiserDashboard'
 
 function AdvertiserLayout() {
     return (
-        <Outlet />
+        <div>
+            <AdvertiserDashboard />
+        </div>
     )
 }
 

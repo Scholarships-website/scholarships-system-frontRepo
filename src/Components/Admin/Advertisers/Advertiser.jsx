@@ -26,7 +26,7 @@ export default function Advertiser() {
   const fetchAdvertisers = async () => {
     try {
       const { data } = await axios.get(`http://localhost:3000/api/v1/advertisers/`);
-      console.log(data);
+      // console.log(data);
       setAdvertiser(data);
       setLoading(false);
     } catch (error) {
@@ -145,8 +145,8 @@ export default function Advertiser() {
                     <th scope="row"><Skeleton variant="text" width={20} /></th>
                     <td><Skeleton variant="text" width="80%" /></td>
                     <td><Skeleton variant="text" width="80%" /></td>
-                    <td><Skeleton variant="text" width="80%" /></td>
-                    <td><Skeleton variant="text" width="80%" /></td>
+                    <td className="d-none d-md-table-cell"><Skeleton variant="text" width="80%" /></td>
+                    <td className="d-none d-md-table-cell"><Skeleton variant="text" width="80%" /></td>
                     <td><Skeleton variant="rectangular" width={50} height={20} /></td>
                   </tr>
                 ))}

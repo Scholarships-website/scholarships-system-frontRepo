@@ -41,7 +41,6 @@ export default function Login() {
                     theme: "light",
                     transition: Bounce,
                 });
-
                 // Delay navigation to allow toast to be seen
                 setTimeout(() => {
                     switch (role) {

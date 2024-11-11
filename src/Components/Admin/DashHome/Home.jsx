@@ -115,9 +115,9 @@ export default function Home() {
       <div className="summary-container">
         {loading ? (
           <>
-            <div className="summary-card">
-              <Skeleton variant="text" width="80%" height={30} />
-              <Skeleton variant="text" width="50%" height={50} />
+            <div className="summary-card" width='200px'>
+              <Skeleton variant="text" width="200px" height={30} />
+              <Skeleton variant="text" width="150px" height={50} />
             </div>
             <div className="summary-card">
               <Skeleton variant="text" width="80%" height={30} />
@@ -147,7 +147,7 @@ export default function Home() {
       </div>
       <div className="pieChartContainer">
         {loading ? (
-          <Skeleton variant="rectangular" width={600} height={400} />
+          <Skeleton variant="rectangular" width={500} height={300} />
         ) : (
           <ApexChart
             data={[data.studentsCount, data.advertisersCount, data.scholarshipsCount]}

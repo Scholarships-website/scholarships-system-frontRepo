@@ -23,6 +23,12 @@ import SearchScholarships from '../Components/SearchScholarships/SearchScholarsh
 import ScholarshipDetail from '../Components/ScholarshipDetail/ScholarshipDetail';
 import Contact from '../Components/Contact/Contact';
 import DashboardLayoutBasic from '../Components/Admin/Dash/DashboardLayoutBasic';
+import AcceptedScholarships from '../Components/Advertiser/AcceptedScholarships/AcceptedScholarships';
+import AllScholarships from '../Components/Advertiser/AllScholarships/AllScholarships';
+import PendingScholarships from '../Components/Advertiser/PendingScholarships/PendingScholarships';
+import RejectedScholarships from '../Components/Advertiser/RejectedScholarships/RejectedScholarships';
+import AddScholarships from '../Components/Advertiser/AddScholarship/AddScholarships';
+import EditScholarship from '../Components/Advertiser/EditScholarship/EditScholarship';
 
 export const router = createBrowserRouter([
     {
@@ -40,50 +46,42 @@ export const router = createBrowserRouter([
         ],
     },
     {
-        path: "/AdvertiserDashboard",
+        path: "/advertiserDashboard",
         element: <AdvertiserLayout />,
         children: [
-            {
-                path: "",
-                element: <AdvertiserDashboard />,
-            },
             {
                 path: "*",
                 element: <h2>Page not found — Advertiser Dashboard</h2>,
             },
+            {
+                path: "",
+                element: <Home />,
+            },
+            {
+                path: "scholarship-advertiser",
+                element: <AllScholarships />,
+            },
+            {
+                path: "scholarship-advertiser/accepted",
+                element:<AcceptedScholarships />,
+            },
+            {
+                path: "scholarship-advertiser/pending",
+                element:<PendingScholarships />,
+            },
+            {
+                path: "scholarship-advertiser/rejected",
+                element:<RejectedScholarships />,
+            },
+            {
+                path: "post-scholarship",
+                element:<AddScholarships />,
+            },
+            {
+                path: "edit-scholarship/:id",
+                element: <EditScholarship />,
+            },
         ],
-    },
-    {
-        path: "/",
-        element: <MainPage />,
-    },
-    {
-        path: '/login',
-        element: <Login />,
-    },
-    {
-        path: '/forgot-password',
-        element: <ForgetPassword />,
-    },
-    {
-        path: '/signup',
-        element: <SignUp />,
-    },
-    {
-        path: '/add-feedback',
-        element: <AddFeedback />,
-    },
-    {
-        path: '/search-scholarships',
-        element: <SearchScholarships />,
-    },
-    {
-        path: '/scholarship-detail/:id',
-        element: <ScholarshipDetail />,
-    },
-    {
-        path: '/contact-us',
-        element: <Contact />,
     },
     {
         path: '/dashboard',
@@ -126,5 +124,37 @@ export const router = createBrowserRouter([
                 element: <h2>Page not found — Dashboard Admin</h2>,
             },
         ],
+    },
+    {
+        path: "/",
+        element: <MainPage />,
+    },
+    {
+        path: '/login',
+        element: <Login />,
+    },
+    {
+        path: '/forgot-password',
+        element: <ForgetPassword />,
+    },
+    {
+        path: '/signup',
+        element: <SignUp />,
+    },
+    {
+        path: '/add-feedback',
+        element: <AddFeedback />,
+    },
+    {
+        path: '/search-scholarships',
+        element: <SearchScholarships />,
+    },
+    {
+        path: '/scholarship-detail/:id',
+        element: <ScholarshipDetail />,
+    },
+    {
+        path: '/contact-us',
+        element: <Contact />,
     },
 ]);

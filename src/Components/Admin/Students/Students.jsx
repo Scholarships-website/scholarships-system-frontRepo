@@ -23,7 +23,6 @@ export default function Students() {
     try {
       const { data } = await axios.get(`http://localhost:3000/api/v1/students/`);
       setStudents(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -116,7 +115,7 @@ export default function Students() {
   const isSmallScreen = useMediaQuery('(max-width:768px)');
 
   return (
-    <div className="student-admin ">
+    <div className="student-admin">
       <div className="mb-2 justify-content-between pb-3">
         <h1 className="ps-4 main-col">Students</h1>
         <form className="me-3 search-admin" role="search">
@@ -137,15 +136,11 @@ export default function Students() {
             <thead>
               <tr className="bg-transparent">
                 <th scope="col">#</th>
-                <th scope="col" >First name</th>
-                <th scope="col" >Last name </th>
-                <th scope="col" className="sortable-column d-none d-md-table-cell">
-                  Email
-                </th>
-                <th scope="col" className="sortable-column d-none d-md-table-cell">
-                  Phone Number
-                </th>
-                <th scope="col" >Action</th>
+                <th scope="col">First name</th>
+                <th scope="col">Last name</th>
+                <th scope="col" className="sortable-column d-none d-md-table-cell">Email</th>
+                <th scope="col" className="sortable-column d-none d-md-table-cell">Phone Number</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -154,8 +149,8 @@ export default function Students() {
                   <th scope="row"><Skeleton variant="text" width={20} /></th>
                   <td><Skeleton variant="text" width="80%" /></td>
                   <td><Skeleton variant="text" width="80%" /></td>
-                  <td><Skeleton variant="text" width="80%" /></td>
-                  <td><Skeleton variant="text" width="80%" /></td>
+                  <td className="d-none d-md-table-cell"><Skeleton variant="text" width="80%" /></td>
+                  <td className="d-none d-md-table-cell"><Skeleton variant="text" width="80%" /></td>
                   <td><Skeleton variant="rectangular" width={50} height={20} /></td>
                 </tr>
               ))}
@@ -179,7 +174,7 @@ export default function Students() {
                   <th scope="col" onClick={() => handleSort('user_id.phoneNumber')} className="sortable-column d-none d-md-table-cell">
                     Phone Number {renderSortIcon('user_id.phoneNumber')}
                   </th>
-                  <th scope="col" >Action</th>
+                  <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -187,7 +182,7 @@ export default function Students() {
                   paginatedStudents.map((student, index) => (
                     <React.Fragment key={student._id}>
                       <tr onClick={() => handleExpandRow(index)}>
-                        <th scope="row">{(currentPage - 1) * itemsPerPage + index + 1}</th> {/*to find the index */}
+                        <th scope="row">{(currentPage - 1) * itemsPerPage + index + 1}</th>
                         <td>{student.first_name}</td>
                         <td>{student.last_name}</td>
                         <td className="d-none d-md-table-cell">{student.user_id.email}</td>
@@ -214,7 +209,6 @@ export default function Students() {
                           />
                         </td>
                       </tr>
-                      {/* Expandable row - shown only on smaller screens */}
                       {expandedRow === index && isSmallScreen && (
                         <tr className="expanded-row expanded-row-content">
                           <td colSpan="4" className="full-width-expanded">

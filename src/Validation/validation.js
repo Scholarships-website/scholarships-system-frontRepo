@@ -61,28 +61,6 @@ export const addFeedback = Yup.object({
    name: Yup.string().required('Name is required'),
    email: Yup.string().email('Invalid email address').required('Email is required'),
    role: Yup.string().required('Role is required'),
-   feedback: Yup.string().required('Feedback is required'),
-   rating: Yup.number().required('Rating is required').min(1, 'Please select a rating'),
+   content: Yup.string().required('content is required').min(5, 'content must have at least 5 characters'),
+   rating: Yup.string().required('Rating is required').min(1, 'Please select a rating'),
 });
-
-//  export const addTraining = yup.object({
-//    name:yup.string().required('name is required'),
-//    description:yup.string().required('description is required'),
-// })
-
-//  export const editTraining = yup.object({
-//    name:yup.string().required('Training name is required'),
-//    description:yup.string().required('Description is required'),
-// })
-//  export const editTrainee = yup.object({
-//    email:yup.string().required('Email is required').email('Please enter a valid email address'),
-//    firstName:yup.string().required('First name is required'),
-//    lastName:yup.string().required('Last name is required'),
-// })
-
-//  export const addTrainee = yup.object({
-//     email:yup.string().required('Email is required').email('Please enter a valid email address'),
-//     password:yup.string().required('Password is required').min(6,'your Password must have at least 6 characters').max(30,'your Password must have at most 30 characters'),
-//     firstName:yup.string().required('First name is required'),
-//     lastName:yup.string().required('Last name is required'),
-//  })
