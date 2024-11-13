@@ -123,7 +123,7 @@ export default function Students() {
           <input
             className="form-control me-5"
             type="search"
-            placeholder="Search by name/email"
+            placeholder="Search by Name / Email"
             aria-label="Search"
             value={searchTerm}
             onChange={handleSearch}

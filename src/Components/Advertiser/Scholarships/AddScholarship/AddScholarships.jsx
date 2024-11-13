@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios';
 import { useFormik } from 'formik';
-import Input from '../../Shared/Input/Input';
+import Input from '../../../Shared/Input/Input';
 import { useNavigate } from 'react-router-dom';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
-import { UserContext } from '../../../Context/UserContext';
+import { UserContext } from '../../../../Context/UserContext';
+import { addScholarship } from '../../../../Validation/validation';
 
 function AddScholarships() {
   let { userToken, roleId } = useContext(UserContext);
@@ -102,7 +103,7 @@ function AddScholarships() {
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit,
-    validationSchema: null
+    validationSchema: addScholarship
   })
   const inputs = [
     {

@@ -5,17 +5,17 @@ import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { PageContainer } from '@toolpad/core/PageContainer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBarsProgress, faCircleCheck, faCircleXmark, faClock, faComments, faMessage, faPersonChalkboard, faPlus, faSchoolFlag, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBarsProgress, faCircleCheck, faCircleXmark, faClock, faComments, faLayerGroup, faMessage, faPersonChalkboard, faPlus, faSchoolFlag, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DescriptionIcon from '@mui/icons-material/Description';
 
 import { UserContext } from '../../../Context/UserContext';
-import AcceptedScholarships from '../AcceptedScholarships/AcceptedScholarships';
-import AllScholarships from '../AllScholarships/AllScholarships';
-import PendingScholarships from '../PendingScholarships/PendingScholarships';
-import RejectedScholarships from '../RejectedScholarships/RejectedScholarships';
-import AddScholarships from '../AddScholarship/AddScholarships';
+import AcceptedScholarships from '../Scholarships/AcceptedScholarships/AcceptedScholarships';
+import AllScholarships from '../Scholarships/AllScholarships/AllScholarships';
+import PendingScholarships from '../Scholarships/PendingScholarships/PendingScholarships';
+import RejectedScholarships from '../Scholarships/RejectedScholarships/RejectedScholarships';
+import AddScholarships from '../Scholarships/AddScholarship/AddScholarships';
 
 const demoTheme = createTheme({
     cssVariables: {
@@ -97,6 +97,16 @@ function AdvertiserDashboard(props) {
                     content:<RejectedScholarships/>
                 },
             ],
+        },
+        {
+            segment: 'advertiserDashboard/applications',
+            title: 'Applications',
+            icon: <FontAwesomeIcon icon={faLayerGroup} />,
+        },
+        {
+            segment: 'advertiserDashboard/feedbacks',
+            title: 'Feedbacks',
+            icon: <FontAwesomeIcon icon={faComments} />,
         },
         {
             kind: 'divider',

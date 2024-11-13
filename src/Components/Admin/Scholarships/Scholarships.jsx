@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import '../Dashboard.css';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faEllipsisVertical, faUserXmark, faXmark, faSortUp, faSortDown, faChevronDown, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faEllipsisVertical, faUserXmark, faXmark, faSortUp, faSortDown, faChevronDown, faEye, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 import { UserContext } from '../../../Context/UserContext';
 import { PieChart } from '@mui/x-charts';
@@ -42,6 +42,9 @@ export default function Scholarships() {
   const [expandedRow, setExpandedRow] = useState(null);
   const [expandedRowP, setExpandedRowP] = useState(null);
   const [loadingDetails, setLoadingDetails] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTermP, setSearchTermP] = useState('');
+
   // Fetch all scholarships
   const getOrganizationName = async (id) => {
     try {
@@ -176,7 +179,12 @@ export default function Scholarships() {
       direction: prevConfig.key === key && prevConfig.direction === 'ascending' ? 'descending' : 'ascending',
     }));
   };
-  const sortedScholarshipsS = [...scholarships].sort((a, b) => {
+  const filteredScholarships = scholarships.filter((scholarship) => {
+    return (
+      scholarship.scholarsip_name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
+  const sortedScholarshipsS = [...filteredScholarships].sort((a, b) => {
     if (sortConfig.key) {
       const aValue = sortByKey(a, sortConfig.key);
       const bValue = sortByKey(b, sortConfig.key);
@@ -186,7 +194,20 @@ export default function Scholarships() {
     }
     return 0;
   });
-  const sortedScholarshipsP = [...pendingScholarships].sort((a, b) => {
+  const handleSearchP = (event) => {
+    setSearchTermP(event.target.value);
+    setCurrentPageP(1);
+  };
+  const handleSearchS = (event) => {
+    setSearchTerm(event.target.value);
+    setCurrentPageS(1);
+  };
+  const filteredScholarshipsP = pendingScholarships.filter((scholarship) => {
+    return (
+      scholarship.scholarsip_name.toLowerCase().includes(searchTermP.toLowerCase())
+    );
+  });
+  const sortedScholarshipsP = [...filteredScholarshipsP].sort((a, b) => {
     if (sortConfig.key) {
       const aValue = sortByKey(a, sortConfig.key);
       const bValue = sortByKey(b, sortConfig.key);
@@ -259,11 +280,23 @@ export default function Scholarships() {
       setLoadingDetails(false);
     }
   };
+
   return (
     <>
       <div className="scholarships-admin">
         <div className="mb-2 justify-content-between pb-3">
           <h1 className="ps-4 main-col">Scholarships</h1>
+          <form className="me-3 search-admin" role="search">
+            <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#418447" }} />
+            <input
+              className="form-control me-5"
+              type="search"
+              placeholder="Search by Name"
+              aria-label="Search"
+              value={searchTerm}
+              onChange={handleSearchS}
+            />
+          </form>
         </div>
         <div className="table-container">
           {loading ? (
@@ -502,7 +535,7 @@ export default function Scholarships() {
                 </tbody>
               </table>
               <Pagination
-                count={Math.ceil(scholarships.length / itemsPerPage)}
+                count={Math.ceil(filteredScholarships.length / itemsPerPage)}
                 page={currentPageS}
                 onChange={handleChangePageS}
                 className='pagination-search'
@@ -512,10 +545,20 @@ export default function Scholarships() {
           )}
         </div>
         {/* <pendingScholarships /> */}
-        <div className="requestedScholarships d-flex">
-          <div className="d-flex mb-2 justify-content-between pb-3">
-            <h1 className='ps-4 main-col m-0'>Pending Scholarships</h1>
-          </div>
+        <div className="mb-2 justify-content-between pb-3">
+          <h1 className="ps-4 main-col">Pending Scholarships</h1>
+          <form className="me-3 search-admin" role="search">
+            <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#418447" }} />
+            <input
+              className="form-control me-5"
+              type="search"
+              placeholder="Search by Name"
+              aria-label="Search"
+              value={searchTermP}
+              onChange={handleSearchP}
+            />
+          </form>
+        </div>
           <div className="table-container ps-3">
             {loading ? (
               <table className="table table-hover bg-transparent">
@@ -780,7 +823,7 @@ export default function Scholarships() {
                   </tbody>
                 </table>
                 <Pagination
-                  count={Math.ceil(pendingScholarships.length / itemsPerPage)}
+                  count={Math.ceil(filteredScholarshipsP.length / itemsPerPage)}
                   page={currentPageP}
                   onChange={handleChangePageP}
                   className='pagination-search'
@@ -820,7 +863,6 @@ export default function Scholarships() {
             />
           )}
         </div>
-      </div>
     </>
   );
 }

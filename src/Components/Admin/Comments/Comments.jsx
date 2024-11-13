@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '../Dashboard.css'
 import axios from 'axios';
-// import Loading from '../../Shared/Loading/Loading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical, faMagnifyingGlass, faPenToSquare, faUserXmark } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
@@ -10,9 +9,10 @@ import ReportedComments from './ReportedComments';
 
 export default function Comments() {
     let [comments, setComments] = useState([]);
-    // const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     // const fetchComments = async () => {
+    //     setLoading(true)
     //     try {
     //         const { data } = await axios.get(`http://localhost:3000/api/v1/feedbacks/`);
     //         console.log(data)
@@ -24,48 +24,41 @@ export default function Comments() {
     //         setLoading(false)
     //     }
     // };
-    const deleteComment = async (id) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    await axios.delete(`http://localhost:3000/api/v1/feedback/${id}`);
-                    // Remove the deleted comment
-                    setComments((prevComments) => prevComments.filter((comment) => comment.id !== id));
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "comment has been deleted.",
-                        icon: "success",
-                    });
-                } catch (error) {
-                    console.error("Error deleting comment:", error);
-                    Swal.fire({
-                        title: "Error!",
-                        text: "There was a problem deleting the comment.",
-                        icon: "error",
-                    });
-                }
-            }
-        });
-    };
+    // const deleteComment = async (id) => {
+    //     Swal.fire({
+    //         title: "Are you sure?",
+    //         text: "You won't be able to revert this!",
+    //         icon: "warning",
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#3085d6",
+    //         cancelButtonColor: "#d33",
+    //         confirmButtonText: "Yes, delete it!",
+    //     }).then(async (result) => {
+    //         if (result.isConfirmed) {
+    //             try {
+    //                 await axios.delete(`http://localhost:3000/api/v1/feedback/${id}`);
+    //                 // Remove the deleted comment
+    //                 setComments((prevComments) => prevComments.filter((comment) => comment.id !== id));
+    //                 Swal.fire({
+    //                     title: "Deleted!",
+    //                     text: "comment has been deleted.",
+    //                     icon: "success",
+    //                 });
+    //             } catch (error) {
+    //                 console.error("Error deleting comment:", error);
+    //                 Swal.fire({
+    //                     title: "Error!",
+    //                     text: "There was a problem deleting the comment.",
+    //                     icon: "error",
+    //                 });
+    //             }
+    //         }
+    //     });
+    // };
     // useEffect(() => {
     //     fetchComments();
     // }, []);
 
-    // const filteredComments = comments.filter((comment) => {
-    //     return (
-    //         comment.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    //         comment.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    //         comment.email.toLowerCase().includes(searchTerm.toLowerCase())
-    //     );
-    // });
     return (
         <>
             <div className="student-admin">

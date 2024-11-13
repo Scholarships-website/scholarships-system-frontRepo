@@ -13,6 +13,7 @@ import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import ScholarshipFeedback from './ScholarshipFeedback';
 
 const ScholarshipDetail = () => {
     const { id } = useParams();
@@ -150,9 +151,10 @@ const ScholarshipDetail = () => {
                         )}
                     </div>
                 </div>
+                <ScholarshipFeedback id={id} />
                 {/* Similar scholarships section */}
                 <div className="similar-scholarships">
-                    <h2>Similar Scholarships</h2>
+                    <h2 className='header-similar'>Similar Scholarships</h2>
                     <Slider {...sliderSettings}>
                         {similarLoading  ? (
                             Array.from({ length: 3 }).map((_, index) => (

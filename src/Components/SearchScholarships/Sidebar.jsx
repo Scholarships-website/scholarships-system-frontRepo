@@ -3,6 +3,8 @@ import { Typography, Checkbox, FormControlLabel, Slider, Box, IconButton, Drawer
 import { Menu, ExpandLess, ExpandMore } from '@mui/icons-material';
 import axios from 'axios';
 import './search.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar = ({ scholarships, setFilteredScholarships }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -104,8 +106,9 @@ const Sidebar = ({ scholarships, setFilteredScholarships }) => {
                 <div className="sidebar-search-open">
                     <h3>Filters</h3>
                     <Box className="filter-category">
-                        <Typography variant="body1">Place of Study
-                            <IconButton onClick={() => toggleFilter('Place_of_Study')}>
+                        <Typography variant="body1" sx={{ display: 'flex', alignItems: 'center' }}>
+                            Place of Study
+                            <IconButton onClick={() => toggleFilter('Place_of_Study')} sx={{ padding: '4px', marginLeft: '8px' }}>
                                 {openFilters.Place_of_Study ? <ExpandLess /> : <ExpandMore />}
                             </IconButton>
                         </Typography>
@@ -114,7 +117,7 @@ const Sidebar = ({ scholarships, setFilteredScholarships }) => {
                                 key={index}
                                 control={
                                     <Checkbox
-                                        checked={filters.Place_of_Study.includes(place)} 
+                                        checked={filters.Place_of_Study.includes(place)}
                                         onChange={() => handleFilterChange('Place_of_Study', place)}
                                     />
                                 }
@@ -133,7 +136,7 @@ const Sidebar = ({ scholarships, setFilteredScholarships }) => {
                                 key={index}
                                 control={
                                     <Checkbox
-                                        checked={filters.language_Of_Study.includes(language)} 
+                                        checked={filters.language_Of_Study.includes(language)}
                                         onChange={() => handleFilterChange('language_Of_Study', language)}
                                     />
                                 }
@@ -152,7 +155,7 @@ const Sidebar = ({ scholarships, setFilteredScholarships }) => {
                                 key={index}
                                 control={
                                     <Checkbox
-                                        checked={filters.type.includes(type)} 
+                                        checked={filters.type.includes(type)}
                                         onChange={() => handleFilterChange('type', type)}
                                     />
                                 }

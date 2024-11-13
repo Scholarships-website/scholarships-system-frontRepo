@@ -1,4 +1,3 @@
-// src/router.js
 import React from 'react';
 import { createBrowserRouter } from "react-router-dom";
 import Login from '../Components/Shared/Login/Login';
@@ -23,16 +22,19 @@ import SearchScholarships from '../Components/SearchScholarships/SearchScholarsh
 import ScholarshipDetail from '../Components/ScholarshipDetail/ScholarshipDetail';
 import Contact from '../Components/Contact/Contact';
 import DashboardLayoutBasic from '../Components/Admin/Dash/DashboardLayoutBasic';
-import AcceptedScholarships from '../Components/Advertiser/AcceptedScholarships/AcceptedScholarships';
-import AllScholarships from '../Components/Advertiser/AllScholarships/AllScholarships';
-import PendingScholarships from '../Components/Advertiser/PendingScholarships/PendingScholarships';
-import RejectedScholarships from '../Components/Advertiser/RejectedScholarships/RejectedScholarships';
-import AddScholarships from '../Components/Advertiser/AddScholarship/AddScholarships';
-import EditScholarship from '../Components/Advertiser/EditScholarship/EditScholarship';
-
+import AcceptedScholarships from '../Components/Advertiser/Scholarships/AcceptedScholarships/AcceptedScholarships';
+import AllScholarships from '../Components/Advertiser/Scholarships/AllScholarships/AllScholarships';
+import PendingScholarships from '../Components/Advertiser/Scholarships/PendingScholarships/PendingScholarships';
+import RejectedScholarships from '../Components/Advertiser/Scholarships/RejectedScholarships/RejectedScholarships';
+import AddScholarships from '../Components/Advertiser/Scholarships/AddScholarship/AddScholarships';
+import EditScholarship from '../Components/Advertiser/Scholarships/EditScholarship/EditScholarship';
+import ApplicationsList from '../Components/Advertiser/Applications/ApplicationsList';
+import ScholarshipsFeedbacks from '../Components/Advertiser/Feedbacks/ScholarshipsFeedbacks';
+import StudentApplications from '../Components/Advertiser/Applications/StudentApplications';
+import HomeAdvertiser from '../Components/Advertiser/Home/HomeAdvertiser';
 export const router = createBrowserRouter([
     {
-        path: "/PalScholarships",
+        path: "/studentDashboard",
         element: <StudentLayout />,
         children: [
             {
@@ -55,7 +57,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "",
-                element: <Home />,
+                element: <HomeAdvertiser />,
             },
             {
                 path: "scholarship-advertiser",
@@ -80,6 +82,19 @@ export const router = createBrowserRouter([
             {
                 path: "edit-scholarship/:id",
                 element: <EditScholarship />,
+            },
+            {
+                path: "applications",
+                element: <ApplicationsList />,
+            },
+            ///applications/${scholarshipId}
+            {
+                path: "applications/:id",
+                element: <StudentApplications />,
+            },
+            {
+                path: "feedbacks",
+                element: <ScholarshipsFeedbacks />,
             },
         ],
     },

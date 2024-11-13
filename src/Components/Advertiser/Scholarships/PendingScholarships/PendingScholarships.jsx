@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faEllipsisVertical, faUserXmark, faXmark, faSortUp, faSortDown, faChevronDown, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faEllipsisVertical, faUserXmark, faXmark, faSortUp, faSortDown, faChevronDown, faEye, faPenToSquare, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
-import { UserContext } from '../../../Context/UserContext';
+import { UserContext } from '../../../../Context/UserContext';
+import { PieChart } from '@mui/x-charts';
 import { Box, Modal, Pagination, Skeleton, Typography, useMediaQuery } from '@mui/material';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 const sortByKey = (object, key) => {
   return key.split('.').reduce((o, k) => (o ? o[k] : null), object);
@@ -24,9 +26,9 @@ const style = {
   overflowY: 'auto',
   borderRadius: '8px',
 };
-function AcceptedScholarships() {
+function PendingScholarships() {
   const { userToken, roleId, userId } = useContext(UserContext);
-  const [acceptedScholarships, setAcceptedScholarships] = useState([]);
+  const [pendingScholarships, setPendingScholarships] = useState([]);
   const [loading, setLoading] = useState(true);
   const itemsPerPage = 5;
   const [sortConfig, setSortConfig] = useState({ key: '', direction: 'ascending' });
@@ -36,11 +38,13 @@ function AcceptedScholarships() {
   const [open, setOpen] = useState(false);
   const [scholarshipDetails, setScholarshipDetails] = useState(null);
   const isSmallScreen = useMediaQuery('(max-width:850px)');
-  const fetchAcceptedScholarships = async () => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const fetchPendingScholarships = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/accept`);
-      setAcceptedScholarships(response.data);
+      const response = await axios.get(`http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/pending`);
+      setPendingScholarships(response.data);
       console.log(response.data);
     } catch (error) {
       console.error("Error fetching scholarships:", error);
@@ -51,7 +55,7 @@ function AcceptedScholarships() {
 
   useEffect(() => {
     if (roleId) {
-      fetchAcceptedScholarships();
+      fetchPendingScholarships();
     }
   }, [roleId]);
 
@@ -61,8 +65,16 @@ function AcceptedScholarships() {
       direction: prevConfig.key === key && prevConfig.direction === 'ascending' ? 'descending' : 'ascending',
     }));
   };
-
-  const sortedScholarships = [...acceptedScholarships].sort((a, b) => {
+  const filteredScholarships = pendingScholarships.filter((scholarship) => {
+    return (
+      scholarship.scholarsip_name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+    setCurrentPage(1);
+  };
+  const sortedScholarships = [...filteredScholarships].sort((a, b) => {
     if (sortConfig.key) {
       const aValue = sortByKey(a, sortConfig.key);
       const bValue = sortByKey(b, sortConfig.key);
@@ -111,7 +123,7 @@ function AcceptedScholarships() {
   const viewDetails = async (id) => {
     setLoadingDetails(true);
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/scholarships/${id}`);
+      const response = await axios.get(`http://localhost:3000/api/v1/admin/scholarships/pending/${id}`);
       setScholarshipDetails(response.data);
       handleOpen();
       setLoadingDetails(false)
@@ -137,7 +149,7 @@ function AcceptedScholarships() {
               Authorization: `Bearer ${userToken}`, // Include Bearer token in headers
             },
           });
-          setAcceptedScholarships((prevScholarships) =>
+          setPendingScholarships((prevScholarships) =>
             prevScholarships.filter((scholarship) => scholarship._id !== id)
           );
           Swal.fire({
@@ -160,7 +172,18 @@ function AcceptedScholarships() {
     <>
       <div className="scholarships-admin scholarships-advertiser">
         <div className="mb-2 justify-content-between pb-3">
-          <h1 className="ps-4 main-col">Accepted Scholarships</h1>
+          <h1 className="ps-4 main-col">Pending Scholarships</h1>
+          <form className="me-3 search-admin" role="search">
+            <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#418447" }} />
+            <input
+              className="form-control me-5"
+              type="search"
+              placeholder="Search by Name"
+              aria-label="Search"
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+          </form>
         </div>
         <div className="table-container">
           {loading ? (
@@ -267,8 +290,8 @@ function AcceptedScholarships() {
                                               <Typography><strong>Language of Study:</strong> {scholarshipDetails.language_Of_Study}</Typography>
                                               <Typography><strong>Place of Study:</strong> {scholarshipDetails.Place_of_Study}</Typography>
                                               <Typography><strong>Start Date:</strong>{moment.utc(scholarshipDetails.start_Date).format('YYYY-MM-DD')}</Typography>
-                                              <Typography><strong>End Date:</strong>{moment.utc(scholarshipDetails.End_Date).format('YYYY-MM-DD')} </Typography>
-                                              <Typography><strong>Submission Deadline:</strong>{moment.utc(scholarshipDetails.submission_date).format('YYYY-MM-DD')} </Typography>
+                                              <Typography><strong>End Date:</strong>{moment.utc(scholarshipDetails.End_Date).format('YYYY-MM-DD')}</Typography>
+                                              <Typography><strong>Submission Deadline:</strong>{moment.utc(scholarshipDetails.submission_date).format('YYYY-MM-DD')}</Typography>
                                               <Typography><strong>Number of Seats Available:</strong> {scholarshipDetails.number_of_seats_available}</Typography>
                                               <Typography><strong>Expenses Covered:</strong> ${scholarshipDetails.expenses_coverd}</Typography>
                                               <Typography><strong>Terms and Conditions:</strong> {scholarshipDetails.term_and_conditions}</Typography>
@@ -282,6 +305,11 @@ function AcceptedScholarships() {
                                       </Box>
                                     </Modal>
                                   </div>
+                                </li>
+                                <li className='d-flex justify-content-center align-items-center'>
+                                  <Link className="dropdown-item text-warning" to={`/advertiserDashboard/edit-scholarship/${scholarship._id}`}>
+                                    <FontAwesomeIcon icon={faPenToSquare} className='px-1' />Edit
+                                  </Link>
                                 </li>
                                 <li className="d-flex justify-content-center align-items-center">
                                   <button
@@ -352,8 +380,8 @@ function AcceptedScholarships() {
                                                 <Typography><strong>Selection Process:</strong> {scholarshipDetails.SelectionProcess}</Typography>
                                                 <Typography><strong>Language of Study:</strong> {scholarshipDetails.language_Of_Study}</Typography>
                                                 <Typography><strong>Place of Study:</strong> {scholarshipDetails.Place_of_Study}</Typography>
-                                                <Typography><strong>Start Date:</strong>{moment.utc(scholarshipDetails.start_Date).format('YYYY-MM-DD')} </Typography>
-                                                <Typography><strong>End Date:</strong> {moment.utc(scholarshipDetails.End_Date).format('YYYY-MM-DD')}</Typography>
+                                                <Typography><strong>Start Date:</strong>{moment.utc(scholarshipDetails.start_Date).format('YYYY-MM-DD')}</Typography>
+                                                <Typography><strong>End Date:</strong>{moment.utc(scholarshipDetails.End_Date).format('YYYY-MM-DD')}</Typography>
                                                 <Typography><strong>Submission Deadline:</strong>{moment.utc(scholarshipDetails.submission_date).format('YYYY-MM-DD')}</Typography>
                                                 <Typography><strong>Number of Seats Available:</strong> {scholarshipDetails.number_of_seats_available}</Typography>
                                                 <Typography><strong>Expenses Covered:</strong> ${scholarshipDetails.expenses_coverd}</Typography>
@@ -370,6 +398,11 @@ function AcceptedScholarships() {
                                     </div>
                                   </li>
                                   <li>
+                                    <Link className="dropdown-item text-warning" to={`/advertiserDashboard/edit-scholarship/${scholarship._id}`}>
+                                      <FontAwesomeIcon icon={faPenToSquare} className='px-1' />Edit
+                                    </Link>
+                                  </li>
+                                  <li>
                                     <button className="dropdown-item text-danger" onClick={() => deleteScholarship(scholarship._id)}>
                                       <FontAwesomeIcon icon={faUserXmark} className="px-1" />
                                       Delete
@@ -384,13 +417,13 @@ function AcceptedScholarships() {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="7">No Accepted Scholarships</td>
+                      <td colSpan="7">No Pending Scholarships</td>
                     </tr>
                   )}
                 </tbody>
               </table>
               <Pagination
-                count={Math.ceil(acceptedScholarships.length / itemsPerPage)}
+                count={Math.ceil(filteredScholarships.length / itemsPerPage)}
                 page={currentPage}
                 onChange={handleChangePage}
                 className='pagination-search'
@@ -401,7 +434,7 @@ function AcceptedScholarships() {
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default AcceptedScholarships;
+export default PendingScholarships

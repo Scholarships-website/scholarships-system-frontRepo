@@ -260,7 +260,7 @@
 }
 
 .search-admin input {
-  width: max-content;
+  max-width: 320px;
 }
 
 .edit-btn {

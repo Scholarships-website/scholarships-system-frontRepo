@@ -2,10 +2,11 @@ import axios from 'axios';
 import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Input from '../../Shared/Input/Input';
+import Input from '../../../Shared/Input/Input';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
-import Loading from '../../Shared/Loading/Loading'
+import Loading from '../../../Shared/Loading/Loading'
 import './EditScholarship.css'
+import { addFeedback, editScholarship } from '../../../../Validation/validation';
 function EditScholarship() {
   const { id } = useParams();
   console.log(id);
@@ -92,7 +93,7 @@ function EditScholarship() {
       number_of_seats_available: '',
       scholarship_picture: null,
     },
-    validationSchema: null,
+    validationSchema: editScholarship,
     onSubmit,
     enableReinitialize: true,
   });

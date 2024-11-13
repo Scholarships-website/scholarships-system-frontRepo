@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Cinzel:wght@400..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
 .scholarship-detail {
     max-width: 1200px;
     margin: 20px auto;
@@ -20,7 +22,7 @@
 }
 
 .scholarship-detail .img-container-detail img {
-    max-width: 600px;
+    width: 550px;
     height: auto;
     border-radius: 8px;
 }
@@ -40,6 +42,11 @@
 .scholarship-detail .basic-info h1 {
     font-size: 2rem;
     color: #333;
+    font-family: "Cinzel", serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    margin-bottom: 15px;
+    
 }
 
 .scholarship-detail .basic-info p {
@@ -48,17 +55,21 @@
     color: #555;
 }
 
+
 .scholarship-detail .secondary-info {
-    margin-top: 20px;
-    text-align: left;
-    width: 100%;
+
+    max-width: 700px;
     background-color: white;
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
     z-index: 2;
     position: relative;
+    margin: auto;
+    text-align: center;
+    margin-top: 20px;
 }
+
 
 .scholarship-detail .secondary-info p {
     margin: 10px 0;
@@ -66,7 +77,8 @@
     color: #555;
 }
 
-.scholarship-detail .apply-button {
+.scholarship-detail .apply-button,
+.feedbacks-btn {
     display: inline-block;
     margin-top: 20px;
     padding: 10px 20px;
@@ -77,8 +89,15 @@
     transition: background-color 0.3s;
 }
 
-.scholarship-detail .apply-button:hover {
+.scholarship-detail .apply-button:hover,
+.feedbacks-btn:hover {
     background-color: #45a049;
+    color: white;
+}
+
+.feedbacks-btn {
+    margin: 50px auto;
+    display: flex;
 }
 
 .scholarship-detail .date {
@@ -97,13 +116,16 @@
         max-width: 100%;
         height: auto;
     }
-    .scholarship-detail .scholarship-info{
+
+    .scholarship-detail .scholarship-info {
         max-width: 100%;
     }
-    .scholarship-detail .scholarship-info .basic-info{
+
+    .scholarship-detail .scholarship-info .basic-info {
         max-width: 100%;
     }
-    .scholarship-detail .scholarship-info, 
+
+    .scholarship-detail .scholarship-info,
     .scholarship-detail .secondary-info {
         width: 100%;
         padding: 1.5rem;
@@ -158,11 +180,12 @@
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.similar-scholarships  {
+.similar-scholarships {
     font-size: 1.8rem;
     color: #333;
     margin-bottom: 20px;
 }
+
 /* slider */
 .slider-container {
     padding: 40px;
@@ -191,10 +214,11 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     padding: 20px;
 }
-.similar-scholarships .similar-scholarship-item .card-header{
+
+.similar-scholarships .similar-scholarship-item .card-header {
     font-size: 1.3rem;
     margin-bottom: 20px;
-    color:#333 !important ;
+    color: #333 !important;
 }
 
 .similar-scholarship-item:hover {
@@ -236,8 +260,9 @@
 }
 
 .similar-scholarship-item a:hover {
-        background-color: #45a049;
-    }
+    background-color: #45a049;
+}
+
 .similar-scholarships .slick-prev,
 .similar-scholarships .slick-next {
     width: 30px;
@@ -264,13 +289,23 @@
 .similar-scholarships .slick-next {
     right: -50px;
 }
+
 .similar-scholarships h2 {
     font-size: 2rem;
     margin-bottom: 20px;
+
 }
-.similar-scholarship-item img{
+.header-similar{
+    font-family: "Cinzel", serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-size: 2.5rem;
+}
+
+.similar-scholarship-item img {
     border-radius: 8px;
 }
+
 /* 1200px breakpoint */
 @media (max-width: 1200px) {
     .similar-scholarships {
@@ -351,10 +386,12 @@
         width: 90%;
         margin: 0 auto;
     }
-    .similar-scholarships .slick-initialized .slick-slide{
+
+    .similar-scholarships .slick-initialized .slick-slide {
         display: flex;
         justify-content: center;
     }
+
     .similar-scholarship-item p,
     .similar-scholarship-item strong {
         font-size: 0.7rem;
@@ -377,5 +414,52 @@
 
     .similar-scholarships .slick-next {
         right: -15px;
+    }
+}
+
+.feedback-header {
+    margin-top: 50px;
+    margin-bottom: 40px;
+    text-align: center;
+    font-family: "Cinzel", serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+}
+
+.feedbacks-details {
+    padding-bottom: 20px;
+}
+
+@media (max-width: 968px) {
+    .similar-scholarships {
+        padding: 20px;
+    }
+
+    .feedback-header {
+        font-size: 50px;
+        text-align: center;
+    }
+
+    .feedback-detail {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .some-feedbacks {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .img-container iframe {
+        width: 320px;
+        height: 320px;
+    }
+
+    .feedbacks-btn {
+        width: 70%;
+        text-align: center;
+        margin: auto;
+        margin-top: 30px;
+        justify-content: center;
     }
 }
