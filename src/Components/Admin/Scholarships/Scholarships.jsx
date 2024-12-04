@@ -295,6 +295,7 @@ export default function Scholarships() {
               aria-label="Search"
               value={searchTerm}
               onChange={handleSearchS}
+              colSize="col-md-5"
             />
           </form>
         </div>
@@ -556,6 +557,7 @@ export default function Scholarships() {
               aria-label="Search"
               value={searchTermP}
               onChange={handleSearchP}
+              colSize="col-md-5"
             />
           </form>
         </div>

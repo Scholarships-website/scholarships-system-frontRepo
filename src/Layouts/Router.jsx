@@ -32,6 +32,12 @@ import ApplicationsList from '../Components/Advertiser/Applications/Applications
 import ScholarshipsFeedbacks from '../Components/Advertiser/Feedbacks/ScholarshipsFeedbacks';
 import StudentApplications from '../Components/Advertiser/Applications/StudentApplications';
 import HomeAdvertiser from '../Components/Advertiser/Home/HomeAdvertiser';
+import ResetPassword from '../Components/Shared/Login/ForgetPass/ResetPassword';
+import Applications from '../Components/Student/Application/Applications';
+import Wishlist from '../Components/Student/Wishlist/Wishlist';
+import HomeStudent from '../Components/Student/Home/HomeStudent';
+import Profile from '../Components/Student/Profile/Profile';
+import Apply from '../Components/Apply/Apply';
 export const router = createBrowserRouter([
     {
         path: "/studentDashboard",
@@ -39,7 +45,19 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: "",
-                element: <StudentDashboard />,
+                element: <HomeStudent />,
+            },
+            {
+                path: "profile",
+                element: <Profile />,
+            },
+            {
+                path: "applications",
+                element: <Applications />,
+            },
+            {
+                path: "wishlist",
+                element: <Wishlist />,
             },
             {
                 path: "*",
@@ -153,6 +171,10 @@ export const router = createBrowserRouter([
         element: <ForgetPassword />,
     },
     {
+        path: '/resetPassword/:resetToken',
+        element: <ResetPassword />,
+    },
+    {
         path: '/signup',
         element: <SignUp />,
     },
@@ -171,5 +193,9 @@ export const router = createBrowserRouter([
     {
         path: '/contact-us',
         element: <Contact />,
+    },
+    {
+        path: '/apply-for-scholarship',
+        element: <Apply />,
     },
 ]);

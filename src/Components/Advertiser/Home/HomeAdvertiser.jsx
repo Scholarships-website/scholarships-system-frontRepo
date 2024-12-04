@@ -3,6 +3,7 @@ import { UserContext } from '../../../Context/UserContext';
 import axios from 'axios';
 import Skeleton from '@mui/material/Skeleton';
 import { PieChart } from '@mui/x-charts';
+import Loading from '../../Shared/Loading/Loading';
 
 export default function HomeAdvertiser() {
     const { userToken, setUserToken, userData, roleId } = useContext(UserContext);
@@ -11,7 +12,23 @@ export default function HomeAdvertiser() {
         pendingCount: 0,
         rejectedCount: 0,
     });
+    const [acceptedCount, setAcceptedCount] = useState(0);
+    const [pendingCount, setPendingCount] = useState(0);
+    const [rejectedCount, setRejectedCount] = useState(0);
     const [loading, setLoading] = useState(true);
+
+    // Function to animate counter
+    const incrementCounter = (targetCount, setCounter) => {
+        let currentCount = 0;
+        const interval = setInterval(() => {
+            if (currentCount < targetCount) {
+                currentCount += Math.ceil(targetCount / 100); // Gradually increase
+                setCounter(currentCount);
+            } else {
+                clearInterval(interval); // Stop once target is reached
+            }
+        }, 70); // Adjust time interval for speed
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -35,13 +52,29 @@ export default function HomeAdvertiser() {
         };
 
         fetchData();
-    }, []);
+    }, [roleId]);
+
+    useEffect(() => {
+        if (!loading && acceptedCount === 0 && pendingCount === 0 && rejectedCount === 0) {
+            incrementCounter(data.acceptedCount, setAcceptedCount);
+            incrementCounter(data.pendingCount, setPendingCount);
+            incrementCounter(data.rejectedCount, setRejectedCount);
+        }
+    }, [data, loading]);
+
+    if (!roleId) {
+        return <Loading />;
+    }
 
     const colors = ['#008FFB', '#00E396', '#FEB019'];
 
     return (
         <div className="home-container">
-            <h2 className='d-flex align-items-center'>Hi {userData.username}<img src="src/assets/img/hi.gif" alt="example-gif" width='40px' /> ! </h2>
+            <h2 className="d-flex align-items-center">
+                Hi {userData.username}
+                <img src="src/assets/img/hi.gif" alt="example-gif" width="40px" />
+                !
+            </h2>
             <div className="image-container">
                 {loading ? (
                     <Skeleton variant="rectangular" width={500} height={500} />
@@ -52,7 +85,7 @@ export default function HomeAdvertiser() {
             <div className="summary-container">
                 {loading ? (
                     <>
-                        <div className="summary-card" width='200px'>
+                        <div className="summary-card" width="200px">
                             <Skeleton variant="text" width="200px" height={30} />
                             <Skeleton variant="text" width="150px" height={50} />
                         </div>
@@ -69,15 +102,15 @@ export default function HomeAdvertiser() {
                     <>
                         <div className="summary-card">
                             <h3>Accepted Scholarships</h3>
-                            <p>{data.acceptedCount}</p>
+                            <p>{acceptedCount}</p>
                         </div>
                         <div className="summary-card">
                             <h3>Pending Scholarships</h3>
-                            <p>{data.pendingCount}</p>
+                            <p>{pendingCount}</p>
                         </div>
                         <div className="summary-card">
                             <h3>Rejected Scholarships</h3>
-                            <p>{data.rejectedCount}</p>
+                            <p>{rejectedCount}</p>
                         </div>
                     </>
                 )}
@@ -95,14 +128,14 @@ export default function HomeAdvertiser() {
                             {
                                 data: window.innerWidth <= 850
                                     ? [
-                                        { id: 0, value: data.acceptedCount, color: '#443a8f', label: 'Accepted' },
-                                        { id: 1, value: data.pendingCount, color: '#3decae', label: 'Pending' },
-                                        { id: 2, value: data.rejectedCount, color: '#dc3545', label: 'Rejected' },
+                                        { id: 0, value: acceptedCount, color: '#443a8f', label: 'Accepted' },
+                                        { id: 1, value: pendingCount, color: '#3decae', label: 'Pending' },
+                                        { id: 2, value: rejectedCount, color: '#dc3545', label: 'Rejected' },
                                     ]
                                     : [
-                                        { id: 0, value: data.acceptedCount, label: 'Accepted Scholarships', color: '#443a8f' },
-                                        { id: 1, value: data.pendingCount, label: 'Pending Scholarships', color: '#3decae' },
-                                        { id: 2, value: data.rejectedCount, label: 'Rejected Scholarships', color: '#dc3545' },
+                                        { id: 0, value: acceptedCount, label: 'Accepted Scholarships', color: '#443a8f' },
+                                        { id: 1, value: pendingCount, label: 'Pending Scholarships', color: '#3decae' },
+                                        { id: 2, value: rejectedCount, label: 'Rejected Scholarships', color: '#dc3545' },
                                     ],
                             },
                         ]}

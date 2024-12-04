@@ -329,7 +329,7 @@
 
 /* Change text styling */
 .summary-card p:last-of-type {
-  font-size: 0.9em;
+  font-size: 1.2rem;
   color: #8a8a8a;
 }
 

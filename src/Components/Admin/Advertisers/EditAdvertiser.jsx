@@ -108,7 +108,7 @@ export default function EditAdvertiser() {
         />
         <h2 className='ps-4 pt-4'>Edit Advertiser Account "{advertiser.user_id.username}"</h2>
         <form onSubmit={formik.handleSubmit} className="row justify-content-center align-items-center w-75 ps-4 pt-5">
-          <div className="form-item col-md-6">
+          <div className="form-item col-md-5">
             <label className="form-label ps-2" htmlFor="id">ID</label>
             <input
               type="text"
@@ -120,9 +120,10 @@ export default function EditAdvertiser() {
               onBlur={formik.handleBlur}
               errors={formik.errors}
               disabled
+              colSize="col-md-5"
             />
           </div>
-          <div className="form-item col-md-6 my-3">
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="username">Username</label>
             <input
               type="text"
@@ -137,7 +138,7 @@ export default function EditAdvertiser() {
               <div className="text-danger">{formik.errors.username}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-6 my-3">
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="email">Email</label>
             <input
               type="email"
@@ -152,7 +153,7 @@ export default function EditAdvertiser() {
               <div className="text-danger">{formik.errors.email}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-6 my-3">
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="organization_name">Organization Name</label>
             <input
               type="text"
@@ -167,8 +168,9 @@ export default function EditAdvertiser() {
               <div className="text-danger">{formik.errors.organization_name}</div>  // Display the error in red
             ) : null}
           </div>
+          <hr style={{color:'#fff'}}/>
           <button
-            className='w-auto btn edit-btn my-4'
+            className='w-auto btn edit-btn my-4 edit-btn-advertiser'
             type="submit"
             disabled={formik.isSubmitting || Object.keys(formik.errors).length > 0 || Object.keys(formik.touched).length === 0}
           >

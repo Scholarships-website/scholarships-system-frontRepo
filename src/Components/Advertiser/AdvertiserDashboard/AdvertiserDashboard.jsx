@@ -5,11 +5,8 @@ import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { PageContainer } from '@toolpad/core/PageContainer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBarsProgress, faCircleCheck, faCircleXmark, faClock, faComments, faLayerGroup, faMessage, faPersonChalkboard, faPlus, faSchoolFlag, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck, faCircleXmark, faClock, faComments, faLayerGroup, faPlus, faSchoolFlag,} from '@fortawesome/free-solid-svg-icons';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import DescriptionIcon from '@mui/icons-material/Description';
-
 import { UserContext } from '../../../Context/UserContext';
 import AcceptedScholarships from '../Scholarships/AcceptedScholarships/AcceptedScholarships';
 import AllScholarships from '../Scholarships/AllScholarships/AllScholarships';
@@ -55,74 +52,74 @@ function AdvertiserDashboard(props) {
     const { setUserToken } = React.useContext(UserContext);
     const navigate = useNavigate();
     const location = useLocation();
-    const NAVIGATION = [
-        {
-            kind: 'header',
-            title: 'Main items',
-        },
-        {
-            segment: 'advertiserDashboard',
-            title: 'Dashboard',
-            icon: <DashboardIcon />,
-        },
-        {
-            kind: 'divider',
-        },
-        {
-            kind: 'header',
-            title: 'Tables',
-        },
-        {
-            segment: 'advertiserDashboard/scholarship-advertiser',
-            title: 'Scholarships',
-            icon: <FontAwesomeIcon icon={faSchoolFlag} />,
-            content:<AllScholarships/>,
-            children: [
-                {
-                    segment: 'accepted',
-                    title: 'Accepted',
-                    icon: <FontAwesomeIcon icon={faCircleCheck} />,
-                    content: <AcceptedScholarships />,
-                },
-                {
-                    segment: 'pending',
-                    title: 'Pending',
-                    icon: <FontAwesomeIcon icon={faClock} />,
-                    content:<PendingScholarships/>
-                },
-                {
-                    segment: 'rejected',
-                    title: 'Rejected',
-                    icon: <FontAwesomeIcon icon={faCircleXmark} />,
-                    content:<RejectedScholarships/>
-                },
-            ],
-        },
-        {
-            segment: 'advertiserDashboard/applications',
-            title: 'Applications',
-            icon: <FontAwesomeIcon icon={faLayerGroup} />,
-        },
-        {
-            segment: 'advertiserDashboard/feedbacks',
-            title: 'Feedbacks',
-            icon: <FontAwesomeIcon icon={faComments} />,
-        },
-        {
-            kind: 'divider',
-        },
-        {
-            kind: 'header',
-            title: 'Forms',
-        },
-        {
-            segment: 'advertiserDashboard/post-scholarship',
-            title: 'Add Scholarship',
-            icon: <FontAwesomeIcon icon={faPlus} />,
-            content: <AddScholarships />,
-        },
-    ];
-    const currentNavItem = NAVIGATION.find((item) => location.pathname === item.segment);
+    // const NAVIGATION = [
+    //     {
+    //         kind: 'header',
+    //         title: 'Main items',
+    //     },
+    //     {
+    //         segment: 'advertiserDashboard',
+    //         title: 'Dashboard',
+    //         icon: <DashboardIcon />,
+    //     },
+    //     {
+    //         kind: 'divider',
+    //     },
+    //     {
+    //         kind: 'header',
+    //         title: 'Tables',
+    //     },
+    //     {
+    //         segment: 'advertiserDashboard/scholarship-advertiser',
+    //         title: 'Scholarships',
+    //         icon: <FontAwesomeIcon icon={faSchoolFlag} />,
+    //         content:<AllScholarships/>,
+    //         children: [
+    //             {
+    //                 segment: 'accepted',
+    //                 title: 'Accepted',
+    //                 icon: <FontAwesomeIcon icon={faCircleCheck} />,
+    //                 content: <AcceptedScholarships />,
+    //             },
+    //             {
+    //                 segment: 'pending',
+    //                 title: 'Pending',
+    //                 icon: <FontAwesomeIcon icon={faClock} />,
+    //                 content:<PendingScholarships/>
+    //             },
+    //             {
+    //                 segment: 'rejected',
+    //                 title: 'Rejected',
+    //                 icon: <FontAwesomeIcon icon={faCircleXmark} />,
+    //                 content:<RejectedScholarships/>
+    //             },
+    //         ],
+    //     },
+    //     {
+    //         segment: 'advertiserDashboard/applications',
+    //         title: 'Applications',
+    //         icon: <FontAwesomeIcon icon={faLayerGroup} />,
+    //     },
+    //     {
+    //         segment: 'advertiserDashboard/feedbacks',
+    //         title: 'Feedbacks',
+    //         icon: <FontAwesomeIcon icon={faComments} />,
+    //     },
+    //     {
+    //         kind: 'divider',
+    //     },
+    //     {
+    //         kind: 'header',
+    //         title: 'Forms',
+    //     },
+    //     {
+    //         segment: 'advertiserDashboard/post-scholarship',
+    //         title: 'Add Scholarship',
+    //         icon: <FontAwesomeIcon icon={faPlus} />,
+    //         content: <AddScholarships />,
+    //     },
+    // ];
+    // const currentNavItem = NAVIGATION.find((item) => location.pathname === item.segment);
 
     const CustomToolbar = () => {
         const { setUserToken } = React.useContext(UserContext);
@@ -164,11 +161,80 @@ function AdvertiserDashboard(props) {
     };
     return (
         <AppProvider
-            navigation={NAVIGATION.map((item) => ({
-                ...item,
-                onClick: item.onClick || (() => item.segment && navigate(`${item.segment}`)),
-                isActive: location.pathname === item.segment,
-            }))}
+        navigation={
+            [
+                {
+                    kind: 'header',
+                    title: 'Main items',
+                },
+                {
+                    segment: 'advertiserDashboard',
+                    title: 'Dashboard',
+                    icon: <DashboardIcon />,
+                },
+                {
+                    kind: 'divider',
+                },
+                {
+                    kind: 'header',
+                    title: 'Tables',
+                },
+                {
+                    segment: 'advertiserDashboard/scholarship-advertiser',
+                    title: 'Scholarships',
+                    icon: <FontAwesomeIcon icon={faSchoolFlag} />,
+                    content:<AllScholarships/>,
+                    children: [
+                        {
+                            segment: 'accepted',
+                            title: 'Accepted',
+                            icon: <FontAwesomeIcon icon={faCircleCheck} />,
+                            content: <AcceptedScholarships />,
+                        },
+                        {
+                            segment: 'pending',
+                            title: 'Pending',
+                            icon: <FontAwesomeIcon icon={faClock} />,
+                            content:<PendingScholarships/>
+                        },
+                        {
+                            segment: 'rejected',
+                            title: 'Rejected',
+                            icon: <FontAwesomeIcon icon={faCircleXmark} />,
+                            content:<RejectedScholarships/>
+                        },
+                    ],
+                },
+                {
+                    segment: 'advertiserDashboard/applications',
+                    title: 'Applications',
+                    icon: <FontAwesomeIcon icon={faLayerGroup} />,
+                },
+                {
+                    segment: 'advertiserDashboard/feedbacks',
+                    title: 'Feedbacks',
+                    icon: <FontAwesomeIcon icon={faComments} />,
+                },
+                {
+                    kind: 'divider',
+                },
+                {
+                    kind: 'header',
+                    title: 'Forms',
+                },
+                {
+                    segment: 'advertiserDashboard/post-scholarship',
+                    title: 'Add Scholarship',
+                    icon: <FontAwesomeIcon icon={faPlus} />,
+                    content: <AddScholarships />,
+                },
+            ]
+        }
+            // navigation={NAVIGATION.map((item) => ({
+            //     ...item,
+            //     onClick: item.onClick || (() => item.segment && navigate(`${item.segment}`)),
+            //     isActive: location.pathname === item.segment,
+            // }))}
             theme={demoTheme}
             window={props.window ? props.window() : undefined}
         >
@@ -176,7 +242,7 @@ function AdvertiserDashboard(props) {
                 <CustomToolbar />
                 <CustomBranding />
                 <PageContainer>
-                    {currentNavItem?.content || <Outlet />}
+                    {<Outlet />}
                 </PageContainer>
             </DashboardLayout>
         </AppProvider>

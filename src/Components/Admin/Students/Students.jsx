@@ -127,6 +127,7 @@ export default function Students() {
             aria-label="Search"
             value={searchTerm}
             onChange={handleSearch}
+            colSize="col-md-5"
           />
         </form>
       </div>

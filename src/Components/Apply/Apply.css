@@ -1,0 +1,99 @@
+/* Apply.css */
+
+/* General layout for the application */
+.apply-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styles */
+.apply-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.apply-header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Navigation buttons */
+.step-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.step-navigation button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.step-navigation button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.step-navigation .prev-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
+.step-navigation .prev-btn:hover:not(:disabled) {
+  background-color: #5a6268;
+}
+
+.step-navigation .next-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.step-navigation .next-btn:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.step-navigation .submit-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.step-navigation .submit-btn:hover {
+  background-color: #218838;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.input-group h3 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.input-group .row {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/*for the stepper style , from the MUI*/
+.css-3hpdci-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
+  color: #418447 !important;
+}
+.css-3hpdci-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed {
+  color: #418447 !important;
+}
+.next-btn ,.btn-primary{
+  background: #418447 !important;
+  border:#418447 solid 1px !important ;
+}

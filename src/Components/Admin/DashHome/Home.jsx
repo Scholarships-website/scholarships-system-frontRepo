@@ -4,69 +4,7 @@ import { UserContext } from '../../../Context/UserContext';
 import axios from 'axios';
 import ReactApexChart from 'react-apexcharts';
 import Skeleton from '@mui/material/Skeleton';
-
-// ApexChart component
-class ApexChart extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      series: [{
-        data: props.data, // Use data passed from props
-      }],
-      options: {
-        chart: {
-          height: 350,
-          type: 'bar',
-          events: {
-            click: function (chart, w, e) {
-              // Handle click event if needed
-            }
-          }
-        },
-        colors: props.colors || ['#008FFB', '#00E396', '#FEB019'], // Default colors
-        plotOptions: {
-          bar: {
-            columnWidth: '70%',
-            distributed: true,
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        legend: {
-          show: false
-        },
-        tooltip: {
-          enabled: true,
-          // Customize tooltip to show only values without the series label
-          formatter: function (val, { seriesIndex }) {
-            return val; // Return only the value
-          }
-        },
-        xaxis: {
-          categories: props.categories || [], // Use categories passed from props
-          labels: {
-            style: {
-              colors: props.colors || ['#008FFB', '#00E396', '#FEB019'],
-              fontSize: '12px'
-            }
-          }
-        }
-      }
-    };
-  }
-
-  render() {
-    return (
-      <div>
-        <div id="chart">
-          <ReactApexChart options={this.state.options} series={this.state.series} type="bar" height={350} />
-        </div>
-      </div>
-    );
-  }
-}
+import { PieChart } from '@mui/x-charts';
 
 export default function Home() {
   const { userToken, setUserToken, userData } = useContext(UserContext);
@@ -75,8 +13,21 @@ export default function Home() {
     advertisersCount: 0,
     scholarshipsCount: 0,
   });
+  const [studentsCount, setStudentsCount] = useState(0);
+  const [advertisersCount, setAdvertisersCount] = useState(0);
+  const [scholarshipsCount, setScholarshipsCount] = useState(0);
   const [loading, setLoading] = useState(true);
-
+  const incrementCounter = (targetCount, setCounter) => {
+    let currentCount = 0;
+    const interval = setInterval(() => {
+      if (currentCount < targetCount) {
+        currentCount += Math.ceil(targetCount / 100); // Gradually increase
+        setCounter(currentCount);
+      } else {
+        clearInterval(interval); // Stop once target is reached
+      }
+    }, 50); // Adjust time interval for speed
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -102,6 +53,13 @@ export default function Home() {
   }, []);
 
   const colors = ['#008FFB', '#00E396', '#FEB019'];
+  useEffect(() => {
+    if (!loading && studentsCount === 0 && advertisersCount === 0 && scholarshipsCount === 0) {
+      incrementCounter(data.studentsCount, setStudentsCount);
+      incrementCounter(data.advertisersCount, setAdvertisersCount);
+      incrementCounter(data.scholarshipsCount, setScholarshipsCount);
+    }
+  }, [data, loading]);
 
   return (
     <div className="home-container">
@@ -132,27 +90,46 @@ export default function Home() {
           <>
             <div className="summary-card">
               <h3>Students</h3>
-              <p>{data.studentsCount}</p>
+              <p>{studentsCount}</p>
             </div>
             <div className="summary-card">
               <h3>Advertisers</h3>
-              <p>{data.advertisersCount}</p>
+              <p>{advertisersCount}</p>
             </div>
             <div className="summary-card">
               <h3>Scholarships</h3>
-              <p>{data.scholarshipsCount}</p>
+              <p>{scholarshipsCount}</p>
             </div>
           </>
         )}
       </div>
       <div className="pieChartContainer">
         {loading ? (
-          <Skeleton variant="rectangular" width={500} height={300} />
+          <Skeleton
+            variant="circular"
+            width={window.innerWidth <= 850 ? 300 : 400}
+            height={window.innerWidth <= 850 ? 300 : 400}
+          />
         ) : (
-          <ApexChart
-            data={[data.studentsCount, data.advertisersCount, data.scholarshipsCount]}
-            categories={['Students', 'Advertisers', 'Scholarships']}
-            colors={colors}
+          <PieChart
+            series={[
+              {
+                data: window.innerWidth <= 850
+                  ? [
+                    { id: 0, value: studentsCount, color: '#443a8f', label: 'Students' },
+                    { id: 1, value: advertisersCount, color: '#3decae', label: 'Advertisers' },
+                    { id: 2, value: scholarshipsCount, color: '#dc3545', label: 'Scholarships' },
+                  ]
+                  : [
+                    { id: 0, value: studentsCount, label: 'Students Count', color: '#443a8f' },
+                    { id: 1, value: advertisersCount, label: 'Advertisers Count', color: '#3decae' },
+                    { id: 2, value: scholarshipsCount, label: 'Scholarships Count', color: '#dc3545' },
+                  ],
+              },
+            ]}
+            width={window.innerWidth <= 850 ? 400 : 800}
+            height={window.innerWidth <= 850 ? 200 : 400}
+            className="customPieChart"
           />
         )}
       </div>

@@ -220,3 +220,13 @@ export const editScholarship = Yup.object({
    //       }
    //    )
 });
+export const resetPassword = Yup.object({
+   newPassword: Yup.string()
+      .min(8, 'Password must be at least 8 characters')
+      .matches(/[A-Za-z]/, 'Password must contain at least one letter')
+      .matches(/\d/, 'Password must contain at least one number')
+      .required('New password is required'),
+   confirmPassword: Yup.string()
+      .oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
+      .required('Confirm password is required'),
+});

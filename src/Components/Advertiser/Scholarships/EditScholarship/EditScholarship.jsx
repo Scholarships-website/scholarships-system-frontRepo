@@ -145,7 +145,7 @@ function EditScholarship() {
         />
         <h2 className='ps-4 pt-4'>Edit Scholarship</h2>
         <form onSubmit={formik.handleSubmit} className="row justify-content-center align-items-center w-75 ps-4 pt-5">
-          <div className="form-item col-md-6">
+          <div className="form-item col-md-5">
             <label className="form-label ps-2" htmlFor="id">ID</label>
             <input
               type="text"
@@ -159,7 +159,7 @@ function EditScholarship() {
               disabled
             />
           </div>
-          <div className="form-item col-md-6 my-3">
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="scholarsip_name">Scholarship Name</label>
             <input
               type="text"
@@ -174,7 +174,7 @@ function EditScholarship() {
               <div className="text-danger">{formik.errors.scholarsip_name}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-6 my-3">
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="brief_descrition">Brief Description</label>
             <input
               type="text"
@@ -189,7 +189,7 @@ function EditScholarship() {
               <div className="text-danger">{formik.errors.brief_descrition}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-6 my-3">
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="start_Date">Start Date</label>
             <input
               type="date"
@@ -204,7 +204,7 @@ function EditScholarship() {
               <div className="text-danger">{formik.errors.start_Date}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-6 my-3">
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="End_Date">End Date</label>
             <input
               type="date"
@@ -219,7 +219,7 @@ function EditScholarship() {
               <div className="text-danger">{formik.errors.End_Date}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-6 my-3">
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="SelectionProcess">Selection Process</label>
             <input
               type="text"
@@ -234,7 +234,7 @@ function EditScholarship() {
               <div className="text-danger">{formik.errors.SelectionProcess}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-6 my-3">
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="type">Type</label>
             <input
               type="text"
@@ -249,7 +249,7 @@ function EditScholarship() {
               <div className="text-danger">{formik.errors.type}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-6 my-3">
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="language_Of_Study">Language of Study</label>
             <input
               type="text"
@@ -264,7 +264,7 @@ function EditScholarship() {
               <div className="text-danger">{formik.errors.language_Of_Study}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-6 my-3">
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="Place_of_Study">Place of Study</label>
             <input
               type="text"
@@ -279,7 +279,7 @@ function EditScholarship() {
               <div className="text-danger">{formik.errors.Place_of_Study}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-6 my-3">
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="expenses_coverd">Expenses Coverd</label>
             <input
               type="number"
@@ -294,7 +294,7 @@ function EditScholarship() {
               <div className="text-danger">{formik.errors.expenses_coverd}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-6 my-3">
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="eligbility_criteria">Eligbility Criteria</label>
             <input
               type="text"
@@ -309,7 +309,7 @@ function EditScholarship() {
               <div className="text-danger">{formik.errors.eligbility_criteria}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-6 my-3">
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="term_and_conditions">Terms And Conditions</label>
             <input
               type="text"
@@ -324,7 +324,7 @@ function EditScholarship() {
               <div className="text-danger">{formik.errors.term_and_conditions}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-6 my-3">
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="form_Link">Form Link</label>
             <input
               type="url"
@@ -339,7 +339,7 @@ function EditScholarship() {
               <div className="text-danger">{formik.errors.form_Link}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-6 my-3">
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="website_link">Website Link</label>
             <input
               type="url"
@@ -354,7 +354,7 @@ function EditScholarship() {
               <div className="text-danger">{formik.errors.website_link}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-6 my-3">
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="key_personnel_details">Key Personnel Details</label>
             <input
               type="text"
@@ -369,7 +369,7 @@ function EditScholarship() {
               <div className="text-danger">{formik.errors.key_personnel_details}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-6 my-3">
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="number_of_seats_available">Number of Seats</label>
             <input
               type="number"
@@ -384,7 +384,7 @@ function EditScholarship() {
               <div className="text-danger">{formik.errors.number_of_seats_available}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-6 my-3">
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="scholarship_picture">Scholarship Picture</label>
             <input
               type="file"

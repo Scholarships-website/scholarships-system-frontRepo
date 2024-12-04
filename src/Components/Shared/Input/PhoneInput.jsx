@@ -40,7 +40,7 @@ const PhoneInput = ({ value, onChange, onBlur, errors, touched, countryCode }) =
                 onChange={handleChange}
                 onBlur={onBlur}
                 className={`phone-number-input ${errors.phoneNumber && touched.phoneNumber ? 'input-error' : ''}`}
-                placeholder="phone number"
+                placeholder="Phone Number"
             />
 
         </div>{errors.phoneNumber && touched.phoneNumber && (

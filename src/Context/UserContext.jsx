@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import Loading from '../Components/Shared/Loading/Loading';
 
 // Create the context
 export let UserContext = createContext(null);
@@ -10,6 +11,7 @@ export default function UserContextProvider({ children }) {
     const [userId, setUserId] = useState(null);
     const [roleId, setRoleId] = useState(null);
     const [userData, setUserData] = useState({});
+    const [loading, setLoading] = useState(true); // Added loading state
 
     const logout = () => {
         setUserToken(null);
@@ -18,6 +20,7 @@ export default function UserContextProvider({ children }) {
         setUserData({});
         localStorage.removeItem('userToken');
         alert("Session expired. Please log in again.");
+        setLoading(false); // Ensure loading stops after logout
     };
 
     const getUserID = async () => {
@@ -42,8 +45,17 @@ export default function UserContextProvider({ children }) {
     };
 
     useEffect(() => {
+        const token = localStorage.getItem('userToken');
+        if (token) {
+            setUserToken(token); // Set user token from local storage
+        } else {
+            setLoading(false); // No token found, stop loading
+        }
+    }, []);
+
+    useEffect(() => {
         if (userToken) {
-            getUserID();
+            getUserID().finally(() => setLoading(false)); // Ensure loading stops even if getUserID fails
         }
     }, [userToken]);
 
@@ -66,12 +78,9 @@ export default function UserContextProvider({ children }) {
         }
     }, [userId]);
 
-    useEffect(() => {
-        const token = localStorage.getItem('userToken');
-        if (token) {
-            setUserToken(token);  // Set user token from local storage
-        }
-    }, []);
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
         <UserContext.Provider value={{ userToken, setUserToken, userId, setUserId, userData, setUserData, roleId, setRoleId, logout }}>

@@ -8,6 +8,8 @@ import { PieChart } from '@mui/x-charts';
 import { Box, Modal, Pagination, Skeleton, Typography, useMediaQuery } from '@mui/material';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
+import Input from '../../../Shared/Input/Input';
+import { useFormik } from 'formik';
 
 const sortByKey = (object, key) => {
   return key.split('.').reduce((o, k) => (o ? o[k] : null), object);
@@ -176,12 +178,13 @@ function PendingScholarships() {
           <form className="me-3 search-admin" role="search">
             <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#418447" }} />
             <input
-              className="form-control me-5"
+              className="form-control "
               type="search"
               placeholder="Search by Name"
               aria-label="Search"
               value={searchTerm}
               onChange={handleSearch}
+              colSize="col-md-5"
             />
           </form>
         </div>
@@ -311,7 +314,7 @@ function PendingScholarships() {
                                     <FontAwesomeIcon icon={faPenToSquare} className='px-1' />Edit
                                   </Link>
                                 </li>
-                                <li className="d-flex justify-content-center align-items-center">
+                                {/* <li className="d-flex justify-content-center align-items-center">
                                   <button
                                     className="dropdown-item text-danger"
                                     onClick={() => deleteScholarship(scholarship._id)}
@@ -319,7 +322,7 @@ function PendingScholarships() {
                                     <FontAwesomeIcon icon={faUserXmark} className="px-1" />
                                     Delete
                                   </button>
-                                </li>
+                                </li> */}
                               </ul>
                             </div>
                           </td>
@@ -402,12 +405,12 @@ function PendingScholarships() {
                                       <FontAwesomeIcon icon={faPenToSquare} className='px-1' />Edit
                                     </Link>
                                   </li>
-                                  <li>
+                                  {/* <li>
                                     <button className="dropdown-item text-danger" onClick={() => deleteScholarship(scholarship._id)}>
                                       <FontAwesomeIcon icon={faUserXmark} className="px-1" />
                                       Delete
                                     </button>
-                                  </li>
+                                  </li> */}
                                 </ul>
                               </div>
                             </td>

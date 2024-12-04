@@ -181,6 +181,7 @@ function RejectedScholarships() {
               aria-label="Search"
               value={searchTerm}
               onChange={handleSearch}
+              colSize="col-md-5"
             />
           </form>
         </div>
@@ -305,7 +306,7 @@ function RejectedScholarships() {
                                     </Modal>
                                   </div>
                                 </li>
-                                <li className="d-flex justify-content-center align-items-center">
+                                {/* <li className="d-flex justify-content-center align-items-center">
                                   <button
                                     className="dropdown-item text-danger"
                                     onClick={() => deleteScholarship(scholarship._id)}
@@ -313,7 +314,7 @@ function RejectedScholarships() {
                                     <FontAwesomeIcon icon={faUserXmark} className="px-1" />
                                     Delete
                                   </button>
-                                </li>
+                                </li> */}
 
                               </ul>
                             </div>
@@ -392,12 +393,12 @@ function RejectedScholarships() {
                                       </Modal>
                                     </div>
                                   </li>
-                                  <li>
+                                  {/* <li>
                                     <button className="dropdown-item text-danger" onClick={() => deleteScholarship(scholarship._id)}>
                                       <FontAwesomeIcon icon={faUserXmark} className="px-1" />
                                       Delete
                                     </button>
-                                  </li>
+                                  </li> */}
                                 </ul>
                               </div>
                             </td>

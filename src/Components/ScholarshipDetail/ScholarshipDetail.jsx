@@ -39,9 +39,9 @@ const ScholarshipDetail = () => {
 
     useEffect(() => {
         const fetchSimilarScholarships = async () => {
-            setSimilarLoading(true); 
+            setSimilarLoading(true);
             try {
-                const response = await axios.get('http://localhost:3000/api/v1/scholarships'); 
+                const response = await axios.get('http://localhost:3000/api/v1/scholarships');
                 const filteredScholarships = response.data.filter(item =>
                     (item.type === scholarship?.type ||
                         item.Place_of_Study === scholarship?.Place_of_Study ||
@@ -144,7 +144,8 @@ const ScholarshipDetail = () => {
                             <Skeleton width="30%" height={40} />
                         ) : (
                             scholarship.number_of_seats_available > 0 && new Date() <= new Date(scholarship.End_Date) ? (
-                                <a href={scholarship.form_Link} className="apply-button">Apply Here</a>
+                                //<a href={scholarship.form_Link} className="apply-button">Apply Here</a>
+                                <Link to={`/apply-for-scholarship`} className="apply-button" >Apply Here</Link>
                             ) : (
                                 <p className="apply-closed">Applications are closed.</p>
                             )
@@ -156,18 +157,18 @@ const ScholarshipDetail = () => {
                 <div className="similar-scholarships">
                     <h2 className='header-similar'>Similar Scholarships</h2>
                     <Slider {...sliderSettings}>
-                        {similarLoading  ? (
+                        {similarLoading ? (
                             Array.from({ length: 3 }).map((_, index) => (
                                 <Card key={index} className='similar-scholarship-item'>
-                                <Skeleton variant="rounded" height={200} />
-                                <CardContent>
-                                    <Skeleton variant="text" height={20} width="80%" />
-                                    <Skeleton variant="text" height={20} width="50%" />
-                                    <Skeleton variant="text" height={20} width="60%" />
-                                    <Skeleton variant="text" height={20} width="70%" />
-                                    <Skeleton variant="text" height={20} width="50%" />
-                                </CardContent>
-                            </Card>
+                                    <Skeleton variant="rounded" height={200} />
+                                    <CardContent>
+                                        <Skeleton variant="text" height={20} width="80%" />
+                                        <Skeleton variant="text" height={20} width="50%" />
+                                        <Skeleton variant="text" height={20} width="60%" />
+                                        <Skeleton variant="text" height={20} width="70%" />
+                                        <Skeleton variant="text" height={20} width="50%" />
+                                    </CardContent>
+                                </Card>
                             ))
                         ) : similarScholarships.length > 0 ? (
                             similarScholarships.map(scholarship => (
@@ -189,10 +190,10 @@ const ScholarshipDetail = () => {
                                             <strong>Place of Study:</strong>  {scholarship.type}
                                         </Typography>
                                         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                        <strong>Language of Study:</strong> {scholarship.language_Of_Study}
+                                            <strong>Language of Study:</strong> {scholarship.language_Of_Study}
                                         </Typography>
                                         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                        <strong>Place of Study:</strong> {scholarship.Place_of_Study}
+                                            <strong>Place of Study:</strong> {scholarship.Place_of_Study}
                                         </Typography>
                                     </CardContent>
                                     <CardActions disableSpacing height="100px">

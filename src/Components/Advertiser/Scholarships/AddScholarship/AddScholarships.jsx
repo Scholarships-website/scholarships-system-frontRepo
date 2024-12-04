@@ -229,7 +229,7 @@ function AddScholarships() {
       onChange={formik.handleChange}
       onBlur={formik.handleBlur}
       touched={formik.touched}
-      colSize="col-md-6"
+      colSize="col-md-5"
     />
   )
   return (

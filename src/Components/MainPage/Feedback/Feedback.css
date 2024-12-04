@@ -216,3 +216,11 @@
         right: 0;
     }
 }
+.feedback-row{
+    display: flex;
+    width: 200px;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: start;
+}

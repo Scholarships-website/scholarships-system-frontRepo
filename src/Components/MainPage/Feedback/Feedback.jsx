@@ -52,8 +52,8 @@ const Feedback = () => {
                       <Skeleton variant="circular" width={60} height={60} />
                     </div>
                     <div className="info-section">
+                      <Skeleton variant="text" width="70px" />
                       <Skeleton variant="text" width="100px" />
-                      <Skeleton variant="text" width="150px" />
                     </div>
                   </div>
                   <div className="feedback-text">

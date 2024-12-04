@@ -7,14 +7,20 @@ import { UserContext } from '../../Context/UserContext';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { addFeedback } from '../../Validation/validation';
+import { useNavigate } from 'react-router-dom';
+import { Skeleton } from '@mui/material';
 
 const AddFeedback = () => {
-    const {userData, roleId } = useContext(UserContext);
-
+    const {userData, roleId,userToken } = useContext(UserContext);
+    const navigate = useNavigate();
     useEffect(() => {
         window.scrollTo(0, 0); // Scroll to the top on component mount
     }, []);
-
+    useEffect(() => {
+        if (!userToken) {
+            navigate('/login');
+        }
+    }, [userToken, navigate]);
     const formik = useFormik({
         initialValues: {
             id: roleId || '',
@@ -77,9 +83,8 @@ const AddFeedback = () => {
     }, [roleId, userData]);
 
     if (!roleId || !userData) {
-        return <div>Loading...</div>;
+        return <form className="wrapper" ><Skeleton variant="rounded" width={500} height={500} /></form>;
     }
-
     return (
         <>
             <Navbar />

@@ -57,7 +57,7 @@ export default function SignUp() {
                 });
                 setTimeout(() => {
                     navigate('/login');
-                }, 3000);
+                }, 1500);
             }
         } catch (error) {
             if (error.response && error.response.data && Array.isArray(error.response.data.errors)) {
