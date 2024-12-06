@@ -85,7 +85,7 @@ function StudentDashboard(props) {
         },
         {
             segment: 'studentDashboard/wishlist',
-            title: 'Wish List',
+            title: 'Wishlist',
             icon: <FontAwesomeIcon icon={faHeart} />,
             content:<Wishlist/>,
         },
