@@ -67,11 +67,12 @@ function PendingScholarships() {
       direction: prevConfig.key === key && prevConfig.direction === 'ascending' ? 'descending' : 'ascending',
     }));
   };
-  const filteredScholarships = pendingScholarships.filter((scholarship) => {
-    return (
-      scholarship.scholarsip_name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  });
+  // const filteredScholarships = pendingScholarships.filter((scholarship) => {
+  //   return (
+  //     scholarship.scholarsip_name.toLowerCase().includes(searchTerm.toLowerCase())
+  //   );
+  // });
+    const filteredScholarships = pendingScholarships;
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
     setCurrentPage(1);

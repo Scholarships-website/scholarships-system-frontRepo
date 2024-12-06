@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisVertical, faMagnifyingGlass, faUserXmark, faSortUp, faSortDown, faChevronDown, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisVertical, faMagnifyingGlass, faUserXmark, faSortUp, faSortDown, faChevronDown, faEye, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { Pagination, Skeleton, useMediaQuery } from '@mui/material';
 import { Link } from 'react-router-dom';
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import '../../Student/studentDash.css'
+import { UserContext } from "../../../Context/UserContext";
 
 const sortByKey = (object, key) => {
   return key.split('.').reduce((o, k) => (o ? o[k] : null), object);
@@ -17,15 +20,37 @@ function Wishlist() {
   const [sortConfig, setSortConfig] = useState({ key: '', direction: 'ascending' });
   const [expandedRow, setExpandedRow] = useState(null);
   const itemsPerPage = 7;
+  let { userToken, roleId } = useContext(UserContext);
 
   const fetchWishlist = async () => {
     try {
-        const { data } = await axios.get(`http://localhost:3000/api/v1/scholarships`);
-        setWishlist(data);
+      //i will change this 
+      const { data } = await axios.get(`http://localhost:3000/api/v1/scholarships`);
+      setWishlist(data);
     } catch (error) {
-        console.log(error);
+      console.log(error);
     } finally {
-        setLoading(false);
+      setLoading(false);
+    }
+  };
+  const removeFromWishlist = async (scholarshipId) => {
+    try {
+      const endpoint = `http://localhost:3000/api/v1/students/wishlist/${scholarshipId}/delete`;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      };
+      const response = await axios.delete(endpoint, config);
+
+      if (response.status === 200) {
+        console.log(`Scholarship with ID ${scholarshipId} successfully removed from the wishlist.`);
+      } else {
+        console.log("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error removing scholarship from wishlist:", error);
+      alert("An error occurred while removing the scholarship from the wishlist.");
     }
   };
   useEffect(() => {
@@ -87,7 +112,7 @@ function Wishlist() {
   const isSmallScreen = useMediaQuery('(max-width:768px)');
 
   return (
-    <div className="student-admin">
+    <div className="student-admin wishlist-table">
       <div className="mb-2 justify-content-between pb-3">
         <h1 className="ps-4 main-col">Wishlist</h1>
         <form className="me-3 search-admin" role="search">
@@ -151,24 +176,26 @@ function Wishlist() {
                         <td>{item.scholarsip_name}</td>
                         <td className="d-none d-md-table-cell">{item.type}</td>
                         <td className="action d-none d-md-table-cell">
-                          <div className="dropdown">
-                            <button className="border-0 bg-transparent dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              <FontAwesomeIcon icon={faEllipsisVertical} />
-                            </button>
-                            <ul className="dropdown-menu">
+                          <div>
+                            <ul className='wishlist-menu'>
                               <li>
                                 <div>
-                                  <button
-                                    className="dropdown-item"
-                                  >
-                                    <FontAwesomeIcon icon={faEye} className="px-1" />
-                                    <Link
-                                      to={`/scholarship-detail/${item._id}`}
-                                    >
-                                      View Details
-                                    </Link>
-                                  </button>
+                                  <Link to={`/scholarship-detail/${item._id}`} className="details-scholarship-link">
+                                    <button title="view details">
+                                      <FontAwesomeIcon icon={faEye} />
+
+                                    </button>
+                                  </Link>
                                 </div>
+                              </li>
+                              <li><div>
+                                <button
+                                  onClick={() => removeFromWishlist(item._id)}
+                                  title="remove from favorites"
+                                >
+                                  <FavoriteIcon color={"error"} />
+                                </button>
+                              </div>
                               </li>
                             </ul>
                           </div>
@@ -182,21 +209,25 @@ function Wishlist() {
                       </tr>
                       {expandedRow === index && isSmallScreen && (
                         <tr className="expanded-row expanded-row-content">
-                          <td colSpan="4" className="full-width-expanded">
-                            <div><strong>Type:</strong> {item.type}</div>
-                            <div className="dropdown d-md-none drop-down-buttons">
+                          <td colSpan="4" className="full-width-expanded ">
+                            <div className='left'><strong>Type:</strong> {item.type}</div>
+                            <div className="dropdown d-md-none drop-down-buttons ">
                               <ul className='expanded-delete'>
                                 <li>
-                                <div>
-                                  <button
-                                    className="dropdown-item"
-                                  >
-                                    <FontAwesomeIcon icon={faEye} className="px-1" />
-                                    <Link
-                                      to={`/scholarship-detail/${scholarship._id}`}
-                                    >
-                                      View Details
+                                  <div>
+                                    <Link to={`/scholarship-detail/${item._id}`} className="details-scholarship-link">
+                                      <button title="view details" className="dropdown-item">
+                                        <FontAwesomeIcon icon={faEye} className="px-1" />
+                                      </button>
                                     </Link>
+                                  </div>
+                                </li>
+                                <li><div>
+                                  <button className="dropdown-item"
+                                    onClick={() => removeFromWishlist(item._id)}
+                                    title="remove from favorites"
+                                  >
+                                    <FavoriteIcon color={"error"} />
                                   </button>
                                 </div>
                                 </li>

@@ -11,47 +11,78 @@ import { Link } from "react-router-dom";
 import axios from "axios";  // Import Axios
 import "./search.css";
 import { UserContext } from "../../Context/UserContext";
+import { useEffect } from "react";
 
 const ScholarshipList = ({ scholarships, loading }) => {
     const [wishlist, setWishlist] = useState({}); // Track wishlist state for scholarships
-    let { userToken } = useContext(UserContext);
+    let { userToken, roleId } = useContext(UserContext);
+    const [loader, setLoader] = useState(false);
+    const [error, setError] = useState(null);
+    
+    const fetchWishlist = async () => {
+        setLoader(true);
+        setError(null);
+        try {
+            const { data } = await axios.get(`http://localhost:3000/api/v1/students/${roleId}/wishlist`, {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                },
+            });
+            setWishlist(data);
+            console.log("wishlist:", data);
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                console.log("No scholarships in wishlist");
+                setWishlist([]); // Set empty wishlist
+            } else {
+                console.error("Error fetching wishlist:", error);
+                setError("Failed to fetch wishlist. Please try again later.");
+            }
+        } finally {
+            setLoader(false);
+        }
+    };
 
     const handleWishlistToggle = async (scholarshipId) => {
-        const isInWishlist = wishlist[scholarshipId] || false;
+        const isInWishlist = wishlist.some((item) => item.id === scholarshipId);
     
         try {
             const endpoint = `http://localhost:3000/api/v1/students/wishlist/${scholarshipId}/${isInWishlist ? "delete" : "add"}`;
-            const method = "PUT";
-    
             const config = {
                 headers: {
-                    Authorization: `Bearer ${userToken}`  // Include the token in the header
-                }
+                    Authorization: `Bearer ${userToken}`,
+                },
             };
-    
-            // Use Axios to make the PUT request
-            const response = await axios.put(endpoint, {}, config);    
+            const response = await axios.put(endpoint, {}, config);
             if (response.status === 200) {
-                setWishlist((prev) => ({
-                    ...prev,
-                    [scholarshipId]: !isInWishlist,
-                }));
+                // Optimistically update the state
+                setWishlist((prev) =>
+                    isInWishlist
+                        ? prev.filter((item) => item.id !== scholarshipId)
+                        : [...prev, { id: scholarshipId }] // Adjust structure to match API response
+                );
                 alert(
-                    `Scholarship ${isInWishlist ? "removed from" : "added to"
-                    } the Wishlist successfully!`
+                    `Scholarship ${isInWishlist ? "removed from" : "added to"} the Wishlist successfully!`
                 );
             } else {
                 alert("Something went wrong. Please try again.");
-            } 
-            console.log(wishlist);
+            }
         } catch (error) {
             console.error("Error:", error);
             alert("An error occurred. Please check your connection and try again.");
         }
     };
-    
+    useEffect(() => {
+        if (roleId && userToken) {
+            fetchWishlist();
+        } else {
+            console.warn("Missing roleId or userToken");
+        }
+    }, [roleId, userToken]);
     return (
         <div className="list-container">
+                    {loader && <p>Loading wishlist...</p>}
+
             {loading ? (
                 Array.from(new Array(3)).map((_, index) => (
                     <Card key={index} className="scholarship-item">

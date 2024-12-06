@@ -10,6 +10,7 @@ import { addScholarship } from '../../../../Validation/validation';
 function AddScholarships() {
   let { userToken, roleId } = useContext(UserContext);
   const [isRoleIdReady, setIsRoleIdReady] = useState(false); 
+  const [loading, setLoading] = useState(false); 
 
   const initialValues = {
     scholarsip_name: '',
@@ -41,6 +42,7 @@ function AddScholarships() {
     if (!isRoleIdReady) {
       return; // Don't send request if roleId is not ready
     }
+  
     try {
       const formData = new FormData();
       formData.append('scholarsip_name', values.scholarsip_name);
@@ -58,48 +60,70 @@ function AddScholarships() {
       formData.append('website_link', values.website_link);
       formData.append('key_personnel_details', values.key_personnel_details);
       formData.append('number_of_seats_available', values.number_of_seats_available);
-      formData.append('scholarship_picture', values.scholarship_picture);
+  
+      // Append file only if it exists
+      if (values.scholarship_picture) {
+        formData.append('scholarship_picture', values.scholarship_picture);
+      }
+  
+      // Add loading feedback
+      setLoading(true);
+  
       const { data } = await axios.post(
         `http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/create`,
         formData,
         {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${userToken}`,
+            Authorization: `Bearer ${userToken}`,
           },
         }
       );
+  
+      // Reset the form and show success toast
       formik.resetForm();
-      toast.success(`Scholarship Added Successfully`, {
-        position: "top-right",
+      toast.success('Scholarship Added Successfully', {
+        position: 'top-right',
         autoClose: true,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark",
+        theme: 'dark',
       });
+  
+      // Navigate after a delay
       setTimeout(() => {
-        navigate('/advertiserDashboard/scholarship-advertiser/pending')
+        navigate('/advertiserDashboard/scholarship-advertiser/pending');
       }, 2000);
-    }
-    catch (error) {
+  
+    } catch (error) {
+      // Log the error
       console.error('Error submitting form:', error);
-      console.log('Error response:', error.response);
-      toast.error('add advertiser failed: ' + error.response.data, {
-        position: "bottom-right",
+  
+      // Fallback for error response
+      const errorMessage =
+        (error.response && error.response.data) || 'Something went wrong. Please try again.';
+  
+      // Show error toast
+      toast.error('Add scholarship failed: ' + errorMessage, {
+        position: 'bottom-right',
         autoClose: false,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: 'light',
         transition: Bounce,
       });
+    } finally {
+      // Stop loading
+      setLoading(false);
     }
   };
+
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit,
