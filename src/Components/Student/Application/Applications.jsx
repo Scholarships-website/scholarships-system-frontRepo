@@ -62,7 +62,7 @@ function Applications() {
   };
 
   const handleTabChange = (event, newValue) => {
-    setTabValue(newValue); 
+    setTabValue(newValue);
     setCurrentPage(1);
 
   };
@@ -124,7 +124,7 @@ function Applications() {
                   <th scope="col">#</th>
                   <th scope="col">Scholarship Image</th>
                   <th scope="col">
-                    Scholarship Name 
+                    Scholarship Name
                   </th>
                   <th scope="col" className="d-none d-md-table-cell">Status</th>
                   <th scope="col">Action</th>
@@ -163,6 +163,27 @@ function Applications() {
                           />
                         </td>
                       </tr>
+                      {expandedRow === index && isSmallScreen && (
+                        <tr className="expanded-row expanded-row-content">
+                          <td colSpan="4" className="full-width-expanded ">
+                            <div className={`left ${getStatusClass(item.approval_status)}`}><strong>Status:</strong> {item.approval_status}</div>
+                            <div className="dropdown d-md-none drop-down-buttons ">
+                              <ul className=' expanded'>
+                                <div>
+                                  <li>
+                                    <Link to={`/scholarship-detail/${item._id}`} className="details-scholarship-link">
+                                      <button title="view details" className="dropdown-item">
+                                        <FontAwesomeIcon icon={faEye} className="px-1" />
+                                        view details
+                                      </button>
+                                    </Link>
+                                  </li>
+                                </div>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
                     </React.Fragment>
                   ))
                 ) : (
