@@ -19,7 +19,7 @@ function Wishlist() {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: '', direction: 'ascending' });
   const [expandedRow, setExpandedRow] = useState(null);
-  const itemsPerPage = 7;
+  const itemsPerPage = 5;
   let { userToken, roleId } = useContext(UserContext);
 
   const fetchWishlist = async () => {
@@ -181,9 +181,8 @@ function Wishlist() {
                               <li>
                                 <div>
                                   <Link to={`/scholarship-detail/${item._id}`} className="details-scholarship-link">
-                                    <button title="view details">
+                                    <button title="view details" className='mt-15px'>
                                       <FontAwesomeIcon icon={faEye} />
-
                                     </button>
                                   </Link>
                                 </div>
@@ -192,6 +191,7 @@ function Wishlist() {
                                 <button
                                   onClick={() => removeFromWishlist(item._id)}
                                   title="remove from favorites"
+                                  className='mt-15px'
                                 >
                                   <FavoriteIcon color={"error"} />
                                 </button>
@@ -212,25 +212,28 @@ function Wishlist() {
                           <td colSpan="4" className="full-width-expanded ">
                             <div className='left'><strong>Type:</strong> {item.type}</div>
                             <div className="dropdown d-md-none drop-down-buttons ">
-                              <ul className='expanded-delete'>
-                                <li>
-                                  <div>
+                              <ul className=' expanded'>
+                                <div>
+                                  <li>
                                     <Link to={`/scholarship-detail/${item._id}`} className="details-scholarship-link">
                                       <button title="view details" className="dropdown-item">
                                         <FontAwesomeIcon icon={faEye} className="px-1" />
+                                        view details
                                       </button>
                                     </Link>
-                                  </div>
-                                </li>
-                                <li><div>
-                                  <button className="dropdown-item"
-                                    onClick={() => removeFromWishlist(item._id)}
-                                    title="remove from favorites"
-                                  >
-                                    <FavoriteIcon color={"error"} />
-                                  </button>
+                                  </li>
                                 </div>
-                                </li>
+                                <div>
+                                  <li>
+                                    <button className="dropdown-item"
+                                      onClick={() => removeFromWishlist(item._id)}
+                                      title="remove from favorites"
+                                    >
+                                      <FavoriteIcon color={"error"} />
+                                      remove from favorites
+                                    </button>
+                                  </li>
+                                  </div>
                               </ul>
                             </div>
                           </td>

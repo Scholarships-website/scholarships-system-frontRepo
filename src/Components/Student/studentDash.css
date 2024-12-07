@@ -18,6 +18,64 @@
 }
 
 .wishlist-table .left {
-display: flex;
-justify-content: flex-start;
+    display: flex;
+    justify-content: flex-start;
+}
+
+/*for application*/
+.text-success {
+    color: #2e7d32;
+    /* Dark green for the text */
+    font-weight: bold;
+}
+
+.text-warning {
+    color: #f9a825;
+    /* Amber yellow for the text */
+    font-weight: bold;
+}
+
+.text-danger {
+    color: #c62828;
+    /* Dark red for the text */
+    font-weight: bold;
+}
+
+.bg-success-light {
+    background-color: #e8f5e9;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.bg-warning-light {
+    background-color: #fff8e1;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.bg-danger-light {
+    background-color: #ffebee;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.status {
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.mt-15px {
+    margin-top: 15px;
+}
+
+.expanded {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: flex-start;
+    padding: 0;
+    align-items: flex-start;
+    margin-top: 10px;
 }

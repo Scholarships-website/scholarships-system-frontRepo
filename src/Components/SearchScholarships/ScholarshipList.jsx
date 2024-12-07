@@ -19,29 +19,29 @@ const ScholarshipList = ({ scholarships, loading }) => {
     const [loader, setLoader] = useState(false);
     const [error, setError] = useState(null);
     
-    const fetchWishlist = async () => {
-        setLoader(true);
-        setError(null);
-        try {
-            const { data } = await axios.get(`http://localhost:3000/api/v1/students/${roleId}/wishlist`, {
-                headers: {
-                    Authorization: `Bearer ${userToken}`,
-                },
-            });
-            setWishlist(data);
-            console.log("wishlist:", data);
-        } catch (error) {
-            if (error.response && error.response.status === 404) {
-                console.log("No scholarships in wishlist");
-                setWishlist([]); // Set empty wishlist
-            } else {
-                console.error("Error fetching wishlist:", error);
-                setError("Failed to fetch wishlist. Please try again later.");
-            }
-        } finally {
-            setLoader(false);
-        }
-    };
+    // const fetchWishlist = async () => {
+    //     setLoader(true);
+    //     setError(null);
+    //     try {
+    //         const { data } = await axios.get(`http://localhost:3000/api/v1/students/${roleId}/wishlist`, {
+    //             headers: {
+    //                 Authorization: `Bearer ${userToken}`,
+    //             },
+    //         });
+    //         setWishlist(data);
+    //         console.log("wishlist:", data);
+    //     } catch (error) {
+    //         if (error.response && error.response.status === 404) {
+    //             console.log("No scholarships in wishlist");
+    //             setWishlist([]); // Set empty wishlist
+    //         } else {
+    //             console.error("Error fetching wishlist:", error);
+    //             setError("Failed to fetch wishlist. Please try again later.");
+    //         }
+    //     } finally {
+    //         setLoader(false);
+    //     }
+    // };
 
     const handleWishlistToggle = async (scholarshipId) => {
         const isInWishlist = wishlist.some((item) => item.id === scholarshipId);
@@ -72,13 +72,13 @@ const ScholarshipList = ({ scholarships, loading }) => {
             alert("An error occurred. Please check your connection and try again.");
         }
     };
-    useEffect(() => {
-        if (roleId && userToken) {
-            fetchWishlist();
-        } else {
-            console.warn("Missing roleId or userToken");
-        }
-    }, [roleId, userToken]);
+    // useEffect(() => {
+    //     if (roleId && userToken) {
+    //         fetchWishlist();
+    //     } else {
+    //         console.warn("Missing roleId or userToken");
+    //     }
+    // }, [roleId, userToken]);
     return (
         <div className="list-container">
                     {loader && <p>Loading wishlist...</p>}

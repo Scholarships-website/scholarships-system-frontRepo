@@ -25,7 +25,7 @@ function ResetPassword() {
             try {
                 setIsLoading(true);
                 const response = await fetch(`http://localhost:3000/api/v1/resetPassword/${resetToken}`, {
-                    method: 'POST',
+                    method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ newPassword: values.newPassword }),
                 });
