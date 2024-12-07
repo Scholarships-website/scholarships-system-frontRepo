@@ -62,7 +62,7 @@ export default function ReportedComments() {
         <>
             <div className="student-admin">
                 <div className=" mt-3 mb-2 justify-content-between border-bottom py-3">
-                    <h2 className='ps-4 main-col'>Reported Comments</h2>
+                    <h2 className='ps-4 main-col mb-4'>Reported Comments</h2>
                 </div>
                 {/* <div className="table-container ps-3">
                     {loading ? (

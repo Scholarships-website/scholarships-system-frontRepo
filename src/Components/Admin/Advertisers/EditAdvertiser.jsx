@@ -9,7 +9,6 @@ import Loading from '../../Shared/Loading/Loading'
 
 export default function EditAdvertiser() {
   const { id } = useParams();
-  console.log(id);
   const [advertiser, setAdvertiser] = useState(null);
   const navigate = useNavigate();
 
@@ -17,7 +16,6 @@ export default function EditAdvertiser() {
   const fetchAdvertiser = async () => {
     try {
       const response = await axios.get(`http://localhost:3000/api/v1/advertisers/${id}`);
-      console.log('Fetched Advertiser:', response.data);
       setAdvertiser(response.data);
     } catch (error) {
       console.error('Error fetching advertiser:', error);
@@ -77,7 +75,6 @@ export default function EditAdvertiser() {
   // Update Formik values when advertiser data is fetched
   useEffect(() => {
     if (advertiser) {
-      console.log('Setting Formik values:', advertiser);
       formik.setValues({
         id: advertiser._id || '',
         username: advertiser.user_id.username || '',
@@ -120,7 +117,6 @@ export default function EditAdvertiser() {
               onBlur={formik.handleBlur}
               errors={formik.errors}
               disabled
-              colSize="col-md-5"
             />
           </div>
           <div className="form-item col-md-5 my-3">

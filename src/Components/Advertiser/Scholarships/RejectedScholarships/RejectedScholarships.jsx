@@ -45,7 +45,6 @@ function RejectedScholarships() {
     try {
       const response = await axios.get(`http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/reject`);
       setRejectedScholarships(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching scholarships:", error);
     } finally {
@@ -171,17 +170,16 @@ function RejectedScholarships() {
     <>
       <div className="scholarships-admin scholarships-advertiser">
         <div className="mb-2 justify-content-between pb-3">
-          <h1 className="ps-4 main-col">Rejected Scholarships</h1>
+          <h1 className="ps-4 main-col mb-4">Rejected Scholarships</h1>
           <form className="me-3 search-admin" role="search">
             <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#418447" }} />
             <input
-              className="form-control me-5"
+              className="form-control me-5 col-md-5"
               type="search"
               placeholder="Search by Name"
               aria-label="Search"
               value={searchTerm}
               onChange={handleSearch}
-              colSize="col-md-5"
             />
           </form>
         </div>
@@ -408,7 +406,7 @@ function RejectedScholarships() {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="7">No Pending Scholarships</td>
+                      <td colSpan="7">No Rejected Scholarships</td>
                     </tr>
                   )}
                 </tbody>

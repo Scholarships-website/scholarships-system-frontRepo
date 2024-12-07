@@ -63,7 +63,7 @@ export default function Comments() {
         <>
             <div className="student-admin">
                 <div className=" mt-3 mb-2 justify-content-between border-bottom py-3">
-                    <h1 className='ps-4 main-col'>Comments on Scholarships</h1>
+                    <h1 className='ps-4 main-col mb-4'>Comments on Scholarships</h1>
                 </div>
                 {/* <div className="table-container ps-3">
                     {loading ? (

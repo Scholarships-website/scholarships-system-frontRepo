@@ -99,17 +99,16 @@ function Applications() {
   return (
     <div className="student-admin wishlist-table">
       <div className="mb-2 justify-content-between pb-3">
-        <h1 className="ps-4 main-col">Applications</h1>
+        <h1 className="ps-4 main-col mb-4">Applications</h1>
         <form className="me-3 search-admin" role="search">
           <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#418447" }} />
           <input
-            className="form-control me-5"
+            className="form-control me-5 col-md-5"
             type="search"
             placeholder="Search by Name"
             aria-label="Search"
             value={searchTerm}
             onChange={handleSearch}
-            colSize="col-md-5"
           />
         </form>
       </div>

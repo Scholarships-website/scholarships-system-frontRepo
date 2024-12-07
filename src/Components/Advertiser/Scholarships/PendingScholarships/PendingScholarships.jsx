@@ -4,12 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faEllipsisVertical, faUserXmark, faXmark, faSortUp, faSortDown, faChevronDown, faEye, faPenToSquare, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 import { UserContext } from '../../../../Context/UserContext';
-import { PieChart } from '@mui/x-charts';
 import { Box, Modal, Pagination, Skeleton, Typography, useMediaQuery } from '@mui/material';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import Input from '../../../Shared/Input/Input';
-import { useFormik } from 'formik';
 
 const sortByKey = (object, key) => {
   return key.split('.').reduce((o, k) => (o ? o[k] : null), object);
@@ -47,7 +44,6 @@ function PendingScholarships() {
     try {
       const response = await axios.get(`http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/pending`);
       setPendingScholarships(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching scholarships:", error);
     } finally {
@@ -67,16 +63,14 @@ function PendingScholarships() {
       direction: prevConfig.key === key && prevConfig.direction === 'ascending' ? 'descending' : 'ascending',
     }));
   };
-  // const filteredScholarships = pendingScholarships.filter((scholarship) => {
-  //   return (
-  //     scholarship.scholarsip_name.toLowerCase().includes(searchTerm.toLowerCase())
-  //   );
-  // });
-    const filteredScholarships = pendingScholarships;
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-    setCurrentPage(1);
-  };
+  const filteredScholarships = pendingScholarships.filter((scholarship) => {
+    return (
+      scholarship.scholarsip_name &&
+      typeof scholarship.scholarsip_name === "string" &&
+      scholarship.scholarsip_name.toLowerCase().includes(searchTerm.trim().toLowerCase())
+    );
+  });
+
   const sortedScholarships = [...filteredScholarships].sort((a, b) => {
     if (sortConfig.key) {
       const aValue = sortByKey(a, sortConfig.key);
@@ -87,16 +81,13 @@ function PendingScholarships() {
     }
     return 0;
   });
-
   const handleChangePage = (event, newPage) => {
     setCurrentPage(newPage);
   };
-
   const paginatedScholarships = sortedScholarships.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-
   const renderSortIcon = (columnKey) => {
     const isActive = sortConfig.key === columnKey;
     const icon = sortConfig.direction === 'ascending' ? faSortUp : faSortDown;
@@ -107,11 +98,9 @@ function PendingScholarships() {
       />
     );
   };
-
   const handleExpandRow = (index) => {
     setExpandedRow(expandedRow === index ? null : index);
   };
-
   if (!roleId) {
     return (
       <div>
@@ -171,21 +160,24 @@ function PendingScholarships() {
       }
     });
   };
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+    setCurrentPage(1);
+  };
   return (
     <>
       <div className="scholarships-admin scholarships-advertiser">
         <div className="mb-2 justify-content-between pb-3">
-          <h1 className="ps-4 main-col">Pending Scholarships</h1>
+          <h1 className="ps-4 main-col mb-4">Pending Scholarships</h1>
           <form className="me-3 search-admin" role="search">
             <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#418447" }} />
             <input
-              className="form-control "
+              className="form-control me-5 col-md-5"
               type="search"
               placeholder="Search by Name"
               aria-label="Search"
               value={searchTerm}
               onChange={handleSearch}
-              colSize="col-md-5"
             />
           </form>
         </div>

@@ -204,7 +204,9 @@ export default function Scholarships() {
   };
   const filteredScholarshipsP = pendingScholarships.filter((scholarship) => {
     return (
-      scholarship.scholarsip_name.toLowerCase().includes(searchTermP.toLowerCase())
+      scholarship.scholarsip_name &&
+      typeof scholarship.scholarsip_name === "string" &&
+      scholarship.scholarsip_name.toLowerCase().includes(searchTermP.trim().toLowerCase())
     );
   });
   const sortedScholarshipsP = [...filteredScholarshipsP].sort((a, b) => {
@@ -285,17 +287,16 @@ export default function Scholarships() {
     <>
       <div className="scholarships-admin">
         <div className="mb-2 justify-content-between pb-3">
-          <h1 className="ps-4 main-col">Scholarships</h1>
+          <h1 className="ps-4 main-col my-4">Scholarships</h1>
           <form className="me-3 search-admin" role="search">
             <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#418447" }} />
             <input
-              className="form-control me-5"
+              className="form-control me-5 col-md-5"
               type="search"
               placeholder="Search by Name"
               aria-label="Search"
               value={searchTerm}
               onChange={handleSearchS}
-              colSize="col-md-5"
             />
           </form>
         </div>
@@ -547,17 +548,16 @@ export default function Scholarships() {
         </div>
         {/* <pendingScholarships /> */}
         <div className="mb-2 justify-content-between pb-3">
-          <h1 className="ps-4 main-col">Pending Scholarships</h1>
+          <h1 className="ps-4 main-col my-4">Pending Scholarships</h1>
           <form className="me-3 search-admin" role="search">
             <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#418447" }} />
             <input
-              className="form-control me-5"
+              className="form-control me-5 col-md-5"
               type="search"
               placeholder="Search by Name"
               aria-label="Search"
               value={searchTermP}
               onChange={handleSearchP}
-              colSize="col-md-5"
             />
           </form>
         </div>

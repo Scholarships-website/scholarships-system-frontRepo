@@ -36,7 +36,6 @@ function ScholarshipsFeedbacks() {
     try {
       const response = await axios.get(`http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/accept`);
       setScholarships(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching scholarships:", error);
     } finally {
@@ -184,7 +183,7 @@ function ScholarshipsFeedbacks() {
       />
       <div className="scholarships-admin scholarships-advertiser">
         <div className="mb-2 justify-content-between pb-3">
-          <h1 className="ps-4 main-col">Feedbacks</h1>
+          <h1 className="ps-4 main-col mb-4">Feedbacks</h1>
         </div>
         <div className="table-container">
           {loading ? (

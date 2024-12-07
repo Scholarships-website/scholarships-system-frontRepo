@@ -121,7 +121,7 @@ export default function Feedbacks() {
   return (
     <div className="student-admin">
       <div className="mb-2 justify-content-between pb-3">
-        <h1 className='ps-4 main-col'>Feedbacks on the Website</h1>
+        <h1 className='ps-4 main-col mb-4'>Feedbacks on the Website</h1>
       </div>
       <div className="table-container ps-3">
         {loading ? (

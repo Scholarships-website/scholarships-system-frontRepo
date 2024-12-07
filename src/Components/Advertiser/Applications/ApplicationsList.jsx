@@ -22,7 +22,6 @@ const ApplicationsList = ({ advertiserId }) => {
         try {
             const { data } = await axios.get(`http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/accept`);
             setScholarships(data);
-            console.log(data)
         } catch (error) {
             console.log(error);
         } finally {
