@@ -1,16 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisVertical, faMagnifyingGlass, faUserXmark, faSortUp, faSortDown, faChevronDown, faEye, faHeart } from '@fortawesome/free-solid-svg-icons';
-import { Pagination, Skeleton, useMediaQuery } from '@mui/material';
+import { faMagnifyingGlass, faChevronDown, faEye } from '@fortawesome/free-solid-svg-icons';
+import { Pagination, Skeleton, useMediaQuery, Tabs, Tab, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import '../../Student/studentDash.css'
+import '../../Student/studentDash.css';
 import { UserContext } from "../../../Context/UserContext";
 
-const sortByKey = (object, key) => {
-  return key.split('.').reduce((o, k) => (o ? o[k] : null), object);
-};
 function Applications() {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,99 +15,83 @@ function Applications() {
   const [sortConfig, setSortConfig] = useState({ key: '', direction: 'ascending' });
   const [expandedRow, setExpandedRow] = useState(null);
   const itemsPerPage = 5;
+  const [tabValue, setTabValue] = useState(0);
+  const [acceptedApplications, setAcceptedApplications] = useState([]);
+  const [pendingApplications, setPendingApplications] = useState([]);
+  const [rejectedApplications, setRejectedApplications] = useState([]);
   let { userToken, roleId } = useContext(UserContext);
 
   const fetchApplicatins = async () => {
     try {
-      //i will change this 
-      const { data } = await axios.get(`http://localhost:3000/api/v1/scholarships`);
-      setApplications(data);
+      const { data } = await axios.get(`http://localhost:3000/api/v1/admin/scholarhips`);
+      setAcceptedApplications(data.filter(app => app.approval_status === 'accept'));
+      setPendingApplications(data.filter(app => app.approval_status === 'pending'));
+      setRejectedApplications(data.filter(app => app.approval_status === 'reject'));
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchApplicatins();
   }, []);
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-    setCurrentPage(1);
-  };
 
-  const handleSort = (key) => {
-    setSortConfig((prevConfig) => ({
-      key,
-      direction: prevConfig.key === key && prevConfig.direction === 'ascending' ? 'descending' : 'ascending',
-    }));
-  };
-  const filteredApplications = applications.filter((item) => {
-    return (
-      item.scholarsip_name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  });
-  const sortedApplications = [...filteredApplications].sort((a, b) => {
-    if (sortConfig.key) {
-      const aValue = sortByKey(a, sortConfig.key);
-      const bValue = sortByKey(b, sortConfig.key);
-      const order = sortConfig.direction === 'ascending' ? 1 : -1;
-      if (aValue < bValue) return -1 * order;
-      if (aValue > bValue) return 1 * order;
-    }
-    return 0;
-  });
   const handleChangePage = (event, newPage) => {
     setCurrentPage(newPage);
   };
+
   const handleExpandRow = (index) => {
     setExpandedRow(expandedRow === index ? null : index);
   };
 
-  const renderSortIcon = (columnKey) => {
-    const isActive = sortConfig.key === columnKey;
-    const icon = sortConfig.direction === 'ascending' ? faSortUp : faSortDown;
-
-    return (
-      <FontAwesomeIcon
-        icon={icon}
-        className={`sort-icon ${isActive ? 'active' : ''}`}
-      />
-    );
-  };
-  const paginatedApplications = sortedApplications.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
   const isSmallScreen = useMediaQuery('(max-width:768px)');
+
   const getStatusClass = (status) => {
     switch (status) {
       case 'accept':
         return 'text-success bg-success-light';
       case 'pending':
         return 'text-warning bg-warning-light';
-      case 'rejected':
+      case 'reject':
         return 'text-danger bg-danger-light';
       default:
         return '';
     }
   };
+
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue); 
+    setCurrentPage(1);
+
+  };
+
+  const getTabFilteredApplications = () => {
+    if (tabValue === 0) return acceptedApplications;
+    if (tabValue === 1) return pendingApplications;
+    if (tabValue === 2) return rejectedApplications;
+    return [];
+  };
+
+  const tabFilteredApplications = getTabFilteredApplications();
+  const paginatedApplications = tabFilteredApplications.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
     <div className="student-admin wishlist-table">
       <div className="mb-2 justify-content-between pb-3">
         <h1 className="ps-4 main-col mb-4">Applications</h1>
-        <form className="me-3 search-admin" role="search">
-          <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#418447" }} />
-          <input
-            className="form-control me-5 col-md-5"
-            type="search"
-            placeholder="Search by Name"
-            aria-label="Search"
-            value={searchTerm}
-            onChange={handleSearch}
-          />
-        </form>
       </div>
+      <Box sx={{ width: '100%', marginBottom: '25px' }}>
+        <Tabs value={tabValue} onChange={handleTabChange} aria-label="Scholarship Status">
+          <Tab label="Accepted" />
+          <Tab label="Pending" />
+          <Tab label="Rejected" />
+        </Tabs>
+      </Box>
       <div className="table-container ps-3">
         {loading ? (
           <table className="table table-hover bg-transparent">
@@ -143,8 +123,8 @@ function Applications() {
                 <tr className="bg-transparent">
                   <th scope="col">#</th>
                   <th scope="col">Scholarship Image</th>
-                  <th scope="col" onClick={() => handleSort('scholarsip_name')} className="sortable-column">
-                    Scholarship Name {renderSortIcon('scholarsip_name')}
+                  <th scope="col">
+                    Scholarship Name 
                   </th>
                   <th scope="col" className="d-none d-md-table-cell">Status</th>
                   <th scope="col">Action</th>
@@ -158,18 +138,16 @@ function Applications() {
                         <th scope="row">{(currentPage - 1) * itemsPerPage + index + 1}</th>
                         <td><img src={item.scholarship_picture} alt="Scholarship" style={{ width: '60px', height: '60px', borderRadius: '50%' }} /></td>
                         <td>{item.scholarsip_name}</td>
-                        <td
-                          className={`d-none d-md-table-cell `}
-                        >
+                        <td className={`d-none d-md-table-cell`}>
                           <span className={`status ${getStatusClass(item.approval_status)}`}>{item.approval_status}</span>
                         </td>
                         <td className="action d-none d-md-table-cell">
                           <div>
-                            <ul className='wishlist-menu'>
+                            <ul className="wishlist-menu">
                               <li>
                                 <div>
                                   <Link to={`/scholarship-detail/${item._id}`} className="details-scholarship-link">
-                                    <button title="view details" className='mt-15px'>
+                                    <button title="view details" className="mt-15px">
                                       <FontAwesomeIcon icon={faEye} />
                                     </button>
                                   </Link>
@@ -185,27 +163,6 @@ function Applications() {
                           />
                         </td>
                       </tr>
-                      {expandedRow === index && isSmallScreen && (
-                        <tr className="expanded-row expanded-row-content">
-                          <td colSpan="4" className="full-width-expanded ">
-                            <div className={`left status ${getStatusClass(item.approval_status)} `}><strong>Status:</strong> {item.approval_status}</div>
-                            <div className="dropdown d-md-none drop-down-buttons ">
-                              <ul className='expanded-delete'>
-                                <li>
-                                  <div>
-                                    <Link to={`/scholarship-detail/${item._id}`} className="details-scholarship-link">
-                                      <button title="view details" className="dropdown-item">
-                                        <FontAwesomeIcon icon={faEye} className="px-1" />
-                                        view details
-                                      </button>
-                                    </Link>
-                                  </div>
-                                </li>
-                              </ul>
-                            </div>
-                          </td>
-                        </tr>
-                      )}
                     </React.Fragment>
                   ))
                 ) : (
@@ -216,17 +173,17 @@ function Applications() {
               </tbody>
             </table>
             <Pagination
-              count={Math.ceil(filteredApplications.length / itemsPerPage)}
+              count={Math.ceil(tabFilteredApplications.length / itemsPerPage)}
               page={currentPage}
               onChange={handleChangePage}
-              className='pagination-search'
+              className="pagination-search"
               size="large"
             />
           </>
         )}
       </div>
     </div>
-  )
+  );
 }
 
-export default Applications
+export default Applications;
