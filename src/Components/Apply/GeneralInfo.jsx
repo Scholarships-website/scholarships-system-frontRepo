@@ -1,7 +1,6 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 const GeneralInfo = ({ formData, setFormData }) => {
     // Validation Schema
