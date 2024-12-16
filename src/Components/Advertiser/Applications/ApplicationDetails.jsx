@@ -23,7 +23,7 @@ const ApplicationDetails = () => {
     return (
         <PageContainer
             title="Application Details"
-            breadcrumbs={<Typography>Dashboard / Applications / Scholarship / Application Details</Typography>}
+            breadcrumbs={<Typography>Dashboard / Scholarship / Applications / Application Details</Typography>}
             actions={
                 <Box>
                     <Button variant="contained" color="primary" onClick={() => handleStatusUpdate('accepted')}>

@@ -1,0 +1,21 @@
+.numberOfApp {
+    background-color: #4caf50;
+    color: white;
+    border-radius: 50%; 
+    width: 30px;
+    height: 30px;
+    display: inline-flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-size: 14px; 
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 2px solid #388e3c;
+    transition: all 0.2s ease-in-out;
+}
+
+.numberOfApp:hover {
+    transform: scale(1.1); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    background-color: #43a047;
+}

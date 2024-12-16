@@ -22,7 +22,7 @@ const StudentApplications = () => {
     return (
         <PageContainer
             title="Student Applications"
-            breadcrumbs={<Typography>Dashboard / Applications / Scholarship</Typography>}
+            breadcrumbs={<Typography>Dashboard / Scholarships / Applications</Typography>}
         >
             <List>
                 {applications.map((app) => (

@@ -52,74 +52,6 @@ function AdvertiserDashboard(props) {
     const { setUserToken } = React.useContext(UserContext);
     const navigate = useNavigate();
     const location = useLocation();
-    // const NAVIGATION = [
-    //     {
-    //         kind: 'header',
-    //         title: 'Main items',
-    //     },
-    //     {
-    //         segment: 'advertiserDashboard',
-    //         title: 'Dashboard',
-    //         icon: <DashboardIcon />,
-    //     },
-    //     {
-    //         kind: 'divider',
-    //     },
-    //     {
-    //         kind: 'header',
-    //         title: 'Tables',
-    //     },
-    //     {
-    //         segment: 'advertiserDashboard/scholarship-advertiser',
-    //         title: 'Scholarships',
-    //         icon: <FontAwesomeIcon icon={faSchoolFlag} />,
-    //         content:<AllScholarships/>,
-    //         children: [
-    //             {
-    //                 segment: 'accepted',
-    //                 title: 'Accepted',
-    //                 icon: <FontAwesomeIcon icon={faCircleCheck} />,
-    //                 content: <AcceptedScholarships />,
-    //             },
-    //             {
-    //                 segment: 'pending',
-    //                 title: 'Pending',
-    //                 icon: <FontAwesomeIcon icon={faClock} />,
-    //                 content:<PendingScholarships/>
-    //             },
-    //             {
-    //                 segment: 'rejected',
-    //                 title: 'Rejected',
-    //                 icon: <FontAwesomeIcon icon={faCircleXmark} />,
-    //                 content:<RejectedScholarships/>
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         segment: 'advertiserDashboard/applications',
-    //         title: 'Applications',
-    //         icon: <FontAwesomeIcon icon={faLayerGroup} />,
-    //     },
-    //     {
-    //         segment: 'advertiserDashboard/feedbacks',
-    //         title: 'Feedbacks',
-    //         icon: <FontAwesomeIcon icon={faComments} />,
-    //     },
-    //     {
-    //         kind: 'divider',
-    //     },
-    //     {
-    //         kind: 'header',
-    //         title: 'Forms',
-    //     },
-    //     {
-    //         segment: 'advertiserDashboard/post-scholarship',
-    //         title: 'Add Scholarship',
-    //         icon: <FontAwesomeIcon icon={faPlus} />,
-    //         content: <AddScholarships />,
-    //     },
-    // ];
-    // const currentNavItem = NAVIGATION.find((item) => location.pathname === item.segment);
 
     const CustomToolbar = () => {
         const { setUserToken } = React.useContext(UserContext);
@@ -230,11 +162,6 @@ function AdvertiserDashboard(props) {
                 },
             ]
         }
-            // navigation={NAVIGATION.map((item) => ({
-            //     ...item,
-            //     onClick: item.onClick || (() => item.segment && navigate(`${item.segment}`)),
-            //     isActive: location.pathname === item.segment,
-            // }))}
             theme={demoTheme}
             window={props.window ? props.window() : undefined}
         >
