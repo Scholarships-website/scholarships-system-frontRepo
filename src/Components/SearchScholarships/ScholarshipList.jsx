@@ -14,14 +14,13 @@ import { UserContext } from "../../Context/UserContext";
 import { useEffect } from "react";
 
 const ScholarshipList = ({ scholarships, loading }) => {
-    const [wishlist, setWishlist] = useState({}); // Track wishlist state for scholarships
+    const [wishlist, setWishlist] = useState([]);
     let { userToken, roleId } = useContext(UserContext);
     const [loader, setLoader] = useState(false);
     const [error, setError] = useState(null);
     
     // const fetchWishlist = async () => {
     //     setLoader(true);
-    //     setError(null);
     //     try {
     //         const { data } = await axios.get(`http://localhost:3000/api/v1/students/${roleId}/wishlist`, {
     //             headers: {
@@ -33,7 +32,7 @@ const ScholarshipList = ({ scholarships, loading }) => {
     //     } catch (error) {
     //         if (error.response && error.response.status === 404) {
     //             console.log("No scholarships in wishlist");
-    //             setWishlist([]); // Set empty wishlist
+    //             setWishlist([]);
     //         } else {
     //             console.error("Error fetching wishlist:", error);
     //             setError("Failed to fetch wishlist. Please try again later.");
@@ -44,7 +43,7 @@ const ScholarshipList = ({ scholarships, loading }) => {
     // };
 
     const handleWishlistToggle = async (scholarshipId) => {
-        const isInWishlist = wishlist.some((item) => item.id === scholarshipId);
+        const isInWishlist = wishlist.some((item) => item._id === scholarshipId);
     
         try {
             const endpoint = `http://localhost:3000/api/v1/students/wishlist/${scholarshipId}/${isInWishlist ? "delete" : "add"}`;
@@ -75,8 +74,6 @@ const ScholarshipList = ({ scholarships, loading }) => {
     // useEffect(() => {
     //     if (roleId && userToken) {
     //         fetchWishlist();
-    //     } else {
-    //         console.warn("Missing roleId or userToken");
     //     }
     // }, [roleId, userToken]);
     return (
