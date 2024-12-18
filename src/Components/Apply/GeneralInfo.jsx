@@ -15,7 +15,6 @@ const GeneralInfo = ({ formData, setFormData }) => {
         province: Yup.string().required("Province is required"),
         street: Yup.string().required("Street is required"),
         phoneNumber: Yup.string().required("Phone Number is required"),
-        mobile: Yup.string().required("Mobile is required"),
         temporaryAddress: Yup.string().required("Temporary Address is required"),
         currentAccommodation: Yup.string().required("Current Accommodation is required"),
         studentType: Yup.string().required("Please select your student type"),
@@ -49,7 +48,6 @@ const GeneralInfo = ({ formData, setFormData }) => {
         province: formData.province || "",
         street: formData.street || "",
         phoneNumber: formData.phoneNumber || "",
-        mobile: formData.mobile || "",
         temporaryAddress: formData.temporaryAddress || "",
         currentAccommodation: formData.currentAccommodation || "",
         studentType: formData.studentType || "",
@@ -160,7 +158,7 @@ const GeneralInfo = ({ formData, setFormData }) => {
                                         </div>
 
                                         <div className="col-md-5 mb-3">
-                                            <label htmlFor="specialization">Specialization</label>
+                                            <label htmlFor="specialization">Major</label>
                                             <Field type="text" name="specialization" className="form-control" />
                                             <ErrorMessage name="specialization" component="div" className="text-danger" />
                                         </div>
@@ -216,12 +214,6 @@ const GeneralInfo = ({ formData, setFormData }) => {
                                     <label htmlFor="phoneNumber">Phone Number</label>
                                     <Field type="text" name="phoneNumber" className="form-control" />
                                     <ErrorMessage name="phoneNumber" component="div" className="text-danger" />
-                                </div>
-
-                                <div className="col-md-5 mb-3">
-                                    <label htmlFor="mobile">Mobile</label>
-                                    <Field type="text" name="mobile" className="form-control" />
-                                    <ErrorMessage name="mobile" component="div" className="text-danger" />
                                 </div>
                             </div>
                         </div>

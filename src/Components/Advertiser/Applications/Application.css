@@ -1,13 +1,17 @@
+* {
+    padding: 0;
+}
+
 .numberOfApp {
     background-color: #4caf50;
     color: white;
-    border-radius: 50%; 
+    border-radius: 50%;
     width: 30px;
     height: 30px;
-    display: inline-flex; 
-    justify-content: center; 
-    align-items: center; 
-    font-size: 14px; 
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
     font-weight: 600;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border: 2px solid #388e3c;
@@ -15,7 +19,120 @@
 }
 
 .numberOfApp:hover {
-    transform: scale(1.1); 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     background-color: #43a047;
+}
+
+.scholarship-name {
+    font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .scholarship-name {
+        font-size: 1rem;
+    }
+
+    .css-nl63yj {
+        padding: 0 !important;
+    }
+
+    .css-177gnr0-MuiContainer-root {
+        padding: 10px !important;
+    }
+}
+
+.student-application td,
+.student-application th {
+    vertical-align: middle;
+}
+
+.eyeIcon {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.scholarship-details {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.scholarship-details .details-bold {
+    font-weight: bold;
+    color: #2c6e49;
+}
+
+.available-seats {
+    margin-bottom: 1rem;
+}
+
+.accepted-applicants {
+    margin-bottom: 1rem;
+}
+
+.scholarship-details .available-seats,
+.scholarship-details .accepted-applicants {
+    margin-bottom: 1rem;
+    background-color: #f1f8f0;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.available-seats {
+    border-left: 5px solid #2c6e49;
+}
+
+.accepted-applicants {
+    border-left: 5px solid #4caf50;
+}
+
+.details-bold {
+    font-weight: bold;
+    color: #2c6e49;
+}
+
+.scholarship-name {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2c6e49;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    display: inline-block;
+    padding: 10px 0;
+    background: linear-gradient(45deg, #6abf69, #4caf50);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    border-radius: 10px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.scholarship-name:hover {
+    transform: scale(1.01);
+    transition: transform 0.3s ease-in-out;
+}
+
+.scholarship-name::after {
+    content: '✨';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 2rem;
+    animation: sparkle 1s infinite alternate;
+}
+
+@keyframes sparkle {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
 }

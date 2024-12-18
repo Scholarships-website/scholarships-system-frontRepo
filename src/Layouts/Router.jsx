@@ -38,6 +38,7 @@ import Wishlist from '../Components/Student/Wishlist/Wishlist';
 import HomeStudent from '../Components/Student/Home/HomeStudent';
 import Profile from '../Components/Student/Profile/Profile';
 import Apply from '../Components/Apply/Apply';
+import ApplicationDetails from '../Components/Advertiser/Applications/ApplicationDetails';
 export const router = createBrowserRouter([
     {
         path: "/studentDashboard",
@@ -105,10 +106,13 @@ export const router = createBrowserRouter([
                 path: "applications",
                 element: <ApplicationsList />,
             },
-            ///applications/${scholarshipId}
             {
                 path: "applications/:id",
                 element: <StudentApplications />,
+            },
+            {
+                path: "applications/:id/details/:_id",
+                element: <ApplicationDetails />,
             },
             {
                 path: "feedbacks",
