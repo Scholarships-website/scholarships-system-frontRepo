@@ -295,6 +295,7 @@ const StudentApplications = () => {
                 <>
                     <Skeleton variant="text" width="45%" height="50px" />
                     <Skeleton variant="text" width="20%" height="30px" />
+                    <Skeleton variant="text" width="20%" height="30px" />
                 </>
             ) : (
                 <div>

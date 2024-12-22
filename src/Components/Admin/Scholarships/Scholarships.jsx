@@ -97,42 +97,42 @@ export default function Scholarships() {
     fetchScholarships();
   }, []);
 
-  const deleteScholarship = async (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          await axios.delete(`http://localhost:3000/api/v1/scholarships/${id}`, {
-            headers: {
-              Authorization: `Bearer ${userToken}`, // Include Bearer token in headers
-            },
-          });
-          setScholarships((prevScholarships) =>
-            prevScholarships.filter((scholarship) => scholarship._id !== id) // Use _id for deletion
-          );
-          Swal.fire({
-            title: "Deleted!",
-            text: "Scholarship has been deleted.",
-            icon: "success",
-          });
-        } catch (error) {
-          console.error("Error deleting scholarship:", error);
-          Swal.fire({
-            title: "Error!",
-            text: "There was a problem deleting the scholarship.",
-            icon: "error",
-          });
-        }
-      }
-    });
-  };
+  // const deleteScholarship = async (id) => {
+  //   Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, delete it!",
+  //   }).then(async (result) => {
+  //     if (result.isConfirmed) {
+  //       try {
+  //         await axios.delete(`http://localhost:3000/api/v1/scholarships/${id}`, {
+  //           headers: {
+  //             Authorization: `Bearer ${userToken}`, // Include Bearer token in headers
+  //           },
+  //         });
+  //         setScholarships((prevScholarships) =>
+  //           prevScholarships.filter((scholarship) => scholarship._id !== id) // Use _id for deletion
+  //         );
+  //         Swal.fire({
+  //           title: "Deleted!",
+  //           text: "Scholarship has been deleted.",
+  //           icon: "success",
+  //         });
+  //       } catch (error) {
+  //         console.error("Error deleting scholarship:", error);
+  //         Swal.fire({
+  //           title: "Error!",
+  //           text: "There was a problem deleting the scholarship.",
+  //           icon: "error",
+  //         });
+  //       }
+  //     }
+  //   });
+  // };
   const handleAccept = async (id) => {
     try {
       const { data: acceptedScholarship } = await axios.patch(
@@ -415,7 +415,6 @@ export default function Scholarships() {
                                               <Typography><strong>Key Personnel Details:</strong> {scholarshipDetails.key_personnel_details}</Typography>
                                               <Typography><strong>Approval Status:</strong> {scholarshipDetails.approval_status}</Typography>
                                               <Typography><strong>Website:</strong> <a href={scholarshipDetails.website_link} target="_blank" rel="noopener noreferrer">{scholarshipDetails.website_link}</a></Typography>
-                                              <Typography><strong>Application Form:</strong> <a href={scholarshipDetails.form_Link} target="_blank" rel="noopener noreferrer">{scholarshipDetails.form_Link}</a></Typography>
                                             </Box>
                                           )
                                         )}
@@ -423,7 +422,7 @@ export default function Scholarships() {
                                     </Modal>
                                   </div>
                                 </li>
-                                <li className="d-flex justify-content-center align-items-center">
+                                {/* <li className="d-flex justify-content-center align-items-center">
                                   <button
                                     className="dropdown-item text-danger"
                                     onClick={() => deleteScholarship(scholarship._id)}
@@ -431,7 +430,7 @@ export default function Scholarships() {
                                     <FontAwesomeIcon icon={faUserXmark} className="px-1" />
                                     Delete
                                   </button>
-                                </li>
+                                </li> */}
                               </ul>
                             </div>
                           </td>
@@ -508,7 +507,6 @@ export default function Scholarships() {
                                                 <Typography><strong>Key Personnel Details:</strong> {scholarshipDetails.key_personnel_details}</Typography>
                                                 <Typography><strong>Approval Status:</strong> {scholarshipDetails.approval_status}</Typography>
                                                 <Typography><strong>Website:</strong> <a href={scholarshipDetails.website_link} target="_blank" rel="noopener noreferrer">{scholarshipDetails.website_link}</a></Typography>
-                                                <Typography><strong>Application Form:</strong> <a href={scholarshipDetails.form_Link} target="_blank" rel="noopener noreferrer">{scholarshipDetails.form_Link}</a></Typography>
                                               </Box>
                                             )
                                           )}
@@ -516,12 +514,12 @@ export default function Scholarships() {
                                       </Modal>
                                     </div>
                                   </li>
-                                  <li>
+                                  {/* <li>
                                     <button className="dropdown-item text-danger" onClick={() => deleteStudent(student._id)}>
                                       <FontAwesomeIcon icon={faUserXmark} className="px-1" />
                                       Delete
                                     </button>
-                                  </li>
+                                  </li> */}
                                 </ul>
                               </div>
                             </td>
@@ -676,7 +674,6 @@ export default function Scholarships() {
                                                 <Typography><strong>Key Personnel Details:</strong> {scholarshipDetails.key_personnel_details}</Typography>
                                                 <Typography><strong>Approval Status:</strong> {scholarshipDetails.approval_status}</Typography>
                                                 <Typography><strong>Website:</strong> <a href={scholarshipDetails.website_link} target="_blank" rel="noopener noreferrer">{scholarshipDetails.website_link}</a></Typography>
-                                                <Typography><strong>Application Form:</strong> <a href={scholarshipDetails.form_Link} target="_blank" rel="noopener noreferrer">{scholarshipDetails.form_Link}</a></Typography>
                                               </Box>
                                             )
                                           )}
@@ -781,7 +778,6 @@ export default function Scholarships() {
                                                   <Typography><strong>Key Personnel Details:</strong> {scholarshipDetails.key_personnel_details}</Typography>
                                                   <Typography><strong>Approval Status:</strong> {scholarshipDetails.approval_status}</Typography>
                                                   <Typography><strong>Website:</strong> <a href={scholarshipDetails.website_link} target="_blank" rel="noopener noreferrer">{scholarshipDetails.website_link}</a></Typography>
-                                                  <Typography><strong>Application Form:</strong> <a href={scholarshipDetails.form_Link} target="_blank" rel="noopener noreferrer">{scholarshipDetails.form_Link}</a></Typography>
                                                 </Box>
                                               )
                                             )}

@@ -30,28 +30,28 @@ export default function Students() {
     }
   };
 
-  const deleteStudent = async (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          await axios.delete(`http://localhost:3000/api/v1/students/${id}`);
-          setStudents((prevStudents) => prevStudents.filter((student) => student._id !== id));
-          Swal.fire("Deleted!", "Student has been deleted.", "success");
-        } catch (error) {
-          console.error("Error deleting student:", error);
-          Swal.fire("Error!", "There was a problem deleting the student.", "error");
-        }
-      }
-    });
-  };
+  // const deleteStudent = async (id) => {
+  //   Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, delete it!",
+  //   }).then(async (result) => {
+  //     if (result.isConfirmed) {
+  //       try {
+  //         await axios.delete(`http://localhost:3000/api/v1/students/${id}`);
+  //         setStudents((prevStudents) => prevStudents.filter((student) => student._id !== id));
+  //         Swal.fire("Deleted!", "Student has been deleted.", "success");
+  //       } catch (error) {
+  //         console.error("Error deleting student:", error);
+  //         Swal.fire("Error!", "There was a problem deleting the student.", "error");
+  //       }
+  //     }
+  //   });
+  // };
 
   useEffect(() => {
     fetchStudents();
@@ -140,7 +140,6 @@ export default function Students() {
                 <th scope="col">Last name</th>
                 <th scope="col" className="sortable-column d-none d-md-table-cell">Email</th>
                 <th scope="col" className="sortable-column d-none d-md-table-cell">Phone Number</th>
-                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -151,7 +150,6 @@ export default function Students() {
                   <td><Skeleton variant="text" width="80%" /></td>
                   <td className="d-none d-md-table-cell"><Skeleton variant="text" width="80%" /></td>
                   <td className="d-none d-md-table-cell"><Skeleton variant="text" width="80%" /></td>
-                  <td><Skeleton variant="rectangular" width={50} height={20} /></td>
                 </tr>
               ))}
             </tbody>
@@ -174,7 +172,6 @@ export default function Students() {
                   <th scope="col" onClick={() => handleSort('user_id.phoneNumber')} className="sortable-column d-none d-md-table-cell">
                     Phone Number {renderSortIcon('user_id.phoneNumber')}
                   </th>
-                  <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -188,7 +185,7 @@ export default function Students() {
                         <td className="d-none d-md-table-cell">{student.user_id.email}</td>
                         <td className="d-none d-md-table-cell">{student.user_id.phoneNumber}</td>
                         <td className="action d-none d-md-table-cell">
-                          <div className="dropdown">
+                          {/* <div className="dropdown">
                             <button className="border-0 bg-transparent dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                               <FontAwesomeIcon icon={faEllipsisVertical} />
                             </button>
@@ -200,7 +197,7 @@ export default function Students() {
                                 </button>
                               </li>
                             </ul>
-                          </div>
+                          </div> */}
                         </td>
                         <td>
                           <FontAwesomeIcon
@@ -214,7 +211,7 @@ export default function Students() {
                           <td colSpan="4" className="full-width-expanded">
                             <div><strong>Email:</strong> {student.user_id.email}</div>
                             <div><strong>Phone:</strong> {student.user_id.phoneNumber}</div>
-                            <div className="dropdown d-md-none drop-down-buttons">
+                            {/* <div className="dropdown d-md-none drop-down-buttons">
                               <ul className='expanded-delete'>
                                 <li>
                                   <button className="dropdown-item text-danger" onClick={() => deleteStudent(student._id)}>
@@ -223,7 +220,7 @@ export default function Students() {
                                   </button>
                                 </li>
                               </ul>
-                            </div>
+                            </div> */}
                           </td>
                         </tr>
                       )}

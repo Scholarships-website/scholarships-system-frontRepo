@@ -34,28 +34,28 @@ export default function Advertiser() {
       setLoading(false);
     }
   };
-  const deleteAdvertiser = async (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          await axios.delete(`http://localhost:3000/api/v1/advertisers/${id}`);
-          setAdvertiser((prevAdvertiser) => prevAdvertiser.filter((advertiser) => advertiser._id !== id));
-          Swal.fire("Deleted!", "The advertiser has been deleted.", "success");
-        } catch (error) {
-          console.error("Error deleting advertiser:", error);
-          Swal.fire("Error!", "There was a problem deleting the advertiser.", "error");
-        }
-      }
-    });
-  };
+  // const deleteAdvertiser = async (id) => {
+  //   Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, delete it!",
+  //   }).then(async (result) => {
+  //     if (result.isConfirmed) {
+  //       try {
+  //         await axios.delete(`http://localhost:3000/api/v1/advertisers/${id}`);
+  //         setAdvertiser((prevAdvertiser) => prevAdvertiser.filter((advertiser) => advertiser._id !== id));
+  //         Swal.fire("Deleted!", "The advertiser has been deleted.", "success");
+  //       } catch (error) {
+  //         console.error("Error deleting advertiser:", error);
+  //         Swal.fire("Error!", "There was a problem deleting the advertiser.", "error");
+  //       }
+  //     }
+  //   });
+  // };
 
   useEffect(() => {
     fetchAdvertisers();
@@ -186,14 +186,14 @@ export default function Advertiser() {
                                     <FontAwesomeIcon icon={faPenToSquare} className='px-1' />Update
                                   </Link>
                                 </li>
-                                <li className='d-flex justify-content-center align-items-center'>
+                                {/* <li className='d-flex justify-content-center align-items-center'>
                                   <button
                                     className="dropdown-item text-danger"
                                     onClick={() => deleteAdvertiser(advertiser._id)}
                                   >
                                     <FontAwesomeIcon icon={faUserXmark} className='px-1' />Delete
                                   </button>
-                                </li>
+                                </li> */}
                               </ul>
                             </div>
                           </td>
@@ -217,12 +217,12 @@ export default function Advertiser() {
                                       <FontAwesomeIcon icon={faPenToSquare} className='px-1' />Update
                                     </Link>
                                   </li>
-                                  <li>
+                                  {/* <li>
                                     <button className="dropdown-item text-danger" onClick={() => deleteStudent(student._id)}>
                                       <FontAwesomeIcon icon={faUserXmark} className="px-1" />
                                       Delete
                                     </button>
-                                  </li>
+                                  </li> */}
                                 </ul>
                               </div>
                             </td>
