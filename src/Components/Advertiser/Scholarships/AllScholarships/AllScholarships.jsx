@@ -12,7 +12,6 @@ function AllScholarships() {
     };
 
     useEffect(() => {
-        // You can fetch data here if needed when the component loads
     }, []);
 
     return (

@@ -159,14 +159,14 @@ export default function Login() {
                     </div>)}
                 <div className="formContainer style={{ borderRadius: 25 }}">
                     <div className="card-body">
-                        <p className='signinP'>Sign in</p>
+                        <p className='signinP'>Login</p>
                         <form className="registrationForm" id="registrationForm" onSubmit={formik.handleSubmit}>
                             {renderInputs}
                             <div className="forgot-password mt-3">
                                 <a href="#" onClick={handleForgotPassword} className="text-muted">Forgot Password?</a>
                             </div>
                             <div className="btnContainer">
-                                <button type="submit" className="loginBtn btn  btn-lg">Login</button>
+                                <button disabled={formik.isSubmitting || Object.keys(formik.errors).length > 0 || Object.keys(formik.touched).length === 0} type="submit" className="loginBtn btn  btn-lg" >{formik.isSubmitting ? 'Loading...' : 'Login'}</button>
                             </div>
                         </form>
                     </div>

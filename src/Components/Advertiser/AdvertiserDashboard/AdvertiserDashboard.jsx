@@ -40,7 +40,7 @@ function CustomBranding() {
                 display: contents;
             ">
                     <img src="/assets/img/logo.png" alt="Logo" width="60" height="40" />
-                    <Typography variant="h6">PalScholarships</Typography>
+                    <Typography style="color:black" variant="h6">PalScholarships</Typography>
                 </Stack>`
         }
     }, []);

@@ -6,6 +6,7 @@ import Input from '../../Shared/Input/Input';
 import { editAdvertiser } from '../../../Validation/validation';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import Loading from '../../Shared/Loading/Loading'
+import Swal from 'sweetalert2';
 
 export default function EditAdvertiser() {
   const { id } = useParams();
@@ -25,38 +26,58 @@ export default function EditAdvertiser() {
   useEffect(() => {
     fetchAdvertiser();
   }, [id]);
-
   const onSubmit = async (updatedData) => {
-    try {
-      const response = await axios.patch(
-        `http://localhost:3000/api/v1/admin/advertisers/edit/${id}`,
-        {
-          id: updatedData.id,
-          username: updatedData.username,
-          email: updatedData.email,
-          organization_name: updatedData.organization_name,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
+    // Show confirmation dialog before submitting
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You are about to edit this advertiser's details!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, update it!',
+      cancelButtonText: 'No, cancel',
+      reverseButtons: true,
+    });
+  
+    // If the user confirms, proceed with the update
+    if (result.isConfirmed) {
+      try {
+        const response = await axios.patch(
+          `http://localhost:3000/api/v1/admin/advertisers/edit/${id}`,
+          {
+            id: updatedData.id,
+            username: updatedData.username,
+            email: updatedData.email,
+            organization_name: updatedData.organization_name,
           },
-        }
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        toast.success(`Advertiser updated successfully!`, {
+          position: "top-right",
+          autoClose: true,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        setTimeout(() => {
+          navigate('/dashboard/advertisers')
+        }, 2000);
+      } catch (error) {
+        console.error('Error updating advertiser:', error);
+      }
+    } else {
+      // If the user cancels, display a message (optional)
+      Swal.fire(
+        'Cancelled',
+        'The advertiser was not updated.',
+        'error'
       );
-      toast.success(`Advertiser updated Successfully`, {
-        position: "top-right",
-        autoClose: true,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      setTimeout(() => {
-        navigate('/dashboard/advertisers')
-      }, 2000);
-    } catch (error) {
-      console.error('Error updating advertiser:', error);
     }
   };
   // Formik setup

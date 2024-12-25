@@ -8,6 +8,7 @@ import { Bounce, ToastContainer, toast } from 'react-toastify';
 import { UserContext } from '../../../Context/UserContext';
 import './Advertiser.css'
 import PhoneInput from '../../Shared/Input/PhoneInput';
+import Swal from 'sweetalert2';
 
 export default function AddAdvertiser() {
   let { userToken, setUserToken } = useContext(UserContext);
@@ -21,53 +22,123 @@ export default function AddAdvertiser() {
     countryCode: '+970', // Default country code
   };
   const navigate = useNavigate();
+  // const onSubmit = async (values) => {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('username', values.username);
+  //     formData.append('email', values.email);
+  //     formData.append('password', values.password);
+  //     formData.append('organization_name', values.organization_name);
+  //     formData.append('phoneNumber', `${values.countryCode}${values.phoneNumber}`);
+  //     const { data } = await axios.post(
+  //       `http://localhost:3000/api/v1/advertisers/register`,
+  //       formData, // Sending the users object directly
+  //       {
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           'Authorization': `Bearer ${userToken}`,
+  //         },
+  //       }
+  //     );
+  //     formik.resetForm();
+  //     toast.success(`Advertiser Added Successfully`, {
+  //       position: "top-right",
+  //       autoClose: true,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "dark",
+  //     });
+  //     setTimeout(() => {
+  //       navigate('/dashboard/advertisers')
+  //     }, 2000);
+  //   }
+  //   catch (error) {
+  //     console.error('Error submitting form:', error);
+  //     console.log('Error response:', error.response);
+  //     toast.error('add advertiser failed: ' + error.response.data, {
+  //       position: "bottom-right",
+  //       autoClose: false,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //       transition: Bounce,
+  //     });
+  //   }
+  // };
   const onSubmit = async (values) => {
-    try {
-      const formData = new FormData();
-      formData.append('username', values.username);
-      formData.append('email', values.email);
-      formData.append('password', values.password);
-      formData.append('organization_name', values.organization_name);
-      formData.append('phoneNumber', `${values.countryCode}${values.phoneNumber}`);
-      const { data } = await axios.post(
-        `http://localhost:3000/api/v1/advertisers/register`,
-        formData, // Sending the users object directly
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${userToken}`,
-          },
-        }
+    // Show confirmation dialog before submitting the form
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You are about to add a new advertiser!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, add it!',
+      cancelButtonText: 'No, cancel',
+      reverseButtons: true,
+    });
+
+    // If the user confirms, proceed with the form submission
+    if (result.isConfirmed) {
+      try {
+        const formData = new FormData();
+        formData.append('username', values.username);
+        formData.append('email', values.email);
+        formData.append('password', values.password);
+        formData.append('organization_name', values.organization_name);
+        formData.append('phoneNumber', `${values.countryCode}${values.phoneNumber}`);
+
+        const { data } = await axios.post(
+          `http://localhost:3000/api/v1/advertisers/register`,
+          formData, // Sending the form data
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${userToken}`,
+            },
+          }
+        );
+        formik.resetForm();
+        toast.success(`Advertiser Added Successfully`, {
+          position: "top-right",
+          autoClose: true,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        setTimeout(() => {
+          navigate('/dashboard/advertisers');
+        }, 2000);
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        console.log('Error response:', error.response);
+        toast.error('Add advertiser failed: ' + error.response.data, {
+          position: "bottom-right",
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      }
+    } else {
+      // If the user cancels, display a message (optional)
+      Swal.fire(
+        'Cancelled',
+        'The advertiser was not added.',
+        'error'
       );
-      formik.resetForm();
-      toast.success(`Advertiser Added Successfully`, {
-        position: "top-right",
-        autoClose: true,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      setTimeout(() => {
-        navigate('/dashboard/advertisers')
-      }, 2000);
-    }
-    catch (error) {
-      console.error('Error submitting form:', error);
-      console.log('Error response:', error.response);
-      toast.error('add advertiser failed: ' + error.response.data, {
-        position: "bottom-right",
-        autoClose: false,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
     }
   };
   const formik = useFormik({

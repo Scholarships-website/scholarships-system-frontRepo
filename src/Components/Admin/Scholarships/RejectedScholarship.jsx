@@ -1,16 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react';
+import '../Dashboard.css';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faEllipsisVertical, faUserXmark, faXmark, faSortUp, faSortDown, faChevronDown, faEye, faPenToSquare, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faEllipsisVertical, faUserXmark, faXmark, faSortUp, faSortDown, faChevronDown, faEye, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
-import { UserContext } from '../../../../Context/UserContext';
-import { Box, Modal, Pagination, Skeleton, Typography, useMediaQuery } from '@mui/material';
+import { UserContext } from '../../../Context/UserContext';
+import { PieChart } from '@mui/x-charts';
+import { Box, Modal, Pagination, Skeleton, Typography, useMediaQuery } from '@mui/material'; // Import Skeleton
+import './Scholarships.css'
 import moment from 'moment';
-import { Link } from 'react-router-dom';
 
 const sortByKey = (object, key) => {
   return key.split('.').reduce((o, k) => (o ? o[k] : null), object);
 };
+//style for the modal when view the details of a scholarship
 const style = {
   position: 'absolute',
   top: '50%',
@@ -22,28 +25,57 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
-  overflowY: 'auto',
+  overflowY: 'auto', // Enable vertical scrolling
   borderRadius: '8px',
 };
-function PendingScholarships() {
-  const { userToken, roleId, userId } = useContext(UserContext);
+
+function RejectedScholarship() {
+  const { userToken } = useContext(UserContext);
+  const [scholarships, setScholarships] = useState([]);
   const [pendingScholarships, setPendingScholarships] = useState([]);
+  const [rejectedScholarships, setRejectedScholarships] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [organizationNames, setOrganizationNames] = useState({});
   const itemsPerPage = 5;
   const [sortConfig, setSortConfig] = useState({ key: '', direction: 'ascending' });
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPageS, setCurrentPageS] = useState(1);
   const [expandedRow, setExpandedRow] = useState(null);
   const [loadingDetails, setLoadingDetails] = useState(true);
-  const [open, setOpen] = useState(false);
-  const [scholarshipDetails, setScholarshipDetails] = useState(null);
-  const isSmallScreen = useMediaQuery('(max-width:850px)');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const fetchPendingScholarships = async () => {
+  // Fetch all scholarships
+  const getOrganizationName = async (id) => {
+    try {
+      const { data } = await axios.get(`http://localhost:3000/api/v1/advertisers/${id}`);
+      return data.organization_name;
+    } catch (error) {
+      console.error("Error fetching organization name:", error);
+      return 'Unknown Organization';
+    }
+  };
+  const fetchScholarships = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/pending`);
-      setPendingScholarships(response.data);
+      const [rejectedRes] = await Promise.all([
+        axios.get(`http://localhost:3000/api/v1/admin/scholarhips/reject`),
+      ]);
+
+      const rejectedScholarships = rejectedRes.data;
+
+      const allScholarships = [...rejectedScholarships];
+
+      // Fetch all organization names in parallel for all scholarships
+      const organizationNameMap = {};
+      await Promise.all(
+        allScholarships.map(async (scholarship) => {
+          const organizationName = await getOrganizationName(scholarship.advertiser_id);
+          organizationNameMap[scholarship._id] = organizationName;
+        })
+      );
+
+      setScholarships(rejectedScholarships);
+      console.log(rejectedScholarships);
+      setOrganizationNames(organizationNameMap);
     } catch (error) {
       console.error("Error fetching scholarships:", error);
     } finally {
@@ -51,11 +83,47 @@ function PendingScholarships() {
     }
   };
 
+  // Fetch scholarships and organization names on mount
   useEffect(() => {
-    if (roleId) {
-      fetchPendingScholarships();
-    }
-  }, [roleId]);
+    fetchScholarships();
+  }, []);
+
+  // const deleteScholarship = async (id) => {
+  //   Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, delete it!",
+  //   }).then(async (result) => {
+  //     if (result.isConfirmed) {
+  //       try {
+  //         await axios.delete(`http://localhost:3000/api/v1/scholarships/${id}`, {
+  //           headers: {
+  //             Authorization: `Bearer ${userToken}`, // Include Bearer token in headers
+  //           },
+  //         });
+  //         setScholarships((prevScholarships) =>
+  //           prevScholarships.filter((scholarship) => scholarship._id !== id) // Use _id for deletion
+  //         );
+  //         Swal.fire({
+  //           title: "Deleted!",
+  //           text: "Scholarship has been deleted.",
+  //           icon: "success",
+  //         });
+  //       } catch (error) {
+  //         console.error("Error deleting scholarship:", error);
+  //         Swal.fire({
+  //           title: "Error!",
+  //           text: "There was a problem deleting the scholarship.",
+  //           icon: "error",
+  //         });
+  //       }
+  //     }
+  //   });
+  // };
 
   const handleSort = (key) => {
     setSortConfig((prevConfig) => ({
@@ -63,15 +131,12 @@ function PendingScholarships() {
       direction: prevConfig.key === key && prevConfig.direction === 'ascending' ? 'descending' : 'ascending',
     }));
   };
-  const filteredScholarships = pendingScholarships.filter((scholarship) => {
+  const filteredScholarships = scholarships.filter((scholarship) => {
     return (
-      scholarship.scholarsip_name &&
-      typeof scholarship.scholarsip_name === "string" &&
-      scholarship.scholarsip_name.toLowerCase().includes(searchTerm.trim().toLowerCase())
+      scholarship.scholarsip_name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
-
-  const sortedScholarships = [...filteredScholarships].sort((a, b) => {
+  const sortedScholarshipsS = [...filteredScholarships].sort((a, b) => {
     if (sortConfig.key) {
       const aValue = sortByKey(a, sortConfig.key);
       const bValue = sortByKey(b, sortConfig.key);
@@ -81,13 +146,19 @@ function PendingScholarships() {
     }
     return 0;
   });
-  const handleChangePage = (event, newPage) => {
-    setCurrentPage(newPage);
+  const handleSearchS = (event) => {
+    setSearchTerm(event.target.value);
+    setCurrentPageS(1);
   };
-  const paginatedScholarships = sortedScholarships.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+
+  const handleChangePageS = (event, newPage) => {
+    setCurrentPageS(newPage);
+  };
+  const paginatedScholarshipsS = sortedScholarshipsS.slice(
+    (currentPageS - 1) * itemsPerPage,
+    currentPageS * itemsPerPage
   );
+
   const renderSortIcon = (columnKey) => {
     const isActive = sortConfig.key === columnKey;
     const icon = sortConfig.direction === 'ascending' ? faSortUp : faSortDown;
@@ -101,22 +172,19 @@ function PendingScholarships() {
   const handleExpandRow = (index) => {
     setExpandedRow(expandedRow === index ? null : index);
   };
-  if (!roleId) {
-    return (
-      <div>
-        <Skeleton variant="text" width={410} height={60} />
-        <Skeleton variant="rectangular" width={800} height={400} style={{ marginTop: '10px' }} />
-      </div>
-    );
-  }
+  const isSmallScreen = useMediaQuery('(max-width:850px)');
+  const [open, setOpen] = useState(false);
+  const [scholarshipDetails, setScholarshipDetails] = useState(null);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const viewDetails = async (id) => {
     setLoadingDetails(true);
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/admin/scholarships/pending/${id}`);
+      const response = await axios.get(`http://localhost:3000/api/v1/admin/scholarships/reject/${id}`);
       setScholarshipDetails(response.data);
+      // console.log(response.data);
       handleOpen();
       setLoadingDetails(false)
     } catch (error) {
@@ -124,51 +192,11 @@ function PendingScholarships() {
       setLoadingDetails(false);
     }
   };
-  const deleteScholarship = async (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          await axios.delete(`http://localhost:3000/api/v1/scholarships/${id}`, {
-            headers: {
-              Authorization: `Bearer ${userToken}`, // Include Bearer token in headers
-            },
-          });
-          setPendingScholarships((prevScholarships) =>
-            prevScholarships.filter((scholarship) => scholarship._id !== id)
-          );
-          Swal.fire({
-            title: "Deleted!",
-            text: "Scholarship has been deleted.",
-            icon: "success",
-          });
-        } catch (error) {
-          console.error("Error deleting scholarship:", error);
-          Swal.fire({
-            title: "Error!",
-            text: "There was a problem deleting the scholarship.",
-            icon: "error",
-          });
-        }
-      }
-    });
-  };
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-    setCurrentPage(1);
-  };
   return (
     <>
-      <div className="scholarships-admin scholarships-advertiser">
+      <div className="scholarships-admin">
         <div className="mb-2 justify-content-between pb-3">
-          <h1 className="ps-4 main-col mb-4">Pending Scholarships</h1>
+          <h1 className="ps-4 main-col my-4">Rejected Scholarships</h1>
           <form className="me-3 search-admin" role="search">
             <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#418447" }} />
             <input
@@ -177,7 +205,7 @@ function PendingScholarships() {
               placeholder="Search by Name"
               aria-label="Search"
               value={searchTerm}
-              onChange={handleSearch}
+              onChange={handleSearchS}
             />
           </form>
         </div>
@@ -188,8 +216,7 @@ function PendingScholarships() {
                 <tr className="bg-transparent">
                   <th scope="col">#</th>
                   <th scope="col">Scholarship Name</th>
-                  <th scope="col" className='d-none d-md-table-cell'>Place of Study</th>
-                  <th scope="col" className='d-none d-md-table-cell'>Language</th>
+                  <th scope="col" className='d-none d-md-table-cell'>Organization Name</th>
                   <th scope="col" className='d-none d-md-table-cell'>Submission Date</th>
                   <th scope="col">Action</th>
                 </tr>
@@ -199,7 +226,6 @@ function PendingScholarships() {
                   <tr key={index}>
                     <th scope="row"><Skeleton variant="text" width={20} /></th>
                     <td><Skeleton variant="text" width="80%" /></td>
-                    <td className='d-none d-md-table-cell'><Skeleton variant="text" width="80%" /></td>
                     <td className='d-none d-md-table-cell'><Skeleton variant="text" width="80%" /></td>
                     <td className='d-none d-md-table-cell'><Skeleton variant="text" width="80%" /></td>
                     <td><Skeleton variant="rectangular" width={50} height={20} /></td>
@@ -214,21 +240,25 @@ function PendingScholarships() {
                   <tr className="bg-transparent">
                     <th scope="col">#</th>
                     <th scope="col" onClick={() => handleSort('scholarsip_name')} className="sortable-column">Scholarship Name {renderSortIcon('scholarsip_name')}</th>
-                    <th scope="col" className='d-none d-md-table-cell' >Place of Study</th>
-                    <th scope="col" className='d-none d-md-table-cell' >Language</th>
+                    <th scope="col" className='d-none d-md-table-cell' >Organization Name </th>
                     <th scope="col" onClick={() => handleSort('submission_date')} className="sortable-column d-none d-md-table-cell">Submission Date {renderSortIcon('submission_date')}</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {paginatedScholarships.length ? (
-                    paginatedScholarships.map((scholarship, index) => (
+                  {paginatedScholarshipsS.length ? (
+                    paginatedScholarshipsS.map((scholarship, index) => (
                       <React.Fragment key={scholarship._id}>
                         <tr onClick={() => handleExpandRow(index)}>
-                          <th scope="row">{(currentPage - 1) * itemsPerPage + index + 1}</th>
+                          <th scope="row">{(currentPageS - 1) * itemsPerPage + index + 1}</th>
                           <td>{scholarship.scholarsip_name}</td>
-                          <td className="d-none d-md-table-cell">{scholarship.Place_of_Study}</td>
-                          <td className="d-none d-md-table-cell">{scholarship.language_Of_Study}</td>
+                          <td className="d-none d-md-table-cell">
+                            {organizationNames[scholarship._id] ? (
+                              organizationNames[scholarship._id]
+                            ) : (
+                              <Skeleton width="100px" />
+                            )}
+                          </td>
                           <td className="d-none d-md-table-cell">
                             {moment.utc(scholarship.submission_date).format('YYYY-MM-DD')}
                           </td>
@@ -276,8 +306,7 @@ function PendingScholarships() {
                                           scholarshipDetails && (
                                             <Box id="scholarship-details-description" sx={{ mt: 2 }}>
                                               <Box sx={{ my: 2 }}>
-                                                {/* <img src={scholarshipDetails.scholarship_picture} alt="Scholarship" style={{ width: '100%', borderRadius: '8px' }} /> */}
-                                                <img src={`${scholarshipDetails.scholarship_picture}`} alt="Scholarship" style={{ width: '100%', borderRadius: '8px' }} />
+                                                <img src={scholarshipDetails.scholarship_picture} alt="Scholarship" style={{ width: '100%', borderRadius: '8px' }} />
                                               </Box>
                                               <Typography><strong>Name:</strong> {scholarshipDetails.scholarsip_name}</Typography>
                                               <Typography><strong>Brief Description:</strong> {scholarshipDetails.brief_descrition}</Typography>
@@ -286,8 +315,8 @@ function PendingScholarships() {
                                               <Typography><strong>Selection Process:</strong> {scholarshipDetails.SelectionProcess}</Typography>
                                               <Typography><strong>Language of Study:</strong> {scholarshipDetails.language_Of_Study}</Typography>
                                               <Typography><strong>Place of Study:</strong> {scholarshipDetails.Place_of_Study}</Typography>
-                                              <Typography><strong>Start Date:</strong>{moment.utc(scholarshipDetails.start_Date).format('YYYY-MM-DD')}</Typography>
-                                              <Typography><strong>End Date:</strong>{moment.utc(scholarshipDetails.End_Date).format('YYYY-MM-DD')}</Typography>
+                                              <Typography><strong>Start Date:</strong>{moment.utc(scholarshipDetails.start_Date).format('YYYY-MM-DD')} </Typography>
+                                              <Typography><strong>End Date:</strong> {moment.utc(scholarshipDetails.End_Date).format('YYYY-MM-DD')}</Typography>
                                               <Typography><strong>Submission Deadline:</strong>{moment.utc(scholarshipDetails.submission_date).format('YYYY-MM-DD')}</Typography>
                                               <Typography><strong>Number of Seats Available:</strong> {scholarshipDetails.number_of_seats_available}</Typography>
                                               <Typography><strong>Expenses Covered:</strong> ${scholarshipDetails.expenses_coverd}</Typography>
@@ -301,11 +330,6 @@ function PendingScholarships() {
                                       </Box>
                                     </Modal>
                                   </div>
-                                </li>
-                                <li className='d-flex justify-content-center align-items-center'>
-                                  <Link className="dropdown-item text-warning" to={`/advertiserDashboard/edit-scholarship/${scholarship._id}`}>
-                                    <FontAwesomeIcon icon={faPenToSquare} className='px-1' />Edit
-                                  </Link>
                                 </li>
                                 {/* <li className="d-flex justify-content-center align-items-center">
                                   <button
@@ -329,6 +353,13 @@ function PendingScholarships() {
                         {expandedRow === index && isSmallScreen && (
                           <tr className="expanded-row expanded-row-content">
                             <td colSpan="4" className="full-width-expanded">
+                              <div><strong>Organization Name:</strong>
+                                {organizationNames[scholarship._id] ? (
+                                  organizationNames[scholarship._id]
+                                ) : (
+                                  <Skeleton width="100px" />
+                                )}
+                              </div>
                               <div><strong>Submission Date:</strong>
                                 {moment.utc(scholarship.submission_date).format('YYYY-MM-DD')}
                               </div>
@@ -376,16 +407,15 @@ function PendingScholarships() {
                                                 <Typography><strong>Selection Process:</strong> {scholarshipDetails.SelectionProcess}</Typography>
                                                 <Typography><strong>Language of Study:</strong> {scholarshipDetails.language_Of_Study}</Typography>
                                                 <Typography><strong>Place of Study:</strong> {scholarshipDetails.Place_of_Study}</Typography>
-                                                <Typography><strong>Start Date:</strong>{moment.utc(scholarshipDetails.start_Date).format('YYYY-MM-DD')}</Typography>
-                                                <Typography><strong>End Date:</strong>{moment.utc(scholarshipDetails.End_Date).format('YYYY-MM-DD')}</Typography>
-                                                <Typography><strong>Submission Deadline:</strong>{moment.utc(scholarshipDetails.submission_date).format('YYYY-MM-DD')}</Typography>
+                                                <Typography><strong>Start Date:</strong>{moment.utc(scholarshipDetails.start_Date).format('YYYY-MM-DD')} </Typography>
+                                                <Typography><strong>End Date:</strong>{moment.utc(scholarshipDetails.End_Date).format('YYYY-MM-DD')} </Typography>
+                                                <Typography><strong>Submission Deadline:</strong>{moment.utc(scholarshipDetails.submission_date).format('YYYY-MM-DD')} </Typography>
                                                 <Typography><strong>Number of Seats Available:</strong> {scholarshipDetails.number_of_seats_available}</Typography>
                                                 <Typography><strong>Expenses Covered:</strong> ${scholarshipDetails.expenses_coverd}</Typography>
                                                 <Typography><strong>Terms and Conditions:</strong> {scholarshipDetails.term_and_conditions}</Typography>
                                                 <Typography><strong>Key Personnel Details:</strong> {scholarshipDetails.key_personnel_details}</Typography>
                                                 <Typography><strong>Approval Status:</strong> {scholarshipDetails.approval_status}</Typography>
                                                 <Typography><strong>Website:</strong> <a href={scholarshipDetails.website_link} target="_blank" rel="noopener noreferrer">{scholarshipDetails.website_link}</a></Typography>
-                                                <Typography><strong>Application Form:</strong> <a href={scholarshipDetails.form_Link} target="_blank" rel="noopener noreferrer">{scholarshipDetails.form_Link}</a></Typography>
                                               </Box>
                                             )
                                           )}
@@ -393,13 +423,8 @@ function PendingScholarships() {
                                       </Modal>
                                     </div>
                                   </li>
-                                  <li>
-                                    <Link className="dropdown-item text-warning" to={`/advertiserDashboard/edit-scholarship/${scholarship._id}`}>
-                                      <FontAwesomeIcon icon={faPenToSquare} className='px-1' />Edit
-                                    </Link>
-                                  </li>
                                   {/* <li>
-                                    <button className="dropdown-item text-danger" onClick={() => deleteScholarship(scholarship._id)}>
+                                    <button className="dropdown-item text-danger" onClick={() => deleteStudent(student._id)}>
                                       <FontAwesomeIcon icon={faUserXmark} className="px-1" />
                                       Delete
                                     </button>
@@ -413,15 +438,15 @@ function PendingScholarships() {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="7">No Pending Scholarships</td>
+                      <td colSpan="7">No Rejected Scholarships</td>
                     </tr>
                   )}
                 </tbody>
               </table>
               <Pagination
                 count={Math.ceil(filteredScholarships.length / itemsPerPage)}
-                page={currentPage}
-                onChange={handleChangePage}
+                page={currentPageS}
+                onChange={handleChangePageS}
                 className='pagination-search'
                 size="large"
               />
@@ -433,4 +458,4 @@ function PendingScholarships() {
   )
 }
 
-export default PendingScholarships
+export default RejectedScholarship

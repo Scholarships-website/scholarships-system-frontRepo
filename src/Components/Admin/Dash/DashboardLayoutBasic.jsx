@@ -5,7 +5,7 @@ import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { PageContainer } from '@toolpad/core/PageContainer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBarsProgress, faComments, faMessage, faPersonChalkboard, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBarsProgress, faCircleCheck, faCircleXmark, faClock, faComments, faMessage, faPersonChalkboard, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import Students from '../Students/Students'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Advertiser from '../Advertisers/Advertiser';
@@ -16,6 +16,9 @@ import AddAdvertiser from '../Advertisers/AddAdvertiser';
 import { UserContext } from '../../../Context/UserContext';
 
 import './Dash.css'
+import AcceptedScholarships from '../Scholarships/AcceptedScholarship';
+import PendingScholarships from '../Scholarships/PendingScholarship';
+import RejectedScholarships from '../Scholarships/RejectedScholarship';
 
 const demoTheme = createTheme({
     cssVariables: {
@@ -43,7 +46,7 @@ function CustomBranding() {
                 display: contents;
             ">
                     <img src="/assets/img/logo.png" alt="Logo" width="60" height="40" />
-                    <Typography variant="h6">PalScholarships</Typography>
+                    <Typography style="color:black" variant="h6">PalScholarships</Typography>
                 </Stack>`
         }
     }, []);
@@ -88,6 +91,26 @@ function DashboardLayoutBasic(props) {
             title: 'Scholarships',
             icon: <FontAwesomeIcon icon={faBarsProgress} />,
             content: <Scholarships />,
+            children: [
+                {
+                    segment: 'accepted',
+                    title: 'Accepted',
+                    icon: <FontAwesomeIcon icon={faCircleCheck} />,
+                    content: <AcceptedScholarships />,
+                },
+                {
+                    segment: 'pending',
+                    title: 'Pending',
+                    icon: <FontAwesomeIcon icon={faClock} />,
+                    content: <PendingScholarships />
+                },
+                {
+                    segment: 'rejected',
+                    title: 'Rejected',
+                    icon: <FontAwesomeIcon icon={faCircleXmark} />,
+                    content: <RejectedScholarships />
+                },
+            ],
         },
         {
             segment: 'dashboard/feedbacks',
@@ -126,7 +149,7 @@ function DashboardLayoutBasic(props) {
         React.useEffect(() => {
             // Select the toolbar more specifically if possible
             const toolbarDiv = document.querySelector('.MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular.css-1dbvo5e-MuiToolbar-root');
-            
+
             // Only add logout button if it's not already there
             if (toolbarDiv && !toolbarDiv.querySelector('.logout-button')) {
                 // Create the logout button
@@ -138,7 +161,7 @@ function DashboardLayoutBasic(props) {
                 logoutButton.style.marginLeft = 'auto';
                 const icon = document.createElement('i');
                 icon.classList.add('fa-solid', 'fa-right-from-bracket');
-                icon.style.color='#757575';
+                icon.style.color = '#757575';
                 logoutButton.appendChild(icon);
                 // Append logout button to the toolbar
                 toolbarDiv.appendChild(logoutButton);
@@ -158,7 +181,7 @@ function DashboardLayoutBasic(props) {
         }, [navigate, setUserToken]);
         return null;
     };
-    
+
     return (
         <AppProvider
             navigation={NAVIGATION.map((item) => ({
@@ -170,7 +193,7 @@ function DashboardLayoutBasic(props) {
             window={props.window ? props.window() : undefined}
         >
             <DashboardLayout>
-                <CustomToolbar/>
+                <CustomToolbar />
                 <CustomBranding />
                 <PageContainer>
                     {currentNavItem?.content || <Outlet />}

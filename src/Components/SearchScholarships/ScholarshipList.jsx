@@ -12,74 +12,132 @@ import axios from "axios";  // Import Axios
 import "./search.css";
 import { UserContext } from "../../Context/UserContext";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const ScholarshipList = ({ scholarships, loading }) => {
     const [wishlist, setWishlist] = useState([]);
     let { userToken, roleId } = useContext(UserContext);
     const [loader, setLoader] = useState(false);
     const [error, setError] = useState(null);
-    
-    // const fetchWishlist = async () => {
-    //     setLoader(true);
-    //     try {
-    //         const { data } = await axios.get(`http://localhost:3000/api/v1/students/${roleId}/wishlist`, {
-    //             headers: {
-    //                 Authorization: `Bearer ${userToken}`,
-    //             },
-    //         });
-    //         setWishlist(data);
-    //         console.log("wishlist:", data);
-    //     } catch (error) {
-    //         if (error.response && error.response.status === 404) {
-    //             console.log("No scholarships in wishlist");
-    //             setWishlist([]);
-    //         } else {
-    //             console.error("Error fetching wishlist:", error);
-    //             setError("Failed to fetch wishlist. Please try again later.");
-    //         }
-    //     } finally {
-    //         setLoader(false);
-    //     }
-    // };
 
-    const handleWishlistToggle = async (scholarshipId) => {
-        const isInWishlist = wishlist.some((item) => item._id === scholarshipId);
-    
+    const fetchWishlist = async () => {
+        setLoader(true);
         try {
-            const endpoint = `http://localhost:3000/api/v1/students/wishlist/${scholarshipId}/${isInWishlist ? "delete" : "add"}`;
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${userToken}`,
-                },
-            };
-            const response = await axios.put(endpoint, {}, config);
-            if (response.status === 200) {
-                // Optimistically update the state
-                setWishlist((prev) =>
-                    isInWishlist
-                        ? prev.filter((item) => item.id !== scholarshipId)
-                        : [...prev, { id: scholarshipId }] // Adjust structure to match API response
-                );
-                alert(
-                    `Scholarship ${isInWishlist ? "removed from" : "added to"} the Wishlist successfully!`
-                );
-            } else {
-                alert("Something went wrong. Please try again.");
-            }
+            const { data } = await axios.get(`http://localhost:3000/api/v1/students/${roleId}/wishlist`);
+            setWishlist(data);
+            console.log("wishlist:", data);
         } catch (error) {
-            console.error("Error:", error);
-            alert("An error occurred. Please check your connection and try again.");
+            if (error.response && error.response.status === 404) {
+                console.log("No scholarships in wishlist");
+                setWishlist([]);
+            } else {
+                console.error("Error fetching wishlist:", error);
+                setError("Failed to fetch wishlist. Please try again later.");
+            }
+        } finally {
+            setLoader(false);
         }
     };
-    // useEffect(() => {
-    //     if (roleId && userToken) {
-    //         fetchWishlist();
-    //     }
-    // }, [roleId, userToken]);
+    useEffect(() => {
+        if (roleId) {
+            fetchWishlist();
+        }
+    }, [roleId]);
+    const handleWishlistToggle = async (scholarshipId) => {
+        // Check if the scholarship ID is in the wishlist
+        const isInWishlist = wishlist.includes(scholarshipId);
+
+        // Show confirmation dialog
+        const confirmResult = await Swal.fire({
+            title: `Are you sure?`,
+            text: isInWishlist
+                ? 'Do you want to remove this scholarship from your wishlist?'
+                : 'Do you want to add this scholarship to your wishlist?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: isInWishlist ? 'Yes, remove it!' : 'Yes, add it!',
+            cancelButtonText: 'Cancel',
+        });
+
+        if (confirmResult.isConfirmed) {
+            try {
+                // Define the endpoint based on the action (add or remove)
+                const action = isInWishlist ? 'delete' : 'add';
+                const endpoint = `http://localhost:3000/api/v1/students/wishlist/${scholarshipId}/${action}`;
+
+                // Configuration for the request
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${userToken}`, // Ensure `userToken` is valid
+                    },
+                };
+
+                // Make the API call
+                const response = await axios.put(endpoint, {}, config);
+
+                if (response.status === 200) {
+                    // Update the wishlist state optimistically
+                    setWishlist((prevWishlist) =>
+                        isInWishlist
+                            ? prevWishlist.filter((id) => id !== scholarshipId) // Remove the ID
+                            : [...prevWishlist, scholarshipId] // Add the ID
+                    );
+
+                    // Show success toast notification
+                    toast.success(
+                        `Scholarship successfully ${isInWishlist ? 'removed from' : 'added to'
+                        } the wishlist!`,
+                        {
+                            position: 'top-right',
+                            autoClose: true,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: 'dark',
+                        }
+                    );
+
+                    await fetchWishlist();
+                } else {
+                    // Show error toast notification for unexpected status codes
+                    toast.error('Something went wrong. Please try again.', {
+                        position: 'bottom-right',
+                        autoClose: false,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: 'light',
+                    });
+                }
+            } catch (error) {
+                // Log and notify the user of errors
+                console.error('Error toggling wishlist item:', error);
+                toast.error('An error occurred. Please check your connection and try again.', {
+                    position: 'bottom-right',
+                    autoClose: false,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
+                });
+            }
+        } else {
+            Swal.fire('Cancelled', 'No changes were made to your wishlist.', 'info');
+        }
+    };
+
+
     return (
         <div className="list-container">
-                    {loader && <p>Loading wishlist...</p>}
-
             {loading ? (
                 Array.from(new Array(3)).map((_, index) => (
                     <Card key={index} className="scholarship-item">
@@ -133,14 +191,14 @@ const ScholarshipList = ({ scholarships, loading }) => {
                         <CardActions disableSpacing>
                             <IconButton
                                 aria-label={
-                                    wishlist[scholarship._id]
+                                    wishlist.includes(scholarship._id)
                                         ? "remove from favorites"
                                         : "add to favorites"
                                 }
                                 onClick={() => handleWishlistToggle(scholarship._id)}
                             >
                                 <FavoriteIcon
-                                    color={wishlist[scholarship._id] ? "error" : "disabled"}
+                                    color={wishlist.includes(scholarship._id) ? "error" : "disabled"}
                                 />
                             </IconButton>
                             <Link

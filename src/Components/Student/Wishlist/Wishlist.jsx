@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import '../../Student/studentDash.css'
 import { UserContext } from "../../../Context/UserContext";
+import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 const sortByKey = (object, key) => {
   return key.split('.').reduce((o, k) => (o ? o[k] : null), object);
@@ -21,12 +23,20 @@ function Wishlist() {
   const [expandedRow, setExpandedRow] = useState(null);
   const itemsPerPage = 5;
   let { userToken, roleId } = useContext(UserContext);
+  const [wishlistDetails, setWishlistDetails] = useState([]);
+  const [loadingDetails, setLoadingDetails] = useState(true);
 
   const fetchWishlist = async () => {
+    setLoading(true);
     try {
-      //i will change this 
-      const { data } = await axios.get(`http://localhost:3000/api/v1/scholarships`);
+      const { data } = await axios.get(`http://localhost:3000/api/v1/students/${roleId}/wishlist`);
       setWishlist(data);
+      console.log(data);
+      if (data.length > 0) {
+        await fetchWishlistDetails();
+      } else {
+        setWishlistDetails([]); // Clear details if no IDs
+      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -34,28 +44,88 @@ function Wishlist() {
     }
   };
   const removeFromWishlist = async (scholarshipId) => {
-    try {
-      const endpoint = `http://localhost:3000/api/v1/students/wishlist/${scholarshipId}/delete`;
-      const config = {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      };
-      const response = await axios.delete(endpoint, config);
-
-      if (response.status === 200) {
-        console.log(`Scholarship with ID ${scholarshipId} successfully removed from the wishlist.`);
-      } else {
-        console.log("Something went wrong. Please try again.");
+    const confirmResult = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to remove this scholarship from your wishlist?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, remove it!',
+      cancelButtonText: 'Cancel',
+    });
+  
+    if (confirmResult.isConfirmed) {
+      try {
+        const endpoint = `http://localhost:3000/api/v1/students/wishlist/${scholarshipId}/delete`;
+        const config = {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        };
+        const response = await axios.put(endpoint, {}, config);
+        if (response.status === 200) {
+          toast.success('Scholarship successfully removed from the wishlist.', {
+            position: 'top-right',
+            autoClose: true,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'dark',
+          });
+        } else {
+          console.log('Something went wrong. Please try again.');
+        }
+        await fetchWishlist();
+      } catch (error) {
+        console.error('Error removing scholarship from wishlist:', error);
+        toast.error('An error occurred while removing the scholarship from the wishlist.', {
+          position: 'bottom-right',
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
       }
-    } catch (error) {
-      console.error("Error removing scholarship from wishlist:", error);
-      alert("An error occurred while removing the scholarship from the wishlist.");
+    } else {
+      Swal.fire('Cancelled', 'The scholarship was not removed from the wishlist.', 'info');
     }
   };
+
+  const fetchWishlistDetails = async () => {
+    setLoadingDetails(true);
+    try {
+        const detailsPromises = wishlist.map((id) => 
+            axios.get(`http://localhost:3000/api/v1/scholarships/${id}`)
+        );
+        const responses = await Promise.all(detailsPromises);
+
+        const details = responses.map((response) => response.data);
+        setWishlistDetails(details); // Store detailed data
+        console.log("Wishlist Details:", details);
+    } catch (error) {
+        console.error("Error fetching wishlist details:", error);
+    } finally {
+      setLoadingDetails(false);
+    }
+};
+
   useEffect(() => {
-    fetchWishlist();
-  }, []);
+    if (roleId) {
+      fetchWishlist();
+    }
+  }, [roleId]);
+
+  useEffect(() => {
+    if (wishlist.length > 0) {
+        fetchWishlistDetails();
+    }
+}, [wishlist]);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -69,7 +139,7 @@ function Wishlist() {
     }));
   };
 
-  const filteredWishlist = wishlist.filter((item) => {
+  const filteredWishlist = wishlistDetails.filter((item) => {
     return (
       item.scholarsip_name.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -128,7 +198,7 @@ function Wishlist() {
         </form>
       </div>
       <div className="table-container ps-3">
-        {loading ? (
+        {loading && loadingDetails ? (
           <table className="table table-hover bg-transparent">
             <thead>
               <tr className="bg-transparent">
@@ -232,7 +302,7 @@ function Wishlist() {
                                       remove from favorites
                                     </button>
                                   </li>
-                                  </div>
+                                </div>
                               </ul>
                             </div>
                           </td>

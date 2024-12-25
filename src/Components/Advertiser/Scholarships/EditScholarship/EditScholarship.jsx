@@ -7,12 +7,13 @@ import { Bounce, ToastContainer, toast } from 'react-toastify';
 import Loading from '../../../Shared/Loading/Loading'
 import './EditScholarship.css'
 import { addFeedback, editScholarship } from '../../../../Validation/validation';
+import Swal from 'sweetalert2';
 function EditScholarship() {
   const { id } = useParams();
   console.log(id);
   const [scholarship, setScholarship] = useState(null);
   const navigate = useNavigate();
-//for pending scholarship!!!!
+  //for pending scholarship!!!!
   const fetchScholarship = async () => {
     try {
       const response = await axios.get(`http://localhost:3000/api/v1/admin/scholarships/pending/${id}`);
@@ -28,48 +29,63 @@ function EditScholarship() {
   }, [id]);
 
   const onSubmit = async (updatedData) => {
-    const formData = new FormData();
-    formData.append('scholarsip_name', updatedData.scholarsip_name);
-    formData.append('brief_descrition', updatedData.brief_descrition);
-    formData.append('start_Date', updatedData.start_Date);
-    formData.append('end_Date', updatedData.end_Date);
-    formData.append('selectionProcess', updatedData.SelectionProcess);
-    formData.append('type', updatedData.type);
-    formData.append('language_Of_Study', updatedData.language_Of_Study);
-    formData.append('Place_of_Study', updatedData.Place_of_Study);
-    formData.append('expenses_coverd', updatedData.expenses_coverd);
-    formData.append('eligbility_criteria', updatedData.eligbility_criteria);
-    formData.append('term_and_conditions', updatedData.term_and_conditions);
-    formData.append('form_Link', updatedData.form_Link);
-    formData.append('website_link', updatedData.website_link);
-    formData.append('key_personnel_details', updatedData.key_personnel_details);
-    formData.append('number_of_seats_available', updatedData.number_of_seats_available);
-    formData.append('scholarship_picture', updatedData.scholarship_picture);
-    try {
-      const response = await axios.patch(
-        `http://localhost:3000/api/v1/advertisers/scholarships/${id}/edit`,formData
-        ,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      toast.success(`Scholarship updated Successfully`, {
-        position: "top-right",
-        autoClose: true,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      setTimeout(() => {
-        navigate('/advertiserDashboard/scholarship-advertiser')
-      }, 2000);
-    } catch (error) {
-      console.error('Error updating scholarship:', error);
+    const confirmResult = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to update this scholarship?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, update it!',
+    });
+
+    if (confirmResult.isConfirmed) {
+      const formData = new FormData();
+      formData.append('scholarsip_name', updatedData.scholarsip_name);
+      formData.append('brief_descrition', updatedData.brief_descrition);
+      formData.append('start_Date', updatedData.start_Date);
+      formData.append('end_Date', updatedData.end_Date);
+      formData.append('selectionProcess', updatedData.SelectionProcess);
+      formData.append('type', updatedData.type);
+      formData.append('language_Of_Study', updatedData.language_Of_Study);
+      formData.append('Place_of_Study', updatedData.Place_of_Study);
+      formData.append('expenses_coverd', updatedData.expenses_coverd);
+      formData.append('eligbility_criteria', updatedData.eligbility_criteria);
+      formData.append('term_and_conditions', updatedData.term_and_conditions);
+      formData.append('form_Link', updatedData.form_Link);
+      formData.append('website_link', updatedData.website_link);
+      formData.append('key_personnel_details', updatedData.key_personnel_details);
+      formData.append('number_of_seats_available', updatedData.number_of_seats_available);
+      formData.append('scholarship_picture', updatedData.scholarship_picture);
+
+      try {
+        const response = await axios.patch(
+          `http://localhost:3000/api/v1/advertisers/scholarships/${id}/edit`,
+          formData,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        toast.success(`Scholarship updated Successfully`, {
+          position: 'top-right',
+          autoClose: true,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark',
+        });
+        setTimeout(() => {
+          navigate('/advertiserDashboard/scholarship-advertiser');
+        }, 2000);
+      } catch (error) {
+        console.error('Error updating scholarship:', error);
+      }
+    } else {
+      Swal.fire('Cancelled', 'The scholarship update was cancelled.', 'info');
     }
   };
   // Formik setup
@@ -399,7 +415,7 @@ function EditScholarship() {
               <div className="text-danger">{formik.errors.scholarship_picture}</div>  // Display the error in red
             ) : null}
           </div>
-          <hr style={{color:'#fff'}}/>
+          <hr style={{ color: '#fff' }} />
           <button
             className='btn edit-btn my-4 edit-btn-advertiser'
             type="submit"

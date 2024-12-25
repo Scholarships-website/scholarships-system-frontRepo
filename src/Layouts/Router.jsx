@@ -39,6 +39,9 @@ import HomeStudent from '../Components/Student/Home/HomeStudent';
 import Profile from '../Components/Student/Profile/Profile';
 import Apply from '../Components/Apply/Apply';
 import ApplicationDetails from '../Components/Advertiser/Applications/ApplicationDetails';
+import AcceptedScholarship from '../Components/Admin/Scholarships/AcceptedScholarship';
+import PendingScholarship from '../Components/Admin/Scholarships/PendingScholarship';
+import RejectedScholarship from '../Components/Admin/Scholarships/RejectedScholarship';
 export const router = createBrowserRouter([
     {
         path: "/studentDashboard",
@@ -139,6 +142,18 @@ export const router = createBrowserRouter([
             {
                 path: "scholarships",
                 element: <Scholarships />,
+            },
+            {
+                path: "scholarships/accepted",
+                element:<AcceptedScholarship />,
+            },
+            {
+                path: "scholarships/pending",
+                element:<PendingScholarship />,
+            },
+            {
+                path: "scholarships/rejected",
+                element:<RejectedScholarship />,
             },
             {
                 path: "feedbacks",

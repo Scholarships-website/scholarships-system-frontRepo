@@ -39,59 +39,74 @@ function AddScholarshipForm() {
       if (!isRoleIdReady) {
         return;
       }
-
-      try {
-        setLoading(true);
-        const uploadData = new FormData();
-        for (const key in values) {
-          uploadData.append(key, values[key]);
-        }
-
-        const response = await axios.post(
-          `http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/create`,
-          uploadData,
-          {
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-              'Content-Type': 'multipart/form-data',
-            },
+    
+      const confirmResult = await Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to create this scholarship?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, create it!',
+        cancelButtonText: 'Cancel',
+      });
+    
+      if (confirmResult.isConfirmed) {
+        try {
+          setLoading(true);
+          const uploadData = new FormData();
+          for (const key in values) {
+            uploadData.append(key, values[key]);
           }
-        );
-
-        toast.success('Scholarship created successfully!', {
-          position: 'top-right',
-          autoClose: true,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark',
-        });
-
-        formik.resetForm(); // Reset form after success
-
-        setTimeout(() => {
-          navigate('/advertiserDashboard/scholarship-advertiser/pending');
-        }, 2000);
-      } catch (error) {
-        console.error('Error creating scholarship:', error);
-        const errorMessage =
-          (error.response && error.response.data && error.response.data.message) ||
-          'An error occurred while creating the scholarship.';
-        toast.error(`Error: ${errorMessage}`, {
-          position: 'bottom-right',
-          autoClose: false,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-          transition: Bounce,
-        });
-      } finally {
-        setLoading(false);
+    
+          const response = await axios.post(
+            `http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/create`,
+            uploadData,
+            {
+              headers: {
+                Authorization: `Bearer ${userToken}`,
+                'Content-Type': 'multipart/form-data',
+              },
+            }
+          );
+    
+          toast.success('Scholarship created successfully!', {
+            position: 'top-right',
+            autoClose: true,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'dark',
+          });
+    
+          formik.resetForm(); // Reset form after success
+    
+          setTimeout(() => {
+            navigate('/advertiserDashboard/scholarship-advertiser/pending');
+          }, 2000);
+        } catch (error) {
+          console.error('Error creating scholarship:', error);
+          const errorMessage =
+            (error.response && error.response.data && error.response.data.message) ||
+            'An error occurred while creating the scholarship.';
+          toast.error(`Error: ${errorMessage}`, {
+            position: 'bottom-right',
+            autoClose: false,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+            transition: Bounce,
+          });
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        Swal.fire('Cancelled', 'Scholarship creation was cancelled.', 'info');
       }
     },
   });
