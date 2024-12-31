@@ -56,7 +56,7 @@ export default function Login() {
                         default:
                             alert('Unknown user role');
                     }
-                }, 2000); // Adjust this timeout to allow enough time to see the toast
+                }, 100); // Adjust this timeout to allow enough time to see the toast
             } else {
                 toast.error('Login failed: ' + data.message, {
                     position: "bottom-right",
@@ -155,7 +155,7 @@ export default function Login() {
                     <Skeleton variant="rounded" width={500} height={500} />
                 ) : (
                     <div className="animationContainer">
-                        <iframe src="https://lottie.host/embed/b60b1f1f-181c-4ace-9378-52ccead1d285/9IAC16aUWY.json" width="500px" height="500px" />
+                        <iframe src="https://lottie.host/embed/b60b1f1f-181c-4ace-9378-52ccead1d285/9IAC16aUWY.json" width="500px" height="500px" loading="lazy" />
                     </div>)}
                 <div className="formContainer style={{ borderRadius: 25 }}">
                     <div className="card-body">

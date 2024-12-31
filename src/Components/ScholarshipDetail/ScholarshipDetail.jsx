@@ -16,199 +16,198 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ScholarshipFeedback from './ScholarshipFeedback';
 
 const ScholarshipDetail = () => {
-    const { id } = useParams();
-    const [scholarship, setScholarship] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [similarScholarships, setSimilarScholarships] = useState([]);
-    const [similarLoading, setSimilarLoading] = useState(true);
+  const { id } = useParams();
+  const [scholarship, setScholarship] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [similarScholarships, setSimilarScholarships] = useState([]);
+  const [similarLoading, setSimilarLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchScholarship = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3000/api/v1/scholarships/${id}`);
-                setScholarship(response.data);
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching scholarship:', error);
-                setLoading(false);
-            }
-        };
-        window.scrollTo(0, 0);
-        fetchScholarship();
-    }, [id]);
-
-    useEffect(() => {
-        const fetchSimilarScholarships = async () => {
-            setSimilarLoading(true);
-            try {
-                const response = await axios.get('http://localhost:3000/api/v1/scholarships');
-                const filteredScholarships = response.data.filter(item =>
-                    (item.type === scholarship?.type ||
-                        item.Place_of_Study === scholarship?.Place_of_Study ||
-                        item.language_Of_Study === scholarship?.language_Of_Study) &&
-                    item._id !== scholarship?._id // Exclude the current scholarship
-                );
-                setSimilarScholarships(filteredScholarships);
-            } catch (error) {
-                console.error('Error fetching similar scholarships:', error);
-            }
-            finally {
-                setSimilarLoading(false);
-            }
-        };
-
-        if (scholarship) {
-            fetchSimilarScholarships();
-        }
-    }, [scholarship]);
-
-    const renderField = (label, value) => (
-        <p><strong>{label}:</strong> {loading ? <Skeleton width="50%" /> : value}</p>
-    );
-    const sliderSettings = {
-        dots: true,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        responsive: [
-            {
-                breakpoint: 1200,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1
-                }
-            },
-            {
-                breakpoint: 868,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1
-                }
-            },
-            {
-                breakpoint: 660,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }
-        ]
+  useEffect(() => {
+    const fetchScholarship = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/v1/scholarships/${id}`);
+        setScholarship(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching scholarship:', error);
+        setLoading(false);
+      }
     };
-    return (
-        <>
-            <Navbar />
-            <div className="scholarship-detail">
-                <div className="scholarship-detail">
-                    <div className="row-detail">
-                        <div className="img-container-detail">
-                            {loading ? (
-                                <Skeleton variant="rounded" width={500} height={500} />
-                            ) : (
-                                <img src={scholarship.scholarship_picture} alt="Scholarship" />
-                            )}
-                        </div>
-                        <div className="scholarship-info">
-                            <div className="basic-info">
-                                {loading ? <Skeleton width="60%" /> : <h1>{scholarship.scholarsip_name}</h1>}
-                                {renderField("Brief Description", scholarship?.brief_descrition)}
-                                {renderField("Eligibility Criteria", scholarship?.eligbility_criteria)}
-                                {renderField("Place of Study", scholarship?.Place_of_Study)}
-                                {renderField("Type", scholarship?.type)}
-                                {renderField("Selection Process", scholarship?.SelectionProcess)}
-                                {renderField("Language of Study", scholarship?.language_Of_Study)}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="secondary-info">
-                        {renderField("Expenses Covered", `$${scholarship?.expenses_coverd}`)}
-                        {renderField("Number of Seats Available", scholarship?.number_of_seats_available)}
-                        {renderField("Key Personnel", scholarship?.key_personnel_details)}
-                        {renderField("Terms and Conditions", scholarship?.term_and_conditions)}
-                        <p>
-                            <strong>Website:</strong>
-                            {loading ? <Skeleton width="40%" /> : <a href={scholarship.website_link}>Visit our website to Learn More</a>}
-                        </p>
-                        {renderField("Start Date", new Date(scholarship?.start_Date).toLocaleDateString())}
-                        {renderField("End Date", new Date(scholarship?.End_Date).toLocaleDateString())}
-                        {renderField("Submission Date", new Date(scholarship?.submission_date).toLocaleDateString())}
+    window.scrollTo(0, 0);
+    fetchScholarship();
+  }, [id]);
 
-                        {loading ? (
-                            <Skeleton width="30%" height={40} />
-                        ) : (
-                            scholarship.number_of_seats_available > 0 && new Date() <= new Date(scholarship.End_Date) ? (
-                                //<a href={scholarship.form_Link} className="apply-button">Apply Here</a>
-                                <Link to={`/apply-for-scholarship`} className="apply-button" >Apply Here</Link>
-                            ) : (
-                                <p className="apply-closed">Applications are closed.</p>
-                            )
-                        )}
-                    </div>
-                </div>
-                <ScholarshipFeedback id={id} />
-                {/* Similar scholarships section */}
-                <div className="similar-scholarships">
-                    <h2 className='header-similar'>Similar Scholarships</h2>
-                    <Slider {...sliderSettings}>
-                        {similarLoading ? (
-                            Array.from({ length: 3 }).map((_, index) => (
-                                <Card key={index} className='similar-scholarship-item'>
-                                    <Skeleton variant="rounded" height={200} />
-                                    <CardContent>
-                                        <Skeleton variant="text" height={20} width="80%" />
-                                        <Skeleton variant="text" height={20} width="50%" />
-                                        <Skeleton variant="text" height={20} width="60%" />
-                                        <Skeleton variant="text" height={20} width="70%" />
-                                        <Skeleton variant="text" height={20} width="50%" />
-                                    </CardContent>
-                                </Card>
-                            ))
-                        ) : similarScholarships.length > 0 ? (
-                            similarScholarships.map(scholarship => (
-                                <Card key={scholarship._id} className=' similar-scholarship-item'>
-                                    <h2 height="100px" className='card-header' style={{ color: '#418447' }}>
-                                        {scholarship.scholarsip_name}
-                                    </h2>
-                                    <CardMedia
-                                        component="img"
-                                        height="200px"
-                                        image={scholarship.scholarship_picture}
-                                        alt={scholarship.scholarsip_name}
-                                    />
-                                    <CardContent height="200px">
-                                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                            <strong>Brief Description: </strong>{scholarship.brief_descrition}
-                                        </Typography>
-                                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                            <strong>Place of Study:</strong>  {scholarship.type}
-                                        </Typography>
-                                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                            <strong>Language of Study:</strong> {scholarship.language_Of_Study}
-                                        </Typography>
-                                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                            <strong>Place of Study:</strong> {scholarship.Place_of_Study}
-                                        </Typography>
-                                    </CardContent>
-                                    <CardActions disableSpacing height="100px">
-                                        <Link to={`/scholarship-detail/${scholarship._id}`} className="details-scholarship-link">View Details</Link>
-                                    </CardActions>
-                                </Card>
-                            ))
-                        ) : (
-                            <p>No similar scholarships found.</p>
-                        )}
-                    </Slider>
-                </div>
+  useEffect(() => {
+    const fetchSimilarScholarships = async () => {
+      setSimilarLoading(true);
+      try {
+        const response = await axios.get('http://localhost:3000/api/v1/scholarships');
+        const filteredScholarships = response.data.filter(item =>
+          (item.type === scholarship?.type ||
+            item.Place_of_Study === scholarship?.Place_of_Study ||
+            item.language_Of_Study === scholarship?.language_Of_Study) &&
+          item._id !== scholarship?._id // Exclude the current scholarship
+        );
+        setSimilarScholarships(filteredScholarships);
+      } catch (error) {
+        console.error('Error fetching similar scholarships:', error);
+      }
+      finally {
+        setSimilarLoading(false);
+      }
+    };
+
+    if (scholarship) {
+      fetchSimilarScholarships();
+    }
+  }, [scholarship]);
+
+  const renderField = (label, value) => (
+    <p><strong>{label}:</strong> {loading ? <Skeleton width="50%" /> : value}</p>
+  );
+  const sliderSettings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 868,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 660,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  };
+  return (
+    <>
+      <Navbar />
+      <div className="scholarship-detail">
+        <div className="scholarship-detail">
+          <div className="row-detail">
+            <div className="img-container-detail">
+              {loading ? (
+                <Skeleton variant="rounded" width={500} height={500} />
+              ) : (
+                <img src={scholarship.scholarship_picture} alt="Scholarship" loading="lazy" />
+              )}
             </div>
-        </>
-    );
+            <div className="scholarship-info">
+              <div className="basic-info">
+                {loading ? <Skeleton width="60%" /> : <h1>{scholarship.scholarsip_name}</h1>}
+                {renderField("Brief Description", scholarship?.brief_descrition)}
+                {renderField("Eligibility Criteria", scholarship?.eligbility_criteria)}
+                {renderField("Place of Study", scholarship?.Place_of_Study)}
+                {renderField("Type", scholarship?.type)}
+                {renderField("Selection Process", scholarship?.SelectionProcess)}
+                {renderField("Language of Study", scholarship?.language_Of_Study)}
+              </div>
+            </div>
+          </div>
+          <div className="secondary-info">
+            {renderField("Expenses Covered", `$${scholarship?.expenses_coverd}`)}
+            {renderField("Number of Seats Available", scholarship?.number_of_seats_available)}
+            {renderField("Key Personnel", scholarship?.key_personnel_details)}
+            {renderField("Terms and Conditions", scholarship?.term_and_conditions)}
+            <p>
+              <strong>Website:</strong>
+              {loading ? <Skeleton width="40%" /> : <a href={scholarship.website_link}>Visit our website to Learn More</a>}
+            </p>
+            {renderField("Start Date", new Date(scholarship?.start_Date).toLocaleDateString())}
+            {renderField("End Date", new Date(scholarship?.End_Date).toLocaleDateString())}
+            {renderField("Submission Date", new Date(scholarship?.submission_date).toLocaleDateString())}
+
+            {loading ? (
+              <Skeleton width="30%" height={40} />
+            ) : (
+              scholarship.number_of_seats_available > 0 && new Date() <= new Date(scholarship.End_Date) ? (
+                //<a href={scholarship.form_Link} className="apply-button">Apply Here</a>
+                <Link to={`/apply-for-scholarship`} className="apply-button" >Apply Now</Link>
+              ) : (
+                <p className="apply-closed">Applications are closed.</p>
+              )
+            )}
+          </div>
+        </div>
+        <ScholarshipFeedback id={id} />
+        {/* Similar scholarships section */}
+        {!similarLoading && similarScholarships.length === 0 ? null : (
+          <div className="similar-scholarships">
+            <h2 className='header-similar'>Similar Scholarships</h2>
+            <Slider {...sliderSettings}>
+              {similarLoading ? (
+                Array.from({ length: 3 }).map((_, index) => (
+                  <Card key={index} className='similar-scholarship-item'>
+                    <Skeleton variant="rounded" height={200} />
+                    <CardContent>
+                      <Skeleton variant="text" height={20} width="80%" />
+                      <Skeleton variant="text" height={20} width="50%" />
+                      <Skeleton variant="text" height={20} width="60%" />
+                      <Skeleton variant="text" height={20} width="70%" />
+                      <Skeleton variant="text" height={20} width="50%" />
+                    </CardContent>
+                  </Card>
+                ))
+              ) : similarScholarships.map(scholarship => (
+                <Card key={scholarship._id} className=' similar-scholarship-item'>
+                  <h2 height="100px" className='card-header' style={{ color: '#418447' }}>
+                    {scholarship.scholarsip_name}
+                  </h2>
+                  <CardMedia
+                    component="img"
+                    height="200px"
+                    image={scholarship.scholarship_picture}
+                    alt={scholarship.scholarsip_name}
+                    loading="lazy"
+                  />
+                  <CardContent height="200px">
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                      <strong>Brief Description: </strong>{scholarship.brief_descrition}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                      <strong>Place of Study:</strong>  {scholarship.type}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                      <strong>Language of Study:</strong> {scholarship.language_Of_Study}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                      <strong>Place of Study:</strong> {scholarship.Place_of_Study}
+                    </Typography>
+                  </CardContent>
+                  <CardActions disableSpacing height="100px">
+                    <Link to={`/scholarship-detail/${scholarship._id}`} className="details-scholarship-link">View Details</Link>
+                  </CardActions>
+                </Card>
+              ))}
+            </Slider>
+          </div>
+        )}
+      </div>
+    </>
+  );
 };
 
 export default ScholarshipDetail;

@@ -79,7 +79,7 @@ export default function HomeAdvertiser() {
                 {loading ? (
                     <Skeleton variant="rectangular" width={500} height={500} />
                 ) : (
-                    <iframe src="https://lottie.host/embed/7eb9c883-adbb-4fdb-94c6-a697e64b8f54/jZjKY4SR6q.json" width="500px" height="500px" />
+                    <iframe src="https://lottie.host/embed/7eb9c883-adbb-4fdb-94c6-a697e64b8f54/jZjKY4SR6q.json" width="500px" height="500px" loading="lazy" />
                 )}
             </div>
             <div className="summary-container">

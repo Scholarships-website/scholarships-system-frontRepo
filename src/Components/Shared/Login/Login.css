@@ -40,7 +40,7 @@
     text-align: center;
 }
 
-.formContainer button {
+.formContainer .btnContainer button {
     background-color: #418447;
     color: #eee;
     text-align: center;
@@ -52,7 +52,7 @@
     align-items: center;
 }
 
-.formContainer button:hover {
+.formContainer .btnContainer button:hover {
     background-color: #eee;
     color: #418447;
     border: 1px solid #418447;

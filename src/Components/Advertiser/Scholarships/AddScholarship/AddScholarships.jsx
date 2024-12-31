@@ -6,6 +6,7 @@ import { UserContext } from '../../../../Context/UserContext';
 import { addScholarship } from '../../../../Validation/validation';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
+import Swal from 'sweetalert2';
 
 function AddScholarshipForm() {
   const { userToken, roleId } = useContext(UserContext);

@@ -77,6 +77,7 @@ const NewestScholarships = () => {
                     className="scholarship-image"
                     width='400px'
                     height='400px'
+                    loading="lazy"
                   />
                 </div>
               </div>

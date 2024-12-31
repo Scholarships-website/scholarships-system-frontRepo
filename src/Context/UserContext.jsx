@@ -12,6 +12,7 @@ export default function UserContextProvider({ children }) {
     const [roleId, setRoleId] = useState(null);
     const [userData, setUserData] = useState({});
     const [loading, setLoading] = useState(true); // Added loading state
+    const [studentData, setStudentData] = useState(true); // Added loading state
 
     const logout = () => {
         setUserToken(null);
@@ -65,9 +66,24 @@ export default function UserContextProvider({ children }) {
                 const { data } = await axios.get(`http://localhost:3000/api/v1/getUserInfo/${userId}`);
                 console.log(data);
                 setUserData(data);
-            }
-            catch (error) {
+                if (data.role === 'student') {
+                    // Fetch student-specific data if the role is student
+                    await getStudentDataFromId();
+                }
+            } catch (error) {
                 console.error("Error fetching user data:", error);
+            }
+        }
+    };
+    
+    const getStudentDataFromId = async () => {
+        if (roleId) {
+            try {
+                const { data } = await axios.get(`http://localhost:3000/api/v1/getStudentDataFromId/${roleId}`);
+                console.log(data);
+                setStudentData(data);
+            } catch (error) {
+                console.error("Error fetching student data:", error);
             }
         }
     };

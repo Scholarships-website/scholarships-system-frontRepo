@@ -54,7 +54,7 @@ function Wishlist() {
       confirmButtonText: 'Yes, remove it!',
       cancelButtonText: 'Cancel',
     });
-  
+
     if (confirmResult.isConfirmed) {
       try {
         const endpoint = `http://localhost:3000/api/v1/students/wishlist/${scholarshipId}/delete`;
@@ -100,20 +100,20 @@ function Wishlist() {
   const fetchWishlistDetails = async () => {
     setLoadingDetails(true);
     try {
-        const detailsPromises = wishlist.map((id) => 
-            axios.get(`http://localhost:3000/api/v1/scholarships/${id}`)
-        );
-        const responses = await Promise.all(detailsPromises);
+      const detailsPromises = wishlist.map((id) =>
+        axios.get(`http://localhost:3000/api/v1/scholarships/${id}`)
+      );
+      const responses = await Promise.all(detailsPromises);
 
-        const details = responses.map((response) => response.data);
-        setWishlistDetails(details); // Store detailed data
-        console.log("Wishlist Details:", details);
+      const details = responses.map((response) => response.data);
+      setWishlistDetails(details); // Store detailed data
+      console.log("Wishlist Details:", details);
     } catch (error) {
-        console.error("Error fetching wishlist details:", error);
+      console.error("Error fetching wishlist details:", error);
     } finally {
       setLoadingDetails(false);
     }
-};
+  };
 
   useEffect(() => {
     if (roleId) {
@@ -123,9 +123,9 @@ function Wishlist() {
 
   useEffect(() => {
     if (wishlist.length > 0) {
-        fetchWishlistDetails();
+      fetchWishlistDetails();
     }
-}, [wishlist]);
+  }, [wishlist]);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -198,7 +198,7 @@ function Wishlist() {
         </form>
       </div>
       <div className="table-container ps-3">
-        {loading && loadingDetails ? (
+        {loadingDetails ? (
           <table className="table table-hover bg-transparent">
             <thead>
               <tr className="bg-transparent">
@@ -212,8 +212,10 @@ function Wishlist() {
             <tbody>
               {Array.from({ length: itemsPerPage }).map((_, index) => (
                 <tr key={index}>
-                  <th scope="row"><Skeleton variant="text" width={20} /></th>
-                  <td><Skeleton variant="text" width="30%" /></td>
+                  <th scope="row"><Skeleton variant="text" width="100%" /></th>
+                  <td style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Skeleton variant="circular" width="60px" height="60px" />
+                  </td>
                   <td><Skeleton variant="text" width="80%" /></td>
                   <td className="d-none d-md-table-cell"><Skeleton variant="text" width="80%" /></td>
                   <td><Skeleton variant="rectangular" width={50} height={20} /></td>
@@ -241,7 +243,7 @@ function Wishlist() {
                     <React.Fragment key={item._id}>
                       <tr onClick={() => handleExpandRow(index)}>
                         <th scope="row">{(currentPage - 1) * itemsPerPage + index + 1}</th>
-                        <td><img src={item.scholarship_picture} alt="Scholarship" style={{ width: '60px', height: '60px', borderRadius: '50%' }} /></td>
+                        <td><img src={item.scholarship_picture} alt="Scholarship" style={{ width: '60px', height: '60px', borderRadius: '50%' }}  loading="lazy" /></td>
                         <td>{item.scholarsip_name}</td>
                         <td className="d-none d-md-table-cell">{item.type}</td>
                         <td className="action d-none d-md-table-cell">

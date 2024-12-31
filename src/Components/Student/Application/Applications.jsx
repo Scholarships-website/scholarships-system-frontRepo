@@ -107,11 +107,13 @@ function Applications() {
             <tbody>
               {Array.from({ length: itemsPerPage }).map((_, index) => (
                 <tr key={index}>
-                  <th scope="row"><Skeleton variant="text" width={20} /></th>
-                  <td><Skeleton variant="text" width="30%" /></td>
+                  <th scope="row"><Skeleton variant="text" width="100%" /></th>
+                  <td style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Skeleton variant="circular" width="60px" height="60px" />
+                  </td>
                   <td><Skeleton variant="text" width="80%" /></td>
-                  <td className="d-none d-md-table-cell"><Skeleton variant="text" width="80%" /></td>
-                  <td><Skeleton variant="rectangular" width={50} height={20} /></td>
+                  <td className="d-none d-md-table-cell"><Skeleton variant="text" width="100%" /></td>
+                  <td><Skeleton variant="rectangular" width="30%" height={20} /></td>
                 </tr>
               ))}
             </tbody>
@@ -136,7 +138,7 @@ function Applications() {
                     <React.Fragment key={item._id}>
                       <tr onClick={() => handleExpandRow(index)}>
                         <th scope="row">{(currentPage - 1) * itemsPerPage + index + 1}</th>
-                        <td><img src={item.scholarship_picture} alt="Scholarship" style={{ width: '60px', height: '60px', borderRadius: '50%' }} /></td>
+                        <td><img src={item.scholarship_picture} alt="Scholarship" style={{ width: '60px', height: '60px', borderRadius: '50%' }} loading="lazy" /></td>
                         <td>{item.scholarsip_name}</td>
                         <td className={`d-none d-md-table-cell`}>
                           <span className={`status ${getStatusClass(item.approval_status)}`}>{item.approval_status}</span>

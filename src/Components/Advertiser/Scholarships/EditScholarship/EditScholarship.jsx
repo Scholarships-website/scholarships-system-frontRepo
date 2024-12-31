@@ -8,9 +8,14 @@ import Loading from '../../../Shared/Loading/Loading'
 import './EditScholarship.css'
 import { addFeedback, editScholarship } from '../../../../Validation/validation';
 import Swal from 'sweetalert2';
+const formatDate = (isoString) => {
+  if (!isoString) return '';
+  const date = new Date(isoString);
+  return date.toISOString().split('T')[0]; // Extract "yyyy-MM-dd"
+};
 function EditScholarship() {
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
   const [scholarship, setScholarship] = useState(null);
   const navigate = useNavigate();
   //for pending scholarship!!!!
@@ -40,31 +45,34 @@ function EditScholarship() {
     });
 
     if (confirmResult.isConfirmed) {
-      const formData = new FormData();
-      formData.append('scholarsip_name', updatedData.scholarsip_name);
-      formData.append('brief_descrition', updatedData.brief_descrition);
-      formData.append('start_Date', updatedData.start_Date);
-      formData.append('end_Date', updatedData.end_Date);
-      formData.append('selectionProcess', updatedData.SelectionProcess);
-      formData.append('type', updatedData.type);
-      formData.append('language_Of_Study', updatedData.language_Of_Study);
-      formData.append('Place_of_Study', updatedData.Place_of_Study);
-      formData.append('expenses_coverd', updatedData.expenses_coverd);
-      formData.append('eligbility_criteria', updatedData.eligbility_criteria);
-      formData.append('term_and_conditions', updatedData.term_and_conditions);
-      formData.append('form_Link', updatedData.form_Link);
-      formData.append('website_link', updatedData.website_link);
-      formData.append('key_personnel_details', updatedData.key_personnel_details);
-      formData.append('number_of_seats_available', updatedData.number_of_seats_available);
-      formData.append('scholarship_picture', updatedData.scholarship_picture);
-
+      // const formData = new FormData();
+      // formData.append('scholarsip_name', updatedData.scholarsip_name);
+      // formData.append('brief_descrition', updatedData.brief_descrition);
+      // formData.append('start_Date', formatDate(updatedData.start_Date));
+      // formData.append('End_Date', formatDate(updatedData.End_Date));
+      // formData.append('SelectionProcess', updatedData.SelectionProcess);
+      // formData.append('type', updatedData.type);
+      // formData.append('language_Of_Study', updatedData.language_Of_Study);
+      // formData.append('Place_of_Study', updatedData.Place_of_Study);
+      // formData.append('expenses_coverd', updatedData.expenses_coverd);
+      // formData.append('eligbility_criteria', updatedData.eligbility_criteria);
+      // formData.append('term_and_conditions', updatedData.term_and_conditions);
+      // formData.append('form_Link', updatedData.form_Link);
+      // formData.append('website_link', updatedData.website_link);
+      // formData.append('key_personnel_details', updatedData.key_personnel_details);
+      // formData.append('number_of_seats_available', updatedData.number_of_seats_available);
+      // formData.append('scholarship_picture', updatedData.scholarship_picture);
+      const uploadData = new FormData();
+      for (const key in updatedData) {
+        uploadData.append(key, updatedData[key]);
+      }
       try {
         const response = await axios.patch(
           `http://localhost:3000/api/v1/advertisers/scholarships/${id}/edit`,
-          formData,
+          uploadData,
           {
             headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': 'multipart/form-data',
             },
           }
         );
@@ -78,9 +86,10 @@ function EditScholarship() {
           progress: undefined,
           theme: 'dark',
         });
+        formik.resetForm();
         setTimeout(() => {
           navigate('/advertiserDashboard/scholarship-advertiser');
-        }, 2000);
+        }, 1000);
       } catch (error) {
         console.error('Error updating scholarship:', error);
       }
@@ -122,8 +131,8 @@ function EditScholarship() {
         id: scholarship._id || '',
         scholarsip_name: scholarship.scholarsip_name || '',
         brief_descrition: scholarship.brief_descrition || '',
-        start_Date: scholarship.start_Date || '',
-        End_Date: scholarship.End_Date || '',
+        start_Date: formatDate(scholarship.start_Date) || '',
+        End_Date: formatDate(scholarship.End_Date) || '',
         SelectionProcess: scholarship.SelectionProcess || '',
         type: scholarship.type || '',
         language_Of_Study: scholarship.language_Of_Study || '',
@@ -139,7 +148,9 @@ function EditScholarship() {
       });
     }
   }, [scholarship, id]);
-
+  const handleFileChange = (e) => {
+    formik.setFieldValue('scholarship_picture', e.target.files[0]);
+  };
   if (!scholarship) {
     return <Loading />;
   }
@@ -407,8 +418,7 @@ function EditScholarship() {
               className={`form-control ${formik.touched.scholarship_picture && formik.errors.scholarship_picture ? 'is-invalid' : ''}`}
               id="scholarship_picture"
               name="scholarship_picture"
-              // value={formik.values.scholarship_picture}
-              onChange={formik.handleChange}
+              onChange={handleFileChange}
               onBlur={formik.handleBlur}
             />
             {formik.touched.scholarship_picture && formik.errors.scholarship_picture ? (
