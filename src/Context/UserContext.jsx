@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import Loading from '../Components/Shared/Loading/Loading';
+import Logout from "../Components/Shared/Logout";
 
 // Create the context
 export let UserContext = createContext(null);
@@ -11,18 +12,18 @@ export default function UserContextProvider({ children }) {
     const [userId, setUserId] = useState(null);
     const [roleId, setRoleId] = useState(null);
     const [userData, setUserData] = useState({});
-    const [loading, setLoading] = useState(true); // Added loading state
-    const [studentData, setStudentData] = useState(true); // Added loading state
+    const [loading, setLoading] = useState(true);
+    const [studentData, setStudentData] = useState(true); 
 
-    const logout = () => {
-        setUserToken(null);
-        setUserId(null);
-        setRoleId(null);
-        setUserData({});
-        localStorage.removeItem('userToken');
-        alert("Session expired. Please log in again.");
-        setLoading(false); // Ensure loading stops after logout
-    };
+    // const logout = () => {
+    //     setUserToken(null);
+    //     setUserId(null);
+    //     setRoleId(null);
+    //     setUserData({});
+    //     localStorage.removeItem('userToken');
+    //     alert("Session expired. Please log in again.");
+    //     setLoading(false);
+    // };
 
     const getUserID = async () => {
         if (userToken) {
@@ -34,13 +35,11 @@ export default function UserContextProvider({ children }) {
                 setUserId(data.userId);
                 setRoleId(data.RoleId);
             } catch (error) {
-                if (error.response && error.response.data.message === "jwt expired") {
-                    console.error("Token expired:", error);
-                    alert("Session expired. Please log in again.");
-                    logout(); // Call logout on token expiration
-                } else {
-                    console.error("Error fetching user ID:", error);
-                }
+                console.error("Error fetching user ID:", error);
+                const { data } = await axios.post(`http://localhost:3000/api/v1/logout`);
+                console.log(data);
+                alert("Session expired. Please log in again.");
+                <Logout />;
             }
         }
     };
@@ -99,7 +98,7 @@ export default function UserContextProvider({ children }) {
     }
 
     return (
-        <UserContext.Provider value={{ userToken, setUserToken, userId, setUserId, userData, setUserData, roleId, setRoleId, logout }}>
+        <UserContext.Provider value={{ userToken, setUserToken, userId, setUserId, userData, setUserData, roleId, setRoleId }}>
             {children}
         </UserContext.Provider>
     );

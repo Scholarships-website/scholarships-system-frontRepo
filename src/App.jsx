@@ -10,21 +10,21 @@ import { Bounce, ToastContainer } from 'react-toastify';
 
 export default function App() {
   return (
-    <UserContextProvider>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        transition={Bounce}
-      />
+      <UserContextProvider>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition={Bounce}
+        />
         <MainApp />
-    </UserContextProvider>
+      </UserContextProvider>
   );
 }
 
@@ -43,7 +43,7 @@ function MainApp() {
   //     navigate('/login'); // Redirect to login for protected routes without token
   //   }
   // }, [userToken, location.pathname, navigate]);
-  
+
   useEffect(() => {
     if (localStorage.getItem('userToken') != null) {
       setUserToken(localStorage.getItem('userToken'));

@@ -278,7 +278,7 @@ function RejectedScholarships() {
                                           scholarshipDetails && (
                                             <Box id="scholarship-details-description" sx={{ mt: 2 }}>
                                               <Box sx={{ my: 2 }}>
-                                                <img src={scholarshipDetails.scholarship_picture} alt="Scholarship" style={{ width: '100%', borderRadius: '8px' }} />
+                                                <img src={scholarshipDetails.scholarship_picture} alt="Scholarship" style={{ width: '100%', borderRadius: '8px' }} loading="lazy" />
                                               </Box>
                                               <Typography><strong>Name:</strong> {scholarshipDetails.scholarsip_name}</Typography>
                                               <Typography><strong>Brief Description:</strong> {scholarshipDetails.brief_descrition}</Typography>
@@ -365,7 +365,7 @@ function RejectedScholarships() {
                                             scholarshipDetails && (
                                               <Box id="scholarship-details-description" sx={{ mt: 2 }}>
                                                 <Box sx={{ my: 2 }}>
-                                                  <img src={scholarshipDetails.scholarship_picture} alt="Scholarship" style={{ width: '100%', borderRadius: '8px' }} />
+                                                  <img src={scholarshipDetails.scholarship_picture} alt="Scholarship" style={{ width: '100%', borderRadius: '8px' }} loading="lazy" />
                                                 </Box>
                                                 <Typography><strong>Name:</strong> {scholarshipDetails.scholarsip_name}</Typography>
                                                 <Typography><strong>Brief Description:</strong> {scholarshipDetails.brief_descrition}</Typography>

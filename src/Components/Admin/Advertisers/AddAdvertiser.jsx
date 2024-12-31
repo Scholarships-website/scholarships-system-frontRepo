@@ -116,7 +116,7 @@ export default function AddAdvertiser() {
         });
         setTimeout(() => {
           navigate('/dashboard/advertisers');
-        }, 2000);
+        }, 500);
       } catch (error) {
         console.error('Error submitting form:', error);
         console.log('Error response:', error.response);

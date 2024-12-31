@@ -14,7 +14,7 @@ function AddScholarshipForm() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const validationSchema = addScholarship;
-  
+
   // Initialize Formik
   const formik = useFormik({
     initialValues: {
@@ -29,7 +29,6 @@ function AddScholarshipForm() {
       expenses_coverd: '',
       eligbility_criteria: '',
       term_and_conditions: '',
-      form_Link: '',
       website_link: '',
       key_personnel_details: '',
       number_of_seats_available: '',
@@ -40,7 +39,7 @@ function AddScholarshipForm() {
       if (!isRoleIdReady) {
         return;
       }
-    
+
       const confirmResult = await Swal.fire({
         title: 'Are you sure?',
         text: 'Do you want to create this scholarship?',
@@ -51,7 +50,7 @@ function AddScholarshipForm() {
         confirmButtonText: 'Yes, create it!',
         cancelButtonText: 'Cancel',
       });
-    
+
       if (confirmResult.isConfirmed) {
         try {
           setLoading(true);
@@ -59,7 +58,7 @@ function AddScholarshipForm() {
           for (const key in values) {
             uploadData.append(key, values[key]);
           }
-    
+
           const response = await axios.post(
             `http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/create`,
             uploadData,
@@ -70,7 +69,7 @@ function AddScholarshipForm() {
               },
             }
           );
-    
+
           toast.success('Scholarship created successfully!', {
             position: 'top-right',
             autoClose: true,
@@ -81,9 +80,9 @@ function AddScholarshipForm() {
             progress: undefined,
             theme: 'dark',
           });
-    
+
           formik.resetForm(); // Reset form after success
-    
+
           setTimeout(() => {
             navigate('/advertiserDashboard/scholarship-advertiser/pending');
           }, 2000);
@@ -136,7 +135,6 @@ function AddScholarshipForm() {
     expenses_coverd: 'Expenses Covered',
     eligbility_criteria: 'Eligibility Criteria',
     term_and_conditions: 'Terms and Conditions',
-    form_Link: 'Form Link',
     website_link: 'Website Link',
     key_personnel_details: 'Key Personnel Details',
     number_of_seats_available: 'Number of Seats Available',
@@ -176,8 +174,11 @@ function AddScholarshipForm() {
                 {customLabels[key] || key.replace(/_/g, ' ')}
               </label>
               <input
-                type={key.includes('Date') ? 'date' : 'text'}
-                className={`form-control ${formik.touched[key] && formik.errors[key] ? 'is-invalid' : ''}`}
+                type={key.includes('Date')
+                  ? 'date'
+                  : key.includes('number') || key.includes('expenses')
+                    ? 'number'
+                    : 'text'} className={`form-control ${formik.touched[key] && formik.errors[key] ? 'is-invalid' : ''}`}
                 id={key}
                 name={key}
                 value={formik.values[key]}

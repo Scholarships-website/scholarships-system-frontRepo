@@ -67,7 +67,7 @@ export default function EditAdvertiser() {
         });
         setTimeout(() => {
           navigate('/dashboard/advertisers')
-        }, 2000);
+        }, 500);
       } catch (error) {
         console.error('Error updating advertiser:', error);
       }

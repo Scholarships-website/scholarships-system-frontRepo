@@ -45,23 +45,6 @@ function EditScholarship() {
     });
 
     if (confirmResult.isConfirmed) {
-      // const formData = new FormData();
-      // formData.append('scholarsip_name', updatedData.scholarsip_name);
-      // formData.append('brief_descrition', updatedData.brief_descrition);
-      // formData.append('start_Date', formatDate(updatedData.start_Date));
-      // formData.append('End_Date', formatDate(updatedData.End_Date));
-      // formData.append('SelectionProcess', updatedData.SelectionProcess);
-      // formData.append('type', updatedData.type);
-      // formData.append('language_Of_Study', updatedData.language_Of_Study);
-      // formData.append('Place_of_Study', updatedData.Place_of_Study);
-      // formData.append('expenses_coverd', updatedData.expenses_coverd);
-      // formData.append('eligbility_criteria', updatedData.eligbility_criteria);
-      // formData.append('term_and_conditions', updatedData.term_and_conditions);
-      // formData.append('form_Link', updatedData.form_Link);
-      // formData.append('website_link', updatedData.website_link);
-      // formData.append('key_personnel_details', updatedData.key_personnel_details);
-      // formData.append('number_of_seats_available', updatedData.number_of_seats_available);
-      // formData.append('scholarship_picture', updatedData.scholarship_picture);
       const uploadData = new FormData();
       for (const key in updatedData) {
         uploadData.append(key, updatedData[key]);
@@ -112,7 +95,6 @@ function EditScholarship() {
       expenses_coverd: '',
       eligbility_criteria: '',
       term_and_conditions: '',
-      form_Link: '',
       website_link: '',
       key_personnel_details: '',
       number_of_seats_available: '',
@@ -140,7 +122,6 @@ function EditScholarship() {
         expenses_coverd: scholarship.expenses_coverd || '',
         eligbility_criteria: scholarship.eligbility_criteria || '',
         term_and_conditions: scholarship.term_and_conditions || '',
-        form_Link: scholarship.form_Link || '',
         website_link: scholarship.website_link || '',
         key_personnel_details: scholarship.key_personnel_details || '',
         number_of_seats_available: scholarship.number_of_seats_available || '',
@@ -351,7 +332,7 @@ function EditScholarship() {
               <div className="text-danger">{formik.errors.term_and_conditions}</div>  // Display the error in red
             ) : null}
           </div>
-          <div className="form-item col-md-5 my-3">
+          {/* <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="form_Link">Form Link</label>
             <input
               type="url"
@@ -365,7 +346,7 @@ function EditScholarship() {
             {formik.touched.form_Link && formik.errors.form_Link ? (
               <div className="text-danger">{formik.errors.form_Link}</div>  // Display the error in red
             ) : null}
-          </div>
+          </div> */}
           <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="website_link">Website Link</label>
             <input
