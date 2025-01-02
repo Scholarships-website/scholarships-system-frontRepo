@@ -214,7 +214,7 @@ export const router = createBrowserRouter([
         element: <Contact />,
     },
     {
-        path: '/apply-for-scholarship/:id',
+        path: '/apply-for-scholarship/:scholarship_id',
         element: <Apply />,
     },
 ]);

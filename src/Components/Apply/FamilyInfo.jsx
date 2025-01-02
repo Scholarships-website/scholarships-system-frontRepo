@@ -128,8 +128,8 @@ const FamilyInfo = ({ formData, setFormData,saveStepData }) => {
                                     <label htmlFor="Does_mother_work">Does the student's mother work?</label>
                                     <Field as="select" name="Does_mother_work" className="form-control">
                                         <option value="">-- Select --</option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
                                     </Field>
                                     <ErrorMessage name="Does_mother_work" component="div" className="text-danger" />
                                 </div>
@@ -137,8 +137,8 @@ const FamilyInfo = ({ formData, setFormData,saveStepData }) => {
                                     <label htmlFor="any_other_income">Is there any other income?</label>
                                     <Field as="select" name="any_other_income" className="form-control">
                                         <option value="">-- Select --</option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
                                     </Field>
                                     <ErrorMessage name="any_other_income" component="div" className="text-danger" />
                                 </div>
@@ -158,8 +158,8 @@ const FamilyInfo = ({ formData, setFormData,saveStepData }) => {
                                     <label htmlFor="Does_student_work">Does the student work?</label>
                                     <Field as="select" name="Does_student_work" className="form-control">
                                         <option value="">-- Select --</option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
                                     </Field>
                                     <ErrorMessage name="Does_student_work" component="div" className="text-danger" />
                                 </div>
@@ -167,8 +167,8 @@ const FamilyInfo = ({ formData, setFormData,saveStepData }) => {
                                     <label htmlFor="social_affairs_case">Is the family registered as a social affairs case?</label>
                                     <Field as="select" name="social_affairs_case" className="form-control">
                                         <option value="">-- Select --</option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
                                     </Field>
                                     <ErrorMessage name="social_affairs_case" component="div" className="text-danger" />
                                 </div>
@@ -176,8 +176,8 @@ const FamilyInfo = ({ formData, setFormData,saveStepData }) => {
                                     <label htmlFor="UNRWA_card">Does the family have a UNRWA card?</label>
                                     <Field as="select" name="UNRWA_card" className="form-control">
                                         <option value="">-- Select --</option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
                                     </Field>
                                     <ErrorMessage name="UNRWA_card" component="div" className="text-danger" />
                                 </div>

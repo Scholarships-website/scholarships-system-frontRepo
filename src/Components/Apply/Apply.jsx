@@ -14,10 +14,9 @@ import { UserContext } from "../../Context/UserContext";
 import axios from "axios";
 
 const Apply = () => {
-  const { id } = useParams();
+  const { scholarship_id } = useParams();
   const [currentStep, setCurrentStep] = useState(1);
-  const {userToken } = useContext(UserContext);
-
+  const { userToken } = useContext(UserContext);
   const [formData, setFormData] = useState({
     generalInfo: {
       ID_Number: "",
@@ -61,8 +60,8 @@ const Apply = () => {
     },
     identifiers: {
       identifier_Name1: "",
-      identifier_phone1:"",
-      identifier_profession1:"",
+      identifier_phone1: "",
+      identifier_profession1: "",
       identifier_Name2: "",
       identifier_phone2: "",
       identifier_profession2: "",
@@ -73,7 +72,7 @@ const Apply = () => {
     pdffiles: {
       Student_ID_Image: null,
       Head_of_Household_ID_Image: null,
-      Mother_ID_Image:null,
+      Mother_ID_Image: null,
       Sibling_ID_Image: null,
       Special_Cases_Report: null,
     },
@@ -163,44 +162,67 @@ const Apply = () => {
     const formDataToSubmit = new FormData();
 
     // Append structured data for all steps
-    formDataToSubmit.append("generalInfo", JSON.stringify(formData.generalInfo));
-    formDataToSubmit.append("familyInfo", JSON.stringify(formData.familyInfo));
-    formDataToSubmit.append("educationalData", JSON.stringify(formData.educationalData));
-    formDataToSubmit.append("healthStatus", JSON.stringify(formData.healthStatus));
-    formDataToSubmit.append("identifiers", JSON.stringify(formData.identifiers));
+     // Append fields from generalInfo
+  Object.entries(formData.generalInfo).forEach(([key, value]) => {
+    formDataToSubmit.append(key, value);
+  });
 
-    // Append attachments
-    Object.entries(formData.pdffiles).forEach(([key, file]) => {
-      if (file) { // Only add if the file is not null
-        formDataToSubmit.append(`pdffiles[${key}]`, file);
+  // Append fields from familyInfo
+  Object.entries(formData.familyInfo).forEach(([key, value]) => {
+    formDataToSubmit.append(key, value);
+  });
+
+  // Append fields from educationalData
+  Object.entries(formData.educationalData).forEach(([key, value]) => {
+    formDataToSubmit.append(key, value);
+  });
+
+  // Append fields from healthStatus
+  Object.entries(formData.healthStatus).forEach(([key, value]) => {
+    formDataToSubmit.append(key, value);
+  });
+
+  // Append fields from identifiers
+  Object.entries(formData.identifiers).forEach(([key, value]) => {
+    formDataToSubmit.append(key, value);
+  });
+
+  // Append files from pdffiles
+  Object.entries(formData.pdffiles).forEach(([key, file]) => {
+      formDataToSubmit.append(key, file);
+  });
+
+  try {
+    const response = await axios.post(
+      `http://localhost:3000/api/v1/scholarships/${scholarship_id}/apply`,
+      formDataToSubmit,
+      {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          'Content-Type': 'multipart/form-data', 
+        },
       }
-    });
-
-    try {
-      const response = await axios.post(
-        `http://localhost:3000/api/v1/scholarships/${id}/apply`,
-        formDataToSubmit, // FormData object
-        {
-          headers: {
-            Authorization: `Bearer ${userToken}`, // Token for authentication
-            'Content-Type': 'multipart/form-data', // Explicitly specify multipart/form-data
-          },
-        }
-      );
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to submit application");
-      }
-
-      const result = await response.json();
-      alert("Application submitted successfully!");
-      console.log(result);
-    } catch (error) {
-      console.error("Error submitting application:", error.message);
+    );
+  
+    // Axios automatically throws an error for HTTP status codes >= 400
+    console.log(response.data); // Log the response data
+    alert("Application submitted successfully!");
+  } catch (error) {
+    // Axios error handling
+    if (error.response) {
+      // The server responded with a status code outside the 2xx range
+      console.error("Error response from server:", error.response.data);
+      alert("Failed to submit application: " + (error.response.data.message || error.message));
+    } else if (error.request) {
+      // No response was received from the server
+      console.error("No response received:", error.request);
+      alert("Failed to submit application: No response from server.");
+    } else {
+      // Other errors
+      console.error("Error setting up request:", error.message);
       alert("Failed to submit application: " + error.message);
     }
-  };
-
+  }}
   return (
     <>
       <Navbar />
