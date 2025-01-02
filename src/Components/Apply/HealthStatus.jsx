@@ -3,31 +3,34 @@ import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const HealthStatus = ({ formData, setFormData }) => {
+const HealthStatus = ({ formData, setFormData,saveStepData }) => {
     // Validation Schema
     const validationSchema = Yup.object({
-        familyDisabilities: Yup.number()
-            .required("This field is required")
-            .min(0, "The number cannot be less than zero"),
-        healthDetails: Yup.array().when("familyDisabilities", {
-            is: (val) => val > 0,
-            then: Yup.array().of(
-                Yup.object({
-                    description: Yup.string().required("Description is required"),
-                })
-            ),
-            otherwise: Yup.array().notRequired(),
-        }),
+        // Number_of_Disabilities_in_the_Family: Yup.number()
+        //     .required("This field is required")
+        //     .min(0, "The number cannot be less than zero"),
+        // healthDetails: Yup.array().when("Number_of_Disabilities_in_the_Family", {
+        //     is: (val) => val > 0,
+        //     then: Yup.array().of(
+        //         Yup.object({
+        //             description: Yup.string().required("Description is required"),
+        //         })
+        //     ),
+        //     otherwise: Yup.array().notRequired(),
+        // }),
     });
 
     // Initial Values
     const initialValues = {
-        familyDisabilities: formData.familyDisabilities || 0,
-        healthDetails: formData.healthDetails || [{ description: "" }],
+        Number_of_Disabilities_in_the_Family: formData.Number_of_Disabilities_in_the_Family || 0,
+        // healthDetails: formData.healthDetails || [{ description: "" }],
     };
 
     // Submit Handler
     const handleSubmit = (values) => {
+                console.log("Submitting form...");
+        console.log(values);
+        saveStepData({ stepKey: 'healthStatus', data: values });
         setFormData((prev) => ({
             ...prev,
             healthStatus: values,
@@ -37,7 +40,7 @@ const HealthStatus = ({ formData, setFormData }) => {
     return (
         <div className="container">
             <Formik
-                initialValues={initialValues}
+                initialValues={formData.healthStatus || initialValues}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
@@ -46,16 +49,16 @@ const HealthStatus = ({ formData, setFormData }) => {
                         {/* Number of Disabilities */}
                         <div className="row my-5">
                             <div className="col-md-5">
-                                <label htmlFor="familyDisabilities" className="form-label">
+                                <label htmlFor="Number_of_Disabilities_in_the_Family" className="form-label">
                                     Number of Disabilities in the Family
                                 </label>
                                 <Field
                                     type="number"
-                                    name="familyDisabilities"
+                                    name="Number_of_Disabilities_in_the_Family"
                                     className="form-control"
                                 />
                                 <ErrorMessage
-                                    name="familyDisabilities"
+                                    name="Number_of_Disabilities_in_the_Family"
                                     component="div"
                                     className="text-danger mt-1"
                                 />
@@ -63,7 +66,7 @@ const HealthStatus = ({ formData, setFormData }) => {
                         </div>
 
                         {/* Details of Disabilities */}
-                        {values.familyDisabilities > 0 && (
+                        {/* {values.Number_of_Disabilities_in_the_Family > 0 && (
                             <div className="mb-4">
                                 <h4 className="mb-3">Details of Disabilities</h4>
                                 <FieldArray name="healthDetails">
@@ -112,7 +115,7 @@ const HealthStatus = ({ formData, setFormData }) => {
                                     )}
                                 </FieldArray>
                             </div>
-                        )}
+                        )} */}
 
                         {/* Submit Button */}
                         <div className="text-end">

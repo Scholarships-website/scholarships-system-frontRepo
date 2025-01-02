@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import './Home.css';
 import { UserContext } from '../../../Context/UserContext';
 import axios from 'axios';
-import ReactApexChart from 'react-apexcharts';
 import Skeleton from '@mui/material/Skeleton';
 import { PieChart } from '@mui/x-charts';
 

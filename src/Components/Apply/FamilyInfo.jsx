@@ -3,43 +3,46 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const FamilyInfo = ({ formData, setFormData }) => {
+const FamilyInfo = ({ formData, setFormData,saveStepData }) => {
     // Validation Schema
     const validationSchema = Yup.object({
-        headOfFamily: Yup.string().required("Head of the family is required"),
-        breadwinnerName: Yup.string().required("Name of the head of the household is required"),
-        breadwinnerID: Yup.string().required("ID number is required"),
-        fatherWorkNature: Yup.string().required("Nature of work for the father is required"),
-        institutionName: Yup.string().required("Name of the institution is required"),
-        incomeCategory: Yup.string().required("Monthly income category is required"),
-        motherWorks: Yup.string().required("Please specify if the student's mother works"),
-        otherIncome: Yup.string().required("Please specify if there is other income"),
-        familyMembers: Yup.number()
-            .required("Number of family members is required")
-            .min(1, "There must be at least one family member"),
-        studentWorks: Yup.string().required("Please specify if the student works"),
-        socialAffairsCase: Yup.string().required("Please specify if the family is registered as a social affairs case"),
-        unrwaCard: Yup.string().required("Please specify if the family has a UNRWA card"),
+        // Head_of_the_family: Yup.string().required("Head of the family is required"),
+        // breadwinner: Yup.string().required("Name of the head of the household is required"),
+        // breadwinner_id: Yup.string().required("ID number is required"),
+        // work_nature: Yup.string().required("Nature of work for the father is required"),
+        // institution: Yup.string().required("Name of the institution is required"),
+        // income_category: Yup.string().required("Monthly income category is required"),
+        // Does_mother_work: Yup.string().required("Please specify if the student's mother works"),
+        // any_other_income: Yup.string().required("Please specify if there is other income"),
+        // Total_number_of_family_members: Yup.number()
+        //     .required("Number of family members is required")
+        //     .min(1, "There must be at least one family member"),
+        // Does_student_work: Yup.string().required("Please specify if the student works"),
+        // social_affairs_case: Yup.string().required("Please specify if the family is registered as a social affairs case"),
+        // UNRWA_card: Yup.string().required("Please specify if the family has a UNRWA card"),
     });
 
     // Initial Values
     const initialValues = {
-        headOfFamily: formData.headOfFamily || "",
-        breadwinnerName: formData.breadwinnerName || "",
-        breadwinnerID: formData.breadwinnerID || "",
-        fatherWorkNature: formData.fatherWorkNature || "",
-        institutionName: formData.institutionName || "",
-        incomeCategory: formData.incomeCategory || "",
-        motherWorks: formData.motherWorks || "",
-        otherIncome: formData.otherIncome || "",
-        familyMembers: formData.familyMembers || "",
-        studentWorks: formData.studentWorks || "",
-        socialAffairsCase: formData.socialAffairsCase || "",
-        unrwaCard: formData.unrwaCard || "",
+        Head_of_the_family: formData.Head_of_the_family || "",
+        breadwinner: formData.breadwinner || "",
+        breadwinner_id: formData.breadwinner_id || "",
+        work_nature: formData.work_nature || "",
+        institution: formData.institution || "",
+        income_category: formData.income_category || "",
+        Does_mother_work: formData.Does_mother_work || "",
+        any_other_income: formData.any_other_income || "",
+        Total_number_of_family_members: formData.Total_number_of_family_members || "",
+        Does_student_work: formData.Does_student_work || "",
+        social_affairs_case: formData.social_affairs_case || "",
+        UNRWA_card: formData.UNRWA_card || "",
     };
 
     // Submit Handler
     const handleSubmit = (values) => {
+        console.log("Submitting form...");
+        console.log(values);
+        saveStepData({ stepKey: 'familyInfo', data: values });
         setFormData((prev) => ({
             ...prev,
             familyInfo: values,
@@ -49,7 +52,7 @@ const FamilyInfo = ({ formData, setFormData }) => {
     return (
         <div className="container">
             <Formik
-                initialValues={initialValues}
+                initialValues={formData.familyInfo || initialValues}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
@@ -60,25 +63,25 @@ const FamilyInfo = ({ formData, setFormData }) => {
                             <h3 className="mt-5">Basic Family Information</h3>
                             <div className="row">
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="headOfFamily">Head of the family</label>
-                                    <Field as="select" name="headOfFamily" className="form-control">
+                                    <label htmlFor="Head_of_the_family">Head of the family</label>
+                                    <Field as="select" name="Head_of_the_family" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="father">Father</option>
                                         <option value="mother">Mother</option>
                                         <option value="guardian">Guardian</option>
                                         <option value="other">Other</option>
                                     </Field>
-                                    <ErrorMessage name="headOfFamily" component="div" className="text-danger" />
+                                    <ErrorMessage name="Head_of_the_family" component="div" className="text-danger" />
                                 </div>
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="breadwinnerName">Name of the breadwinner</label>
-                                    <Field type="text" name="breadwinnerName" className="form-control" />
-                                    <ErrorMessage name="breadwinnerName" component="div" className="text-danger" />
+                                    <label htmlFor="breadwinner">Name of the breadwinner</label>
+                                    <Field type="text" name="breadwinner" className="form-control" />
+                                    <ErrorMessage name="breadwinner" component="div" className="text-danger" />
                                 </div>
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="breadwinnerID">ID number</label>
-                                    <Field type="text" name="breadwinnerID" className="form-control" />
-                                    <ErrorMessage name="breadwinnerID" component="div" className="text-danger" />
+                                    <label htmlFor="breadwinner_id">ID number</label>
+                                    <Field type="text" name="breadwinner_id" className="form-control" />
+                                    <ErrorMessage name="breadwinner_id" component="div" className="text-danger" />
                                 </div>
                             </div>
                         </div>
@@ -88,8 +91,8 @@ const FamilyInfo = ({ formData, setFormData }) => {
                             <h3>Father's Work Details</h3>
                             <div className="row">
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="fatherWorkNature">Nature of work for the father</label>
-                                    <Field as="select" name="fatherWorkNature" className="form-control">
+                                    <label htmlFor="work_nature">Nature of work for the father</label>
+                                    <Field as="select" name="work_nature" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="government">Government Employee</option>
                                         <option value="private">Private Sector Employee</option>
@@ -97,22 +100,22 @@ const FamilyInfo = ({ formData, setFormData }) => {
                                         <option value="unemployed">Unemployed</option>
                                         <option value="other">Other</option>
                                     </Field>
-                                    <ErrorMessage name="fatherWorkNature" component="div" className="text-danger" />
+                                    <ErrorMessage name="work_nature" component="div" className="text-danger" />
                                 </div>
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="institutionName">Name of the institution</label>
-                                    <Field type="text" name="institutionName" className="form-control" />
-                                    <ErrorMessage name="institutionName" component="div" className="text-danger" />
+                                    <label htmlFor="institution">Name of the institution</label>
+                                    <Field type="text" name="institution" className="form-control" />
+                                    <ErrorMessage name="institution" component="div" className="text-danger" />
                                 </div>
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="incomeCategory">Monthly income category</label>
-                                    <Field as="select" name="incomeCategory" className="form-control">
+                                    <label htmlFor="income_category">Monthly income category</label>
+                                    <Field as="select" name="income_category" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="low">Low</option>
                                         <option value="medium">Medium</option>
                                         <option value="high">High</option>
                                     </Field>
-                                    <ErrorMessage name="incomeCategory" component="div" className="text-danger" />
+                                    <ErrorMessage name="income_category" component="div" className="text-danger" />
                                 </div>
                             </div>
                         </div>
@@ -122,27 +125,27 @@ const FamilyInfo = ({ formData, setFormData }) => {
                             <h3>Additional Family Details</h3>
                             <div className="row">
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="motherWorks">Does the student's mother work?</label>
-                                    <Field as="select" name="motherWorks" className="form-control">
+                                    <label htmlFor="Does_mother_work">Does the student's mother work?</label>
+                                    <Field as="select" name="Does_mother_work" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="yes">Yes</option>
                                         <option value="no">No</option>
                                     </Field>
-                                    <ErrorMessage name="motherWorks" component="div" className="text-danger" />
+                                    <ErrorMessage name="Does_mother_work" component="div" className="text-danger" />
                                 </div>
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="otherIncome">Is there any other income?</label>
-                                    <Field as="select" name="otherIncome" className="form-control">
+                                    <label htmlFor="any_other_income">Is there any other income?</label>
+                                    <Field as="select" name="any_other_income" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="yes">Yes</option>
                                         <option value="no">No</option>
                                     </Field>
-                                    <ErrorMessage name="otherIncome" component="div" className="text-danger" />
+                                    <ErrorMessage name="any_other_income" component="div" className="text-danger" />
                                 </div>
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="familyMembers">Total number of family members</label>
-                                    <Field type="number" name="familyMembers" className="form-control" />
-                                    <ErrorMessage name="familyMembers" component="div" className="text-danger" />
+                                    <label htmlFor="Total_number_of_family_members">Total number of family members</label>
+                                    <Field type="number" name="Total_number_of_family_members" className="form-control" />
+                                    <ErrorMessage name="Total_number_of_family_members" component="div" className="text-danger" />
                                 </div>
                             </div>
                         </div>
@@ -152,31 +155,31 @@ const FamilyInfo = ({ formData, setFormData }) => {
                             <h3>Social and Registration Details</h3>
                             <div className="row">
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="studentWorks">Does the student work?</label>
-                                    <Field as="select" name="studentWorks" className="form-control">
+                                    <label htmlFor="Does_student_work">Does the student work?</label>
+                                    <Field as="select" name="Does_student_work" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="yes">Yes</option>
                                         <option value="no">No</option>
                                     </Field>
-                                    <ErrorMessage name="studentWorks" component="div" className="text-danger" />
+                                    <ErrorMessage name="Does_student_work" component="div" className="text-danger" />
                                 </div>
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="socialAffairsCase">Is the family registered as a social affairs case?</label>
-                                    <Field as="select" name="socialAffairsCase" className="form-control">
+                                    <label htmlFor="social_affairs_case">Is the family registered as a social affairs case?</label>
+                                    <Field as="select" name="social_affairs_case" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="yes">Yes</option>
                                         <option value="no">No</option>
                                     </Field>
-                                    <ErrorMessage name="socialAffairsCase" component="div" className="text-danger" />
+                                    <ErrorMessage name="social_affairs_case" component="div" className="text-danger" />
                                 </div>
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="unrwaCard">Does the family have a UNRWA card?</label>
-                                    <Field as="select" name="unrwaCard" className="form-control">
+                                    <label htmlFor="UNRWA_card">Does the family have a UNRWA card?</label>
+                                    <Field as="select" name="UNRWA_card" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="yes">Yes</option>
                                         <option value="no">No</option>
                                     </Field>
-                                    <ErrorMessage name="unrwaCard" component="div" className="text-danger" />
+                                    <ErrorMessage name="UNRWA_card" component="div" className="text-danger" />
                                 </div>
                             </div>
                         </div>

@@ -145,7 +145,7 @@ const ScholarshipDetail = () => {
             ) : (
               scholarship.number_of_seats_available > 0 && new Date() <= new Date(scholarship.End_Date) ? (
                 //<a href={scholarship.form_Link} className="apply-button">Apply Here</a>
-                <Link to={`/apply-for-scholarship`} className="apply-button" >Apply Now</Link>
+                <Link to={`/apply-for-scholarship/${scholarship._id}`} className="apply-button" >Apply Now</Link>
               ) : (
                 <p className="apply-closed">Applications are closed.</p>
               )

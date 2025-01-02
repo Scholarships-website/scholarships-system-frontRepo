@@ -111,9 +111,6 @@ export const addScholarship = Yup.object({
       .required('Terms and Conditions are required')
       .max(1000, 'Terms and Conditions should be at most 1000 characters'),
 
-   form_Link: Yup.string()
-      .required('Form Link is required')
-      .url('Enter a valid URL for the Form Link'),
 
    website_link: Yup.string()
       .required('Website Link is required')
@@ -189,9 +186,6 @@ export const editScholarship = Yup.object({
       .required('Terms and Conditions are required')
       .max(1000, 'Terms and Conditions should be at most 1000 characters'),
 
-   form_Link: Yup.string()
-      .required('Form Link is required')
-      .url('Enter a valid URL for the Form Link'),
 
    website_link: Yup.string()
       .required('Website Link is required')

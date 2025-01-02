@@ -2,73 +2,60 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-const GeneralInfo = ({ formData, setFormData }) => {
+const GeneralInfo = ({ formData, setFormData,saveStepData  }) => {
     // Validation Schema
     const validationSchema = Yup.object({
-        fullName: Yup.string().required("Full Name is required"),
-        idNumber: Yup.string().required("ID Number is required"),
-        cardType: Yup.string().required("Card Type is required"),
-        dob: Yup.date().required("Date of Birth is required"),
-        gender: Yup.string().required("Gender is required"),
-        maritalStatus: Yup.string().required("Marital Status is required"),
-        permanentResidence: Yup.string().required("Permanent Residence is required"),
-        province: Yup.string().required("Province is required"),
-        street: Yup.string().required("Street is required"),
-        phoneNumber: Yup.string().required("Phone Number is required"),
-        temporaryAddress: Yup.string().required("Temporary Address is required"),
-        currentAccommodation: Yup.string().required("Current Accommodation is required"),
-        studentType: Yup.string().required("Please select your student type"),
-        academicProgram: Yup.string().when("studentType", {
-            is: "university",
-            then: Yup.string().required("Academic Program is required"),
-        }),
-        college: Yup.string().when("studentType", {
-            is: "university",
-            then: Yup.string().required("College is required"),
-        }),
-        specialization: Yup.string().when("studentType", {
-            is: "university",
-            then: Yup.string().required("Specialization is required"),
-        }),
-        stream: Yup.string().when("studentType", {
-            is: "school",
-            then: Yup.string().required("Stream is required"),
-        }),
-    });
+        // ID_Number: Yup.string().required("ID Number is required"),
+        // Card_Type: Yup.string().required("Card Type is required"),
+        // Martial_Status: Yup.string().required("Marital Status is required"),
+        // Permanent_Residence: Yup.string().required("Permanent Residence is required"),
+        // province: Yup.string().required("Province is required"),
+        // street: Yup.string().required("Street is required"),
+        // phoneNumber: Yup.string().required("Phone Number is required"),
+        // temporaryAddress: Yup.string().required("Temporary Address is required"),
+        // currentAccommodation: Yup.string().required("Current Accommodation is required"),
+        // student_type: Yup.string().required("Please select your student type"),
+        // academic_program: Yup.string().required("Academic Program is required"), // Removed conditional logic
+        // college: Yup.string().required("College is required"), // Removed conditional logic
+        // major: Yup.string().required("Major is required"), // Removed conditional logic
+        // stream: Yup.string().required("Stream is required"), // Removed conditional logic
+      });
 
     // Initial Values
     const initialValues = {
-        fullName: formData.fullName || "",
-        idNumber: formData.idNumber || "",
-        cardType: formData.cardType || "",
-        dob: formData.dob || "",
-        gender: formData.gender || "",
-        maritalStatus: formData.maritalStatus || "",
-        permanentResidence: formData.permanentResidence || "",
+        // fullName: formData.fullName || "",
+        ID_Number: formData.ID_Number || "",
+        Card_Type: formData.Card_Type || "",
+        // dob: formData.dob || "",
+        // gender: formData.gender || "",
+        Martial_Status: formData.Martial_Status || "",
+        Permanent_Residence: formData.Permanent_Residence || "",
         province: formData.province || "",
         street: formData.street || "",
         phoneNumber: formData.phoneNumber || "",
         temporaryAddress: formData.temporaryAddress || "",
         currentAccommodation: formData.currentAccommodation || "",
-        studentType: formData.studentType || "",
-        academicProgram: formData.academicProgram || "",
+        student_type: formData.student_type || "",
+        academic_program: formData.academic_program || "",
         college: formData.college || "",
-        specialization: formData.specialization || "",
+        major: formData.major || "",
         stream: formData.stream || "",
     };
 
     // Submit Handler
     const handleSubmit = (values) => {
+        console.log("Submitting form...");
+        console.log(values);
+        saveStepData({ stepKey: 'generalInfo', data: values });
         setFormData((prev) => ({
-            ...prev,
-            generalInfo: values,
+          ...prev,
+          generalInfo: values,
         }));
     };
-
     return (
         <div className="container">
             <Formik
-                initialValues={initialValues}
+                initialValues={formData.generalInfo || initialValues}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
@@ -84,19 +71,19 @@ const GeneralInfo = ({ formData, setFormData }) => {
                                     <ErrorMessage name="fullName" component="div" className="text-danger" />
                                 </div>
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="idNumber">ID Number</label>
-                                    <Field type="text" name="idNumber" className="form-control" />
-                                    <ErrorMessage name="idNumber" component="div" className="text-danger" />
+                                    <label htmlFor="ID_Number">ID Number</label>
+                                    <Field type="text" name="ID_Number" className="form-control" />
+                                    <ErrorMessage name="ID_Number" component="div" className="text-danger" />
                                 </div>
 
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="cardType">Card Type</label>
-                                    <Field as="select" name="cardType" className="form-control">
+                                    <label htmlFor="Card_Type">Card Type</label>
+                                    <Field as="select" name="Card_Type" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="هوية فلسطينية">هوية فلسطينية</option>
                                         <option value="Other">Other</option>
                                     </Field>
-                                    <ErrorMessage name="cardType" component="div" className="text-danger" />
+                                    <ErrorMessage name="Card_Type" component="div" className="text-danger" />
                                 </div>
 
                                 <div className="col-md-5 mb-3">
@@ -117,14 +104,14 @@ const GeneralInfo = ({ formData, setFormData }) => {
                                 </div>
 
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="maritalStatus">Marital Status</label>
-                                    <Field as="select" name="maritalStatus" className="form-control">
+                                    <label htmlFor="Martial_Status">Marital Status</label>
+                                    <Field as="select" name="Martial_Status" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="Single">Single</option>
                                         <option value="Married">Married</option>
                                         <option value="Other">Other</option>
                                     </Field>
-                                    <ErrorMessage name="maritalStatus" component="div" className="text-danger" />
+                                    <ErrorMessage name="Martial_Status" component="div" className="text-danger" />
                                 </div>
                             </div>
                         </div>
@@ -134,21 +121,21 @@ const GeneralInfo = ({ formData, setFormData }) => {
                             <h3>Student Information</h3>
                             <div className="row">
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="studentType">Are you a University or School Student?</label>
-                                    <Field as="select" name="studentType" className="form-control">
+                                    <label htmlFor="student_type">Are you a University or School Student?</label>
+                                    <Field as="select" name="student_type" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="university">University Student</option>
                                         <option value="school">School Student</option>
                                     </Field>
-                                    <ErrorMessage name="studentType" component="div" className="text-danger" />
+                                    <ErrorMessage name="student_type" component="div" className="text-danger" />
                                 </div>
 
-                                {values.studentType === "university" && (
+                                {values.student_type === "university" && (
                                     <>
                                         <div className="col-md-5 mb-3">
-                                            <label htmlFor="academicProgram">Academic Program</label>
-                                            <Field type="text" name="academicProgram" className="form-control" />
-                                            <ErrorMessage name="academicProgram" component="div" className="text-danger" />
+                                            <label htmlFor="academic_program">Academic Program</label>
+                                            <Field type="text" name="academic_program" className="form-control" />
+                                            <ErrorMessage name="academic_program" component="div" className="text-danger" />
                                         </div>
 
                                         <div className="col-md-5 mb-3">
@@ -158,14 +145,14 @@ const GeneralInfo = ({ formData, setFormData }) => {
                                         </div>
 
                                         <div className="col-md-5 mb-3">
-                                            <label htmlFor="specialization">Major</label>
-                                            <Field type="text" name="specialization" className="form-control" />
-                                            <ErrorMessage name="specialization" component="div" className="text-danger" />
+                                            <label htmlFor="major">Major</label>
+                                            <Field type="text" name="major" className="form-control" />
+                                            <ErrorMessage name="major" component="div" className="text-danger" />
                                         </div>
                                     </>
                                 )}
 
-                                {values.studentType === "school" && (
+                                {values.student_type === "school" && (
                                     <div className="col-md-5 mb-3">
                                         <label htmlFor="stream">Stream</label>
                                         <Field as="select" name="stream" className="form-control">
@@ -187,9 +174,9 @@ const GeneralInfo = ({ formData, setFormData }) => {
                             <h3>Address Information</h3>
                             <div className="row">
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="permanentResidence">Permanent Residence</label>
-                                    <Field type="text" name="permanentResidence" className="form-control" />
-                                    <ErrorMessage name="permanentResidence" component="div" className="text-danger" />
+                                    <label htmlFor="Permanent_Residence">Permanent Residence</label>
+                                    <Field type="text" name="Permanent_Residence" className="form-control" />
+                                    <ErrorMessage name="Permanent_Residence" component="div" className="text-danger" />
                                 </div>
 
                                 <div className="col-md-5 mb-3">

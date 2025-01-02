@@ -3,65 +3,68 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Identifiers = ({ formData, setFormData }) => {
+const Identifiers = ({ formData, setFormData,saveStepData }) => {
   // Validation Schema
   const validationSchema = Yup.object({
-    name1: Yup.string().required("Identifier's Name is required"),
-    phone1: Yup.string()
-      .required("Phone/Mobile Number is required")
-      .matches(/^\d+$/, "Phone number must contain only digits")
-      .min(8, "Phone number must be at least 8 digits"),
-    profession1: Yup.string().required("Profession is required"),
+    // identifier_Name1: Yup.string().required("Identifier's Name is required"),
+    // identifier_phone1: Yup.string()
+    //   .required("Phone/Mobile Number is required")
+    //   .matches(/^\d+$/, "Phone number must contain only digits")
+    //   .min(8, "Phone number must be at least 8 digits"),
+    //   identifier_profession1: Yup.string().required("Profession is required"),
 
-    name2: Yup.string().required("Identifier's Name is required"),
-    phone2: Yup.string()
-      .required("Phone/Mobile Number is required")
-      .matches(/^\d+$/, "Phone number must contain only digits")
-      .min(8, "Phone number must be at least 8 digits"),
-    profession2: Yup.string().required("Profession is required"),
+    // identifier_Name2: Yup.string().required("Identifier's Name is required"),
+    // identifier_phone2: Yup.string()
+    //   .required("Phone/Mobile Number is required")
+    //   .matches(/^\d+$/, "Phone number must contain only digits")
+    //   .min(8, "Phone number must be at least 8 digits"),
+    //   identifier_profession2: Yup.string().required("Profession is required"),
 
-    name3: Yup.string().required("Identifier's Name is required"),
-    phone3: Yup.string()
-      .required("Phone/Mobile Number is required")
-      .matches(/^\d+$/, "Phone number must contain only digits")
-      .min(8, "Phone number must be at least 8 digits"),
-    profession3: Yup.string().required("Profession is required"),
+    // identifier_Name3: Yup.string().required("Identifier's Name is required"),
+    // identifier_phone3: Yup.string()
+    //   .required("Phone/Mobile Number is required")
+    //   .matches(/^\d+$/, "Phone number must contain only digits")
+    //   .min(8, "Phone number must be at least 8 digits"),
+    //   identifier_profession3: Yup.string().required("Profession is required"),
   });
 
   // Initial Values: Assign values individually for each identifier field
   const initialValues = {
-    name1: formData?.identifiers?.[0]?.name || "",
-    phone1: formData?.identifiers?.[0]?.phone || "",
-    profession1: formData?.identifiers?.[0]?.profession || "",
+    identifier_Name1: formData.identifier_Name1 || "",
+    identifier_phone1: formData.identifier_phone1 || "",
+    identifier_profession1: formData.identifier_profession1 || "",
 
-    name2: formData?.identifiers?.[1]?.name || "",
-    phone2: formData?.identifiers?.[1]?.phone || "",
-    profession2: formData?.identifiers?.[1]?.profession || "",
+    identifier_Name2: formData.identifier_Name2 || "",
+    identifier_phone2: formData.identifier_phone2 || "",
+    identifier_profession2: formData.identifier_profession2 || "",
 
-    name3: formData?.identifiers?.[2]?.name || "",
-    phone3: formData?.identifiers?.[2]?.phone || "",
-    profession3: formData?.identifiers?.[2]?.profession || "",
+    identifier_Name3: formData.identifier_Name3 || "",
+    identifier_phone3: formData.identifier_phone3 || "",
+    identifier_profession3: formData.identifier_profession3 || "",
   };
 
   // Submit Handler
   const handleSubmit = (values) => {
     // Structure the form data to match your previous approach
-    const identifiers = [
-      { name: values.name1, phone: values.phone1, profession: values.profession1 },
-      { name: values.name2, phone: values.phone2, profession: values.profession2 },
-      { name: values.name3, phone: values.phone3, profession: values.profession3 },
-    ];
+    // const identifiers = [
+    //   { name: values.identifier_Name1, phone: values.identifier_phone1, profession: values.identifier_profession1 },
+    //   { name: values.identifier_Name2, phone: values.identifier_phone2, profession: values.identifier_profession2 },
+    //   { name: values.identifier_Name3, phone: values.identifier_phone3, profession: values.identifier_profession3 },
+    // ];
+        console.log("Submitting form...");
+        console.log(values);
+        saveStepData({ stepKey: 'identifiers', data: values });
 
     setFormData((prev) => ({
       ...prev,
-      identifiers,
+      identifiers:values,
     }));
   };
 
   return (
     <div className="container mt-5">
       <Formik
-        initialValues={initialValues}
+                initialValues={formData.identifiers || initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
@@ -72,42 +75,42 @@ const Identifiers = ({ formData, setFormData }) => {
             {/* Name */}
             <div className="row">
               <div className="mb-3 col-md-4">
-                <label htmlFor="name1">Identifier's Name</label>
+                <label htmlFor="identifier_Name1">Identifier's Name</label>
                 <Field
                   type="text"
-                  name="name1"
+                  name="identifier_Name1"
                   className="form-control"
                 />
                 <ErrorMessage
-                  name="name1"
+                  name="identifier_Name1"
                   component="div"
                   className="text-danger"
                 />
               </div>
               {/* Phone */}
               <div className="mb-3 col-md-4">
-                <label htmlFor="phone1">Phone/Mobile Number</label>
+                <label htmlFor="identifier_phone1">Phone/Mobile Number</label>
                 <Field
                   type="text"
-                  name="phone1"
+                  name="identifier_phone1"
                   className="form-control"
                 />
                 <ErrorMessage
-                  name="phone1"
+                  name="identifier_phone1"
                   component="div"
                   className="text-danger"
                 />
               </div>
               {/* Profession */}
               <div className="mb-3 col-md-4">
-                <label htmlFor="profession1">Profession</label>
+                <label htmlFor="identifier_profession1">Profession</label>
                 <Field
                   type="text"
-                  name="profession1"
+                  name="identifier_profession1"
                   className="form-control"
                 />
                 <ErrorMessage
-                  name="profession1"
+                  name="identifier_profession1"
                   component="div"
                   className="text-danger"
                 />
@@ -121,42 +124,42 @@ const Identifiers = ({ formData, setFormData }) => {
             {/* Name */}
             <div className="row">
               <div className="mb-3 col-md-4">
-                <label htmlFor="name2">Identifier's Name</label>
+                <label htmlFor="identifier_Name2">Identifier's Name</label>
                 <Field
                   type="text"
-                  name="name2"
+                  name="identifier_Name2"
                   className="form-control"
                 />
                 <ErrorMessage
-                  name="name2"
+                  name="identifier_Name2"
                   component="div"
                   className="text-danger"
                 />
               </div>
               {/* Phone */}
               <div className="mb-3 col-md-4">
-                <label htmlFor="phone2">Phone/Mobile Number</label>
+                <label htmlFor="identifier_phone2">Phone/Mobile Number</label>
                 <Field
                   type="text"
-                  name="phone2"
+                  name="identifier_phone2"
                   className="form-control"
                 />
                 <ErrorMessage
-                  name="phone2"
+                  name="identifier_phone2"
                   component="div"
                   className="text-danger"
                 />
               </div>
               {/* Profession */}
               <div className="mb-3 col-md-4">
-                <label htmlFor="profession2">Profession</label>
+                <label htmlFor="identifier_profession2">Profession</label>
                 <Field
                   type="text"
-                  name="profession2"
+                  name="identifier_profession2"
                   className="form-control"
                 />
                 <ErrorMessage
-                  name="profession2"
+                  name="identifier_profession2"
                   component="div"
                   className="text-danger"
                 />
@@ -170,42 +173,42 @@ const Identifiers = ({ formData, setFormData }) => {
             {/* Name */}
             <div className="row">
               <div className="mb-3 col-md-4">
-                <label htmlFor="name3">Identifier's Name</label>
+                <label htmlFor="identifier_Name3">Identifier's Name</label>
                 <Field
                   type="text"
-                  name="name3"
+                  name="identifier_Name3"
                   className="form-control"
                 />
                 <ErrorMessage
-                  name="name3"
+                  name="identifier_Name3"
                   component="div"
                   className="text-danger"
                 />
               </div>
               {/* Phone */}
               <div className="mb-3 col-md-4">
-                <label htmlFor="phone3">Phone/Mobile Number</label>
+                <label htmlFor="identifier_phone3">Phone/Mobile Number</label>
                 <Field
                   type="text"
-                  name="phone3"
+                  name="identifier_phone3"
                   className="form-control"
                 />
                 <ErrorMessage
-                  name="phone3"
+                  name="identifier_phone3"
                   component="div"
                   className="text-danger"
                 />
               </div>
               {/* Profession */}
               <div className="mb-3 col-md-4">
-                <label htmlFor="profession3">Profession</label>
+                <label htmlFor="identifier_profession3">Profession</label>
                 <Field
                   type="text"
-                  name="profession3"
+                  name="identifier_profession3"
                   className="form-control"
                 />
                 <ErrorMessage
-                  name="profession3"
+                  name="identifier_profession3"
                   component="div"
                   className="text-danger"
                 />

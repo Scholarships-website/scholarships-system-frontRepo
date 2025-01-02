@@ -3,40 +3,45 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const EducationalData = ({ formData, setFormData }) => {
+const EducationalData = ({ formData, setFormData,saveStepData }) => {
   // Validation Schema
   const validationSchema = Yup.object({
-    studyLevel: Yup.string().required("Study level is required"),
-    gpa: Yup.number()
-      .required("GPA is required")
-      .min(0, "GPA cannot be less than 0")
-      .max(4, "GPA cannot be more than 4"),
-    universityYear: Yup.string().when("studyLevel", {
-      is: "university",
-      then: Yup.string().required("Please specify the university year"),
-      otherwise: Yup.string().notRequired(),
-    }),
-    schoolClass: Yup.string().when("studyLevel", {
-      is: "school",
-      then: Yup.string().required("Please specify your class"),
-      otherwise: Yup.string().notRequired(),
-    }),
-    siblingsInUniversity: Yup.number()
-      .required("Number of siblings is required")
-      .min(0, "The number cannot be less than zero"),
+    // Study_Level: Yup.string()
+    //   .required("Study level is required")
+    //   .oneOf(["university", "school"], "Invalid study level"),
+    // GPA: Yup.number()
+    //   .required("GPA is required")
+    //   .min(0, "GPA cannot be less than 0")
+    //   .max(4, "GPA cannot be more than 4"),
+    // university_year: Yup.string().when("Study_Level", {
+    //   is: (value) => value === "university",
+    //   then: Yup.string().required("Please specify the university year"),
+    //   otherwise: Yup.string().notRequired(),
+    // }),
+    // class_year: Yup.string().when("Study_Level", {
+    //   is: (value) => value === "school",
+    //   then: Yup.string().required("Please specify your class"),
+    //   otherwise: Yup.string().notRequired(),
+    // }),
+    // Number_of_Siblings: Yup.number()
+    //   .required("Number of siblings is required")
+    //   .min(0, "The number cannot be less than zero"),
   });
 
   // Initial Values
   const initialValues = {
-    studyLevel: formData.studyLevel || "",
-    gpa: formData.gpa || "",
-    universityYear: formData.universityYear || "",
-    schoolClass: formData.schoolClass || "",
-    siblingsInUniversity: formData.siblingsInUniversity || "",
+    Study_Level: formData.Study_Level || "",
+    GPA: formData.GPA || "",
+    university_year: formData.university_year || "",
+    class_year: formData.class_year || "",
+    Number_of_Siblings: formData.Number_of_Siblings || "",
   };
 
   // Submit Handler
   const handleSubmit = (values) => {
+    console.log("Submitting form...");
+    console.log(values);
+    saveStepData({ stepKey: 'educationalData', data: values });
     setFormData((prev) => ({
       ...prev,
       educationalData: values,
@@ -46,7 +51,7 @@ const EducationalData = ({ formData, setFormData }) => {
   return (
     <div className="container">
       <Formik
-        initialValues={initialValues}
+        initialValues={formData.educationalData || initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
@@ -56,33 +61,33 @@ const EducationalData = ({ formData, setFormData }) => {
               <h3 className="mt-5">Study Level</h3>
               <div className="row">
                 <div className="col-md-5 mb-3">
-                  <label htmlFor="studyLevel">Study Level</label>
-                  <Field as="select" name="studyLevel" className="form-control">
+                  <label htmlFor="Study_Level">Study Level</label>
+                  <Field as="select" name="Study_Level" className="form-control">
                     <option value="">-- Select --</option>
                     <option value="university">University Student</option>
                     <option value="school">School Student</option>
                   </Field>
-                  <ErrorMessage name="studyLevel" component="div" className="text-danger" />
+                  <ErrorMessage name="Study_Level" component="div" className="text-danger" />
                 </div>
               </div>
             </div>
 
-            {values.studyLevel && (
+            {values.Study_Level && (
               <div className="input-group mb-4">
                 <h3>Additional Details</h3>
                 <div className="row">
                   {/* GPA Field */}
                   <div className="col-md-5 mb-3">
-                    <label htmlFor="gpa">GPA</label>
-                    <Field type="number" name="gpa" className="form-control" />
-                    <ErrorMessage name="gpa" component="div" className="text-danger" />
+                    <label htmlFor="GPA">GPA</label>
+                    <Field type="number" name="GPA" className="form-control" />
+                    <ErrorMessage name="GPA" component="div" className="text-danger" />
                   </div>
 
                   {/* Conditional Fields Based on Study Level */}
-                  {values.studyLevel === "university" && (
+                  {values.Study_Level === "university" && (
                     <div className="col-md-5 mb-3">
-                      <label htmlFor="universityYear">University Year</label>
-                      <Field as="select" name="universityYear" className="form-control">
+                      <label htmlFor="university_year">University Year</label>
+                      <Field as="select" name="university_year" className="form-control">
                         <option value="">-- Select --</option>
                         <option value="first">First Year</option>
                         <option value="second">Second Year</option>
@@ -90,17 +95,17 @@ const EducationalData = ({ formData, setFormData }) => {
                         <option value="fourth">Fourth Year</option>
                         <option value="fifth">Fifth Year or Higher</option>
                       </Field>
-                      <ErrorMessage name="universityYear" component="div" className="text-danger" />
+                      <ErrorMessage name="university_year" component="div" className="text-danger" />
                     </div>
                   )}
-                  {values.studyLevel === "school" && (
+                  {values.Study_Level === "school" && (
                     <div className="col-md-5 mb-3">
-                      <label htmlFor="schoolClass">Class</label>
-                      <Field as="select" name="schoolClass" className="form-control">
+                      <label htmlFor="class_year">Class</label>
+                      <Field as="select" name="class_year" className="form-control">
                         <option value="">-- Select --</option>
                         <option value="grade12">Grade 12</option>
                       </Field>
-                      <ErrorMessage name="schoolClass" component="div" className="text-danger" />
+                      <ErrorMessage name="class_year" component="div" className="text-danger" />
                     </div>
                   )}
                 </div>
@@ -111,16 +116,16 @@ const EducationalData = ({ formData, setFormData }) => {
               <h3>Number of Siblings</h3>
               <div className="row">
                 <div className="col-md-5 mb-3">
-                  <label htmlFor="siblingsInUniversity">
+                  <label htmlFor="Number_of_Siblings">
                     Number of siblings studying at universities
                   </label>
                   <Field
                     type="number"
-                    name="siblingsInUniversity"
+                    name="Number_of_Siblings"
                     className="form-control"
                   />
                   <ErrorMessage
-                    name="siblingsInUniversity"
+                    name="Number_of_Siblings"
                     component="div"
                     className="text-danger"
                   />

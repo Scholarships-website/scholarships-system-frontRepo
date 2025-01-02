@@ -3,55 +3,59 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Attachments = ({ formData, setFormData }) => {
+const Attachments = ({ formData, setFormData,saveStepData }) => {
   // Validation Schema
   const validationSchema = Yup.object({
-    studentIdImage: Yup.mixed()
-      .required("Student's ID image is required")
-      .test("fileFormat", "Only PDF files are allowed", (value) => {
-        return value && value.name.endsWith(".pdf");
-      }),
-    headOfHouseholdIdWithAnnex: Yup.mixed()
-      .required("Head of household's ID with annex is required")
-      .test("fileFormat", "Only PDF files are allowed", (value) => {
-        return value && value.name.endsWith(".pdf");
-      }),
-    motherIdImage: Yup.mixed()
-      .required("Mother's ID image is required")
-      .test("fileFormat", "Only PDF files are allowed", (value) => {
-        return value && value.name.endsWith(".pdf");
-      }),
-    certificateForBrothers: Yup.mixed()
-      .test("fileFormat", "Only PDF files are allowed", (value) => {
-        return value && value.name.endsWith(".pdf");
-      }),
-    specialCasesReport: Yup.mixed()
-      .test("fileFormat", "Only PDF files are allowed", (value) => {
-        return value && value.name.endsWith(".pdf");
-      }),
+    // Student_ID_Image: Yup.mixed()
+    //   .required("Student's ID image is required")
+    //   .test("fileFormat", "Only PDF files are allowed", (value) => {
+    //     return value && value.name.endsWith(".pdf");
+    //   }),
+    //   Head_of_Household_ID_Image: Yup.mixed()
+    //   .required("Head of household's ID with annex is required")
+    //   .test("fileFormat", "Only PDF files are allowed", (value) => {
+    //     return value && value.name.endsWith(".pdf");
+    //   }),
+    //   Mother_ID_Image: Yup.mixed()
+    //   .required("Mother's ID image is required")
+    //   .test("fileFormat", "Only PDF files are allowed", (value) => {
+    //     return value && value.name.endsWith(".pdf");
+    //   }),
+    //   Sibling_ID_Image: Yup.mixed()
+    //   .test("fileFormat", "Only PDF files are allowed", (value) => {
+    //     return value && value.name.endsWith(".pdf");
+    //   }),
+    //   Special_Cases_Report: Yup.mixed()
+    //   .test("fileFormat", "Only PDF files are allowed", (value) => {
+    //     return value && value.name.endsWith(".pdf");
+    //   }),
   });
 
   // Initial Values
   const initialValues = {
-    studentIdImage: formData?.studentIdImage || null,
-    headOfHouseholdIdWithAnnex: formData?.headOfHouseholdIdWithAnnex || null,
-    motherIdImage: formData?.motherIdImage || null,
-    certificateForBrothers: formData?.certificateForBrothers || null,
-    specialCasesReport: formData?.specialCasesReport || null,
+    Student_ID_Image: formData.Student_ID_Image || null,
+    Head_of_Household_ID_Image: formData?.Head_of_Household_ID_Image || null,
+    Mother_ID_Image: formData?.Mother_ID_Image || null,
+    Sibling_ID_Image: formData?.Sibling_ID_Image || null,
+    Special_Cases_Report: formData?.Special_Cases_Report || null,
   };
 
   // Submit Handler
   const handleSubmit = (values) => {
+            console.log("Submitting form...");
+        console.log(values);
+        saveStepData({ stepKey: 'pdffiles', data: values });
+
     setFormData((prev) => ({
       ...prev,
-      attachments: values,
+      pdffiles: values,
     }));
   };
 
   return (
     <div className="container">
       <Formik
-        initialValues={initialValues}
+                initialValues={formData.pdffiles || initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
@@ -62,67 +66,67 @@ const Attachments = ({ formData, setFormData }) => {
 
               {/* Student's ID Image */}
               <div className="mb-3 col-md-5">
-                <label htmlFor="studentIdImage">Student's ID Image (PDF Only)</label>
+                <label htmlFor="Student_ID_Image">Student's ID Image (PDF Only)</label>
                 <input
                   type="file"
-                  name="studentIdImage"
+                  name="Student_ID_Image"
                   accept=".pdf"
                   className="form-control"
-                  onChange={(event) => setFieldValue("studentIdImage", event.currentTarget.files[0])}
+                  onChange={(event) => setFieldValue("Student_ID_Image", event.currentTarget.files[0])}
                 />
-                <ErrorMessage name="studentIdImage" component="div" className="text-danger" />
+                <ErrorMessage name="Student_ID_Image" component="div" className="text-danger" />
               </div>
 
               {/* Head of Household's ID with Annex (children under 18) */}
               <div className="mb-3 col-md-5">
-                <label htmlFor="headOfHouseholdIdWithAnnex">Head of Household's ID with Annex (PDF Only)</label>
+                <label htmlFor="Head_of_Household_ID_Image">Head of Household's ID with Annex (PDF Only)</label>
                 <input
                   type="file"
-                  name="headOfHouseholdIdWithAnnex"
+                  name="Head_of_Household_ID_Image"
                   accept=".pdf"
                   className="form-control"
-                  onChange={(event) => setFieldValue("headOfHouseholdIdWithAnnex", event.currentTarget.files[0])}
+                  onChange={(event) => setFieldValue("Head_of_Household_ID_Image", event.currentTarget.files[0])}
                 />
-                <ErrorMessage name="headOfHouseholdIdWithAnnex" component="div" className="text-danger" />
+                <ErrorMessage name="Head_of_Household_ID_Image" component="div" className="text-danger" />
               </div>
 
               {/* Mother's ID Image */}
               <div className="mb-3 col-md-5">
-                <label htmlFor="motherIdImage">Mother's ID Image (PDF Only)</label>
+                <label htmlFor="Mother_ID_Image">Mother's ID Image (PDF Only)</label>
                 <input
                   type="file"
-                  name="motherIdImage"
+                  name="Mother_ID_Image"
                   accept=".pdf"
                   className="form-control"
-                  onChange={(event) => setFieldValue("motherIdImage", event.currentTarget.files[0])}
+                  onChange={(event) => setFieldValue("Mother_ID_Image", event.currentTarget.files[0])}
                 />
-                <ErrorMessage name="motherIdImage" component="div" className="text-danger" />
+                <ErrorMessage name="Mother_ID_Image" component="div" className="text-danger" />
               </div>
 
               {/* Certificate for Brothers/Sisters in Universities */}
               <div className="mb-3 col-md-5">
-                <label htmlFor="certificateForBrothers">Certificate for Brothers/Sisters Enrolled in Universities (PDF Only)</label>
+                <label htmlFor="Sibling_ID_Image">Certificate for Brothers/Sisters Enrolled in Universities (PDF Only)</label>
                 <input
                   type="file"
-                  name="certificateForBrothers"
+                  name="Sibling_ID_Image"
                   accept=".pdf"
                   className="form-control"
-                  onChange={(event) => setFieldValue("certificateForBrothers", event.currentTarget.files[0])}
+                  onChange={(event) => setFieldValue("Sibling_ID_Image", event.currentTarget.files[0])}
                 />
-                <ErrorMessage name="certificateForBrothers" component="div" className="text-danger" />
+                <ErrorMessage name="Sibling_ID_Image" component="div" className="text-danger" />
               </div>
 
               {/* Special Cases Report */}
               <div className="mb-3 col-md-5">
-                <label htmlFor="specialCasesReport">Special Cases Report (PDF Only)</label>
+                <label htmlFor="Special_Cases_Report">Special Cases Report (PDF Only)</label>
                 <input
                   type="file"
-                  name="specialCasesReport"
+                  name="Special_Cases_Report"
                   accept=".pdf"
                   className="form-control"
-                  onChange={(event) => setFieldValue("specialCasesReport", event.currentTarget.files[0])}
+                  onChange={(event) => setFieldValue("Special_Cases_Report", event.currentTarget.files[0])}
                 />
-                <ErrorMessage name="specialCasesReport" component="div" className="text-danger" />
+                <ErrorMessage name="Special_Cases_Report" component="div" className="text-danger" />
               </div>
 
             </div>
