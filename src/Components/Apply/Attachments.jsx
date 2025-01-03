@@ -6,29 +6,35 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const Attachments = ({ formData, setFormData,saveStepData }) => {
   // Validation Schema
   const validationSchema = Yup.object({
-    // Student_ID_Image: Yup.mixed()
-    //   .required("Student's ID image is required")
-    //   .test("fileFormat", "Only PDF files are allowed", (value) => {
-    //     return value && value.name.endsWith(".pdf");
-    //   }),
-    //   Head_of_Household_ID_Image: Yup.mixed()
-    //   .required("Head of household's ID with annex is required")
-    //   .test("fileFormat", "Only PDF files are allowed", (value) => {
-    //     return value && value.name.endsWith(".pdf");
-    //   }),
-    //   Mother_ID_Image: Yup.mixed()
-    //   .required("Mother's ID image is required")
-    //   .test("fileFormat", "Only PDF files are allowed", (value) => {
-    //     return value && value.name.endsWith(".pdf");
-    //   }),
-    //   Sibling_ID_Image: Yup.mixed()
-    //   .test("fileFormat", "Only PDF files are allowed", (value) => {
-    //     return value && value.name.endsWith(".pdf");
-    //   }),
-    //   Special_Cases_Report: Yup.mixed()
-    //   .test("fileFormat", "Only PDF files are allowed", (value) => {
-    //     return value && value.name.endsWith(".pdf");
-    //   }),
+    Student_ID_Image: Yup.mixed()
+      .required("Student's ID image is required")
+      .test("fileFormat", "Only PDF files are allowed", (value) => {
+        return value && value.name.endsWith(".pdf");
+      }),
+      Head_of_Household_ID_Image: Yup.mixed()
+      .required("Head of household's ID with annex is required")
+      .test("fileFormat", "Only PDF files are allowed", (value) => {
+        return value && value.name.endsWith(".pdf");
+      }),
+      Mother_ID_Image: Yup.mixed()
+      .required("Mother's ID image is required")
+      .test("fileFormat", "Only PDF files are allowed", (value) => {
+        return value && value.name.endsWith(".pdf");
+      }),
+      Sibling_ID_Image: Yup.mixed()
+      .nullable()
+      .test("fileFormat", "Only PDF files are allowed", (value) => {
+        // Skip validation if the field is empty or null
+        if (!value) return true; 
+        return value.name.endsWith(".pdf");
+      }),
+    
+    Special_Cases_Report: Yup.mixed()
+      .nullable()
+      .test("fileFormat", "Only PDF files are allowed", (value) => {
+        if (!value) return true; 
+        return value.name.endsWith(".pdf");
+      }),
   });
 
   // Initial Values

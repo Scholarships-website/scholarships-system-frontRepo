@@ -64,11 +64,11 @@ export default function UserContextProvider({ children }) {
             try {
                 const { data } = await axios.get(`http://localhost:3000/api/v1/getUserInfo/${userId}`);
                 console.log(data);
-                setUserData(data);
+                
                 if (data.role === 'student') {
                     // Fetch student-specific data if the role is student
                     await getStudentDataFromId();
-                }
+                }setUserData(data);
             } catch (error) {
                 console.error("Error fetching user data:", error);
             }
@@ -98,7 +98,7 @@ export default function UserContextProvider({ children }) {
     }
 
     return (
-        <UserContext.Provider value={{ userToken, setUserToken, userId, setUserId, userData, setUserData, roleId, setRoleId }}>
+        <UserContext.Provider value={{ userToken, setUserToken, userId, setUserId, userData, setUserData, roleId, setRoleId,studentData }}>
             {children}
         </UserContext.Provider>
     );

@@ -23,10 +23,12 @@ function Applications() {
 
   const fetchApplicatins = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:3000/api/v1/admin/scholarhips`);
-      setAcceptedApplications(data.filter(app => app.approval_status === 'accept'));
-      setPendingApplications(data.filter(app => app.approval_status === 'pending'));
-      setRejectedApplications(data.filter(app => app.approval_status === 'reject'));
+      // const { data } = await axios.get(`http://localhost:3000/api/v1/admin/scholarhips`);
+      // setAcceptedApplications(data.filter(app => app.approval_status === 'accept'));
+      // setPendingApplications(data.filter(app => app.approval_status === 'pending'));
+      // setRejectedApplications(data.filter(app => app.approval_status === 'reject'));
+      const response = await axios.get(`http://localhost:3000/api/v1/students/${roleId}/applications`);
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     } finally {

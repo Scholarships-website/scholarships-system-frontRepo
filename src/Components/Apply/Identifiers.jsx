@@ -6,26 +6,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const Identifiers = ({ formData, setFormData,saveStepData }) => {
   // Validation Schema
   const validationSchema = Yup.object({
-    // identifier_Name1: Yup.string().required("Identifier's Name is required"),
-    // identifier_phone1: Yup.string()
-    //   .required("Phone/Mobile Number is required")
-    //   .matches(/^\d+$/, "Phone number must contain only digits")
-    //   .min(8, "Phone number must be at least 8 digits"),
-    //   identifier_profession1: Yup.string().required("Profession is required"),
+    identifier_Name1: Yup.string().required("Identifier's Name is required"),
+    identifier_phone1: Yup.string().required("Identifier's Phone is required"),
+      identifier_profession1: Yup.string().required("Profession is required"),
 
-    // identifier_Name2: Yup.string().required("Identifier's Name is required"),
-    // identifier_phone2: Yup.string()
-    //   .required("Phone/Mobile Number is required")
-    //   .matches(/^\d+$/, "Phone number must contain only digits")
-    //   .min(8, "Phone number must be at least 8 digits"),
-    //   identifier_profession2: Yup.string().required("Profession is required"),
+    identifier_Name2: Yup.string().required("Identifier's Name is required"),
+    identifier_phone2: Yup.string().required("Identifier's Phone is required"),
 
-    // identifier_Name3: Yup.string().required("Identifier's Name is required"),
-    // identifier_phone3: Yup.string()
-    //   .required("Phone/Mobile Number is required")
-    //   .matches(/^\d+$/, "Phone number must contain only digits")
-    //   .min(8, "Phone number must be at least 8 digits"),
-    //   identifier_profession3: Yup.string().required("Profession is required"),
+      identifier_profession2: Yup.string().required("Profession is required"),
+
+    identifier_Name3: Yup.string().required("Identifier's Name is required"),
+    identifier_phone3: Yup.string().required("Identifier's Phone is required"),
+
+      identifier_profession3: Yup.string().required("Profession is required"),
   });
 
   // Initial Values: Assign values individually for each identifier field

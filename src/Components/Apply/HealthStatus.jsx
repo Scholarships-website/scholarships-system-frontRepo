@@ -1,34 +1,27 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import * as Yup from "yup";
-import "bootstrap/dist/css/bootstrap.min.css";
 
-const HealthStatus = ({ formData, setFormData,saveStepData }) => {
+const HealthStatus = ({ formData, setFormData, saveStepData }) => {
     // Validation Schema
     const validationSchema = Yup.object({
-        // Number_of_Disabilities_in_the_Family: Yup.number()
-        //     .required("This field is required")
-        //     .min(0, "The number cannot be less than zero"),
-        // healthDetails: Yup.array().when("Number_of_Disabilities_in_the_Family", {
-        //     is: (val) => val > 0,
-        //     then: Yup.array().of(
-        //         Yup.object({
-        //             description: Yup.string().required("Description is required"),
-        //         })
-        //     ),
-        //     otherwise: Yup.array().notRequired(),
-        // }),
+        Number_of_Disabilities_in_the_Family: Yup.number()
+            .required("This field is required")
+            .min(0, "The number cannot be less than zero"),
+        Disabilities_description: Yup.array()
+            .of(Yup.string().required("Description is required"))
+            .min(1, "At least one description is required"),
     });
 
     // Initial Values
     const initialValues = {
         Number_of_Disabilities_in_the_Family: formData.Number_of_Disabilities_in_the_Family || 0,
-        // healthDetails: formData.healthDetails || [{ description: "" }],
+        Disabilities_description: formData.Disabilities_description || [],
     };
 
     // Submit Handler
     const handleSubmit = (values) => {
-                console.log("Submitting form...");
+        console.log("Submitting form...");
         console.log(values);
         saveStepData({ stepKey: 'healthStatus', data: values });
         setFormData((prev) => ({
@@ -44,9 +37,8 @@ const HealthStatus = ({ formData, setFormData,saveStepData }) => {
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
-                {({ values }) => (
+                {({ values, setFieldValue }) => (
                     <Form>
-                        {/* Number of Disabilities */}
                         <div className="row my-5">
                             <div className="col-md-5">
                                 <label htmlFor="Number_of_Disabilities_in_the_Family" className="form-label">
@@ -56,6 +48,12 @@ const HealthStatus = ({ formData, setFormData,saveStepData }) => {
                                     type="number"
                                     name="Number_of_Disabilities_in_the_Family"
                                     className="form-control"
+                                    onChange={(e) => {
+                                        const number = parseInt(e.target.value, 10);
+                                        setFieldValue("Number_of_Disabilities_in_the_Family", number);
+                                        const descriptions = Array(number).fill("");
+                                        setFieldValue("Disabilities_description", descriptions);
+                                    }}
                                 />
                                 <ErrorMessage
                                     name="Number_of_Disabilities_in_the_Family"
@@ -65,57 +63,35 @@ const HealthStatus = ({ formData, setFormData,saveStepData }) => {
                             </div>
                         </div>
 
-                        {/* Details of Disabilities */}
-                        {/* {values.Number_of_Disabilities_in_the_Family > 0 && (
-                            <div className="mb-4">
-                                <h4 className="mb-3">Details of Disabilities</h4>
-                                <FieldArray name="healthDetails">
-                                    {({ push, remove }) => (
+                        {/* Dynamic Text Areas for Disabilities */}
+                        {values.Number_of_Disabilities_in_the_Family > 0 && (
+                            <div className="row my-3">
+                                <FieldArray
+                                    name="Disabilities_description"
+                                    render={(arrayHelpers) => (
                                         <div>
-                                            {values.healthDetails.map((_, index) => (
-                                                <div key={index} className="row mb-3">
-                                                    <div className="col-md-5">
-                                                        <label
-                                                            htmlFor={`healthDetails.${index}.description`}
-                                                            className="form-label"
-                                                        >
-                                                            Description
-                                                        </label>
-                                                        <Field
-                                                            type="text"
-                                                            name={`healthDetails.${index}.description`}
-                                                            className="form-control"
-                                                            placeholder="Describe the disability"
-                                                        />
-                                                        <ErrorMessage
-                                                            name={`healthDetails.${index}.description`}
-                                                            component="div"
-                                                            className="text-danger mt-1"
-                                                        />
-                                                    </div>
-                                                    <div className="col-md-2 d-flex align-items-end">
-                                                        <button
-                                                            type="button"
-                                                            className="btn btn-danger w-100"
-                                                            onClick={() => remove(index)}
-                                                        >
-                                                            Remove
-                                                        </button>
-                                                    </div>
+                                            {values.Disabilities_description.map((_, index) => (
+                                                <div key={index} className="mb-3">
+                                                    <label htmlFor={`Disabilities_description.${index}`} className="form-label">
+                                                        Description of Disability {index + 1}
+                                                    </label>
+                                                    <Field
+                                                        type="text"
+                                                        name={`Disabilities_description.${index}`}
+                                                        className="form-control"
+                                                    />
+                                                    <ErrorMessage
+                                                        name={`Disabilities_description.${index}`}
+                                                        component="div"
+                                                        className="text-danger mt-1"
+                                                    />
                                                 </div>
                                             ))}
-                                            <button
-                                                type="button"
-                                                className="btn btn-primary mt-3"
-                                                onClick={() => push({ description: "" })}
-                                            >
-                                                Add Entry
-                                            </button>
                                         </div>
                                     )}
-                                </FieldArray>
+                                />
                             </div>
-                        )} */}
+                        )}
 
                         {/* Submit Button */}
                         <div className="text-end">

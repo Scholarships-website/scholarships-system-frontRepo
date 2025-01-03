@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useParams } from "react-router-dom"; // For extracting the scholarship ID from the URL
+import { useParams } from "react-router-dom";
 import GeneralInfo from "./GeneralInfo";
 import FamilyInfo from "./FamilyInfo";
 import EducationalData from "./EducationalData";
@@ -19,6 +19,9 @@ const Apply = () => {
   const { userToken } = useContext(UserContext);
   const [formData, setFormData] = useState({
     generalInfo: {
+      fullname:"",
+      birthdate:"",
+      Gender:"",
       ID_Number: "",
       Card_Type: "",
       Martial_Status: "",

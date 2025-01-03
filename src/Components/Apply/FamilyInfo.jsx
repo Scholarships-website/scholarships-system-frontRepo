@@ -6,20 +6,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const FamilyInfo = ({ formData, setFormData,saveStepData }) => {
     // Validation Schema
     const validationSchema = Yup.object({
-        // Head_of_the_family: Yup.string().required("Head of the family is required"),
-        // breadwinner: Yup.string().required("Name of the head of the household is required"),
-        // breadwinner_id: Yup.string().required("ID number is required"),
-        // work_nature: Yup.string().required("Nature of work for the father is required"),
-        // institution: Yup.string().required("Name of the institution is required"),
-        // income_category: Yup.string().required("Monthly income category is required"),
-        // Does_mother_work: Yup.string().required("Please specify if the student's mother works"),
-        // any_other_income: Yup.string().required("Please specify if there is other income"),
-        // Total_number_of_family_members: Yup.number()
-        //     .required("Number of family members is required")
-        //     .min(1, "There must be at least one family member"),
-        // Does_student_work: Yup.string().required("Please specify if the student works"),
-        // social_affairs_case: Yup.string().required("Please specify if the family is registered as a social affairs case"),
-        // UNRWA_card: Yup.string().required("Please specify if the family has a UNRWA card"),
+        Head_of_the_family: Yup.string().required("Head of the family is required"),
+        breadwinner: Yup.string().required("Name of the head of the household is required"),
+        breadwinner_id: Yup.string().required("ID number is required"),
+        work_nature: Yup.string().required("Nature of work for the father is required"),
+        institution: Yup.string().required("Name of the institution is required"),
+        income_category: Yup.string().required("Monthly income category is required"),
+        Does_mother_work: Yup.string().required("Please specify if the student's mother works"),
+        any_other_income: Yup.string().required("Please specify if there is other income"),
+        Total_number_of_family_members: Yup.number()
+            .required("Number of family members is required")
+            .min(1, "There must be at least one family member"),
+        Does_student_work: Yup.string().required("Please specify if the student works"),
+        social_affairs_case: Yup.string().required("Please specify if the family is registered as a social affairs case"),
+        UNRWA_card: Yup.string().required("Please specify if the family has a UNRWA card"),
     });
 
     // Initial Values
