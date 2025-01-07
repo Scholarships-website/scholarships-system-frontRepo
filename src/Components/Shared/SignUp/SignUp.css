@@ -4,7 +4,7 @@
     /* left: 20px; */
     padding: 20px;
     z-index: 9999;
-    width: 100%;
+    width: 100vh;
     background-color: rgb(255, 255, 255);
 }
 
@@ -18,17 +18,16 @@
     padding: 30px;
     margin: 100px auto;
     gap: 20px;
-    background-color: '#fff';
+    background-color: #f2fff2;
 }
 
 .signup .formContainer {
-    width: 40%;
+    /* max-width: 800px; */
+    width: 90%;
     padding: 24px;
     display: flex;
     flex-wrap: wrap;
-    /* Allow wrapping of input fields */
     justify-content: space-between;
-    /* Space between the input pairs */
 }
 
 .formContainer .signupP {
@@ -77,31 +76,47 @@
 }
 
 .signupP {
-    color: #418447;;
-    font-size: 1.5rem ;
+    color: #418447;
+    ;
+    font-size: 1.5rem;
     font-weight: bold !important;
     font-family: monospace;
-    letter-spacing: 7px ;
+    letter-spacing: 7px;
     text-transform: uppercase;
-    background: linear-gradient(to right, #3b7f3b 0%, #ffffff 10%, #3b7f3b 20%); /* Modified gradient colors */
-    -webkit-background-clip: text; 
-    background-clip: text; 
-    -webkit-text-fill-color: transparent; 
+    background: linear-gradient(to right, #3b7f3b 0%, #ffffff 10%, #3b7f3b 20%);
+    /* Modified gradient colors */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     animation: shine 3s infinite linear;
 }
 
+.registrationForm {
+    width: 90%;
+    margin: auto;
+}
+.registrationForm .row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    padding: 10px;
+}
 /* Animation for the shine effect */
 @keyframes shine {
     0% {
         background-position: 0;
     }
+
     60% {
         background-position: 600px;
     }
+
     100% {
         background-position: 600px;
     }
 }
+
 /* @media (max-width: 830px) {
     .signup .registrationContainer {
         width: 95%;
@@ -126,8 +141,9 @@
         padding: 10px;
         gap: 10px;
     }
+
     .signup .formContainer .signupP {
-        font-size: 1.5rem; 
+        font-size: 1.5rem;
 
     }
 }
@@ -141,22 +157,22 @@
         width: 100vw;
         padding: 0;
         gap: 0;
-        flex-direction: column; 
-        margin: 20px auto; 
+        flex-direction: column;
+        margin: 20px auto;
     }
 
     .signup .formContainer {
-        width: 90%; 
-        padding: 15px; 
+        width: 90%;
+        padding: 15px;
     }
 
     .signup .formContainer .signupP {
-        font-size: 1.5rem; 
+        font-size: 1.5rem;
 
     }
 
     .signup .formContainer button {
-        min-width: 50%; 
+        min-width: 50%;
         padding: 10px;
     }
 }
@@ -164,17 +180,20 @@
 /* Adjustments for mobile devices (max-width: 500px) */
 @media (max-width: 500px) {
     .signup .formContainer .signupP {
-        font-size: 1rem !important; 
+        font-size: 1rem !important;
         text-align: left;
         letter-spacing: 2.5px;
     }
+
     .signup .logoContainer img {
-        width: 70px; /* Smaller logo */
+        width: 70px;
+        /* Smaller logo */
     }
 
     .signup .registrationContainer {
         width: 100vw;
-        margin: 10px auto; /* Reduce margins further */
+        margin: 10px auto;
+        /* Reduce margins further */
         padding: 5px;
     }
 
@@ -182,31 +201,35 @@
         width: 100%;
         padding: 10px;
     }
+
     .signup .formContainer .form-control {
-        width: 90%;
+        /* width: 90%; */
         padding: 20px;
     }
+
     .signup .formContainer .phone-number-input {
-        width:50%;
+        width: 50%;
         flex: none;
         /* padding: 20px; */
-        
-    } 
-    .signup .animationContainer{
+
+    }
+
+    .signup .animationContainer {
         display: flex;
         justify-content: flex-start;
     }
+
     .animationContainer iframe {
-        width: 80%; 
-        height: 200px; 
+        width: 80%;
+        height: 200px;
     }
 
     .signup .formContainer .signupP {
-        font-size: 1.4rem; 
+        font-size: 1.4rem;
     }
 
     .signup .formContainer button {
-        width: 70%; 
+        width: 70%;
         padding: 10px;
     }
 }

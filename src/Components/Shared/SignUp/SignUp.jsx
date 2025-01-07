@@ -9,7 +9,7 @@ import './SignUp.css';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Skeleton } from '@mui/material';
-
+import Navbar from '../Navbar/Navbar'
 export default function SignUp() {
     const initialValues = {
         username: '',
@@ -165,9 +165,7 @@ export default function SignUp() {
     console.log(formik.errors);
     return (
         <div className='signup'>
-            <div className="logoContainer">
-                <a href="/"><img src="assets/img/logo.png" alt="logo" width="100px" /></a>
-            </div>
+            <Navbar />
             <ToastContainer
                 position="top-right"
                 autoClose={5000}
@@ -180,33 +178,168 @@ export default function SignUp() {
                 pauseOnHover
                 theme="light"
                 transition={Bounce}
-            />
-            <section className="registrationContainer">
-                {isLoading ?
+            />{/* {isLoading ?
                     (<Skeleton variant="rounded" width={500} height={500} />) :
                     (<div className="animationContainer">
                         <iframe src="https://lottie.host/embed/6bd501ce-91ab-47aa-bad8-a61ec42174e8/zwZupXfoO0.json" width='500px' height='500px'></iframe>
                     </div>)
-                }
-
+                } */}
+            <section className="registrationContainer">
                 <div className="formContainer" style={{ borderRadius: 25 }}>
                     <div className="card-body">
-                        <p className='signupP'>Create your account</p>
+                        <p className='signupP' style={{textAlign:'center'}}>Create your account</p>
                         <form className="registrationForm" id="registrationForm" onSubmit={formik.handleSubmit}>
-                            {renderInputs}
-                            <div className="col-md-12">
-                                <PhoneInput className="phoneInput"
-                                    value={formik.values.phoneNumber}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    errors={formik.errors}
-                                    touched={formik.touched}
-                                    countryCode={formik.values.countryCode} // Pass the country code to the PhoneInput
-                                />
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <Input
+                                        type="text"
+                                        id="first_name"
+                                        name="first_name"
+                                        title="First Name"
+                                        errors={formik.errors}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        touched={formik.touched}
+                                        value={formik.values.first_name}
+                                        colSize="col-md-12"
+                                    />
+                                </div>
+                                <div className="col-md-6">
+                                    <Input
+                                        type="text"
+                                        id="last_name"
+                                        name="last_name"
+                                        title="Last Name"
+                                        errors={formik.errors}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        touched={formik.touched}
+                                        value={formik.values.last_name}
+                                        colSize="col-md-12"
+                                    />
+                                </div>
                             </div>
-                            <p className="alreadyAccountText" style={{ marginTop: '15px', fontSize: '16px', textDecoration: 'underline', cursor: 'pointer' }} onClick={handleLoginNavigation}>
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <Input
+                                        type="text"
+                                        id="username"
+                                        name="username"
+                                        title="Username"
+                                        errors={formik.errors}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        touched={formik.touched}
+                                        value={formik.values.username}
+                                        colSize="col-md-12"
+                                    />
+                                </div>
+                                <div className="col-md-6">
+                                    <Input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        title="Email Address"
+                                        errors={formik.errors}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        touched={formik.touched}
+                                        value={formik.values.email}
+                                        colSize="col-md-12"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Second Row: Password and Confirm Password */}
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <Input
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        title="Password"
+                                        errors={formik.errors}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        touched={formik.touched}
+                                        value={formik.values.password}
+                                        colSize="col-md-12"
+                                    />
+                                </div>
+                                <div className="col-md-6">
+                                    <Input
+                                        type="password"
+                                        id="confirmPassword"
+                                        name="confirmPassword"
+                                        title="Confirm Password"
+                                        errors={formik.errors}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        touched={formik.touched}
+                                        value={formik.values.confirmPassword}
+                                        colSize="col-md-12"
+                                    />
+                                </div>
+                            </div>
+
+
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <Input
+                                        type="date"
+                                        id="BirthDate"
+                                        name="BirthDate"
+                                        title="Birth Date"
+                                        errors={formik.errors}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        touched={formik.touched}
+                                        value={formik.values.BirthDate}
+                                        colSize="col-md-12"
+                                    />
+                                </div>
+                                <div className="col-md-6">
+                                    <Input
+                                        type="select"
+                                        id="Gender"
+                                        name="Gender"
+                                        title="Gender"
+                                        errors={formik.errors}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        touched={formik.touched}
+                                        value={formik.values.Gender}
+                                        options={[
+                                            { value: '', label: 'Select Gender' },
+                                            { value: 'male', label: 'Male' },
+                                            { value: 'female', label: 'Female' },
+                                        ]}
+                                        colSize="col-md-12"
+                                    />
+                                </div>
+
+                            </div>
+                            {/* Phone Input */}
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <PhoneInput
+                                        className="phoneInput"
+                                        value={formik.values.phoneNumber}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        errors={formik.errors}
+                                        touched={formik.touched}
+                                        countryCode={formik.values.countryCode}
+                                        colSize="col-md-12"
+                                    />
+                                </div>
+                            </div>
+                            {/* Already have an account */}
+                            <p className="alreadyAccountText" style={{ margin: '20px', fontSize: '16px', textDecoration: 'underline', cursor: 'pointer',textAlign:'center' }} onClick={handleLoginNavigation}>
                                 Already have an account?
                             </p>
+
+                            {/* Submit Button */}
                             <div className="btnContainer">
                                 <button type="submit" className="registerBtn btn btn-lg">Sign Up</button>
                             </div>

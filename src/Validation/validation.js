@@ -10,7 +10,7 @@ export const loginScheme = Yup.object().shape({
 });
 // Registration Validation Schema
 export const registrationScheme = Yup.object({
-   username: Yup.string().required('username is required'),
+   username: Yup.string().required('Username is required'),
    email: Yup.string().email('Invalid email format').required('Email is required'),
    password: Yup.string()
       .min(8, 'Password must be at least 8 characters')
@@ -24,6 +24,11 @@ export const registrationScheme = Yup.object({
    phoneNumber: Yup.string()
       .matches(/^\d{9}$/, 'Phone number must have 9 digits')
       .required('Phone number is required'),
+      Gender : Yup.string().oneOf(['male', 'female', 'other'], 'Gender is required').required('Gender is required'),
+      BirthDate : Yup.date()
+      .max(new Date(), 'Birth date cannot be in the future')
+      .required('Birth Date is required')
+      .nullable(),
 });
 
 export const addAdvertiser = Yup.object({
