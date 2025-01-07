@@ -8,11 +8,13 @@ import Loading from '../../../Shared/Loading/Loading'
 import './EditScholarship.css'
 import { addFeedback, editScholarship } from '../../../../Validation/validation';
 import Swal from 'sweetalert2';
+
 const formatDate = (isoString) => {
   if (!isoString) return '';
   const date = new Date(isoString);
   return date.toISOString().split('T')[0]; // Extract "yyyy-MM-dd"
 };
+
 function EditScholarship() {
   const { id } = useParams();
   // console.log(id);
@@ -22,7 +24,7 @@ function EditScholarship() {
   const fetchScholarship = async () => {
     try {
       const response = await axios.get(`http://localhost:3000/api/v1/admin/scholarships/pending/${id}`);
-      console.log('Fetched Scholarship:', response.data);
+      // console.log('Fetched Scholarship:', response.data);
       setScholarship(response.data);
     } catch (error) {
       console.error('Error fetching Scholarship:', error);
@@ -46,7 +48,11 @@ function EditScholarship() {
 
     if (confirmResult.isConfirmed) {
       const uploadData = new FormData();
+      const combinedExpenses = `${updatedData.expenses_coverd} ${updatedData.currency}`;
+      uploadData.append('expenses_coverd', combinedExpenses);
+
       for (const key in updatedData) {
+        if (key !== 'currency' && key !== 'expenses_coverd') 
         uploadData.append(key, updatedData[key]);
       }
       try {
@@ -59,6 +65,8 @@ function EditScholarship() {
             },
           }
         );
+        console.log(updatedData);  // Check if scholarship_picture is there and is a file object
+
         toast.success(`Scholarship updated Successfully`, {
           position: 'top-right',
           autoClose: true,
@@ -74,6 +82,7 @@ function EditScholarship() {
           navigate('/advertiserDashboard/scholarship-advertiser');
         }, 1000);
       } catch (error) {
+        console.log(updatedData)
         console.error('Error updating scholarship:', error);
       }
     } else {
@@ -88,6 +97,7 @@ function EditScholarship() {
       brief_descrition: '',
       start_Date: '',
       End_Date: '',
+      deadline: '',
       SelectionProcess: '',
       type: '',
       language_Of_Study: '',
@@ -99,6 +109,7 @@ function EditScholarship() {
       key_personnel_details: '',
       number_of_seats_available: '',
       scholarship_picture: null,
+      currency: 'USD',
     },
     validationSchema: editScholarship,
     onSubmit,
@@ -108,24 +119,28 @@ function EditScholarship() {
   // Update Formik values when scholarship data is fetched
   useEffect(() => {
     if (scholarship) {
-      console.log('Setting Formik values:', scholarship);
+      // console.log('Setting Formik values:', scholarship);
+      const expenses = scholarship.expenses_coverd.split(' '); // Split the string at the space
+
       formik.setValues({
         id: scholarship._id || '',
         scholarsip_name: scholarship.scholarsip_name || '',
         brief_descrition: scholarship.brief_descrition || '',
         start_Date: formatDate(scholarship.start_Date) || '',
         End_Date: formatDate(scholarship.End_Date) || '',
+        deadline: formatDate(scholarship.deadline) || '',
         SelectionProcess: scholarship.SelectionProcess || '',
         type: scholarship.type || '',
         language_Of_Study: scholarship.language_Of_Study || '',
         Place_of_Study: scholarship.Place_of_Study || '',
-        expenses_coverd: scholarship.expenses_coverd || '',
+        expenses_coverd: expenses[0] || '',  // The numeric part
         eligbility_criteria: scholarship.eligbility_criteria || '',
         term_and_conditions: scholarship.term_and_conditions || '',
         website_link: scholarship.website_link || '',
         key_personnel_details: scholarship.key_personnel_details || '',
         number_of_seats_available: scholarship.number_of_seats_available || '',
         scholarship_picture: scholarship.scholarship_picture || null,
+        currency: expenses[1] || 'USD',  // The currency part, defaulting to 'USD'
       });
     }
   }, [scholarship, id]);
@@ -135,8 +150,20 @@ function EditScholarship() {
   if (!scholarship) {
     return <Loading />;
   }
+  const currencySymbols = {
+    USD: '$',
+    EUR: '€',
+    GBP: '£',
+    INR: '₹',
+    JPY: '¥',
+    AUD: 'A$',
+    CAD: 'C$',
+    MXN: 'Mex$',
+    CNY: '¥'
+  };
   return (
     <>
+
       <div className="edit-adv">
         <ToastContainer
           position="top-right"
@@ -228,6 +255,21 @@ function EditScholarship() {
             ) : null}
           </div>
           <div className="form-item col-md-5 my-3">
+            <label className="form-label ps-2" htmlFor="deadline">Deadline</label>
+            <input
+              type="date"
+              className={`form-control ${formik.touched.deadline && formik.errors.deadline ? 'is-invalid' : ''}`}
+              id="deadline"
+              name="deadline"
+              value={formik.values.deadline}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            {formik.touched.deadline && formik.errors.deadline ? (
+              <div className="text-danger">{formik.errors.deadline}</div>  // Display the error in red
+            ) : null}
+          </div>
+          <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="SelectionProcess">Selection Process</label>
             <input
               type="text"
@@ -288,16 +330,33 @@ function EditScholarship() {
             ) : null}
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="expenses_coverd">Expenses Coverd</label>
-            <input
-              type="number"
-              className={`form-control ${formik.touched.expenses_coverd && formik.errors.expenses_coverd ? 'is-invalid' : ''}`}
-              id="expenses_coverd"
-              name="expenses_coverd"
-              value={formik.values.expenses_coverd}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
+            <label className="form-label ps-2" htmlFor="expenses_coverd">Expenses Covered</label>
+            <div className="d-flex align-items-center">
+              <input
+                type="number"
+                className={`form-control ${formik.touched.expenses_coverd && formik.errors.expenses_coverd ? 'is-invalid' : ''}`}
+                id="expenses_coverd"
+                name="expenses_coverd"
+                value={formik.values.expenses_coverd}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                placeholder="Amount"
+              />
+              <select
+                name="currency"
+                className="form-select ms-2"
+                id="currency"
+                value={formik.values.currency || 'USD'}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              >
+                {['USD', 'EUR', 'GBP', 'INR', 'JPY', 'AUD', 'CAD', 'MXN', 'CNY'].map((currency) => (
+                  <option key={currency} value={currency}>
+                    {currency} ({currencySymbols[currency]})
+                  </option>
+                ))}
+              </select>
+            </div>
             {formik.touched.expenses_coverd && formik.errors.expenses_coverd ? (
               <div className="text-danger">{formik.errors.expenses_coverd}</div>  // Display the error in red
             ) : null}
@@ -332,21 +391,6 @@ function EditScholarship() {
               <div className="text-danger">{formik.errors.term_and_conditions}</div>  // Display the error in red
             ) : null}
           </div>
-          {/* <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="form_Link">Form Link</label>
-            <input
-              type="url"
-              className={`form-control ${formik.touched.form_Link && formik.errors.form_Link ? 'is-invalid' : ''}`}
-              id="form_Link"
-              name="form_Link"
-              value={formik.values.form_Link}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.touched.form_Link && formik.errors.form_Link ? (
-              <div className="text-danger">{formik.errors.form_Link}</div>  // Display the error in red
-            ) : null}
-          </div> */}
           <div className="form-item col-md-5 my-3">
             <label className="form-label ps-2" htmlFor="website_link">Website Link</label>
             <input
@@ -402,7 +446,7 @@ function EditScholarship() {
               onChange={handleFileChange}
               onBlur={formik.handleBlur}
             />
-            {formik.touched.scholarship_picture && formik.errors.scholarship_picture ? (
+            {formik.touched.scholarship_picture ? (
               <div className="text-danger">{formik.errors.scholarship_picture}</div>  // Display the error in red
             ) : null}
           </div>

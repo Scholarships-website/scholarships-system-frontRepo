@@ -20,22 +20,64 @@ function Applications() {
   const [pendingApplications, setPendingApplications] = useState([]);
   const [rejectedApplications, setRejectedApplications] = useState([]);
   let { userToken, roleId } = useContext(UserContext);
+  const [combinedData, setCombinedData] = useState([]); // New state for combined data
 
   const fetchApplicatins = async () => {
     try {
-      // const { data } = await axios.get(`http://localhost:3000/api/v1/admin/scholarhips`);
-      // setAcceptedApplications(data.filter(app => app.approval_status === 'accept'));
-      // setPendingApplications(data.filter(app => app.approval_status === 'pending'));
-      // setRejectedApplications(data.filter(app => app.approval_status === 'reject'));
       const response = await axios.get(`http://localhost:3000/api/v1/students/${roleId}/applications`);
-      console.log(response.data);
+      const applicationIds = response.data;
+      if (!Array.isArray(applicationIds) || applicationIds.length === 0) {
+        console.log('No applications found for this student.');
+        setCombinedData([]); // Set an empty array if no applications are found
+        setLoading(false);
+        return; // Exit early since there's no data to process
+      }
+      const applicationDetails = await Promise.all(
+        applicationIds.map((applicationId) =>
+          axios.get(`http://localhost:3000/api/v1/students/applications/${applicationId}`)
+        )
+      );
+
+      const applicationData = applicationDetails.map((response) => response.data);
+
+      // Fetch the scholarship details for each application
+      const scholarshipDetails = await Promise.all(
+        applicationDetails.map((appResponse) => {
+          const scholarshipId = appResponse.data.scholarship_id;
+          return axios.get(`http://localhost:3000/api/v1/scholarships/${scholarshipId}`);
+        })
+      );
+
+      const scholarshipData = scholarshipDetails.map((scholarshipResponse) => scholarshipResponse.data);
+
+      // Combine the application data and scholarship data
+      const combinedData = applicationDetails.map((appResponse, index) => ({
+        application: appResponse.data,
+        scholarship: scholarshipData[index],
+      }));
+      setCombinedData(combinedData);
+
+
+      // console.log("Filtered accepted applications: ", combinedData.filter(item => item.scholarship.approval_status === "accept"));
+      // combinedData.forEach(item => {
+      //   console.log(item.scholarship.approval_status);  // Check if the value is 'accept'
+      // });
+
+
+      {/* i will chang this according to item.application.status */ }
+      setAcceptedApplications(combinedData.filter(item => item.application.status === "accept"));
+      setPendingApplications(combinedData.filter(item => item.application.status=== "pending"));
+      setRejectedApplications(combinedData.filter(item => item.application.status === "reject"));
+
+      // console.log(combinedData);
+      // console.log(acceptedApplications);
+
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchApplicatins();
   }, []);
@@ -137,20 +179,20 @@ function Applications() {
               <tbody>
                 {paginatedApplications.length ? (
                   paginatedApplications.map((item, index) => (
-                    <React.Fragment key={item._id}>
+                    <React.Fragment key={item.application._id}>
                       <tr onClick={() => handleExpandRow(index)}>
                         <th scope="row">{(currentPage - 1) * itemsPerPage + index + 1}</th>
-                        <td><img src={item.scholarship_picture} alt="Scholarship" style={{ width: '60px', height: '60px', borderRadius: '50%' }} loading="lazy" /></td>
-                        <td>{item.scholarsip_name}</td>
+                        <td><img src={item.scholarship.scholarship_picture} alt="Scholarship" style={{ width: '60px', height: '60px', borderRadius: '50%' }} loading="lazy" /></td>
+                        <td>{item.scholarship.scholarsip_name}</td>
                         <td className={`d-none d-md-table-cell`}>
-                          <span className={`status ${getStatusClass(item.approval_status)}`}>{item.approval_status}</span>
+                          <span className={`status ${getStatusClass(item.application.status)}`}>{item.application.status}</span>
                         </td>
                         <td className="action d-none d-md-table-cell">
                           <div>
                             <ul className="wishlist-menu">
                               <li>
                                 <div>
-                                  <Link to={`/scholarship-detail/${item._id}`} className="details-scholarship-link">
+                                  <Link to={`/scholarship-detail/${item.scholarship._id}`} className="details-scholarship-link">
                                     <button title="view details" className="mt-15px">
                                       <FontAwesomeIcon icon={faEye} />
                                     </button>
@@ -170,12 +212,14 @@ function Applications() {
                       {expandedRow === index && isSmallScreen && (
                         <tr className="expanded-row expanded-row-content">
                           <td colSpan="4" className="full-width-expanded ">
-                            <div className={`left ${getStatusClass(item.approval_status)}`}><strong>Status:</strong> {item.approval_status}</div>
+                            {/* i will chang this according to item.application.status */}
+
+                            <div className={`left ${getStatusClass(item.application.status)}`}><strong>Status:</strong> {item.scholarship.approval_status}</div>
                             <div className="dropdown d-md-none drop-down-buttons ">
                               <ul className=' expanded'>
                                 <div>
                                   <li>
-                                    <Link to={`/scholarship-detail/${item._id}`} className="details-scholarship-link">
+                                    <Link to={`/scholarship-detail/${item.scholarship._id}`} className="details-scholarship-link">
                                       <button title="view details" className="dropdown-item">
                                         <FontAwesomeIcon icon={faEye} className="px-1" />
                                         view details

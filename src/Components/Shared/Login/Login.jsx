@@ -9,6 +9,7 @@ import axios from 'axios';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Skeleton } from '@mui/material';
+import Navbar from '../Navbar/Navbar';
 
 export default function Login() {
     const [isLoading, setIsLoading] = useState(true);
@@ -147,9 +148,10 @@ export default function Login() {
                 theme="light"
                 transition={Bounce}
             />
-            <div className="logoContainer">
+            {/* <div className="logoContainer">
                 <a href="/"><img src="assets/img/logo.png" alt="logo" width="100px" /></a>
-            </div>
+            </div> */}
+            <Navbar/>
             <section className="loginContainer" style={{ backgroundColor: '#fff' }} >
                 {isLoading ? (
                     <Skeleton variant="rounded" width={500} height={500} />

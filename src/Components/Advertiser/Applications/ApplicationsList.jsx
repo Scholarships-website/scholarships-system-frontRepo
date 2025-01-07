@@ -30,30 +30,42 @@ const ApplicationsList = ({ advertiserId }) => {
   const fetchScholarships = async () => {
     setLoading(true);
     try {
-      const { data: scholarships } = await axios.get(`http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/accept`);
+      const response = await axios.get(`http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/accept`);
+      const scholarships = response.data;
+  
       const scholarshipsWithCounts = await Promise.all(
         scholarships.map(async (scholarship) => {
           try {
-            const { data: applications } = await axios.get(
-              `http://localhost:3000/api/v1/scholarships/${scholarship._id}/Applied-students`
+            const res = await axios.get(
+              `http://localhost:3000/api/v1/scholarships/${scholarship._id}/Applied-students`,
+              {
+                validateStatus: (status) => status === 200 || status === 404, // Handle 200 and 404 as valid statuses
+              }
             );
-            return { ...scholarship, applicationCount: applications.length }; // Attach application count
+  
+            // If status is 404, assume no applications and set applicationCount to 0
+            const applicationCount = res.status === 404 ? 0 : res.data.length;
+            return { ...scholarship, applicationCount };
           } catch (error) {
             console.error(`Error fetching applications for scholarship ${scholarship._id}:`, error);
-            return { ...scholarship, applicationCount: 0 }; // Default to 0 if an error occurs
+            return { ...scholarship, applicationCount: 0 }; // Fallback for other errors
           }
         })
       );
   
-      // Update the scholarships state with the fetched data
-      setScholarships(scholarshipsWithCounts);
+      // Filter out scholarships with 0 applications
+      const filteredScholarships = scholarshipsWithCounts.filter(
+        (scholarship) => scholarship.applicationCount > 0
+      );
+  
+      setScholarships(filteredScholarships);
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
   };
-
+  
   const handleScholarshipClick = (scholarshipId) => {
     navigate(`/advertiserDashboard/applications/${scholarshipId}`);
   };
@@ -133,8 +145,8 @@ const ApplicationsList = ({ advertiserId }) => {
                     <th scope="col" onClick={() => handleSort('scholarsip_name')} className="sortable-column">
                       Scholarship Name {renderSortIcon('scholarsip_name')}
                     </th>
-                    <th scope="col" style={{ textAlign: 'center' }} onClick={() => handleSort('sapplicationCount')} className="sortable-column">
-                    Number of Applications {renderSortIcon('sapplicationCount')}
+                    <th scope="col" style={{ textAlign: 'center' }} onClick={() => handleSort('applicationCount')} className="sortable-column">
+                    Number of Applications {renderSortIcon('applicationCount')}
                     </th>
                   </tr>
                 </thead>

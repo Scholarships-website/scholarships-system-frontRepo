@@ -82,7 +82,9 @@ export const addScholarship = Yup.object({
       .required('End Date is required')
       .typeError('Please enter a valid date')
       .min(Yup.ref('start_Date'), 'End Date cannot be before Start Date'),
-
+   deadline: Yup.date()
+      .required('Deadline is required')
+      .typeError('Please enter a valid date'),
    SelectionProcess: Yup.string()
       .required('Selection Process is required')
       .max(300, 'Selection Process should be at most 300 characters'),
@@ -157,7 +159,9 @@ export const editScholarship = Yup.object({
       .required('End Date is required')
       .typeError('Please enter a valid date')
       .min(Yup.ref('start_Date'), 'End Date cannot be before Start Date'),
-
+   deadline: Yup.date()
+      .required('Deadline is required')
+      .typeError('Please enter a valid date'),
    SelectionProcess: Yup.string()
       .required('Selection Process is required')
       .max(300, 'Selection Process should be at most 300 characters'),

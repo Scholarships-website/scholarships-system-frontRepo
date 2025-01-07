@@ -2,13 +2,15 @@ import React from "react";
 import { Card, Typography, Box, Link } from "@mui/material";
 
 const Attachments = ({ data }) => {
-    data = {
-        studentIdImage: "path/to/studentIdImage.pdf",
-        headOfHouseholdIdWithAnnex: "path/to/headOfHouseholdIdWithAnnex.pdf",
-        motherIdImage: "path/to/motherIdImage.pdf",
-        certificateForBrothers: "path/to/certificateForBrothers.pdf",
-        specialCasesReport: "path/to/specialCasesReport.pdf",
-    };
+    const { application } = data;
+    console.log(application)
+    // data = {
+    //     studentIdImage: "path/to/studentIdImage.pdf",
+    //     headOfHouseholdIdWithAnnex: "path/to/headOfHouseholdIdWithAnnex.pdf",
+    //     motherIdImage: "path/to/motherIdImage.pdf",
+    //     certificateForBrothers: "path/to/certificateForBrothers.pdf",
+    //     specialCasesReport: "path/to/specialCasesReport.pdf",
+    // };
 
     return (
         <Card elevation={3} sx={{ padding: 3, borderRadius: 2, maxWidth: 800, margin: "auto" }}>
@@ -18,7 +20,7 @@ const Attachments = ({ data }) => {
                     Student ID Image:
                 </Typography>
                 <Box mt={1}>
-                    <Link href={data.studentIdImage} target="_blank" rel="noopener" color="primary">
+                    <Link href={application.Student_ID_Image} target="_blank" rel="noopener" color="primary">
                         View/Download PDF
                     </Link>
                 </Box>
@@ -30,7 +32,7 @@ const Attachments = ({ data }) => {
                     Head of Household ID with Annex:
                 </Typography>
                 <Box mt={1}>
-                    <Link href={data.headOfHouseholdIdWithAnnex} target="_blank" rel="noopener" color="primary">
+                    <Link href={application.Head_of_Household_ID_Image} target="_blank" rel="noopener" color="primary">
                         View/Download PDF
                     </Link>
                 </Box>
@@ -42,35 +44,37 @@ const Attachments = ({ data }) => {
                     Mother ID Image:
                 </Typography>
                 <Box mt={1}>
-                    <Link href={data.motherIdImage} target="_blank" rel="noopener" color="primary">
+                    <Link href={application.Mother_ID_Image} target="_blank" rel="noopener" color="primary">
                         View/Download PDF
                     </Link>
                 </Box>
             </Box>
 
-            {/* Certificate for Brothers */}
-            <Box mb={2}>
-                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                    Certificate for Brothers:
-                </Typography>
-                <Box mt={1}>
-                    <Link href={data.certificateForBrothers} target="_blank" rel="noopener" color="primary">
-                        View/Download PDF
-                    </Link>
+            {application.Sibling_ID_Image && application.Sibling_ID_Image.length > 0 && (
+                <Box mb={2}>
+                    <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                        Certificate for Brothers:
+                    </Typography>
+                    <Box mt={1}>
+                        <Link href={application.Sibling_ID_Image} target="_blank" rel="noopener" color="primary">
+                            View/Download PDF
+                        </Link>
+                    </Box>
                 </Box>
-            </Box>
+            )}
 
-            {/* Special Cases Report */}
-            <Box mb={2}>
-                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                    Special Cases Report:
-                </Typography>
-                <Box mt={1}>
-                    <Link href={data.specialCasesReport} target="_blank" rel="noopener" color="primary">
-                        View/Download PDF
-                    </Link>
+            {application.Special_Cases_Report && application.Special_Cases_Report !== null && (
+                <Box mb={2}>
+                    <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                        Special Cases Report:
+                    </Typography>
+                    <Box mt={1}>
+                        <Link href={application.Special_Cases_Report} target="_blank" rel="noopener" color="primary">
+                            View/Download PDF
+                        </Link>
+                    </Box>
                 </Box>
-            </Box>
+            )}
         </Card>
     );
 };

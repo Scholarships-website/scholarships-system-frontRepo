@@ -6,6 +6,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import moment from 'moment';
 
 const sortByKey = (object, key) => {
   return key.split('.').reduce((o, k) => (o ? o[k] : null), object);
@@ -15,188 +16,188 @@ const StudentApplications = () => {
   const [scholarshipName, setScholarshipName] = useState(null);
   const [loadingDetails, setLoadingDetails] = useState(true);
   const [loading, setLoading] = useState(true);
-  const sampleData = [
-    {
-      _id: "1",
-      fullName: "John Smith",
-      dob: "2001-05-15",
-      major: "Computer Science",
-      GPA: 3.9,
-      submitDate: "2024-12-01",
-      status: "pending"
-    },
-    {
-      _id: "2",
-      fullName: "Sarah Johnson",
-      dob: "2002-08-20",
-      major: "Mechanical Engineering",
-      GPA: 3.7,
-      submitDate: "2024-12-02",
-      status: "accept"
-    },
-    {
-      _id: "3",
-      fullName: "Ahmed Ali",
-      dob: "2000-11-05",
-      major: "Business Administration",
-      GPA: 3.6,
-      submitDate: "2024-12-03",
-      status: "reject"
-    },
-    {
-      _id: "4",
-      fullName: "Maria Gonzalez",
-      dob: "2003-03-18",
-      major: "Biomedical Engineering",
-      GPA: 3.8,
-      submitDate: "2024-12-04",
-      status: "pending"
-    },
-    {
-      _id: "5",
-      fullName: "Kevin Zhang",
-      dob: "1999-07-10",
-      major: "Electrical Engineering",
-      GPA: 3.5,
-      submitDate: "2024-12-01",
-      status: "accepted"
-    },
-    {
-      _id: "6",
-      fullName: "Emily Davis",
-      dob: "2001-12-25",
-      major: "Data Science",
-      GPA: 4.0,
-      submitDate: "2024-12-02",
-      status: "pending"
-    },
-    {
-      _id: "7",
-      fullName: "Omar Hassan",
-      dob: "2002-09-09",
-      major: "Civil Engineering",
-      GPA: 3.4,
-      submitDate: "2024-12-03",
-      status: "reject"
-    },
-    {
-      _id: "8",
-      fullName: "Anna Ivanova",
-      dob: "2000-02-14",
-      major: "Environmental Science",
-      GPA: 3.9,
-      submitDate: "2024-12-04",
-      status: "pending"
-    },
-    {
-      _id: "9",
-      fullName: "Hiroshi Tanaka",
-      dob: "1998-11-23",
-      major: "Software Engineering",
-      GPA: 3.8,
-      submitDate: "2024-12-05",
-      status: "accept"
-    },
-    {
-      _id: "10",
-      fullName: "Fatima Rahman",
-      dob: "2001-06-30",
-      major: "Biotechnology",
-      GPA: 3.7,
-      submitDate: "2024-12-06",
-      status: "pending"
-    },
-    {
-      _id: "11",
-      fullName: "Michael Brown",
-      dob: "2000-01-10",
-      major: "Finance",
-      GPA: 3.5,
-      submitDate: "2024-12-07",
-      status: "reject"
-    },
-    {
-      _id: "12",
-      fullName: "Sophia Patel",
-      dob: "2003-04-18",
-      major: "Chemistry",
-      GPA: 3.9,
-      submitDate: "2024-12-08",
-      status: "pending"
-    },
-    {
-      _id: "13",
-      fullName: "Diego Morales",
-      dob: "1997-08-05",
-      major: "Civil Engineering",
-      GPA: 3.6,
-      submitDate: "2024-12-09",
-      status: "accepted"
-    },
-    {
-      _id: "14",
-      fullName: "Laura Adams",
-      dob: "2002-10-12",
-      major: "Political Science",
-      GPA: 3.8,
-      submitDate: "2024-12-10",
-      status: "pending"
-    },
-    {
-      _id: "15",
-      fullName: "Ali Khan",
-      dob: "1999-02-02",
-      major: "Architecture",
-      GPA: 3.7,
-      submitDate: "2024-12-11",
-      status: "reject"
-    },
-    {
-      _id: "16",
-      fullName: "Chloe Martinez",
-      dob: "2001-03-27",
-      major: "Mathematics",
-      GPA: 4.0,
-      submitDate: "2024-12-12",
-      status: "accept"
-    },
-    {
-      _id: "17",
-      fullName: "William Carter",
-      dob: "2000-07-21",
-      major: "Physics",
-      GPA: 3.5,
-      submitDate: "2024-12-13",
-      status: "pending"
-    },
-    {
-      _id: "18",
-      fullName: "Amara Okafor",
-      dob: "2002-05-30",
-      major: "Environmental Science",
-      GPA: 3.6,
-      submitDate: "2024-12-14",
-      status: "pending"
-    },
-    {
-      _id: "19",
-      fullName: "Yuki Nakamura",
-      dob: "2000-12-01",
-      major: "Computer Engineering",
-      GPA: 3.8,
-      submitDate: "2024-12-15",
-      status: "accept"
-    },
-    {
-      _id: "20",
-      fullName: "Emma Watson",
-      dob: "2003-09-15",
-      major: "Medicine",
-      GPA: 3.9,
-      submitDate: "2024-12-16",
-      status: "pending"
-    }
-  ];
+  // const sampleData = [
+  //   {
+  //     _id: "1",
+  //     fullName: "John Smith",
+  //     dob: "2001-05-15",
+  //     major: "Computer Science",
+  //     GPA: 3.9,
+  //     submitDate: "2024-12-01",
+  //     status: "pending"
+  //   },
+  //   {
+  //     _id: "2",
+  //     fullName: "Sarah Johnson",
+  //     dob: "2002-08-20",
+  //     major: "Mechanical Engineering",
+  //     GPA: 3.7,
+  //     submitDate: "2024-12-02",
+  //     status: "accept"
+  //   },
+  //   {
+  //     _id: "3",
+  //     fullName: "Ahmed Ali",
+  //     dob: "2000-11-05",
+  //     major: "Business Administration",
+  //     GPA: 3.6,
+  //     submitDate: "2024-12-03",
+  //     status: "reject"
+  //   },
+  //   {
+  //     _id: "4",
+  //     fullName: "Maria Gonzalez",
+  //     dob: "2003-03-18",
+  //     major: "Biomedical Engineering",
+  //     GPA: 3.8,
+  //     submitDate: "2024-12-04",
+  //     status: "pending"
+  //   },
+  //   {
+  //     _id: "5",
+  //     fullName: "Kevin Zhang",
+  //     dob: "1999-07-10",
+  //     major: "Electrical Engineering",
+  //     GPA: 3.5,
+  //     submitDate: "2024-12-01",
+  //     status: "accepted"
+  //   },
+  //   {
+  //     _id: "6",
+  //     fullName: "Emily Davis",
+  //     dob: "2001-12-25",
+  //     major: "Data Science",
+  //     GPA: 4.0,
+  //     submitDate: "2024-12-02",
+  //     status: "pending"
+  //   },
+  //   {
+  //     _id: "7",
+  //     fullName: "Omar Hassan",
+  //     dob: "2002-09-09",
+  //     major: "Civil Engineering",
+  //     GPA: 3.4,
+  //     submitDate: "2024-12-03",
+  //     status: "reject"
+  //   },
+  //   {
+  //     _id: "8",
+  //     fullName: "Anna Ivanova",
+  //     dob: "2000-02-14",
+  //     major: "Environmental Science",
+  //     GPA: 3.9,
+  //     submitDate: "2024-12-04",
+  //     status: "pending"
+  //   },
+  //   {
+  //     _id: "9",
+  //     fullName: "Hiroshi Tanaka",
+  //     dob: "1998-11-23",
+  //     major: "Software Engineering",
+  //     GPA: 3.8,
+  //     submitDate: "2024-12-05",
+  //     status: "accept"
+  //   },
+  //   {
+  //     _id: "10",
+  //     fullName: "Fatima Rahman",
+  //     dob: "2001-06-30",
+  //     major: "Biotechnology",
+  //     GPA: 3.7,
+  //     submitDate: "2024-12-06",
+  //     status: "pending"
+  //   },
+  //   {
+  //     _id: "11",
+  //     fullName: "Michael Brown",
+  //     dob: "2000-01-10",
+  //     major: "Finance",
+  //     GPA: 3.5,
+  //     submitDate: "2024-12-07",
+  //     status: "reject"
+  //   },
+  //   {
+  //     _id: "12",
+  //     fullName: "Sophia Patel",
+  //     dob: "2003-04-18",
+  //     major: "Chemistry",
+  //     GPA: 3.9,
+  //     submitDate: "2024-12-08",
+  //     status: "pending"
+  //   },
+  //   {
+  //     _id: "13",
+  //     fullName: "Diego Morales",
+  //     dob: "1997-08-05",
+  //     major: "Civil Engineering",
+  //     GPA: 3.6,
+  //     submitDate: "2024-12-09",
+  //     status: "accepted"
+  //   },
+  //   {
+  //     _id: "14",
+  //     fullName: "Laura Adams",
+  //     dob: "2002-10-12",
+  //     major: "Political Science",
+  //     GPA: 3.8,
+  //     submitDate: "2024-12-10",
+  //     status: "pending"
+  //   },
+  //   {
+  //     _id: "15",
+  //     fullName: "Ali Khan",
+  //     dob: "1999-02-02",
+  //     major: "Architecture",
+  //     GPA: 3.7,
+  //     submitDate: "2024-12-11",
+  //     status: "reject"
+  //   },
+  //   {
+  //     _id: "16",
+  //     fullName: "Chloe Martinez",
+  //     dob: "2001-03-27",
+  //     major: "Mathematics",
+  //     GPA: 4.0,
+  //     submitDate: "2024-12-12",
+  //     status: "accept"
+  //   },
+  //   {
+  //     _id: "17",
+  //     fullName: "William Carter",
+  //     dob: "2000-07-21",
+  //     major: "Physics",
+  //     GPA: 3.5,
+  //     submitDate: "2024-12-13",
+  //     status: "pending"
+  //   },
+  //   {
+  //     _id: "18",
+  //     fullName: "Amara Okafor",
+  //     dob: "2002-05-30",
+  //     major: "Environmental Science",
+  //     GPA: 3.6,
+  //     submitDate: "2024-12-14",
+  //     status: "pending"
+  //   },
+  //   {
+  //     _id: "19",
+  //     fullName: "Yuki Nakamura",
+  //     dob: "2000-12-01",
+  //     major: "Computer Engineering",
+  //     GPA: 3.8,
+  //     submitDate: "2024-12-15",
+  //     status: "accept"
+  //   },
+  //   {
+  //     _id: "20",
+  //     fullName: "Emma Watson",
+  //     dob: "2003-09-15",
+  //     major: "Medicine",
+  //     GPA: 3.9,
+  //     submitDate: "2024-12-16",
+  //     status: "pending"
+  //   }
+  // ];
   const itemsPerPage = 5;
   const [sortConfig, setSortConfig] = useState({ key: '', direction: 'ascending' });
   const [currentPage, setCurrentPage] = useState(1);
@@ -208,6 +209,9 @@ const StudentApplications = () => {
   const [pendingApplications, setPendingApplications] = useState([]);
   const [rejectedApplications, setRejectedApplications] = useState([]);
   const [numberOfSeats, setNumberOfSeats] = useState();
+  const [studentData, setStudent] = useState(null);
+  const [combinedData, setCombinedData] = useState([]); // New state for combined data
+
   const viewDetails = async (id) => {
     setLoadingDetails(true);
     try {
@@ -221,23 +225,41 @@ const StudentApplications = () => {
     }
   };
   const fetchApplications = async (id) => {
-    setLoading(true);
     try {
-      // const { data } = await axios.get(`http://localhost:3000/api/v1/scholarships/${id}/Applied-students`);
-      // setAcceptedApplications(data.filter(app => app.status === 'accept'));
-      // setPendingApplications(data.filter(app => app.status === 'pending'));
-      // setRejectedApplications(data.filter(app => app.status === 'reject'));
-      // console.log(data);
-      setAcceptedApplications(sampleData.filter(app => app.status === 'accept'));
-      setPendingApplications(sampleData.filter(app => app.status === 'pending'));
-      setRejectedApplications(sampleData.filter(app => app.status === 'reject'));
-      console.log
-    }
-    catch (error) {
-      console.log('Error fetching applications:', error);
-      setAcceptedApplications(sampleData.filter(app => app.status === 'accept'));
-      setPendingApplications(sampleData.filter(app => app.status === 'pending'));
-      setRejectedApplications(sampleData.filter(app => app.status === 'reject'));
+      setLoading(true);
+    
+      // First API call to get all applied students for a scholarship
+      const response = await axios.get(`http://localhost:3000/api/v1/scholarships/${id}/Applied-students`);
+      const appliedStudents = response.data;
+    
+      // Fetch the student details for each applied student
+      const studentDetails = await Promise.all(
+        appliedStudents.map((student) =>
+          axios.get(`http://localhost:3000/api/v1/getStudentDataFromId/${student.student_id}`)
+        )
+      );
+    
+      // Extract the student data from the responses
+      const studentData = studentDetails.map((response) => response.data);
+    
+      // Combine the applied students data with their respective student details
+      const combinedData = appliedStudents.map((application, index) => ({
+        application,
+        student: studentData[index],
+      }));
+    
+      // Set the combined data in the state
+      setCombinedData(combinedData);
+    
+      // Filter applications by status
+      setAcceptedApplications(combinedData.filter((item) => item.application.status === "accept"));
+      setPendingApplications(combinedData.filter((item) => item.application.status === "pending"));
+      setRejectedApplications(combinedData.filter((item) => item.application.status === "reject"));
+    
+      console.log("Combined Data:", combinedData);
+      console.log("Accepted Applications:", acceptedApplications);
+    } catch (error) {
+      console.error("Error fetching applications and student data:", error);
     } finally {
       setLoading(false);
     }
@@ -357,7 +379,7 @@ const StudentApplications = () => {
                 <tr className="bg-transparent">
                   <th scope="col">#</th>
                   <th scope="col">Applicant's Name</th>
-                  <th scope="col" className="d-none d-md-table-cell">Major / Field of Study</th>
+                  <th scope="col" className="d-none d-md-table-cell">Major / Stream</th>
                   <th scope="col">GPA</th>
                   <th scope="col" className="d-none d-md-table-cell" >Application Date</th>
                   <th scope="col" className="d-none d-md-table-cell">Status</th>
@@ -370,19 +392,19 @@ const StudentApplications = () => {
                     <React.Fragment key={item._id}>
                       <tr onClick={() => handleExpandRow(index)}>
                         <th scope="row">{(currentPage - 1) * itemsPerPage + index + 1}</th>
-                        <td>{item.fullName}</td>
-                        <td className={`d-none d-md-table-cell`}>{item.major}</td>
-                        <td>{item.GPA}</td>
-                        <td className={`d-none d-md-table-cell`}>{item.submitDate}</td>
+                        <td>{item.student.fullname}</td>
+                        <td className={`d-none d-md-table-cell`}>{item.application.major ||item.application.stream } </td>
+                        <td>{item.application.GPA}</td>
+                        <td className={`d-none d-md-table-cell`}>{moment(item.application.submitDate).format('YYYY-MM-DD HH:mm')}</td>
                         <td className={`d-none d-md-table-cell`}>
-                          <span className={`status ${getStatusClass(item.status)}`}>{item.status}</span>
+                          <span className={`status ${getStatusClass(item.application.status)}`}>{item.application.status}</span>
                         </td>
                         <td className="action d-none d-md-table-cell">
                           <div className='eyeIcon'>
                             <ul className="wishlist-menu">
                               <li>
                                 <div>
-                                  <Link to={`/advertiserDashboard/applications/${id}/details/${item._id}`} className="details-scholarship-link">
+                                  <Link to={`/advertiserDashboard/applications/${id}/details/${item.application._id}`} className="details-scholarship-link">
                                     <button title="view the application">
                                       <FontAwesomeIcon icon={faEye} />
                                     </button>

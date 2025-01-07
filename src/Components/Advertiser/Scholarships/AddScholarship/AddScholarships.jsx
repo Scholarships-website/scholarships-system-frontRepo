@@ -22,6 +22,7 @@ function AddScholarshipForm() {
       brief_descrition: '',
       start_Date: '',
       End_Date: '',
+      deadline: '',
       SelectionProcess: '',
       type: '',
       language_Of_Study: '',
@@ -33,6 +34,7 @@ function AddScholarshipForm() {
       key_personnel_details: '',
       number_of_seats_available: '',
       scholarship_picture: null,
+      currency: 'USD',
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -55,8 +57,13 @@ function AddScholarshipForm() {
         try {
           setLoading(true);
           const uploadData = new FormData();
+          const combinedExpenses = `${values.expenses_coverd} ${values.currency}`;
+          uploadData.append('expenses_coverd', combinedExpenses);
+
           for (const key in values) {
-            uploadData.append(key, values[key]);
+            if (key !== 'currency' && key !== 'expenses_coverd') {
+              uploadData.append(key, values[key]);
+            }
           }
 
           const response = await axios.post(
@@ -139,6 +146,7 @@ function AddScholarshipForm() {
     key_personnel_details: 'Key Personnel Details',
     number_of_seats_available: 'Number of Seats Available',
     scholarship_picture: 'Upload Scholarship Image',
+    deadline: 'Deadline of the Application',
   };
   return (
     <div className="container mt-5">
@@ -147,12 +155,28 @@ function AddScholarshipForm() {
       <form onSubmit={formik.handleSubmit} className="row justify-content-center align-items-center w-75 pt-5 gap-3 addForm" style={{ margin: 'auto' }}>
         {/* Render form fields dynamically */}
         {Object.keys(formik.values).map((key) => {
+          const currencySymbols = {
+            USD: '$',
+            EUR: '€',
+            GBP: '£',
+            INR: '₹',
+            JPY: '¥',
+            AUD: 'A$',
+            CAD: 'C$',
+            MXN: 'MX$',
+            CNY: '¥',
+            BRL: 'R$',
+            ZAR: 'R',
+            // يمكنك إضافة المزيد من العملات هنا
+          };
           if (key === 'scholarship_picture') {
             return (
               <div className="col-md-5" key={key}>
-                <label htmlFor={key} className="form-label">
-                  {customLabels[key]}
-                </label>
+                {key !== 'currency' && (
+                  <label htmlFor={key} className="form-label">
+                    {customLabels[key] || key.replace(/_/g, ' ')}
+                  </label>
+                )}
                 <input
                   type="file"
                   className={`form-control ${formik.touched[key] && formik.errors[key] ? 'is-invalid' : ''}`}
@@ -170,21 +194,57 @@ function AddScholarshipForm() {
 
           return (
             <div className="col-md-5" key={key}>
-              <label htmlFor={key} className="form-label">
-                {customLabels[key] || key.replace(/_/g, ' ')}
-              </label>
-              <input
-                type={key.includes('Date')
-                  ? 'date'
-                  : key.includes('number') || key.includes('expenses')
-                    ? 'number'
-                    : 'text'} className={`form-control ${formik.touched[key] && formik.errors[key] ? 'is-invalid' : ''}`}
-                id={key}
-                name={key}
-                value={formik.values[key]}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
+              {key !== 'currency' && (
+                  <label htmlFor={key} className="form-label">
+                    {customLabels[key] || key.replace(/_/g, ' ')}
+                  </label>
+                )}
+              {key === 'expenses_coverd' ? (
+                <div className="d-flex align-items-center">
+                  <input
+                    type="number"
+                    className={`form-control ${formik.touched[key] && formik.errors[key] ? 'is-invalid' : ''}`}
+                    id={key}
+                    name={key}
+                    value={formik.values[key]}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    placeholder="Amount"
+                  />
+                  <select
+                    name="currency"
+                    className="form-select ms-2"
+                    id="currency"
+                    value={formik.values.currency || 'USD'}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  >
+                    {['USD', 'EUR', 'GBP', 'INR', 'JPY', 'AUD', 'CAD', 'MXN', 'CNY'].map((currency) => (
+                      <option key={currency} value={currency}>
+                        {currency} ({currencySymbols[currency]})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : key.includes('currency') ? (
+                // Do not render any input for currency
+                <></>
+              ) : (
+                <input
+                  type={key.includes('Date') || key.includes('deadline')
+                    ? 'date'
+                    : key.includes('number') || key.includes('expenses')
+                      ? 'number'
+                      : 'text'}
+                  className={`form-control ${formik.touched[key] && formik.errors[key] ? 'is-invalid' : ''}`}
+                  id={key}
+                  name={key}
+                  value={formik.values[key]}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+              )}
+
               {formik.touched[key] && formik.errors[key] && (
                 <div className="text-danger">{formik.errors[key]}</div>
               )}

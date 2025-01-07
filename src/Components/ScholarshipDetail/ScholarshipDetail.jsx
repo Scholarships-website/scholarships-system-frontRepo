@@ -14,6 +14,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ScholarshipFeedback from './ScholarshipFeedback';
+import moment from 'moment';
 
 const ScholarshipDetail = () => {
   const { id } = useParams();
@@ -128,7 +129,7 @@ const ScholarshipDetail = () => {
             </div>
           </div>
           <div className="secondary-info">
-            {renderField("Expenses Covered", `$${scholarship?.expenses_coverd}`)}
+            {renderField("Expenses Covered", `${scholarship?.expenses_coverd}`)}
             {renderField("Number of Seats Available", scholarship?.number_of_seats_available)}
             {renderField("Key Personnel", scholarship?.key_personnel_details)}
             {renderField("Terms and Conditions", scholarship?.term_and_conditions)}
@@ -139,6 +140,7 @@ const ScholarshipDetail = () => {
             {renderField("Start Date", new Date(scholarship?.start_Date).toLocaleDateString())}
             {renderField("End Date", new Date(scholarship?.End_Date).toLocaleDateString())}
             {renderField("Submission Date", new Date(scholarship?.submission_date).toLocaleDateString())}
+            {renderField("Deadline", moment(scholarship?.deadline).format('YYYY-MM-DD'))}
 
             {loading ? (
               <Skeleton width="30%" height={40} />

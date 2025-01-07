@@ -289,9 +289,10 @@ function PendingScholarships() {
                                               <Typography><strong>Place of Study:</strong> {scholarshipDetails.Place_of_Study}</Typography>
                                               <Typography><strong>Start Date:</strong>{moment.utc(scholarshipDetails.start_Date).format('YYYY-MM-DD')}</Typography>
                                               <Typography><strong>End Date:</strong>{moment.utc(scholarshipDetails.End_Date).format('YYYY-MM-DD')}</Typography>
-                                              <Typography><strong>Submission Deadline:</strong>{moment.utc(scholarshipDetails.submission_date).format('YYYY-MM-DD')}</Typography>
+                                              <Typography><strong>Deadline:</strong>{moment.utc(scholarshipDetails.deadline).format('YYYY-MM-DD')} </Typography>
+                                              <Typography><strong>Submission Date:</strong>{moment.utc(scholarshipDetails.submission_date).format('YYYY-MM-DD')}</Typography>
                                               <Typography><strong>Number of Seats Available:</strong> {scholarshipDetails.number_of_seats_available}</Typography>
-                                              <Typography><strong>Expenses Covered:</strong> ${scholarshipDetails.expenses_coverd}</Typography>
+                                              <Typography><strong>Expenses Covered:</strong> {scholarshipDetails.expenses_coverd}</Typography>
                                               <Typography><strong>Terms and Conditions:</strong> {scholarshipDetails.term_and_conditions}</Typography>
                                               <Typography><strong>Key Personnel Details:</strong> {scholarshipDetails.key_personnel_details}</Typography>
                                               <Typography><strong>Approval Status:</strong> {scholarshipDetails.approval_status}</Typography>
@@ -308,7 +309,7 @@ function PendingScholarships() {
                                     <FontAwesomeIcon icon={faPenToSquare} className='px-1' />Edit
                                   </Link>
                                 </li>
-                                {/* <li className="d-flex justify-content-center align-items-center">
+                                <li className="d-flex justify-content-center align-items-center">
                                   <button
                                     className="dropdown-item text-danger"
                                     onClick={() => deleteScholarship(scholarship._id)}
@@ -316,7 +317,7 @@ function PendingScholarships() {
                                     <FontAwesomeIcon icon={faUserXmark} className="px-1" />
                                     Delete
                                   </button>
-                                </li> */}
+                                </li>
                               </ul>
                             </div>
                           </td>
@@ -379,14 +380,14 @@ function PendingScholarships() {
                                                 <Typography><strong>Place of Study:</strong> {scholarshipDetails.Place_of_Study}</Typography>
                                                 <Typography><strong>Start Date:</strong>{moment.utc(scholarshipDetails.start_Date).format('YYYY-MM-DD')}</Typography>
                                                 <Typography><strong>End Date:</strong>{moment.utc(scholarshipDetails.End_Date).format('YYYY-MM-DD')}</Typography>
-                                                <Typography><strong>Submission Deadline:</strong>{moment.utc(scholarshipDetails.submission_date).format('YYYY-MM-DD')}</Typography>
+                                                <Typography><strong>Deadline:</strong>{moment.utc(scholarshipDetails.deadline).format('YYYY-MM-DD')} </Typography>
+                                                <Typography><strong>Submission Date:</strong>{moment.utc(scholarshipDetails.submission_date).format('YYYY-MM-DD')}</Typography>
                                                 <Typography><strong>Number of Seats Available:</strong> {scholarshipDetails.number_of_seats_available}</Typography>
-                                                <Typography><strong>Expenses Covered:</strong> ${scholarshipDetails.expenses_coverd}</Typography>
+                                                <Typography><strong>Expenses Covered:</strong> {scholarshipDetails.expenses_coverd}</Typography>
                                                 <Typography><strong>Terms and Conditions:</strong> {scholarshipDetails.term_and_conditions}</Typography>
                                                 <Typography><strong>Key Personnel Details:</strong> {scholarshipDetails.key_personnel_details}</Typography>
                                                 <Typography><strong>Approval Status:</strong> {scholarshipDetails.approval_status}</Typography>
                                                 <Typography><strong>Website:</strong> <a href={scholarshipDetails.website_link} target="_blank" rel="noopener noreferrer">{scholarshipDetails.website_link}</a></Typography>
-                                                <Typography><strong>Application Form:</strong> <a href={scholarshipDetails.form_Link} target="_blank" rel="noopener noreferrer">{scholarshipDetails.form_Link}</a></Typography>
                                               </Box>
                                             )
                                           )}

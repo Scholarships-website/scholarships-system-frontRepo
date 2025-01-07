@@ -65,7 +65,7 @@ const NewestScholarships = () => {
                   <h3>{scholarship.scholarsip_name}</h3>
                   <p className="scholarship-deadline">
                     <strong>Deadline:</strong>{' '}
-                    {moment.utc(scholarship.End_Date).format('YYYY-MM-DD')}
+                    {moment.utc(scholarship.deadline).format('YYYY-MM-DD')}
                   </p>
                   <p className="scholarship-description">{scholarship.brief_descrition}</p>
                   <Link to={`/scholarship-detail/${scholarship._id}`} className="apply-btn">View Details</Link>

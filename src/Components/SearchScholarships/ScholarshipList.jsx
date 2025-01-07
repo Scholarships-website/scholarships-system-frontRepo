@@ -28,9 +28,9 @@ const ScholarshipList = ({ scholarships, loading }) => {
       setWishlist(data);
       console.log("wishlist:", data);
     } catch (error) {
-      if (error.response && error.response.status === 404) {
-        console.log("No scholarships in wishlist");
-        setWishlist([]);
+      if (error.response && error.response.status === 500) {
+        console.log("No scholarships in wishlist or server error");
+        setWishlist([]); // Set empty array for display
       } else {
         console.error("Error fetching wishlist:", error);
         setError("Failed to fetch wishlist. Please try again later.");
