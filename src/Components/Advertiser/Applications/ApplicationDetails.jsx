@@ -95,33 +95,35 @@ const ApplicationDetails = () => {
     <PageContainer
       breadcrumbs={<Typography>Dashboard / Scholarships / Applications / Application Details</Typography>}
       actions={
-        <Box>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#4CAF50",
-              "&:hover": {
-                backgroundColor: "#45a049",
-              },
-              marginRight: 2,
-            }}
-            onClick={() => handleStatusUpdate("accept")}
-          >
-            Accept
-          </Button>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#F44336",
-              "&:hover": {
-                backgroundColor: "#e53935",
-              },
-            }}
-            onClick={() => handleStatusUpdate("reject")}
-          >
-            Reject
-          </Button>
-        </Box>
+        application && application.status === "pending" && (
+          <Box>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#4CAF50",
+                "&:hover": {
+                  backgroundColor: "#45a049",
+                },
+                marginRight: 2,
+              }}
+              onClick={() => handleStatusUpdate("accept")}
+            >
+              Accept
+            </Button>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#F44336",
+                "&:hover": {
+                  backgroundColor: "#e53935",
+                },
+              }}
+              onClick={() => handleStatusUpdate("reject")}
+            >
+              Reject
+            </Button>
+          </Box>
+        )
       }
     >
       <Box sx={{ width: "100%", mt: 4 }}>

@@ -1,20 +1,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
-
 .hero-section {
-    background: linear-gradient(to right, #1e3521, #418447, #2e5933);
-    color: white;
-    padding: 100px 20px;
-    text-align: center;
-}
-
-.hero-content {
+    position: relative;
+    min-height: 90vh;
+    width: 100%;
+  }
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url(../../../assets/img/cap.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(8px); 
+    z-index: -1; 
+    box-shadow: none;
+  }
+  
+  .hero-content {
+    position: relative; 
+    z-index: 1; 
+    padding: 20px; 
+    color: white; 
     text-align: center;
     max-width: 696px;
     margin-left: auto;
     margin-right: auto;
-}
+  }
+
+
 
 .hero-section h1 {
     font-size: 48px;

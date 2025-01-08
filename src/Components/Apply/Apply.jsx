@@ -12,6 +12,8 @@ import Navbar from "../Shared/Navbar/Navbar";
 import "./Apply.css";
 import { UserContext } from "../../Context/UserContext";
 import axios from "axios";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const Apply = () => {
   const { scholarship_id } = useParams();
@@ -19,9 +21,9 @@ const Apply = () => {
   const { userToken } = useContext(UserContext);
   const [formData, setFormData] = useState({
     generalInfo: {
-      fullname:"",
-      birthdate:"",
-      Gender:"",
+      fullname: "",
+      birthdate: "",
+      Gender: "",
       ID_Number: "",
       Card_Type: "",
       Martial_Status: "",
@@ -89,6 +91,88 @@ const Apply = () => {
     }));
   };
 
+  const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, steps.length));
+  const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
+
+  const handleSubmit = async () => {
+    // Display confirmation dialog using Swal
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You are about to submit your application. Do you want to proceed?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, submit!',
+      cancelButtonText: 'Cancel',
+      reverseButtons: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const formDataToSubmit = new FormData();
+
+        // Append fields from generalInfo
+        Object.entries(formData.generalInfo).forEach(([key, value]) => {
+          formDataToSubmit.append(key, value);
+        });
+
+        // Append fields from familyInfo
+        Object.entries(formData.familyInfo).forEach(([key, value]) => {
+          formDataToSubmit.append(key, value);
+        });
+
+        // Append fields from educationalData
+        Object.entries(formData.educationalData).forEach(([key, value]) => {
+          formDataToSubmit.append(key, value);
+        });
+
+        // Append fields from healthStatus
+        Object.entries(formData.healthStatus).forEach(([key, value]) => {
+          formDataToSubmit.append(key, value);
+        });
+
+        // Append fields from identifiers
+        Object.entries(formData.identifiers).forEach(([key, value]) => {
+          formDataToSubmit.append(key, value);
+        });
+
+        // Append files from pdffiles
+        Object.entries(formData.pdffiles).forEach(([key, file]) => {
+          formDataToSubmit.append(key, file);
+        });
+
+        try {
+          // Send the form data using axios
+          const response = await axios.post(
+            `http://localhost:3000/api/v1/scholarships/${scholarship_id}/apply`,
+            formDataToSubmit,
+            {
+              headers: {
+                Authorization: `Bearer ${userToken}`,
+                'Content-Type': 'multipart/form-data',
+              },
+            }
+          );
+
+          console.log(response.data);
+          toast.success("Application submitted successfully!");  // Success toast
+        } catch (error) {
+          if (error.response) {
+            console.error("Error response from server:", error.response.data);
+            toast.error("Failed to submit application: " + (error.response.data));  // Error toast
+          } else if (error.request) {
+            console.error("No response received:", error.request);
+            toast.error("Failed to submit application: No response from server.");
+          } else {
+            // Other errors
+            console.error("Error setting up request:", error.message);
+            toast.error("Failed to submit application: " + error.message);
+          }
+        }
+      } else {
+        // If user cancels the submission
+        toast.info("Application submission canceled.");
+      }
+    });
+  };
+
   const steps = [
     {
       id: 1,
@@ -98,6 +182,10 @@ const Apply = () => {
           formData={formData.generalInfo}
           setFormData={setFormData}
           saveStepData={saveStepData}
+          nextStep={nextStep}
+          currentStep={currentStep}
+          totalSteps={6}
+          prevStep={prevStep}
         />
       ),
     },
@@ -109,6 +197,10 @@ const Apply = () => {
           formData={formData.familyInfo}
           setFormData={setFormData}
           saveStepData={saveStepData}
+          nextStep={nextStep}
+          currentStep={currentStep}
+          totalSteps={6}
+          prevStep={prevStep}
         />
       ),
     },
@@ -120,6 +212,10 @@ const Apply = () => {
           formData={formData.educationalData}
           setFormData={setFormData}
           saveStepData={saveStepData}
+          nextStep={nextStep}
+          currentStep={currentStep}
+          totalSteps={6}
+          prevStep={prevStep}
         />
       ),
     },
@@ -131,6 +227,10 @@ const Apply = () => {
           formData={formData.healthStatus}
           setFormData={setFormData}
           saveStepData={saveStepData}
+          nextStep={nextStep}
+          currentStep={currentStep}
+          totalSteps={6}
+          prevStep={prevStep}
         />
       ),
     },
@@ -142,6 +242,10 @@ const Apply = () => {
           formData={formData.identifiers}
           setFormData={setFormData}
           saveStepData={saveStepData}
+          nextStep={nextStep}
+          currentStep={currentStep}
+          totalSteps={6}
+          prevStep={prevStep}
         />
       ),
     },
@@ -153,79 +257,19 @@ const Apply = () => {
           formData={formData.pdffiles}
           setFormData={setFormData}
           saveStepData={saveStepData}
+          nextStep={nextStep}
+          currentStep={currentStep}
+          totalSteps={6}
+          prevStep={prevStep}
+          onSubmit={handleSubmit}
         />
       ),
     },
   ];
 
-  const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, steps.length));
-  const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
 
-  const handleSubmit = async () => {
-    const formDataToSubmit = new FormData();
 
-    // Append structured data for all steps
-     // Append fields from generalInfo
-  Object.entries(formData.generalInfo).forEach(([key, value]) => {
-    formDataToSubmit.append(key, value);
-  });
 
-  // Append fields from familyInfo
-  Object.entries(formData.familyInfo).forEach(([key, value]) => {
-    formDataToSubmit.append(key, value);
-  });
-
-  // Append fields from educationalData
-  Object.entries(formData.educationalData).forEach(([key, value]) => {
-    formDataToSubmit.append(key, value);
-  });
-
-  // Append fields from healthStatus
-  Object.entries(formData.healthStatus).forEach(([key, value]) => {
-    formDataToSubmit.append(key, value);
-  });
-
-  // Append fields from identifiers
-  Object.entries(formData.identifiers).forEach(([key, value]) => {
-    formDataToSubmit.append(key, value);
-  });
-
-  // Append files from pdffiles
-  Object.entries(formData.pdffiles).forEach(([key, file]) => {
-      formDataToSubmit.append(key, file);
-  });
-
-  try {
-    const response = await axios.post(
-      `http://localhost:3000/api/v1/scholarships/${scholarship_id}/apply`,
-      formDataToSubmit,
-      {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-          'Content-Type': 'multipart/form-data', 
-        },
-      }
-    );
-  
-    // Axios automatically throws an error for HTTP status codes >= 400
-    console.log(response.data); // Log the response data
-    alert("Application submitted successfully!");
-  } catch (error) {
-    // Axios error handling
-    if (error.response) {
-      // The server responded with a status code outside the 2xx range
-      console.error("Error response from server:", error.response.data);
-      alert("Failed to submit application: " + (error.response.data.message || error.message));
-    } else if (error.request) {
-      // No response was received from the server
-      console.error("No response received:", error.request);
-      alert("Failed to submit application: No response from server.");
-    } else {
-      // Other errors
-      console.error("Error setting up request:", error.message);
-      alert("Failed to submit application: " + error.message);
-    }
-  }}
   return (
     <>
       <Navbar />
@@ -238,16 +282,7 @@ const Apply = () => {
           currentStep={currentStep}
           steps={steps}
         />
-
         <div className="step-content">{steps[currentStep - 1].component}</div>
-
-        <StepNavigation
-          currentStep={currentStep}
-          totalSteps={steps.length}
-          nextStep={nextStep}
-          prevStep={prevStep}
-          onSubmit={handleSubmit}
-        />
       </div>
     </>
   );

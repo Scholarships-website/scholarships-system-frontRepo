@@ -3,8 +3,9 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { UserContext } from "../../Context/UserContext";
 import moment from "moment/moment";
+import PropTypes from "prop-types";
 
-const GeneralInfo = ({ formData, setFormData, saveStepData }) => {
+const GeneralInfo = ({ currentStep, totalSteps, prevStep,formData, setFormData, saveStepData, nextStep }) => {
     const { studentData, userData } = useContext(UserContext);
     const [formValues, setFormValues] = useState({
         fullname: "",
@@ -28,11 +29,6 @@ const GeneralInfo = ({ formData, setFormData, saveStepData }) => {
         province: formData.province || "",
         street: formData.street || "",
         phoneNumber: userData.phoneNumber || "",
-        // student_type: (formData.student_type || "school").trim(),
-        // academic_program: formData.academic_program || "",
-        // college: formData.college || "",
-        // major: formData.major || "",
-        // stream: formData.stream || "",
     };
 
     const handleChange = (event) => {
@@ -51,29 +47,6 @@ const GeneralInfo = ({ formData, setFormData, saveStepData }) => {
         province: Yup.string().required("Province is required"),
         street: Yup.string().required("Street is required"),
         phoneNumber: Yup.string().required("Phone Number is required"),
-        // student_type: Yup.string().required("Please select your student type"),
-
-        // academic_program: Yup.lazy((value, { parent }) =>
-        //     parent.student_type === "university"
-        //         ? Yup.string().required("Academic Program is required")
-        //         : Yup.string().notRequired()
-        // ),
-        // college: Yup.lazy((value, { parent }) =>
-        //     parent.student_type === "university"
-        //         ? Yup.string().required("College is required")
-        //         : Yup.string().notRequired()
-        // ),
-        // major: Yup.lazy((value, { parent }) =>
-        //     parent.student_type === "university"
-        //         ? Yup.string().required("Major is required")
-        //         : Yup.string().notRequired()
-        // ),
-        // stream: Yup.lazy((value, { parent }) =>
-        //     parent.student_type === "school"
-        //         ? Yup.string().required("Stream is required")
-        //         : Yup.string().notRequired()
-        // ),
-
     });
     // Submit Handler
     const handleSubmit = (values) => {
@@ -84,6 +57,7 @@ const GeneralInfo = ({ formData, setFormData, saveStepData }) => {
             ...prev,
             generalInfo: values,
         }));
+        nextStep();
     };
     return (
         <div className="container">
@@ -151,58 +125,7 @@ const GeneralInfo = ({ formData, setFormData, saveStepData }) => {
                             </div>
                         </div>
 
-                        {/* Group 2: Student Type */}
-                        {/* <div className="input-group mb-4">
-                            <h3>Student Information</h3>
-                            <div className="row">
-                                <div className="col-md-5 mb-3">
-                                    <label htmlFor="student_type">Are you a University or School Student?</label>
-                                    <Field as="select" name="student_type" id="student_type" className="form-control">
-                                        <option value="">-- Select --</option>
-                                        <option value="university">University Student</option>
-                                        <option value="school">School Student</option>
-                                    </Field>
-                                    <ErrorMessage name="student_type" component="div" className="text-danger" />
-                                </div>
 
-                                {values.student_type === "university" && (
-                                    <>
-                                        <div className="col-md-5 mb-3">
-                                            <label htmlFor="academic_program">Academic Program</label>
-                                            <Field type="text" name="academic_program" id="academic_program" className="form-control" />
-                                            <ErrorMessage name="academic_program" component="div" className="text-danger" />
-                                        </div>
-
-                                        <div className="col-md-5 mb-3">
-                                            <label htmlFor="college">College</label>
-                                            <Field type="text" name="college" id="college" className="form-control" />
-                                            <ErrorMessage name="college" component="div" className="text-danger" />
-                                        </div>
-
-                                        <div className="col-md-5 mb-3">
-                                            <label htmlFor="major">Major</label>
-                                            <Field type="text" name="major" id="major" className="form-control" />
-                                            <ErrorMessage name="major" component="div" className="text-danger" />
-                                        </div>
-                                    </>
-                                )}
-
-                                {values.student_type === "school" && (
-                                    <div className="col-md-5 mb-3">
-                                        <label htmlFor="stream">Stream</label>
-                                        <Field as="select" name="stream" id="stream" className="form-control">
-                                            <option value="">-- Select --</option>
-                                            <option value="scientific">Scientific</option>
-                                            <option value="literary">Literary</option>
-                                            <option value="commercial">Commercial</option>
-                                            <option value="industrial">Industrial</option>
-                                            <option value="other">Other</option>
-                                        </Field>
-                                        <ErrorMessage name="stream" component="div" className="text-danger" />
-                                    </div>
-                                )}
-                            </div>
-                        </div> */}
 
                         {/* Group 3: Address Information */}
                         <div className="input-group mb-4">
@@ -240,7 +163,16 @@ const GeneralInfo = ({ formData, setFormData, saveStepData }) => {
                             </div>
                         </div>
                         {/* Submit Button */}
-                        <div className="text-end">
+                        <div className="text-end step-navigation">
+                            <button
+                                type="button"
+                                className="prev-btn btn mt-4 "
+                                style={{backgroundColor:'#5a6268'}}
+                                onClick={prevStep}
+                                disabled={currentStep === 1}
+                            >
+                                Previous
+                            </button>
                             <button type="submit" className="btn btn-primary mt-4">
                                 Save and Continue
                             </button>

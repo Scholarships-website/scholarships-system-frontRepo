@@ -167,7 +167,24 @@ function AddScholarshipForm() {
             CNY: '¥',
             BRL: 'R$',
             ZAR: 'R',
-            // يمكنك إضافة المزيد من العملات هنا
+            ILS: '₪',   //  Shekel
+            JOD: 'JD',  // Jordanian Dinar
+            EGP: 'E£',  // Egyptian Pound
+            SAR: '﷼',   // Saudi Riyal
+            AED: 'د.إ',  // UAE Dirham
+            KWD: 'KD',  // Kuwaiti Dinar
+            QAR: '﷼',   // Qatari Riyal
+            OMR: '﷼',   // Omani Rial
+            BHD: 'BD',  // Bahraini Dinar
+            LYD: 'LD',  // Libyan Dinar
+            DZD: 'DA',  // Algerian Dinar
+            MAD: 'MAD', // Moroccan Dirham
+            TND: 'DT',  // Tunisian Dinar
+            SYP: '£S',  // Syrian Pound
+            YER: '﷼',   // Yemeni Rial
+            LBP: 'ل.ل',  // Lebanese Pound
+            SDG: 'ج.س',  // Sudanese Pound
+            IQD: 'ع.د',  // Iraqi Dinar
           };
           if (key === 'scholarship_picture') {
             return (
@@ -195,10 +212,10 @@ function AddScholarshipForm() {
           return (
             <div className="col-md-5" key={key}>
               {key !== 'currency' && (
-                  <label htmlFor={key} className="form-label">
-                    {customLabels[key] || key.replace(/_/g, ' ')}
-                  </label>
-                )}
+                <label htmlFor={key} className="form-label">
+                  {customLabels[key] || key.replace(/_/g, ' ')}
+                </label>
+              )}
               {key === 'expenses_coverd' ? (
                 <div className="d-flex align-items-center">
                   <input
@@ -219,7 +236,7 @@ function AddScholarshipForm() {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   >
-                    {['USD', 'EUR', 'GBP', 'INR', 'JPY', 'AUD', 'CAD', 'MXN', 'CNY'].map((currency) => (
+                    {['USD', 'EUR', 'GBP', 'INR', 'JPY', 'AUD', 'CAD', 'MXN', 'CNY', 'ILS', 'JOD', 'EGP', 'SAR', 'AED', 'KWD', 'QAR', 'OMR', 'BHD', 'LYD', 'DZD', 'MAD', 'TND', 'SYP', 'YER', 'LBP', 'SDG', 'IQD'].map((currency) => (
                       <option key={currency} value={currency}>
                         {currency} ({currencySymbols[currency]})
                       </option>

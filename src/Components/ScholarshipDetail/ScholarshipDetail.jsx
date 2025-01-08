@@ -140,7 +140,7 @@ const ScholarshipDetail = () => {
             {renderField("Start Date", new Date(scholarship?.start_Date).toLocaleDateString())}
             {renderField("End Date", new Date(scholarship?.End_Date).toLocaleDateString())}
             {renderField("Submission Date", new Date(scholarship?.submission_date).toLocaleDateString())}
-            {renderField("Deadline", moment(scholarship?.deadline).format('YYYY-MM-DD'))}
+            {renderField("Deadline", moment(scholarship?.deadline).format('DD/MM/YYYY'))}
 
             {loading ? (
               <Skeleton width="30%" height={40} />

@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const FamilyInfo = ({ formData, setFormData,saveStepData }) => {
+const FamilyInfo = ({currentStep, totalSteps, prevStep, formData, setFormData,saveStepData,nextStep }) => {
     // Validation Schema
     const validationSchema = Yup.object({
         Head_of_the_family: Yup.string().required("Head of the family is required"),
@@ -47,6 +47,8 @@ const FamilyInfo = ({ formData, setFormData,saveStepData }) => {
             ...prev,
             familyInfo: values,
         }));
+        nextStep();
+
     };
 
     return (
@@ -185,11 +187,19 @@ const FamilyInfo = ({ formData, setFormData,saveStepData }) => {
                         </div>
 
                         {/* Submit Button */}
-                        <div className="text-end">
-
-                        <button type="submit" className="btn btn-primary mt-4">
-                            Save and Continue
-                        </button>
+                        <div className="text-end step-navigation">
+                            <button
+                                type="button"
+                                className="prev-btn btn mt-4 "
+                                style={{backgroundColor:'#5a6268'}}
+                                onClick={prevStep}
+                                disabled={currentStep === 1}
+                            >
+                                Previous
+                            </button>
+                            <button type="submit" className="btn btn-primary mt-4">
+                                Save and Continue
+                            </button>
                         </div>
                     </Form>
                 )}

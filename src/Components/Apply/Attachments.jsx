@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Attachments = ({ formData, setFormData,saveStepData }) => {
+const Attachments = ({currentStep, totalSteps, prevStep, formData, setFormData,saveStepData,nextStep,onSubmit }) => {
   // Validation Schema
   const validationSchema = Yup.object({
     Student_ID_Image: Yup.mixed()
@@ -56,6 +56,7 @@ const Attachments = ({ formData, setFormData,saveStepData }) => {
       ...prev,
       pdffiles: values,
     }));
+    onSubmit();
   };
 
   return (
@@ -134,16 +135,23 @@ const Attachments = ({ formData, setFormData,saveStepData }) => {
                 />
                 <ErrorMessage name="Special_Cases_Report" component="div" className="text-danger" />
               </div>
-
             </div>
 
             {/* Submit Button */}
-            <div className="text-end">
-
-              <button type="submit" className="btn btn-primary">
-                Save and Continue
-              </button>
-            </div>
+            <div className="text-end step-navigation">
+                            <button
+                                type="button"
+                                className="prev-btn btn mt-4 "
+                                style={{backgroundColor:'#5a6268'}}
+                                onClick={prevStep}
+                                disabled={currentStep === 1}
+                            >
+                                Previous
+                            </button>
+                            <button type="submit" className="btn btn-primary mt-4">
+                                Submit
+                            </button>
+                        </div>
           </Form>
         )}
       </Formik>

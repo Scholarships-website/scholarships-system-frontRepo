@@ -19,6 +19,7 @@ function HomeStudent() {
           throw new Error("Failed to fetch scholarships");
         }
         const data = await response.json();
+        console.log(data)
         setScholarships(data);
       } catch (err) {
         setError(err.message);
@@ -32,9 +33,9 @@ function HomeStudent() {
 
   const soonDeadlines = scholarships.filter((scholarship) => {
     const now = new Date();
-    const deadline = new Date(scholarship.End_Date);
+    const deadline = new Date(scholarship.deadline);
     const diffInDays = (deadline - now) / (1000 * 60 * 60 * 24); // Convert milliseconds to days
-    return diffInDays > 0 && diffInDays <= 100; // Deadlines within the next 30 days
+    return diffInDays > 0 && diffInDays <= 7; // Deadlines within the next 7 days
   });
 
   if (error) return <p>Error: {error}</p>;
@@ -80,7 +81,7 @@ function HomeStudent() {
                   <p>{scholarship.brief_descrition}</p>
                   <p>
                     <strong>Deadline:</strong>{" "}
-                    {new Date(scholarship.End_Date).toLocaleDateString()}
+                    {new Date(scholarship.deadline).toLocaleDateString()}
                   </p>
                   <Link
                     to={`/scholarship-detail/${scholarship._id}`}

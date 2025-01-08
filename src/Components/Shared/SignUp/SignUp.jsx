@@ -310,7 +310,6 @@ export default function SignUp() {
                                         touched={formik.touched}
                                         value={formik.values.Gender}
                                         options={[
-                                            { value: '', label: 'Select Gender' },
                                             { value: 'male', label: 'Male' },
                                             { value: 'female', label: 'Female' },
                                         ]}

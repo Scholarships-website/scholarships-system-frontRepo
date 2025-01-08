@@ -52,8 +52,8 @@ function EditScholarship() {
       uploadData.append('expenses_coverd', combinedExpenses);
 
       for (const key in updatedData) {
-        if (key !== 'currency' && key !== 'expenses_coverd') 
-        uploadData.append(key, updatedData[key]);
+        if (key !== 'currency' && key !== 'expenses_coverd')
+          uploadData.append(key, updatedData[key]);
       }
       try {
         const response = await axios.patch(
@@ -158,8 +158,28 @@ function EditScholarship() {
     JPY: '¥',
     AUD: 'A$',
     CAD: 'C$',
-    MXN: 'Mex$',
-    CNY: '¥'
+    MXN: 'MX$',
+    CNY: '¥',
+    BRL: 'R$',
+    ZAR: 'R',
+    ILS: '₪',   //  Shekel
+    JOD: 'JD',  // Jordanian Dinar
+    EGP: 'E£',  // Egyptian Pound
+    SAR: '﷼',   // Saudi Riyal
+    AED: 'د.إ',  // UAE Dirham
+    KWD: 'KD',  // Kuwaiti Dinar
+    QAR: '﷼',   // Qatari Riyal
+    OMR: '﷼',   // Omani Rial
+    BHD: 'BD',  // Bahraini Dinar
+    LYD: 'LD',  // Libyan Dinar
+    DZD: 'DA',  // Algerian Dinar
+    MAD: 'MAD', // Moroccan Dirham
+    TND: 'DT',  // Tunisian Dinar
+    SYP: '£S',  // Syrian Pound
+    YER: '﷼',   // Yemeni Rial
+    LBP: 'ل.ل',  // Lebanese Pound
+    SDG: 'ج.س',  // Sudanese Pound
+    IQD: 'ع.د',  // Iraqi Dinar
   };
   return (
     <>
@@ -350,7 +370,7 @@ function EditScholarship() {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               >
-                {['USD', 'EUR', 'GBP', 'INR', 'JPY', 'AUD', 'CAD', 'MXN', 'CNY'].map((currency) => (
+                {['USD', 'EUR', 'GBP', 'INR', 'JPY', 'AUD', 'CAD', 'MXN', 'CNY', 'ILS', 'JOD', 'EGP', 'SAR', 'AED', 'KWD', 'QAR', 'OMR', 'BHD', 'LYD', 'DZD', 'MAD', 'TND', 'SYP', 'YER', 'LBP', 'SDG', 'IQD'].map((currency) => (
                   <option key={currency} value={currency}>
                     {currency} ({currencySymbols[currency]})
                   </option>

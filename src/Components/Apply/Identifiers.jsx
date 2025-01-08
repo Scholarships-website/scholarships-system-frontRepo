@@ -3,22 +3,22 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Identifiers = ({ formData, setFormData,saveStepData }) => {
+const Identifiers = ({ currentStep, totalSteps, prevStep, formData, setFormData, saveStepData, nextStep }) => {
   // Validation Schema
   const validationSchema = Yup.object({
     identifier_Name1: Yup.string().required("Identifier's Name is required"),
     identifier_phone1: Yup.string().required("Identifier's Phone is required"),
-      identifier_profession1: Yup.string().required("Profession is required"),
+    identifier_profession1: Yup.string().required("Profession is required"),
 
     identifier_Name2: Yup.string().required("Identifier's Name is required"),
     identifier_phone2: Yup.string().required("Identifier's Phone is required"),
 
-      identifier_profession2: Yup.string().required("Profession is required"),
+    identifier_profession2: Yup.string().required("Profession is required"),
 
     identifier_Name3: Yup.string().required("Identifier's Name is required"),
     identifier_phone3: Yup.string().required("Identifier's Phone is required"),
 
-      identifier_profession3: Yup.string().required("Profession is required"),
+    identifier_profession3: Yup.string().required("Profession is required"),
   });
 
   // Initial Values: Assign values individually for each identifier field
@@ -44,20 +44,22 @@ const Identifiers = ({ formData, setFormData,saveStepData }) => {
     //   { name: values.identifier_Name2, phone: values.identifier_phone2, profession: values.identifier_profession2 },
     //   { name: values.identifier_Name3, phone: values.identifier_phone3, profession: values.identifier_profession3 },
     // ];
-        console.log("Submitting form...");
-        console.log(values);
-        saveStepData({ stepKey: 'identifiers', data: values });
+    console.log("Submitting form...");
+    console.log(values);
+    saveStepData({ stepKey: 'identifiers', data: values });
 
     setFormData((prev) => ({
       ...prev,
-      identifiers:values,
+      identifiers: values,
     }));
+    nextStep();
+
   };
 
   return (
     <div className="container mt-5">
       <Formik
-                initialValues={formData.identifiers || initialValues}
+        initialValues={formData.identifiers || initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
@@ -210,8 +212,17 @@ const Identifiers = ({ formData, setFormData,saveStepData }) => {
           </div>
 
           {/* Submit Button */}
-          <div className="text-end">
-            <button type="submit" className="btn btn-primary">
+          <div className="text-end step-navigation">
+            <button
+              type="button"
+              className="prev-btn btn mt-4 "
+              style={{ backgroundColor: '#5a6268' }}
+              onClick={prevStep}
+              disabled={currentStep === 1}
+            >
+              Previous
+            </button>
+            <button type="submit" className="btn btn-primary mt-4">
               Save and Continue
             </button>
           </div>

@@ -2,15 +2,12 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import * as Yup from "yup";
 
-const HealthStatus = ({ formData, setFormData, saveStepData }) => {
+const HealthStatus = ({currentStep, totalSteps, prevStep, formData, setFormData, saveStepData,nextStep }) => {
     // Validation Schema
     const validationSchema = Yup.object({
         Number_of_Disabilities_in_the_Family: Yup.number()
             .required("This field is required")
             .min(0, "The number cannot be less than zero"),
-        Disabilities_description: Yup.array()
-            .of(Yup.string().required("Description is required"))
-            .min(1, "At least one description is required"),
     });
 
     // Initial Values
@@ -28,6 +25,7 @@ const HealthStatus = ({ formData, setFormData, saveStepData }) => {
             ...prev,
             healthStatus: values,
         }));
+        nextStep();
     };
 
     return (
@@ -94,8 +92,17 @@ const HealthStatus = ({ formData, setFormData, saveStepData }) => {
                         )}
 
                         {/* Submit Button */}
-                        <div className="text-end">
-                            <button type="submit" className="btn btn-primary">
+                        <div className="text-end step-navigation">
+                            <button
+                                type="button"
+                                className="prev-btn btn mt-4 "
+                                style={{backgroundColor:'#5a6268'}}
+                                onClick={prevStep}
+                                disabled={currentStep === 1}
+                            >
+                                Previous
+                            </button>
+                            <button type="submit" className="btn btn-primary mt-4">
                                 Save and Continue
                             </button>
                         </div>
