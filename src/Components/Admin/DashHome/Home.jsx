@@ -35,11 +35,11 @@ export default function Home() {
           axios.get('http://localhost:3000/api/v1/advertisers/'),
           axios.get('http://localhost:3000/api/v1/admin/scholarhips'),
         ]);
-
+        // console.log(scholarshipsRes.data.pagination.totalScholarships);
         setData({
           studentsCount: studentsRes.data.length,
           advertisersCount: advertisersRes.data.length,
-          scholarshipsCount: scholarshipsRes.data.length,
+          scholarshipsCount: scholarshipsRes.data.pagination.totalScholarships,
         });
       } catch (error) {
         console.error("Error fetching data:", error);
