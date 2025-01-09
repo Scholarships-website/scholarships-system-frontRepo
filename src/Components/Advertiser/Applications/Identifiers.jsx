@@ -27,13 +27,13 @@ const Identifiers = ({ data }) => {
                 </Typography>
                 <Box display="flex" justifyContent="space-between" mt={1}>
                     <Typography variant="body2" color="textSecondary">
-                        Name: {application.identifier_Name[0] || "N/A"}
+                        Name: {application.identifier_Name[0] || "-"}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                        Phone: {application.identifier_Phone[0] || "N/A"}
+                        Phone: {application.identifier_Phone[0] || "-"}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                        Profession: {application.identifier_profession[0] || "N/A"}
+                        Profession: {application.identifier_profession[0] || "-"}
                     </Typography>
                 </Box>
             </Box>
@@ -45,13 +45,13 @@ const Identifiers = ({ data }) => {
                 </Typography>
                 <Box display="flex" justifyContent="space-between" mt={1}>
                     <Typography variant="body2" color="textSecondary">
-                        Name: {application.identifier_Name[1] || "N/A"}
+                        Name: {application.identifier_Name[1] || "-"}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                        Phone: {application.identifier_Phone[1] || "N/A"}
+                        Phone: {application.identifier_Phone[1] || "-"}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                        Profession: {application.identifier_profession[1] || "N/A"}
+                        Profession: {application.identifier_profession[1] || "-"}
                     </Typography>
                 </Box>
             </Box>
@@ -63,13 +63,13 @@ const Identifiers = ({ data }) => {
                 </Typography>
                 <Box display="flex" justifyContent="space-between" mt={1}>
                     <Typography variant="body2" color="textSecondary">
-                        Name: {application.identifier_Name[2] || "N/A"}
+                        Name: {application.identifier_Name[2] || "-"}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                        Phone: {application.identifier_Phone[2] || "N/A"}
+                        Phone: {application.identifier_Phone[2] || "-"}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                        Profession: {application.identifier_profession[2] || "N/A"}
+                        Profession: {application.identifier_profession[2] || "-"}
                     </Typography>
                 </Box>
             </Box>

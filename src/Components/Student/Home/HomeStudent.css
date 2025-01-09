@@ -1,79 +1,54 @@
-/* Container styling */
-.calendar-container {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    background-color: #f9f9f9;
-  }
-  
-  .calendar-container h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  /* Grid layout */
-  .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 10px;
-  }
-  
-  /* Card styling */
-  .calendar-card {
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  }
-  
-  .calendar-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  }
-  
-  .card-header {
-    width: 100%;
-    overflow: hidden;
-  }
-  
-  .card-image {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-  }
-  
-  .card-body {
-    padding: 15px;
-    color: #333;
-  }
-  
-  .card-body h2 {
+
+.calender .card-body .card-link {
+  display: inline-block;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  color: #fff;
+  background-color: #418447;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.2s ease-in-out;
+  width: fit-content;
+}
+
+.calender .card-body .card-link:hover {
+  background-color: #418447;
+}
+
+.homeStudent .responsive-iframe {
+  width: 700px;
+  height: 700px;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .homeStudent h2,.studentHeader {
     font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: #418447;
   }
-  
-  .card-body p {
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-    line-height: 1.5;
+
+  .homeStudent .responsive-iframe {
+    width: 500px;
+    height: 500px;
   }
-  
-  .card-body .card-link {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 8px 12px;
-    font-size: 0.9rem;
-    color: #fff;
-    background-color: #418447;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.2s ease-in-out;
+}
+
+@media (max-width: 500px) {
+  .homeStudent{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
-  
-  .card-body .card-link:hover {
-    background-color: #418447;
+  .homeStudent h2,.calender .studentHeader,
+  .homeStudent span {
+    font-size: 1.2rem !important;
   }
-  
+
+  .homeStudent .responsive-iframe {
+    width: 300px;
+    height: 300px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+  }
+}

@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import * as Yup from "yup";
 
-const HealthStatus = ({currentStep, totalSteps, prevStep, formData, setFormData, saveStepData,nextStep }) => {
+const HealthStatus = ({currentStep, totalSteps, prevStep, formData, setFormData, saveStepData,nextStep,applicationDetails }) => {
     // Validation Schema
     const validationSchema = Yup.object({
         Number_of_Disabilities_in_the_Family: Yup.number()
@@ -12,8 +12,8 @@ const HealthStatus = ({currentStep, totalSteps, prevStep, formData, setFormData,
 
     // Initial Values
     const initialValues = {
-        Number_of_Disabilities_in_the_Family: formData.Number_of_Disabilities_in_the_Family || 0,
-        Disabilities_description: formData.Disabilities_description || [],
+        Number_of_Disabilities_in_the_Family: applicationDetails?.Number_of_Disabilities_in_the_Family || formData?.Number_of_Disabilities_in_the_Family || 0,
+        Disabilities_description: applicationDetails?.Disabilities_description || formData?.Disabilities_description || [],
     };
 
     // Submit Handler

@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const FamilyInfo = ({currentStep, totalSteps, prevStep, formData, setFormData,saveStepData,nextStep }) => {
+const FamilyInfo = ({currentStep, totalSteps, prevStep, formData, setFormData,saveStepData,nextStep,applicationDetails }) => {
     // Validation Schema
     const validationSchema = Yup.object({
         Head_of_the_family: Yup.string().required("Head of the family is required"),
@@ -24,18 +24,18 @@ const FamilyInfo = ({currentStep, totalSteps, prevStep, formData, setFormData,sa
 
     // Initial Values
     const initialValues = {
-        Head_of_the_family: formData.Head_of_the_family || "",
-        breadwinner: formData.breadwinner || "",
-        breadwinner_id: formData.breadwinner_id || "",
-        work_nature: formData.work_nature || "",
-        institution: formData.institution || "",
-        income_category: formData.income_category || "",
-        Does_mother_work: formData.Does_mother_work || "",
-        any_other_income: formData.any_other_income || "",
-        Total_number_of_family_members: formData.Total_number_of_family_members || "",
-        Does_student_work: formData.Does_student_work || "",
-        social_affairs_case: formData.social_affairs_case || "",
-        UNRWA_card: formData.UNRWA_card || "",
+        Head_of_the_family: applicationDetails?.Head_of_the_family || formData?.Head_of_the_family || "",
+        breadwinner: applicationDetails?.breadwinner || formData?.breadwinner || "",
+        breadwinner_id: applicationDetails?.breadwinner_id || formData?.breadwinner_id || "",
+        work_nature: applicationDetails?.work_nature || formData?.work_nature || "",
+        institution: applicationDetails?.institution || formData?.institution || "",
+        income_category: applicationDetails?.income_category || formData?.income_category || "",
+        Does_mother_work: applicationDetails?.Does_mother_work || formData?.Does_mother_work || "",
+        any_other_income: applicationDetails?.any_other_income || formData?.any_other_income || "",
+        Total_number_of_family_members: applicationDetails?.Total_number_of_family_members || formData?.Total_number_of_family_members || "",
+        Does_student_work: applicationDetails?.Does_student_work || formData?.Does_student_work || "",
+        social_affairs_case: applicationDetails?.social_affairs_case || formData?.social_affairs_case || "",
+        UNRWA_card: applicationDetails?.UNRWA_card || formData?.UNRWA_card || "",
     };
 
     // Submit Handler

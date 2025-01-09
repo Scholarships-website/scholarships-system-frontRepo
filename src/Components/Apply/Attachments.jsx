@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Attachments = ({currentStep, totalSteps, prevStep, formData, setFormData,saveStepData,nextStep,onSubmit }) => {
+const Attachments = ({ currentStep, totalSteps, prevStep, formData, setFormData, saveStepData, nextStep, onSubmit, applicationDetails }) => {
   // Validation Schema
   const validationSchema = Yup.object({
     Student_ID_Image: Yup.mixed()
@@ -11,46 +11,46 @@ const Attachments = ({currentStep, totalSteps, prevStep, formData, setFormData,s
       .test("fileFormat", "Only PDF files are allowed", (value) => {
         return value && value.name.endsWith(".pdf");
       }),
-      Head_of_Household_ID_Image: Yup.mixed()
+    Head_of_Household_ID_Image: Yup.mixed()
       .required("Head of household's ID with annex is required")
       .test("fileFormat", "Only PDF files are allowed", (value) => {
         return value && value.name.endsWith(".pdf");
       }),
-      Mother_ID_Image: Yup.mixed()
+    Mother_ID_Image: Yup.mixed()
       .required("Mother's ID image is required")
       .test("fileFormat", "Only PDF files are allowed", (value) => {
         return value && value.name.endsWith(".pdf");
       }),
-      Sibling_ID_Image: Yup.mixed()
+    Sibling_ID_Image: Yup.mixed()
       .nullable()
       .test("fileFormat", "Only PDF files are allowed", (value) => {
         // Skip validation if the field is empty or null
-        if (!value) return true; 
+        if (!value) return true;
         return value.name.endsWith(".pdf");
       }),
-    
+
     Special_Cases_Report: Yup.mixed()
       .nullable()
       .test("fileFormat", "Only PDF files are allowed", (value) => {
-        if (!value) return true; 
+        if (!value) return true;
         return value.name.endsWith(".pdf");
       }),
   });
 
   // Initial Values
   const initialValues = {
-    Student_ID_Image: formData.Student_ID_Image || null,
-    Head_of_Household_ID_Image: formData?.Head_of_Household_ID_Image || null,
-    Mother_ID_Image: formData?.Mother_ID_Image || null,
-    Sibling_ID_Image: formData?.Sibling_ID_Image || null,
-    Special_Cases_Report: formData?.Special_Cases_Report || null,
+    Student_ID_Image: applicationDetails?.Student_ID_Image || formData?.Student_ID_Image || null,
+    Head_of_Household_ID_Image: applicationDetails?.Head_of_Household_ID_Image || formData?.Head_of_Household_ID_Image || null,
+    Mother_ID_Image: applicationDetails?.Mother_ID_Image || formData?.Mother_ID_Image || null,
+    Sibling_ID_Image: applicationDetails?.Sibling_ID_Image || formData?.Sibling_ID_Image || null,
+    Special_Cases_Report: applicationDetails?.Special_Cases_Report || formData?.Special_Cases_Report || null,
   };
 
   // Submit Handler
   const handleSubmit = (values) => {
-            console.log("Submitting form...");
-        console.log(values);
-        saveStepData({ stepKey: 'pdffiles', data: values });
+    console.log("Submitting form...");
+    console.log(values);
+    saveStepData({ stepKey: 'pdffiles', data: values });
 
     setFormData((prev) => ({
       ...prev,
@@ -61,14 +61,24 @@ const Attachments = ({currentStep, totalSteps, prevStep, formData, setFormData,s
 
   return (
     <div className="container">
+      <div className="upload-requirement">
+        <p>
+          <strong>Important:</strong> Please upload the following mandatory documents to submit your application:
+        </p>
+        <ul>
+          <li>Student’s ID Image</li>
+          <li>Head of Household’s ID with Annex </li>
+          <li>Mother’s ID Image</li>
+        </ul>
+      </div>
       <Formik
-                initialValues={formData.pdffiles || initialValues}
+        initialValues={formData.pdffiles || initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         {({ setFieldValue }) => (
           <Form>
-            <div className="my-5 p-3 border rounded">
+            <div className="mb-5 p-3 border rounded">
               <h5>Required Attachments</h5>
 
               {/* Student's ID Image */}
@@ -139,22 +149,23 @@ const Attachments = ({currentStep, totalSteps, prevStep, formData, setFormData,s
 
             {/* Submit Button */}
             <div className="text-end step-navigation">
-                            <button
-                                type="button"
-                                className="prev-btn btn mt-4 "
-                                style={{backgroundColor:'#5a6268'}}
-                                onClick={prevStep}
-                                disabled={currentStep === 1}
-                            >
-                                Previous
-                            </button>
-                            <button type="submit" className="btn btn-primary mt-4">
-                                Submit
-                            </button>
-                        </div>
+              <button
+                type="button"
+                className="prev-btn btn mt-4 "
+                style={{ backgroundColor: '#5a6268' }}
+                onClick={prevStep}
+                disabled={currentStep === 1}
+              >
+                Previous
+              </button>
+              <button type="submit" className="btn btn-primary mt-4">
+                Submit
+              </button>
+            </div>
           </Form>
         )}
       </Formik>
+
     </div>
   );
 };

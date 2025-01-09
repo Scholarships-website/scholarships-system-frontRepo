@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const EducationalData = ({currentStep, totalSteps, prevStep, formData, setFormData, saveStepData,nextStep }) => {
+const EducationalData = ({currentStep, totalSteps, prevStep, formData, setFormData, saveStepData,nextStep,applicationDetails }) => {
   // Validation Schema
   const validationSchema = Yup.object({
 
@@ -53,15 +53,15 @@ const EducationalData = ({currentStep, totalSteps, prevStep, formData, setFormDa
   // Initial Values
   const initialValues = {
     // Study_Level: formData.Study_Level || "",
-    student_type: (formData.student_type || "school").trim(),
-    academic_program: formData.academic_program || "",
-    college: formData.college || "",
-    major: formData.major || "",
-    stream: formData.stream || "",
-    GPA: formData.GPA || "",
-    university_year: formData.university_year || "",
-    class_year: formData.class_year || "",
-    Number_of_Siblings: formData.Number_of_Siblings || "",
+    student_type: applicationDetails?.student_type || (formData?.student_type || "school").trim(),
+    academic_program: applicationDetails?.academic_program || formData?.academic_program || "",
+    college: applicationDetails?.college || formData?.college || "",
+    major: applicationDetails?.major || formData?.major || "",
+    stream: applicationDetails?.stream || "",
+    GPA: applicationDetails?.GPA || formData?.GPA || "",
+    university_year: applicationDetails?.university_year || formData?.university_year || "",
+    class_year: applicationDetails?.class_year || formData?.class_year || "",
+    Number_of_Siblings: applicationDetails?.Number_of_Siblings || formData?.Number_of_Siblings || "",
   };
 
   // Submit Handler

@@ -46,7 +46,7 @@
     font-optical-sizing: auto;
     font-weight: 500;
     margin-bottom: 15px;
-    
+
 }
 
 .scholarship-detail .basic-info p {
@@ -195,7 +195,10 @@
     overflow: hidden;
     position: relative;
 }
-
+.similar-scholarships .slick-list{
+    overflow: hidden !important;
+    padding-bottom: 50px;
+}
 .slider-wrapper {
     display: flex;
     gap: 16px;
@@ -205,7 +208,7 @@
 .similar-scholarship-item {
     width: 330px !important;
     gap: 5px;
-    max-height: 650px;
+    height: 600px;
     flex: 0 0 280px;
     border-radius: 10px;
     background-color: #fff;
@@ -213,6 +216,10 @@
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     padding: 20px;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .similar-scholarships .similar-scholarship-item .card-header {
@@ -295,7 +302,8 @@
     margin-bottom: 20px;
 
 }
-.header-similar{
+
+.header-similar {
     font-family: "Cinzel", serif;
     font-optical-sizing: auto;
     font-weight: 500;
@@ -462,4 +470,20 @@
         margin-top: 30px;
         justify-content: center;
     }
+}
+
+.apply-closed {
+    background-color: #f8d7da;
+    /* Light red background */
+    color: #721c24;
+    /* Dark red text */
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #f5c6cb;
+    /* Lighter red border */
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    width: fit-content;
 }

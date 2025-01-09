@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import GeneralInfo from "./GeneralInfo";
 import FamilyInfo from "./FamilyInfo";
@@ -14,11 +14,15 @@ import { UserContext } from "../../Context/UserContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import Loading from "../Shared/Loading/Loading";
 
 const Apply = () => {
   const { scholarship_id } = useParams();
   const [currentStep, setCurrentStep] = useState(1);
-  const { userToken } = useContext(UserContext);
+  const { userToken, roleId } = useContext(UserContext);
+  const [applicationDetails, setApplicationDetails] = useState();
+  const [loading, setLoading] = useState(true);
+
   const [formData, setFormData] = useState({
     generalInfo: {
       fullname: "",
@@ -82,6 +86,30 @@ const Apply = () => {
       Special_Cases_Report: null,
     },
   });
+
+
+  useEffect(() => {
+    const fetchApplicationDetails = async () => {
+      try {
+        const applicationsResponse = await axios.get(`http://localhost:3000/api/v1/students/${roleId}/applications`);
+        const applicationIds = applicationsResponse.data;
+
+        if (applicationIds.length > 0) {
+          const firstApplicationId = applicationIds[0];
+          const applicationDetailsResponse = await axios.get(`http://localhost:3000/api/v1/students/applications/${firstApplicationId}`);
+          setApplicationDetails(applicationDetailsResponse.data);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching application details:', error);
+        setLoading(false);
+      }
+    };
+
+    window.scrollTo(0, 0);
+    fetchApplicationDetails();
+  }, [roleId]);
+
 
   // Save data for each step
   const saveStepData = (stepData) => {
@@ -177,91 +205,109 @@ const Apply = () => {
     {
       id: 1,
       label: "General Information",
-      component: (
+      component: loading ? (
+        <Loading />
+      ) : (
         <GeneralInfo
           formData={formData.generalInfo}
           setFormData={setFormData}
           saveStepData={saveStepData}
           nextStep={nextStep}
-          currentStep={currentStep}
+          currentStep={1}
           totalSteps={6}
           prevStep={prevStep}
+          {...(applicationDetails ? { applicationDetails } : {})}
         />
       ),
     },
     {
       id: 2,
       label: "Family Information",
-      component: (
+      component: loading ? (
+        <Loading />
+      ) : (
         <FamilyInfo
           formData={formData.familyInfo}
           setFormData={setFormData}
           saveStepData={saveStepData}
           nextStep={nextStep}
-          currentStep={currentStep}
+          currentStep={2}
           totalSteps={6}
           prevStep={prevStep}
+          {...(applicationDetails ? { applicationDetails } : {})}
         />
       ),
     },
     {
       id: 3,
       label: "Educational Data",
-      component: (
+      component: loading ? (
+        <Loading />
+      ) : (
         <EducationalData
           formData={formData.educationalData}
           setFormData={setFormData}
           saveStepData={saveStepData}
           nextStep={nextStep}
-          currentStep={currentStep}
+          currentStep={3}
           totalSteps={6}
           prevStep={prevStep}
+          {...(applicationDetails ? { applicationDetails } : {})}
         />
       ),
     },
     {
       id: 4,
       label: "Health Status",
-      component: (
+      component: loading ? (
+        <Loading />
+      ) : (
         <HealthStatus
           formData={formData.healthStatus}
           setFormData={setFormData}
           saveStepData={saveStepData}
           nextStep={nextStep}
-          currentStep={currentStep}
+          currentStep={4}
           totalSteps={6}
           prevStep={prevStep}
+          {...(applicationDetails ? { applicationDetails } : {})}
         />
       ),
     },
     {
       id: 5,
       label: "Identifiers",
-      component: (
+      component: loading ? (
+        <Loading />
+      ) : (
         <Identifiers
           formData={formData.identifiers}
           setFormData={setFormData}
           saveStepData={saveStepData}
           nextStep={nextStep}
-          currentStep={currentStep}
+          currentStep={5}
           totalSteps={6}
           prevStep={prevStep}
+          {...(applicationDetails ? { applicationDetails } : {})}
         />
       ),
     },
     {
       id: 6,
       label: "Attachments",
-      component: (
+      component: loading ? (
+        <Loading />
+      ) : (
         <Attachments
           formData={formData.pdffiles}
           setFormData={setFormData}
           saveStepData={saveStepData}
           nextStep={nextStep}
-          currentStep={currentStep}
+          currentStep={6}
           totalSteps={6}
           prevStep={prevStep}
           onSubmit={handleSubmit}
+          {...(applicationDetails ? { applicationDetails } : {})}
         />
       ),
     },
@@ -282,7 +328,11 @@ const Apply = () => {
           currentStep={currentStep}
           steps={steps}
         />
-        <div className="step-content">{steps[currentStep - 1].component}</div>
+        <div className="step-content">
+          {/* {console.log(steps)}
+          {console.log("Current Step:", currentStep)} */}
+          {steps[currentStep - 1]?.component || "No content available"}
+        </div>
       </div>
     </>
   );

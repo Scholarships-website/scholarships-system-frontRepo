@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Identifiers = ({ currentStep, totalSteps, prevStep, formData, setFormData, saveStepData, nextStep }) => {
+const Identifiers = ({ currentStep, totalSteps, prevStep, formData, setFormData, saveStepData, nextStep,applicationDetails }) => {
   // Validation Schema
   const validationSchema = Yup.object({
     identifier_Name1: Yup.string().required("Identifier's Name is required"),
@@ -23,17 +23,17 @@ const Identifiers = ({ currentStep, totalSteps, prevStep, formData, setFormData,
 
   // Initial Values: Assign values individually for each identifier field
   const initialValues = {
-    identifier_Name1: formData.identifier_Name1 || "",
-    identifier_phone1: formData.identifier_phone1 || "",
-    identifier_profession1: formData.identifier_profession1 || "",
+    identifier_Name1: applicationDetails?.identifier_Name[0] || formData?.identifier_Name1 || "",
+    identifier_phone1: applicationDetails?.identifier_Phone[0] || formData?.identifier_phone1 || "",
+    identifier_profession1: applicationDetails?.identifier_profession[0] || formData?.identifier_profession1 || "",
 
-    identifier_Name2: formData.identifier_Name2 || "",
-    identifier_phone2: formData.identifier_phone2 || "",
-    identifier_profession2: formData.identifier_profession2 || "",
+    identifier_Name2: applicationDetails?.identifier_Name[1] || formData?.identifier_Name2 || "",
+    identifier_phone2: applicationDetails?.identifier_Phone[1] || formData?.identifier_phone2 || "",
+    identifier_profession2: applicationDetails?.identifier_profession[1] || formData?.identifier_profession2 || "",
 
-    identifier_Name3: formData.identifier_Name3 || "",
-    identifier_phone3: formData.identifier_phone3 || "",
-    identifier_profession3: formData.identifier_profession3 || "",
+    identifier_Name3: applicationDetails?.identifier_Name[2] || formData?.identifier_Name3 || "",
+    identifier_phone3: applicationDetails?.identifier_Phone[1] || formData?.identifier_phone3 || "",
+    identifier_profession3: applicationDetails?.identifier_profession[2] || formData?.identifier_profession3 || "",
   };
 
   // Submit Handler

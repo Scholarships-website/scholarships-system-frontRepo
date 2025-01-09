@@ -97,3 +97,24 @@
   background: #418447 !important;
   border:#418447 solid 1px !important ;
 }
+.upload-requirement {
+  border: 1px solid #e74c3c;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #fce4e4;
+  color: #c0392b;
+  font-family: 'Arial', sans-serif;
+  margin: 20px 0 ;
+}
+
+.upload-requirement ul {
+  margin-left: 20px;
+  padding-left: 0;
+  list-style-type: disc;
+}
+
+.upload-requirement p {
+  margin-bottom: 8px;
+  line-height: 1.4;
+  font-weight: bold;
+}

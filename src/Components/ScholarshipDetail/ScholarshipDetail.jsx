@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import Skeleton from '@mui/material/Skeleton';
@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ScholarshipFeedback from './ScholarshipFeedback';
 import moment from 'moment';
+import { UserContext } from '../../Context/UserContext';
 
 const ScholarshipDetail = () => {
   const { id } = useParams();
@@ -22,12 +23,34 @@ const ScholarshipDetail = () => {
   const [loading, setLoading] = useState(true);
   const [similarScholarships, setSimilarScholarships] = useState([]);
   const [similarLoading, setSimilarLoading] = useState(true);
+  const [hasApplied, setHasApplied] = useState(false);
+  const { roleId } = useContext(UserContext);
+  const [status, setStatus] = useState(null);
 
   useEffect(() => {
     const fetchScholarship = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/api/v1/scholarships/${id}`);
         setScholarship(response.data);
+        const applicationsResponse = await axios.get(`http://localhost:3000/api/v1/students/${roleId}/applications`);
+        const applicationIds = applicationsResponse.data;
+
+        let applied = false;
+        for (let i = 0; i < applicationIds.length; i++) {
+          const applicationId = applicationIds[i];
+          // Fetch application details
+          const applicationDetailsResponse = await axios.get(`http://localhost:3000/api/v1/students/applications/${applicationId}`);
+          const applicationDetails = applicationDetailsResponse.data;
+          // console.log(applicationDetails)
+          // Check if the scholarship ID matches
+          if (applicationDetails.scholarship_id === id) {
+            applied = true;
+            setStatus(applicationDetails.status)
+            break; // No need to check further once we find a match
+          }
+        }
+        setHasApplied(applied);
+        console.log(applied)
         setLoading(false);
       } catch (error) {
         console.error('Error fetching scholarship:', error);
@@ -36,7 +59,7 @@ const ScholarshipDetail = () => {
     };
     window.scrollTo(0, 0);
     fetchScholarship();
-  }, [id]);
+  }, [id, roleId]);
 
   useEffect(() => {
     const fetchSimilarScholarships = async () => {
@@ -106,6 +129,24 @@ const ScholarshipDetail = () => {
   return (
     <>
       <Navbar />
+      {hasApplied && (
+        <div
+          style={{
+            backgroundColor: '#f8d7da', // Light red background
+            color: '#721c24', // Red text color
+            padding: '10px',
+            borderRadius: '5px',
+            marginBottom: '20px',
+            border: '1px solid #f5c6cb', // Border color to match the background
+            maxWidth:'1200px',
+            margin:'auto',
+            marginTop:'20px'
+          }}
+        >
+          <strong>You have already applied for this scholarship!</strong>
+          <p><strong>and your application status is {status}</strong></p>
+        </div>
+      )}
       <div className="scholarship-detail">
         <div className="scholarship-detail">
           <div className="row-detail">
@@ -145,11 +186,11 @@ const ScholarshipDetail = () => {
             {loading ? (
               <Skeleton width="30%" height={40} />
             ) : (
-              scholarship.number_of_seats_available > 0 && new Date() <= new Date(scholarship.End_Date) ? (
+              scholarship.number_of_seats_available > 0 && new Date() <= new Date(scholarship.deadline) && !hasApplied ? (
                 //<a href={scholarship.form_Link} className="apply-button">Apply Here</a>
                 <Link to={`/apply-for-scholarship/${scholarship._id}`} className="apply-button" >Apply Now</Link>
               ) : (
-                <p className="apply-closed">Applications are closed.</p>
+                <p className="apply-closed" style={{margin:'auto'}}>Applications are closed.</p>
               )
             )}
           </div>
@@ -174,7 +215,7 @@ const ScholarshipDetail = () => {
                   </Card>
                 ))
               ) : similarScholarships.map(scholarship => (
-                <Card key={scholarship._id} className=' similar-scholarship-item'>
+                <Card key={scholarship._id} className='similar-scholarship-item'>
                   <h2 height="100px" className='card-header' style={{ color: '#418447' }}>
                     {scholarship.scholarsip_name}
                   </h2>

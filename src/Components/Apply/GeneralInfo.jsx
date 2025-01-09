@@ -5,7 +5,7 @@ import { UserContext } from "../../Context/UserContext";
 import moment from "moment/moment";
 import PropTypes from "prop-types";
 
-const GeneralInfo = ({ currentStep, totalSteps, prevStep,formData, setFormData, saveStepData, nextStep }) => {
+const GeneralInfo = ({ currentStep, totalSteps, prevStep,formData, setFormData, saveStepData, nextStep,applicationDetails }) => {
     const { studentData, userData } = useContext(UserContext);
     const [formValues, setFormValues] = useState({
         fullname: "",
@@ -22,13 +22,13 @@ const GeneralInfo = ({ currentStep, totalSteps, prevStep,formData, setFormData, 
         }
     }, [studentData]);
     const initialValues = {
-        ID_Number: formData.ID_Number || "",
-        Card_Type: formData.Card_Type || "",
-        Martial_Status: formData.Martial_Status || "",
-        Permanent_Residence: formData.Permanent_Residence || "",
-        province: formData.province || "",
-        street: formData.street || "",
-        phoneNumber: userData.phoneNumber || "",
+        ID_Number: applicationDetails?.ID_Number ?? formData.ID_Number ?? "",
+        Card_Type: applicationDetails?.Card_Type ?? formData.Card_Type ?? "",
+        Martial_Status: applicationDetails?.Martial_Status ?? formData.Martial_Status ?? "",
+        Permanent_Residence: applicationDetails?.Permanent_Residence ?? formData.Permanent_Residence ?? "",
+        province: applicationDetails?.province ?? formData.province ?? "",
+        street: applicationDetails?.street ?? formData.street ?? "",
+        phoneNumber: userData?.phoneNumber ?? "",
     };
 
     const handleChange = (event) => {
