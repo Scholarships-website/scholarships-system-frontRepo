@@ -285,3 +285,13 @@
         transform: translateY(-8rem) scale(0.3, 0.5);
     }
 }
+
+
+.styled-textarea::placeholder {
+    color: #6c757d; /* Regular placeholder color */
+  }
+  
+  .styled-textarea::placeholder::after {
+    content: ' *';
+    color: red; /* Color for the asterisk */
+  }

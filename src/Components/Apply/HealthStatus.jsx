@@ -40,7 +40,7 @@ const HealthStatus = ({currentStep, totalSteps, prevStep, formData, setFormData,
                         <div className="row my-5">
                             <div className="col-md-5">
                                 <label htmlFor="Number_of_Disabilities_in_the_Family" className="form-label">
-                                    Number of Disabilities in the Family
+                                    Number of Disabilities in the Family <span className="text-danger"> * </span>
                                 </label>
                                 <Field
                                     type="number"
@@ -71,7 +71,7 @@ const HealthStatus = ({currentStep, totalSteps, prevStep, formData, setFormData,
                                             {values.Disabilities_description.map((_, index) => (
                                                 <div key={index} className="mb-3">
                                                     <label htmlFor={`Disabilities_description.${index}`} className="form-label">
-                                                        Description of Disability {index + 1}
+                                                        Description of Disability {index + 1} <span className="text-danger"> * </span>
                                                     </label>
                                                     <Field
                                                         type="text"

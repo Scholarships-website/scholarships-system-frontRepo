@@ -5,7 +5,7 @@ import { UserContext } from "../../Context/UserContext";
 import moment from "moment/moment";
 import PropTypes from "prop-types";
 
-const GeneralInfo = ({ currentStep, totalSteps, prevStep,formData, setFormData, saveStepData, nextStep,applicationDetails }) => {
+const GeneralInfo = ({ currentStep, totalSteps, prevStep, formData, setFormData, saveStepData, nextStep, applicationDetails }) => {
     const { studentData, userData } = useContext(UserContext);
     const [formValues, setFormValues] = useState({
         fullname: "",
@@ -74,18 +74,18 @@ const GeneralInfo = ({ currentStep, totalSteps, prevStep,formData, setFormData, 
                             <h3 className="mt-5">Personal Information</h3>
                             <div className="row">
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="fullname">Full Name</label>
+                                    <label htmlFor="fullname">Full Name <span className="text-danger"> * </span> </label>
                                     <Field type="text" name="fullname" id="fullname" className="form-control" value={formValues.fullname} readOnly />
                                     <ErrorMessage name="fullname" component="div" className="text-danger" />
                                 </div>
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="ID_Number">ID Number</label>
+                                    <label htmlFor="ID_Number">ID Number <span className="text-danger"> * </span></label>
                                     <Field type="text" name="ID_Number" id="ID_Number" className="form-control" />
                                     <ErrorMessage name="ID_Number" component="div" className="text-danger" />
                                 </div>
 
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="Card_Type">Card Type</label>
+                                    <label htmlFor="Card_Type">Card Type <span className="text-danger"> * </span></label>
                                     <Field as="select" name="Card_Type" id="Card_Type" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="هوية فلسطينية">هوية فلسطينية</option>
@@ -95,13 +95,13 @@ const GeneralInfo = ({ currentStep, totalSteps, prevStep,formData, setFormData, 
                                 </div>
 
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="dob">Date of Birth</label>
+                                    <label htmlFor="dob">Date of Birth <span className="text-danger"> * </span></label>
                                     <Field type="date" name="dob" id="dob" className="form-control" value={formValues.birthdate} readOnly />
                                     <ErrorMessage name="dob" component="div" className="text-danger" />
                                 </div>
 
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="gender">Gender</label>
+                                    <label htmlFor="gender">Gender <span className="text-danger"> * </span></label>
                                     <Field as="select" name="gender" id="gender" className="form-control" value={formValues.Gender} // Set the selected value here
                                         onChange={handleChange}>
                                         <option value="">-- Select --</option>
@@ -113,7 +113,7 @@ const GeneralInfo = ({ currentStep, totalSteps, prevStep,formData, setFormData, 
                                 </div>
 
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="Martial_Status">Marital Status</label>
+                                    <label htmlFor="Martial_Status">Marital Status <span className="text-danger"> * </span></label>
                                     <Field as="select" name="Martial_Status" id="Martial_Status" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="Single">Single</option>
@@ -132,19 +132,19 @@ const GeneralInfo = ({ currentStep, totalSteps, prevStep,formData, setFormData, 
                             <h3>Address Information</h3>
                             <div className="row">
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="Permanent_Residence">Permanent Residence</label>
+                                    <label htmlFor="Permanent_Residence">Permanent Residence <span className="text-danger"> * </span></label>
                                     <Field type="text" name="Permanent_Residence" id="Permanent_Residence" className="form-control" />
                                     <ErrorMessage name="Permanent_Residence" component="div" className="text-danger" />
                                 </div>
 
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="province">The Province</label>
+                                    <label htmlFor="province">The Province <span className="text-danger"> * </span></label>
                                     <Field type="text" name="province" id="province" className="form-control" />
                                     <ErrorMessage name="province" component="div" className="text-danger" />
                                 </div>
 
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="street">Street</label>
+                                    <label htmlFor="street">Street <span className="text-danger"> * </span></label>
                                     <Field type="text" name="street" id="street" className="form-control" />
                                     <ErrorMessage name="street" component="div" className="text-danger" />
                                 </div>
@@ -156,7 +156,7 @@ const GeneralInfo = ({ currentStep, totalSteps, prevStep,formData, setFormData, 
                             <h3>Contact Information</h3>
                             <div className="row">
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="phoneNumber">Phone Number</label>
+                                    <label htmlFor="phoneNumber">Phone Number <span className="text-danger"> * </span></label>
                                     <Field type="text" name="phoneNumber" id="phoneNumber" className="form-control" readOnly />
                                     <ErrorMessage name="phoneNumber" component="div" className="text-danger" />
                                 </div>
@@ -167,7 +167,7 @@ const GeneralInfo = ({ currentStep, totalSteps, prevStep,formData, setFormData, 
                             <button
                                 type="button"
                                 className="prev-btn btn mt-4 "
-                                style={{backgroundColor:'#5a6268'}}
+                                style={{ backgroundColor: '#5a6268' }}
                                 onClick={prevStep}
                                 disabled={currentStep === 1}
                             >

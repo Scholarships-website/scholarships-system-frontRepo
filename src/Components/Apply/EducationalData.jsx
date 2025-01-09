@@ -90,7 +90,7 @@ const EducationalData = ({currentStep, totalSteps, prevStep, formData, setFormDa
               <h3 className="mt-5">Study Level</h3>
               <div className="row">
                 <div className="col-md-5 mb-3">
-                  <label htmlFor="student_type">Are you a University or School Student?</label>
+                  <label htmlFor="student_type">Are you a University or School Student? <span className="text-danger"> * </span></label>
                   <Field as="select" name="student_type" id="student_type" className="form-control">
                     <option value="">-- Select --</option>
                     <option value="university">University Student</option>
@@ -99,7 +99,7 @@ const EducationalData = ({currentStep, totalSteps, prevStep, formData, setFormDa
                   <ErrorMessage name="student_type" component="div" className="text-danger" />
                 </div>
                 <div className="col-md-5 mb-3">
-                  <label htmlFor="GPA">GPA</label>
+                  <label htmlFor="GPA">GPA <span className="text-danger"> * </span></label>
                   <Field type="number" name="GPA" className="form-control" />
                   <ErrorMessage name="GPA" component="div" className="text-danger" />
                 </div>
@@ -116,24 +116,24 @@ const EducationalData = ({currentStep, totalSteps, prevStep, formData, setFormDa
                   {values.student_type === "university" && (
                     <>
                       <div className="col-md-5 mb-3">
-                        <label htmlFor="academic_program">Academic Program</label>
+                        <label htmlFor="academic_program">Academic Program <span className="text-danger"> * </span></label>
                         <Field type="text" name="academic_program" id="academic_program" className="form-control" />
                         <ErrorMessage name="academic_program" component="div" className="text-danger" />
                       </div>
 
                       <div className="col-md-5 mb-3">
-                        <label htmlFor="college">College</label>
+                        <label htmlFor="college">College <span className="text-danger"> * </span></label>
                         <Field type="text" name="college" id="college" className="form-control" />
                         <ErrorMessage name="college" component="div" className="text-danger" />
                       </div>
 
                       <div className="col-md-5 mb-3">
-                        <label htmlFor="major">Major</label>
+                        <label htmlFor="major">Major <span className="text-danger"> * </span></label>
                         <Field type="text" name="major" id="major" className="form-control" />
                         <ErrorMessage name="major" component="div" className="text-danger" />
                       </div>
                       <div className="col-md-5 mb-3">
-                        <label htmlFor="university_year">University Year</label>
+                        <label htmlFor="university_year">University Year <span className="text-danger"> * </span></label>
                         <Field as="select" name="university_year" className="form-control">
                           <option value="">-- Select --</option>
                           <option value="first">First Year</option>
@@ -148,7 +148,7 @@ const EducationalData = ({currentStep, totalSteps, prevStep, formData, setFormDa
                   {values.student_type === "school" && (
                     <>
                       <div className="col-md-5 mb-3">
-                        <label htmlFor="stream">Stream</label>
+                        <label htmlFor="stream">Stream <span className="text-danger"> * </span></label>
                         <Field as="select" name="stream" id="stream" className="form-control">
                           <option value="">-- Select --</option>
                           <option value="scientific">Scientific</option>
@@ -160,7 +160,7 @@ const EducationalData = ({currentStep, totalSteps, prevStep, formData, setFormDa
                         <ErrorMessage name="stream" component="div" className="text-danger" />
                       </div>
                       <div className="col-md-5 mb-3">
-                        <label htmlFor="class_year">Class</label>
+                        <label htmlFor="class_year">Class <span className="text-danger"> * </span></label>
                         <Field as="select" name="class_year" className="form-control">
                           <option value="">-- Select --</option>
                           <option value="grade12">Grade 12</option>
@@ -177,7 +177,7 @@ const EducationalData = ({currentStep, totalSteps, prevStep, formData, setFormDa
               <div className="row">
                 <div className="col-md-5 mb-3">
                   <label htmlFor="Number_of_Siblings">
-                    Number of siblings studying at universities
+                    Number of siblings studying at universities <span className="text-danger"> * </span>
                   </label>
                   <Field
                     type="number"

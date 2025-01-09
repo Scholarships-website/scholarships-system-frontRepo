@@ -14,7 +14,8 @@ export default function Input({
     value,
     disabled,
     colSize = 'col-md-5',
-    options = []  // For select options
+    options = [], // For select options
+    required = false, // Add a 'required' prop to mark fields as required
 }) {
     const [isFilled, setIsFilled] = useState(false);
 
@@ -40,10 +41,15 @@ export default function Input({
                 >
                     <option value="">Select {title}</option>
                     {options.map((option, index) => (
-                        <option key={index} value={option.value}>{option.label}</option>
+                        <option key={index} value={option.value}>
+                            {option.label}
+                        </option>
                     ))}
                 </select>
-                <label htmlFor={id}>{title}</label>
+                <label htmlFor={id}>
+                    {title}
+                    {required && <span className="text-danger">*</span>}
+                </label>
                 {errorMessage && <div className="text-danger">{errorMessage}</div>}
             </div>
         );
@@ -62,9 +68,19 @@ export default function Input({
                 onChange={onChange}
                 onBlur={onBlur}
                 disabled={disabled}
-                style={{ backgroundColor: isFilled ? '#e8f0fe' : '#f8f9fa' }}
+                style={{
+                    backgroundColor: isFilled ? '#e8f0fe' : '#f8f9fa', // Light blue for filled
+                    transition: 'background-color 0.3s ease', // Smooth transition on fill
+                }}
             />
-            <label htmlFor={id}>{title}</label>
+            <label htmlFor={id}>
+                {title}
+                {required && <span className="text-danger" style={{
+                    position: 'absolute',
+                    right: '15px',
+                    top: '20px',
+                }}> * </span>}
+            </label>
             {errorMessage && <div className="text-danger">{errorMessage}</div>}
         </div>
     );

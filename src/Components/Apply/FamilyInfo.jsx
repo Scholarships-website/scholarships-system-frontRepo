@@ -65,7 +65,7 @@ const FamilyInfo = ({currentStep, totalSteps, prevStep, formData, setFormData,sa
                             <h3 className="mt-5">Basic Family Information</h3>
                             <div className="row">
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="Head_of_the_family">Head of the family</label>
+                                    <label htmlFor="Head_of_the_family">Head of the family <span className="text-danger"> * </span></label>
                                     <Field as="select" name="Head_of_the_family" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="father">Father</option>
@@ -76,12 +76,12 @@ const FamilyInfo = ({currentStep, totalSteps, prevStep, formData, setFormData,sa
                                     <ErrorMessage name="Head_of_the_family" component="div" className="text-danger" />
                                 </div>
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="breadwinner">Name of the breadwinner</label>
+                                    <label htmlFor="breadwinner">Name of the breadwinner <span className="text-danger"> * </span></label>
                                     <Field type="text" name="breadwinner" className="form-control" />
                                     <ErrorMessage name="breadwinner" component="div" className="text-danger" />
                                 </div>
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="breadwinner_id">ID number</label>
+                                    <label htmlFor="breadwinner_id">ID number <span className="text-danger"> * </span></label>
                                     <Field type="text" name="breadwinner_id" className="form-control" />
                                     <ErrorMessage name="breadwinner_id" component="div" className="text-danger" />
                                 </div>
@@ -93,7 +93,7 @@ const FamilyInfo = ({currentStep, totalSteps, prevStep, formData, setFormData,sa
                             <h3>Father's Work Details</h3>
                             <div className="row">
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="work_nature">Nature of work for the father</label>
+                                    <label htmlFor="work_nature">Nature of work for the father <span className="text-danger"> * </span></label>
                                     <Field as="select" name="work_nature" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="government">Government Employee</option>
@@ -105,12 +105,12 @@ const FamilyInfo = ({currentStep, totalSteps, prevStep, formData, setFormData,sa
                                     <ErrorMessage name="work_nature" component="div" className="text-danger" />
                                 </div>
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="institution">Name of the institution</label>
+                                    <label htmlFor="institution">Name of the institution <span className="text-danger"> * </span></label>
                                     <Field type="text" name="institution" className="form-control" />
                                     <ErrorMessage name="institution" component="div" className="text-danger" />
                                 </div>
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="income_category">Monthly income category</label>
+                                    <label htmlFor="income_category">Monthly income category <span className="text-danger"> * </span></label>
                                     <Field as="select" name="income_category" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="low">Low</option>
@@ -127,7 +127,7 @@ const FamilyInfo = ({currentStep, totalSteps, prevStep, formData, setFormData,sa
                             <h3>Additional Family Details</h3>
                             <div className="row">
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="Does_mother_work">Does the student's mother work?</label>
+                                    <label htmlFor="Does_mother_work">Does the student's mother work? <span className="text-danger"> * </span></label>
                                     <Field as="select" name="Does_mother_work" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="Yes">Yes</option>
@@ -136,7 +136,7 @@ const FamilyInfo = ({currentStep, totalSteps, prevStep, formData, setFormData,sa
                                     <ErrorMessage name="Does_mother_work" component="div" className="text-danger" />
                                 </div>
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="any_other_income">Is there any other income?</label>
+                                    <label htmlFor="any_other_income">Is there any other income? <span className="text-danger"> * </span></label>
                                     <Field as="select" name="any_other_income" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="Yes">Yes</option>
@@ -145,7 +145,7 @@ const FamilyInfo = ({currentStep, totalSteps, prevStep, formData, setFormData,sa
                                     <ErrorMessage name="any_other_income" component="div" className="text-danger" />
                                 </div>
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="Total_number_of_family_members">Total number of family members</label>
+                                    <label htmlFor="Total_number_of_family_members">Total number of family members <span className="text-danger"> * </span></label>
                                     <Field type="number" name="Total_number_of_family_members" className="form-control" />
                                     <ErrorMessage name="Total_number_of_family_members" component="div" className="text-danger" />
                                 </div>
@@ -157,7 +157,7 @@ const FamilyInfo = ({currentStep, totalSteps, prevStep, formData, setFormData,sa
                             <h3>Social and Registration Details</h3>
                             <div className="row">
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="Does_student_work">Does the student work?</label>
+                                    <label htmlFor="Does_student_work">Does the student work? <span className="text-danger"> * </span></label>
                                     <Field as="select" name="Does_student_work" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="Yes">Yes</option>
@@ -166,7 +166,7 @@ const FamilyInfo = ({currentStep, totalSteps, prevStep, formData, setFormData,sa
                                     <ErrorMessage name="Does_student_work" component="div" className="text-danger" />
                                 </div>
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="social_affairs_case">Is the family registered as a social affairs case?</label>
+                                    <label htmlFor="social_affairs_case">Is the family registered as a social affairs case? <span className="text-danger"> * </span></label>
                                     <Field as="select" name="social_affairs_case" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="Yes">Yes</option>
@@ -175,7 +175,7 @@ const FamilyInfo = ({currentStep, totalSteps, prevStep, formData, setFormData,sa
                                     <ErrorMessage name="social_affairs_case" component="div" className="text-danger" />
                                 </div>
                                 <div className="col-md-5 mb-3">
-                                    <label htmlFor="UNRWA_card">Does the family have a UNRWA card?</label>
+                                    <label htmlFor="UNRWA_card">Does the family have a UNRWA card? <span className="text-danger"> * </span></label>
                                     <Field as="select" name="UNRWA_card" className="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="Yes">Yes</option>

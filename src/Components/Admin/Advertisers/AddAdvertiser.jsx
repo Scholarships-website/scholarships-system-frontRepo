@@ -187,6 +187,7 @@ export default function AddAdvertiser() {
       onBlur={formik.handleBlur}
       touched={formik.touched}
       colSize="col-md-5"
+      required
     />
   )
   return (
@@ -208,14 +209,19 @@ export default function AddAdvertiser() {
         <h2 className='ps-4 pt-4 add-advertiser'>Add Advertiser</h2>
         <form onSubmit={formik.handleSubmit} className="row justify-content-center align-items-center w-75 pt-5 gap-3 addForm " style={{ margin: 'auto' }}>
           {renderInputs}
-          <div className="col-md-5">
+          <div className="col-md-6">
             <PhoneInput className="phoneInput row justify-content-center align-items-center w-75 p-5 pt-5 gap-3"
               value={formik.values.phoneNumber}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               errors={formik.errors}
               touched={formik.touched}
-              countryCode={formik.values.countryCode} // Pass the country code to the PhoneInput
+              countryCode={formik.values.countryCode}
+              required
+              title="Phone Number"
+              name='phoneNumber'
+              id='phoneNumber'
+              colSize="col-md-12"
             />
           </div>
           <div className="row justify-content-center align-items-center addAdvertiser">

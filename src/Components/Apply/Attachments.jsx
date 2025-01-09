@@ -83,7 +83,7 @@ const Attachments = ({ currentStep, totalSteps, prevStep, formData, setFormData,
 
               {/* Student's ID Image */}
               <div className="mb-3 col-md-5">
-                <label htmlFor="Student_ID_Image">Student's ID Image (PDF Only)</label>
+                <label htmlFor="Student_ID_Image">Student's ID Image (PDF Only) <span className="text-danger"> * </span></label>
                 <input
                   type="file"
                   name="Student_ID_Image"
@@ -96,7 +96,7 @@ const Attachments = ({ currentStep, totalSteps, prevStep, formData, setFormData,
 
               {/* Head of Household's ID with Annex (children under 18) */}
               <div className="mb-3 col-md-5">
-                <label htmlFor="Head_of_Household_ID_Image">Head of Household's ID with Annex (PDF Only)</label>
+                <label htmlFor="Head_of_Household_ID_Image">Head of Household's ID with Annex (PDF Only) <span className="text-danger"> * </span></label>
                 <input
                   type="file"
                   name="Head_of_Household_ID_Image"
@@ -109,7 +109,7 @@ const Attachments = ({ currentStep, totalSteps, prevStep, formData, setFormData,
 
               {/* Mother's ID Image */}
               <div className="mb-3 col-md-5">
-                <label htmlFor="Mother_ID_Image">Mother's ID Image (PDF Only)</label>
+                <label htmlFor="Mother_ID_Image">Mother's ID Image (PDF Only) <span className="text-danger"> * </span></label>
                 <input
                   type="file"
                   name="Mother_ID_Image"

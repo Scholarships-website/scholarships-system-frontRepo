@@ -70,7 +70,7 @@ const Identifiers = ({ currentStep, totalSteps, prevStep, formData, setFormData,
             {/* Name */}
             <div className="row">
               <div className="mb-3 col-md-4">
-                <label htmlFor="identifier_Name1">Identifier's Name</label>
+                <label htmlFor="identifier_Name1">Identifier's Name <span className="text-danger"> * </span></label>
                 <Field
                   type="text"
                   name="identifier_Name1"
@@ -84,7 +84,7 @@ const Identifiers = ({ currentStep, totalSteps, prevStep, formData, setFormData,
               </div>
               {/* Phone */}
               <div className="mb-3 col-md-4">
-                <label htmlFor="identifier_phone1">Phone/Mobile Number</label>
+                <label htmlFor="identifier_phone1">Phone/Mobile Number <span className="text-danger"> * </span></label>
                 <Field
                   type="text"
                   name="identifier_phone1"
@@ -98,7 +98,7 @@ const Identifiers = ({ currentStep, totalSteps, prevStep, formData, setFormData,
               </div>
               {/* Profession */}
               <div className="mb-3 col-md-4">
-                <label htmlFor="identifier_profession1">Profession</label>
+                <label htmlFor="identifier_profession1">Profession <span className="text-danger"> * </span></label>
                 <Field
                   type="text"
                   name="identifier_profession1"
@@ -119,7 +119,7 @@ const Identifiers = ({ currentStep, totalSteps, prevStep, formData, setFormData,
             {/* Name */}
             <div className="row">
               <div className="mb-3 col-md-4">
-                <label htmlFor="identifier_Name2">Identifier's Name</label>
+                <label htmlFor="identifier_Name2">Identifier's Name <span className="text-danger"> * </span></label>
                 <Field
                   type="text"
                   name="identifier_Name2"
@@ -133,7 +133,7 @@ const Identifiers = ({ currentStep, totalSteps, prevStep, formData, setFormData,
               </div>
               {/* Phone */}
               <div className="mb-3 col-md-4">
-                <label htmlFor="identifier_phone2">Phone/Mobile Number</label>
+                <label htmlFor="identifier_phone2">Phone/Mobile Number <span className="text-danger"> * </span></label>
                 <Field
                   type="text"
                   name="identifier_phone2"
@@ -147,7 +147,7 @@ const Identifiers = ({ currentStep, totalSteps, prevStep, formData, setFormData,
               </div>
               {/* Profession */}
               <div className="mb-3 col-md-4">
-                <label htmlFor="identifier_profession2">Profession</label>
+                <label htmlFor="identifier_profession2">Profession <span className="text-danger"> * </span></label>
                 <Field
                   type="text"
                   name="identifier_profession2"
@@ -168,7 +168,7 @@ const Identifiers = ({ currentStep, totalSteps, prevStep, formData, setFormData,
             {/* Name */}
             <div className="row">
               <div className="mb-3 col-md-4">
-                <label htmlFor="identifier_Name3">Identifier's Name</label>
+                <label htmlFor="identifier_Name3">Identifier's Name <span className="text-danger"> * </span></label>
                 <Field
                   type="text"
                   name="identifier_Name3"
@@ -182,7 +182,7 @@ const Identifiers = ({ currentStep, totalSteps, prevStep, formData, setFormData,
               </div>
               {/* Phone */}
               <div className="mb-3 col-md-4">
-                <label htmlFor="identifier_phone3">Phone/Mobile Number</label>
+                <label htmlFor="identifier_phone3">Phone/Mobile Number <span className="text-danger"> * </span></label>
                 <Field
                   type="text"
                   name="identifier_phone3"
@@ -196,7 +196,7 @@ const Identifiers = ({ currentStep, totalSteps, prevStep, formData, setFormData,
               </div>
               {/* Profession */}
               <div className="mb-3 col-md-4">
-                <label htmlFor="identifier_profession3">Profession</label>
+                <label htmlFor="identifier_profession3">Profession <span className="text-danger"> * </span></label>
                 <Field
                   type="text"
                   name="identifier_profession3"

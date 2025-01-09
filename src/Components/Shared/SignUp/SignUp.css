@@ -95,13 +95,15 @@
     width: 90%;
     margin: auto;
 }
-.registrationForm .row{
+
+.registrationForm .row {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: auto;
     padding: 10px;
 }
+
 /* Animation for the shine effect */
 @keyframes shine {
     0% {
@@ -146,6 +148,7 @@
         font-size: 1.5rem;
 
     }
+    
 }
 
 @media (max-width: 750px) {
@@ -203,12 +206,16 @@
     }
 
     .signup .formContainer .form-control {
-        /* width: 90%; */
-        padding: 20px;
+        width: 90%;
+        /* padding: 20px; */
+    }
+
+    .phone-input-container {
+        flex-wrap: wrap;
     }
 
     .signup .formContainer .phone-number-input {
-        width: 50%;
+        /* width: 50%; */
         flex: none;
         /* padding: 20px; */
 

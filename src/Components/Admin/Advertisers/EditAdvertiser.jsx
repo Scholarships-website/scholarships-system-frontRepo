@@ -127,7 +127,7 @@ export default function EditAdvertiser() {
         <h2 className='ps-4 pt-4'>Edit Advertiser Account "{advertiser.user_id.username}"</h2>
         <form onSubmit={formik.handleSubmit} className="row justify-content-center align-items-center w-75 ps-4 pt-5">
           <div className="form-item col-md-5">
-            <label className="form-label ps-2" htmlFor="id">ID</label>
+            <label className="form-label ps-2" htmlFor="id">ID <span className="text-danger"> * </span></label>
             <input
               type="text"
               className="form-control "
@@ -141,7 +141,7 @@ export default function EditAdvertiser() {
             />
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="username">Username</label>
+            <label className="form-label ps-2" htmlFor="username">Username <span className="text-danger"> * </span></label>
             <input
               type="text"
               className={`form-control ${formik.touched.username && formik.errors.username ? 'is-invalid' : ''}`}
@@ -156,7 +156,7 @@ export default function EditAdvertiser() {
             ) : null}
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="email">Email</label>
+            <label className="form-label ps-2" htmlFor="email">Email <span className="text-danger"> * </span></label>
             <input
               type="email"
               className={`form-control ${formik.touched.email && formik.errors.email ? 'is-invalid' : ''}`}
@@ -171,7 +171,7 @@ export default function EditAdvertiser() {
             ) : null}
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="organization_name">Organization Name</label>
+            <label className="form-label ps-2" htmlFor="organization_name">Organization Name <span className="text-danger"> * </span></label>
             <input
               type="text"
               className={`form-control ${formik.touched.organization_name && formik.errors.organization_name ? 'is-invalid' : ''}`}

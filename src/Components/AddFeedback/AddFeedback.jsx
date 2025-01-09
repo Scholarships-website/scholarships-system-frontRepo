@@ -76,9 +76,9 @@ const AddFeedback = () => {
     useEffect(() => {
         if (roleId && userData) {
             formik.setFieldValue('id', roleId);
-            formik.setFieldValue('name', userData.username || '');
-            formik.setFieldValue('email', userData.email || '');
-            formik.setFieldValue('role',userData.role || 'Student');
+            formik.setFieldValue('name', userData?.username || '');
+            formik.setFieldValue('email', userData?.email || '');
+            formik.setFieldValue('role',userData?.role || 'Student');
         }
     }, [roleId, userData]);
 
@@ -98,7 +98,7 @@ const AddFeedback = () => {
                     <input
                         type="text"
                         name="name"
-                        placeholder="Name"
+                        placeholder="Name *"
                         {...formik.getFieldProps('name')}
                     />
                     {formik.touched.name && formik.errors.name ? <div className="error">{formik.errors.name}</div> : null}
@@ -106,7 +106,7 @@ const AddFeedback = () => {
                     <input
                         type="email"
                         name="email"
-                        placeholder="Email"
+                        placeholder="Email *"
                         {...formik.getFieldProps('email')}
                     />
                     {formik.touched.email && formik.errors.email ? <div className="error">{formik.errors.email}</div> : null}
@@ -141,7 +141,7 @@ const AddFeedback = () => {
                         name="content"
                         cols="30"
                         rows="6"
-                        placeholder="Tell us about your experience!"
+                        placeholder="Tell us about your experience! *"
                         {...formik.getFieldProps('content')}
                     ></textarea>
                     {formik.touched.content && formik.errors.content ? <div className="error">{formik.errors.content}</div> : null}

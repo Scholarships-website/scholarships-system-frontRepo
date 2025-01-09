@@ -122,6 +122,7 @@ export default function Login() {
             touched={formik.touched}
             value={formik.values[input.name]}
             colSize="col-md-12"
+            required
         />
     ));
     const handleForgotPassword = () => {

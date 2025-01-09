@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
 import './Contact.css';
 import Navbar from '../Shared/Navbar/Navbar'
+import { toast } from 'react-toastify';
 
 function Contact() {
   const sendLetterRef = useRef(null);
@@ -28,10 +29,14 @@ function Contact() {
         document.body.classList.add("sent");
       } else {
         console.error("Failed to send message");
+        toast.error('Failed to send message'); // Error Toast
       }
     } catch (error) {
-      console.error("Error:", error);
-    }
+      if (error.response && error.response.data) {
+        toast.error(error.response.data.error || 'An error occurred');
+      } else {
+        toast.error('An error occurred');
+      }    }
   };
 
   useEffect(() => {
@@ -54,11 +59,12 @@ function Contact() {
               <p>
                 <textarea
                   name="message"
-                  placeholder="Your message"
+                  placeholder="Your message *"
                   value={formData.message}
                   onChange={handleChange}
                   required
-                ></textarea>
+                  className="styled-textarea"
+                />
               </p>
             </div>
             <div className="side">
@@ -66,7 +72,7 @@ function Contact() {
                 <input
                   type="text"
                   name="name"
-                  placeholder="Your name"
+                  placeholder="Your name *"
                   value={formData.name}
                   onChange={handleChange}
                   required
@@ -76,7 +82,7 @@ function Contact() {
                 <input
                   type="email"
                   name="email"
-                  placeholder="Your email"
+                  placeholder="Your email *"
                   value={formData.email}
                   onChange={handleChange}
                   required

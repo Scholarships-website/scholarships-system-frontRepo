@@ -18,8 +18,10 @@ export default function SignUp() {
         confirmPassword: '',
         first_name: '',
         last_name: '',
-        phoneNumber: '',  // Full phone number including country code
-        countryCode: '+970', // Default country code
+        phoneNumber: '', 
+        countryCode: '+970',
+        BirthDate:'',
+        Gender:'',
     };
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
@@ -97,72 +99,72 @@ export default function SignUp() {
         validationSchema: registrationScheme,
     });
 
-    const inputs = [
-        {
-            type: 'text',
-            id: 'username',
-            name: 'username',
-            title: 'username',
-            value: formik.values.username,
-        },
-        {
-            type: 'email',
-            id: 'email',
-            name: 'email',
-            title: 'Email Address',
-            value: formik.values.email,
-        },
-        {
-            type: 'password',
-            id: 'password',
-            name: 'password',
-            title: 'Password',
-            value: formik.values.password,
-        },
-        {
-            type: 'password',
-            id: 'confirmPassword',
-            name: 'confirmPassword',
-            title: 'Confirm Password',
-            value: formik.values.confirmPassword,
-        },
-        {
-            type: 'text',
-            id: 'first_name',
-            name: 'first_name',
-            title: 'First Name',
-            value: formik.values.first_name,
-        },
-        {
-            type: 'text',
-            id: 'last_name',
-            name: 'last_name',
-            title: 'Last Name',
-            value: formik.values.last_name,
-        },
-    ];
+    // const inputs = [
+    //     {
+    //         type: 'text',
+    //         id: 'username',
+    //         name: 'username',
+    //         title: 'username',
+    //         value: formik.values.username,
+    //     },
+    //     {
+    //         type: 'email',
+    //         id: 'email',
+    //         name: 'email',
+    //         title: 'Email Address',
+    //         value: formik.values.email,
+    //     },
+    //     {
+    //         type: 'password',
+    //         id: 'password',
+    //         name: 'password',
+    //         title: 'Password',
+    //         value: formik.values.password,
+    //     },
+    //     {
+    //         type: 'password',
+    //         id: 'confirmPassword',
+    //         name: 'confirmPassword',
+    //         title: 'Confirm Password',
+    //         value: formik.values.confirmPassword,
+    //     },
+    //     {
+    //         type: 'text',
+    //         id: 'first_name',
+    //         name: 'first_name',
+    //         title: 'First Name',
+    //         value: formik.values.first_name,
+    //     },
+    //     {
+    //         type: 'text',
+    //         id: 'last_name',
+    //         name: 'last_name',
+    //         title: 'Last Name',
+    //         value: formik.values.last_name,
+    //     },
+    // ];
 
-    const renderInputs = inputs.map((input, index) => (
-        <Input
-            type={input.type}
-            id={input.id}
-            name={input.name}
-            title={input.title}
-            key={index}
-            errors={formik.errors}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            touched={formik.touched}
-            value={formik.values[input.name]}
-            colSize="col-md-12"
-        />
-    ));
+    // const renderInputs = inputs.map((input, index) => (
+    //     <Input
+    //         type={input.type}
+    //         id={input.id}
+    //         name={input.name}
+    //         title={input.title}
+    //         key={index}
+    //         errors={formik.errors}
+    //         onChange={formik.handleChange}
+    //         onBlur={formik.handleBlur}
+    //         touched={formik.touched}
+    //         value={formik.values[input.name]}
+    //         colSize="col-md-12"
+    //     />
+    // ));
 
     // Define handleLoginNavigation function
     const handleLoginNavigation = () => {
         navigate('/login'); // Adjust the path as needed
     };
-    console.log(formik.errors);
+    // console.log(formik.errors);
     return (
         <div className='signup'>
             <Navbar />
@@ -202,6 +204,7 @@ export default function SignUp() {
                                         touched={formik.touched}
                                         value={formik.values.first_name}
                                         colSize="col-md-12"
+                                        required 
                                     />
                                 </div>
                                 <div className="col-md-6">
@@ -216,6 +219,7 @@ export default function SignUp() {
                                         touched={formik.touched}
                                         value={formik.values.last_name}
                                         colSize="col-md-12"
+                                        required
                                     />
                                 </div>
                             </div>
@@ -232,6 +236,7 @@ export default function SignUp() {
                                         touched={formik.touched}
                                         value={formik.values.username}
                                         colSize="col-md-12"
+                                        required
                                     />
                                 </div>
                                 <div className="col-md-6">
@@ -246,6 +251,7 @@ export default function SignUp() {
                                         touched={formik.touched}
                                         value={formik.values.email}
                                         colSize="col-md-12"
+                                        required
                                     />
                                 </div>
                             </div>
@@ -264,6 +270,7 @@ export default function SignUp() {
                                         touched={formik.touched}
                                         value={formik.values.password}
                                         colSize="col-md-12"
+                                        required
                                     />
                                 </div>
                                 <div className="col-md-6">
@@ -278,6 +285,7 @@ export default function SignUp() {
                                         touched={formik.touched}
                                         value={formik.values.confirmPassword}
                                         colSize="col-md-12"
+                                        required
                                     />
                                 </div>
                             </div>
@@ -296,6 +304,7 @@ export default function SignUp() {
                                         touched={formik.touched}
                                         value={formik.values.BirthDate}
                                         colSize="col-md-12"
+                                        required
                                     />
                                 </div>
                                 <div className="col-md-6">
@@ -314,22 +323,27 @@ export default function SignUp() {
                                             { value: 'female', label: 'Female' },
                                         ]}
                                         colSize="col-md-12"
+                                        required
                                     />
                                 </div>
 
                             </div>
                             {/* Phone Input */}
                             <div className="row">
-                                <div className="col-md-6">
+                                <div className="col-md-12">
                                     <PhoneInput
                                         className="phoneInput"
                                         value={formik.values.phoneNumber}
+                                        title="Phone Number"
+                                        name='phoneNumber'
+                                        id='phoneNumber'
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                         errors={formik.errors}
                                         touched={formik.touched}
                                         countryCode={formik.values.countryCode}
                                         colSize="col-md-12"
+                                        required
                                     />
                                 </div>
                             </div>

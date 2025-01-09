@@ -131,23 +131,88 @@ function AddScholarshipForm() {
     formik.setFieldValue('scholarship_picture', e.target.files[0]);
   };
   const customLabels = {
-    scholarsip_name: 'Scholarship Name',
-    brief_descrition: 'Brief Description',
-    start_Date: 'Start Date',
-    End_Date: 'End Date',
-    SelectionProcess: 'Selection Process',
-    type: 'Type of Scholarship',
-    language_Of_Study: 'Language of Study',
-    Place_of_Study: 'Place of Study',
-    expenses_coverd: 'Expenses Covered',
-    eligbility_criteria: 'Eligibility Criteria',
-    term_and_conditions: 'Terms and Conditions',
-    website_link: 'Website Link',
-    key_personnel_details: 'Key Personnel Details',
-    number_of_seats_available: 'Number of Seats Available',
-    scholarship_picture: 'Upload Scholarship Image',
-    deadline: 'Deadline of the Application',
+    scholarsip_name: (
+      <>
+        Scholarship Name <span className="text-danger"> * </span>
+      </>
+    ),
+    brief_descrition: (
+      <>
+        Brief Description <span className="text-danger"> * </span>
+      </>
+    ),
+    start_Date: (
+      <>
+        Start Date <span className="text-danger"> * </span>
+      </>
+    ),
+    End_Date: (
+      <>
+        End Date <span className="text-danger"> * </span>
+      </>
+    ),
+    SelectionProcess: (
+      <>
+        Selection Process <span className="text-danger"> * </span>
+      </>
+    ),
+    type: (
+      <>
+        Type of Scholarship <span className="text-danger"> * </span>
+      </>
+    ),
+    language_Of_Study: (
+      <>
+        Language of Study <span className="text-danger"> * </span>
+      </>
+    ),
+    Place_of_Study: (
+      <>
+        Place of Study <span className="text-danger"> * </span>
+      </>
+    ),
+    expenses_coverd: (
+      <>
+        Expenses Covered <span className="text-danger"> * </span>
+      </>
+    ),
+    eligbility_criteria: (
+      <>
+        Eligibility Criteria <span className="text-danger"> * </span>
+      </>
+    ),
+    term_and_conditions: (
+      <>
+        Terms and Conditions <span className="text-danger"> * </span>
+      </>
+    ),
+    website_link: (
+      <>
+        Website Link <span className="text-danger"> * </span>
+      </>
+    ),
+    key_personnel_details: (
+      <>
+        Key Personnel Details <span className="text-danger"> * </span>
+      </>
+    ),
+    number_of_seats_available: (
+      <>
+        Number of Seats Available <span className="text-danger"> * </span>
+      </>
+    ),
+    scholarship_picture: (
+      <>
+        Upload Scholarship Image <span className="text-danger"> * </span>
+      </>
+    ),
+    deadline: (
+      <>
+        Deadline of the Application <span className="text-danger"> * </span>
+      </>
+    ),
   };
+  
   return (
     <div className="container mt-5">
       <ToastContainer />

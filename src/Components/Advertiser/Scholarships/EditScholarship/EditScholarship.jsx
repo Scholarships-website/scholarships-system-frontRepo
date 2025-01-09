@@ -24,7 +24,7 @@ function EditScholarship() {
   const fetchScholarship = async () => {
     try {
       const response = await axios.get(`http://localhost:3000/api/v1/admin/scholarships/pending/${id}`);
-      // console.log('Fetched Scholarship:', response.data);
+      console.log('Fetched Scholarship:', response.data);
       setScholarship(response.data);
     } catch (error) {
       console.error('Error fetching Scholarship:', error);
@@ -201,7 +201,7 @@ function EditScholarship() {
         <h2 className='ps-4 pt-4'>Edit Scholarship</h2>
         <form onSubmit={formik.handleSubmit} className="row justify-content-center align-items-center w-75 ps-4 pt-5">
           <div className="form-item col-md-5">
-            <label className="form-label ps-2" htmlFor="id">ID</label>
+            <label className="form-label ps-2" htmlFor="id">ID <span className="text-danger"> * </span></label>
             <input
               type="text"
               className="form-control "
@@ -215,7 +215,7 @@ function EditScholarship() {
             />
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="scholarsip_name">Scholarship Name</label>
+            <label className="form-label ps-2" htmlFor="scholarsip_name">Scholarship Name <span className="text-danger"> * </span></label>
             <input
               type="text"
               className={`form-control ${formik.touched.scholarsip_name && formik.errors.scholarsip_name ? 'is-invalid' : ''}`}
@@ -230,7 +230,7 @@ function EditScholarship() {
             ) : null}
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="brief_descrition">Brief Description</label>
+            <label className="form-label ps-2" htmlFor="brief_descrition">Brief Description <span className="text-danger"> * </span></label>
             <input
               type="text"
               className={`form-control ${formik.touched.brief_descrition && formik.errors.brief_descrition ? 'is-invalid' : ''}`}
@@ -245,7 +245,7 @@ function EditScholarship() {
             ) : null}
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="start_Date">Start Date</label>
+            <label className="form-label ps-2" htmlFor="start_Date">Start Date <span className="text-danger"> * </span></label>
             <input
               type="date"
               className={`form-control ${formik.touched.start_Date && formik.errors.start_Date ? 'is-invalid' : ''}`}
@@ -260,7 +260,7 @@ function EditScholarship() {
             ) : null}
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="End_Date">End Date</label>
+            <label className="form-label ps-2" htmlFor="End_Date">End Date <span className="text-danger"> * </span></label>
             <input
               type="date"
               className={`form-control ${formik.touched.End_Date && formik.errors.End_Date ? 'is-invalid' : ''}`}
@@ -275,7 +275,7 @@ function EditScholarship() {
             ) : null}
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="deadline">Deadline</label>
+            <label className="form-label ps-2" htmlFor="deadline">Deadline <span className="text-danger"> * </span></label>
             <input
               type="date"
               className={`form-control ${formik.touched.deadline && formik.errors.deadline ? 'is-invalid' : ''}`}
@@ -290,7 +290,7 @@ function EditScholarship() {
             ) : null}
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="SelectionProcess">Selection Process</label>
+            <label className="form-label ps-2" htmlFor="SelectionProcess">Selection Process <span className="text-danger"> * </span></label>
             <input
               type="text"
               className={`form-control ${formik.touched.SelectionProcess && formik.errors.SelectionProcess ? 'is-invalid' : ''}`}
@@ -305,7 +305,7 @@ function EditScholarship() {
             ) : null}
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="type">Type</label>
+            <label className="form-label ps-2" htmlFor="type">Type <span className="text-danger"> * </span></label>
             <input
               type="text"
               className={`form-control ${formik.touched.type && formik.errors.type ? 'is-invalid' : ''}`}
@@ -320,7 +320,7 @@ function EditScholarship() {
             ) : null}
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="language_Of_Study">Language of Study</label>
+            <label className="form-label ps-2" htmlFor="language_Of_Study">Language of Study <span className="text-danger"> * </span></label>
             <input
               type="text"
               className={`form-control ${formik.touched.language_Of_Study && formik.errors.language_Of_Study ? 'is-invalid' : ''}`}
@@ -335,7 +335,7 @@ function EditScholarship() {
             ) : null}
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="Place_of_Study">Place of Study</label>
+            <label className="form-label ps-2" htmlFor="Place_of_Study">Place of Study <span className="text-danger"> * </span></label>
             <input
               type="text"
               className={`form-control ${formik.touched.Place_of_Study && formik.errors.Place_of_Study ? 'is-invalid' : ''}`}
@@ -350,7 +350,7 @@ function EditScholarship() {
             ) : null}
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="expenses_coverd">Expenses Covered</label>
+            <label className="form-label ps-2" htmlFor="expenses_coverd">Expenses Covered <span className="text-danger"> * </span></label>
             <div className="d-flex align-items-center">
               <input
                 type="number"
@@ -382,7 +382,7 @@ function EditScholarship() {
             ) : null}
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="eligbility_criteria">Eligbility Criteria</label>
+            <label className="form-label ps-2" htmlFor="eligbility_criteria">Eligbility Criteria <span className="text-danger"> * </span></label>
             <input
               type="text"
               className={`form-control ${formik.touched.eligbility_criteria && formik.errors.eligbility_criteria ? 'is-invalid' : ''}`}
@@ -397,7 +397,7 @@ function EditScholarship() {
             ) : null}
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="term_and_conditions">Terms And Conditions</label>
+            <label className="form-label ps-2" htmlFor="term_and_conditions">Terms And Conditions <span className="text-danger"> * </span></label>
             <input
               type="text"
               className={`form-control ${formik.touched.term_and_conditions && formik.errors.term_and_conditions ? 'is-invalid' : ''}`}
@@ -412,7 +412,7 @@ function EditScholarship() {
             ) : null}
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="website_link">Website Link</label>
+            <label className="form-label ps-2" htmlFor="website_link">Website Link <span className="text-danger"> * </span></label>
             <input
               type="url"
               className={`form-control ${formik.touched.website_link && formik.errors.website_link ? 'is-invalid' : ''}`}
@@ -427,7 +427,7 @@ function EditScholarship() {
             ) : null}
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="key_personnel_details">Key Personnel Details</label>
+            <label className="form-label ps-2" htmlFor="key_personnel_details">Key Personnel Details <span className="text-danger"> * </span></label>
             <input
               type="text"
               className={`form-control ${formik.touched.key_personnel_details && formik.errors.key_personnel_details ? 'is-invalid' : ''}`}
@@ -442,7 +442,7 @@ function EditScholarship() {
             ) : null}
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="number_of_seats_available">Number of Seats</label>
+            <label className="form-label ps-2" htmlFor="number_of_seats_available">Number of Seats <span className="text-danger"> * </span></label>
             <input
               type="number"
               className={`form-control ${formik.touched.number_of_seats_available && formik.errors.number_of_seats_available ? 'is-invalid' : ''}`}
@@ -457,7 +457,7 @@ function EditScholarship() {
             ) : null}
           </div>
           <div className="form-item col-md-5 my-3">
-            <label className="form-label ps-2" htmlFor="scholarship_picture">Scholarship Picture</label>
+            <label className="form-label ps-2" htmlFor="scholarship_picture">Scholarship Picture <span className="text-danger"> * </span></label>
             <input
               type="file"
               className={`form-control ${formik.touched.scholarship_picture && formik.errors.scholarship_picture ? 'is-invalid' : ''}`}
