@@ -34,14 +34,46 @@ function ScholarshipsFeedbacks() {
   const fetchScholarships = async () => {
     setLoading(true);
     try {
+      // Step 1: Fetch the scholarships
       const response = await axios.get(`http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/accept`);
-      setScholarships(response.data);
+      const scholarships = response.data;
+
+      // Step 2: Fetch feedbacks for each scholarship
+      const scholarshipsWithFeedbacks = await Promise.all(scholarships.map(async (scholarship) => {
+        try {
+          const feedbackResponse = await axios.get(`http://localhost:3000/api/v1/scholarships/${scholarship._id}/feedbacks`);
+          const feedbacks = feedbackResponse.data;
+
+          // Step 3: Check if feedbacks are valid
+          if (feedbacks && feedbacks !== "no feedbacks for this scholarship" && feedbacks.length > 0) {
+            // Combine feedbacks with the scholarship object
+            return {
+              ...scholarship,
+              feedbacks: feedbacks // Attach the feedbacks to the scholarship
+            };
+          } else {
+            return null; // Return null if no valid feedbacks
+          }
+        } catch (error) {
+          console.error(`Error fetching feedbacks for scholarship with _id: ${scholarship._id}`, error);
+          return null; // Return null in case of an error
+        }
+      }));
+
+      // Step 4: Filter out scholarships with no feedback
+      const scholarshipsWithFeedbacksOnly = scholarshipsWithFeedbacks.filter(scholarship => scholarship !== null);
+
+      // Step 5: Set the state with the scholarships combined with feedbacks
+      setScholarships(scholarshipsWithFeedbacksOnly);
+      console.log(scholarshipsWithFeedbacksOnly); // Log the final result
     } catch (error) {
       console.error("Error fetching scholarships:", error);
     } finally {
       setLoading(false);
     }
   };
+
+
 
   useEffect(() => {
     if (roleId) {
@@ -72,9 +104,28 @@ function ScholarshipsFeedbacks() {
   const viewFeedbacks = async (id) => {
     setLoadingFeedbacks(true);
     try {
-      // const response = await axios.get(`http://localhost:3000/api/v1/scholarships/${id}/feedbacks`);
-      // setFeedbacks(response.data);
-      setFeedbacks(sampleFeedbacks);
+      const response = await axios.get(`http://localhost:3000/api/v1/scholarships/${id}/feedbacks`);
+      const feedbacks = response.data;
+
+      // Fetch student data for each feedback
+      const feedbacksWithStudentData = await Promise.all(
+          feedbacks.map(async (feedback) => {
+              try {
+                  const studentResponse = await axios.get(`http://localhost:3000/api/v1/getStudentDataFromId/${feedback.student_id}`);
+                  return {
+                      ...feedback,
+                      studentData: studentResponse.data,
+                  };
+              } catch (error) {
+                  console.error(`Error fetching student data for feedback ID: ${feedback.id}`, error);
+                  return { ...feedback, studentData: null }; // Handle missing student data gracefully
+              }
+          })
+      );
+
+      setFeedbacks(feedbacksWithStudentData);
+      console.log("Feedbacks with student data:", feedbacksWithStudentData);
+      // setFeedbacks();
       handleOpen();
       setLoadingFeedbacks(false)
     } catch (error) {
@@ -92,80 +143,58 @@ function ScholarshipsFeedbacks() {
       setLoadingFeedbacks(false);
     }
   };
-  const sampleFeedbacks = [
-    {
-      username: 'John Doe',
-      rating: 4,
-      content: 'This scholarship has greatly helped me further my education. Highly recommend!',
-    },
-    {
-      username: 'Jane Smith',
-      rating: 5,
-      content: 'Amazing opportunity! The application process was straightforward, and the scholarship is very beneficial.',
-    },
-    {
-      username: 'Emily Johnson',
-      rating: 3,
-      content: 'Good scholarship, but the eligibility requirements could be a bit clearer.',
-    },
-    {
-      username: 'Michael Brown',
-      rating: 5,
-      content: 'Fantastic experience! The scholarship was exactly what I needed to continue my studies.',
-    },
-    {
-      username: 'Sophia Lee',
-      rating: 2,
-      content: 'While the scholarship is helpful, I faced a few challenges in the application process. Could use some improvements.',
-    },
-  ];
+  // const sampleFeedbacks = [
+  //   {
+  //     username: 'John Doe',
+  //     rating: 4,
+  //     content: 'This scholarship has greatly helped me further my education. Highly recommend!',
+  //   },
+  //   {
+  //     username: 'Jane Smith',
+  //     rating: 5,
+  //     content: 'Amazing opportunity! The application process was straightforward, and the scholarship is very beneficial.',
+  //   },
+  //   {
+  //     username: 'Emily Johnson',
+  //     rating: 3,
+  //     content: 'Good scholarship, but the eligibility requirements could be a bit clearer.',
+  //   },
+  //   {
+  //     username: 'Michael Brown',
+  //     rating: 5,
+  //     content: 'Fantastic experience! The scholarship was exactly what I needed to continue my studies.',
+  //   },
+  //   {
+  //     username: 'Sophia Lee',
+  //     rating: 2,
+  //     content: 'While the scholarship is helpful, I faced a few challenges in the application process. Could use some improvements.',
+  //   },
+  // ];
   const getRandomColor = () => {
     // List of basic colors (avoiding white and light colors)
-    const basicColors = [
-        '#FF0000', // Red
-        '#00FF00', // Green
-        '#0000FF', // Blue
-        '#FFFF00', // Yellow
-        '#FF6347', // Tomato (darker red)
-        '#8B0000', // Dark Red
-        '#00008B', // Dark Blue
-        '#228B22', // Forest Green
-        '#FFD700', // Gold
-        '#A52A2A', // Brown
-        '#800080', // Purple
-        '#808000', // Olive
-        '#D2691E', // Chocolate
-        '#4B0082', // Indigo
-        '#2F4F4F', // Dark Slate Gray
-        '#FF4500', // Orange Red
-        '#DAA520', // Goldenrod
-        '#9ACD32', // Yellow Green
-        '#CD5C5C', // Indian Red
-        '#B22222', // Firebrick
-        '#008080', // Teal
-        '#A9A9A9', // Dark Gray
-        '#B8860B', // Dark Goldenrod
-        '#556B2F', // Dark Olive Green
-        '#8B4513', // Saddle Brown
-        '#2E8B57', // Sea Green
-        '#4B0082', // Indigo
-        '#F4A300', // Saffron
-        '#C71585', // Medium Violet Red
-        '#000000', // Black
-        '#808080', // Gray
-        '#D3D3D3', // Light Gray
-        '#A52A2A', // Brown
-        '#5F9EA0', // Cadet Blue
-        '#7FFF00', // Chartreuse
-        '#D2691E', // Chocolate
-        '#00CED1'  // Dark Turquoise
-    ];
+    const basicColors =  [
+      '#FF0000', // Red
+      '#00FF00', // Green
+      '#0000FF', // Blue
+      '#FFFF00', // Yellow
+      '#FF6347', // Tomato
+      '#8B0000', // Dark Red
+      '#00008B', // Dark Blue
+      '#228B22', // Forest Green
+      '#FFD700', // Gold
+      '#A52A2A', // Brown
+      '#800080', // Purple
+      '#808000', // Olive
+      '#D2691E', // Chocolate
+      '#4B0082', // Indigo
+      '#2F4F4F', // Dark Slate Gray
+  ];
 
     // Randomly select a color from the list
     const randomIndex = Math.floor(Math.random() * basicColors.length);
     return basicColors[randomIndex];
-};
-  
+  };
+
   return (
     <>
       <ToastContainer
@@ -238,7 +267,7 @@ function ScholarshipsFeedbacks() {
                                 aria-describedby="scholarship-details-description"
                               >
                                 <Box sx={style}>
-                                  <Typography id="scholarship-details-title" variant="h6" component="h1" sx={{fontSize:'30px'}}>
+                                  <Typography id="scholarship-details-title" variant="h6" component="h1" sx={{ fontSize: '30px' }}>
                                     <strong>Scholarship Feedbacks</strong>
                                   </Typography>
                                   {loadingFeedbacks ? (
@@ -248,11 +277,11 @@ function ScholarshipsFeedbacks() {
                                   ) : (
                                     feedbacks && feedbacks.map((feedback, index) => (
                                       <Box key={index} id="scholarship-details-description" sx={{ mt: 2, display: 'flex', alignItems: 'center' }}>
-                                        <Avatar sx={{backgroundColor: getRandomColor(), mr: 2,width:"50px",height:"50px" }}>
-                                          {feedback.username[0].toUpperCase()}
+                                        <Avatar sx={{ backgroundColor: getRandomColor(), mr: 2, width: "50px", height: "50px" }}>
+                                          {feedback.studentData.fullname[0].toUpperCase()}
                                         </Avatar>
                                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                          <Typography variant="body1"><strong>{feedback.username}</strong></Typography>
+                                          <Typography variant="body1"><strong>{feedback.studentData.fullname}</strong></Typography>
                                           <Rating value={feedback.rating} readOnly />
                                           <Typography variant="body2" sx={{ mt: 1 }}>
                                             {feedback.content}

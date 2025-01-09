@@ -26,12 +26,14 @@ const ScholarshipDetail = () => {
   const [hasApplied, setHasApplied] = useState(false);
   const { roleId } = useContext(UserContext);
   const [status, setStatus] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   useEffect(() => {
     const fetchScholarship = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/api/v1/scholarships/${id}`);
         setScholarship(response.data);
+        setEndDate(response.data.End_Date)
         const applicationsResponse = await axios.get(`http://localhost:3000/api/v1/students/${roleId}/applications`);
         const applicationIds = applicationsResponse.data;
 
@@ -138,9 +140,9 @@ const ScholarshipDetail = () => {
             borderRadius: '5px',
             marginBottom: '20px',
             border: '1px solid #f5c6cb', // Border color to match the background
-            maxWidth:'1200px',
-            margin:'auto',
-            marginTop:'20px'
+            maxWidth: '1200px',
+            margin: 'auto',
+            marginTop: '20px'
           }}
         >
           <strong>You have already applied for this scholarship!</strong>
@@ -169,33 +171,46 @@ const ScholarshipDetail = () => {
               </div>
             </div>
           </div>
-          <div className="secondary-info">
-            {renderField("Expenses Covered", `${scholarship?.expenses_coverd}`)}
-            {renderField("Number of Seats Available", scholarship?.number_of_seats_available)}
-            {renderField("Key Personnel", scholarship?.key_personnel_details)}
-            {renderField("Terms and Conditions", scholarship?.term_and_conditions)}
-            <p>
-              <strong>Website:</strong>
-              {loading ? <Skeleton width="40%" /> : <a href={scholarship.website_link}>Visit our website to Learn More</a>}
-            </p>
-            {renderField("Start Date", new Date(scholarship?.start_Date).toLocaleDateString())}
-            {renderField("End Date", new Date(scholarship?.End_Date).toLocaleDateString())}
-            {renderField("Submission Date", new Date(scholarship?.submission_date).toLocaleDateString())}
-            {renderField("Deadline", moment(scholarship?.deadline).format('DD/MM/YYYY'))}
+          <div className="secondary-info" style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px' }}>
+            <div style={{ flex: '1 1 45%' }}>
+              {renderField("Expenses Covered", `${scholarship?.expenses_coverd}`)}
+              {renderField("Number of Seats Available", scholarship?.number_of_seats_available)}
+              {renderField("Key Personnel", scholarship?.key_personnel_details)}
+              {renderField("Submission Date", new Date(scholarship?.submission_date).toLocaleDateString())}
+            </div>
 
-            {loading ? (
-              <Skeleton width="30%" height={40} />
-            ) : (
-              scholarship.number_of_seats_available > 0 && new Date() <= new Date(scholarship.deadline) && !hasApplied ? (
-                //<a href={scholarship.form_Link} className="apply-button">Apply Here</a>
-                <Link to={`/apply-for-scholarship/${scholarship._id}`} className="apply-button" >Apply Now</Link>
+            <div style={{ flex: '1 1 45%' }}>
+              <p>
+                <strong>Website:</strong>
+                {loading ? <Skeleton width="40%" /> : <a href={scholarship.website_link}>Visit our website to Learn More</a>}
+              </p>
+              {renderField("Terms and Conditions", scholarship?.term_and_conditions)}
+
+              {renderField("Start Date", new Date(scholarship?.start_Date).toLocaleDateString())}
+              {renderField("End Date", new Date(scholarship?.End_Date).toLocaleDateString())}
+            </div>
+
+            {/* Third div goes under the first two divs */}
+            <div style={{ flex: '1 1 100%', textAlign: 'center' }}>
+              {loading ? (
+                <Skeleton width="30%" height={40} style={{ margin: 'auto' }} />
               ) : (
-                <p className="apply-closed" style={{margin:'auto'}}>Applications are closed.</p>
-              )
-            )}
+                renderField("Deadline", moment(scholarship?.deadline).format('DD/MM/YYYY'))
+              )}
+
+              {loading ? (
+                <Skeleton width="30%" height={80} style={{ margin: 'auto' }} />
+              ) : (
+                scholarship.number_of_seats_available > 0 && new Date() <= new Date(scholarship.deadline) && !hasApplied ? (
+                  <Link to={`/apply-for-scholarship/${scholarship._id}`} className="apply-button">Apply Now</Link>
+                ) : (
+                  <p className="apply-closed" style={{ margin: 'auto' }}>Applications are closed.</p>
+                )
+              )}
+            </div>
           </div>
         </div>
-        <ScholarshipFeedback id={id} />
+        <ScholarshipFeedback id={id} status={status} endDate={endDate} />
         {/* Similar scholarships section */}
         {!similarLoading && similarScholarships.length === 0 ? null : (
           <div className="similar-scholarships">
@@ -204,13 +219,14 @@ const ScholarshipDetail = () => {
               {similarLoading ? (
                 Array.from({ length: 3 }).map((_, index) => (
                   <Card key={index} className='similar-scholarship-item'>
-                    <Skeleton variant="rounded" height={200} />
+                    <Skeleton variant="text" height={40} width="300px" />
+                    <Skeleton variant="rounded" width='300px' height={200} />
                     <CardContent>
-                      <Skeleton variant="text" height={20} width="80%" />
-                      <Skeleton variant="text" height={20} width="50%" />
-                      <Skeleton variant="text" height={20} width="60%" />
-                      <Skeleton variant="text" height={20} width="70%" />
-                      <Skeleton variant="text" height={20} width="50%" />
+                      <Skeleton variant="text" height={40} width="270px" />
+                      <Skeleton variant="text" height={40} width="250px" />
+                      <Skeleton variant="text" height={40} width="280px" />
+                      <Skeleton variant="text" height={40} width="300px" />
+                      <Skeleton variant="text" height={60} width="50%" style={{margin:'auto'}} />
                     </CardContent>
                   </Card>
                 ))
@@ -243,6 +259,7 @@ const ScholarshipDetail = () => {
                   <CardActions disableSpacing height="100px">
                     <Link to={`/scholarship-detail/${scholarship._id}`} className="details-scholarship-link">View Details</Link>
                   </CardActions>
+
                 </Card>
               ))}
             </Slider>

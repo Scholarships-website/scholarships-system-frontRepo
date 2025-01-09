@@ -66,8 +66,10 @@
     z-index: 2;
     position: relative;
     margin: auto;
-    text-align: center;
+    /* text-align: center; */
     margin-top: 20px;
+    column-gap: 55px;
+
 }
 
 
@@ -96,7 +98,7 @@
 }
 
 .feedbacks-btn {
-    margin: 50px auto;
+    /* margin: 50px auto; */
     display: flex;
 }
 
@@ -454,7 +456,7 @@
     }
 
     .some-feedbacks {
-        width: 100%;
+        max-width: 100%;
         margin-bottom: 20px;
     }
 
@@ -487,3 +489,10 @@
     margin-top: 20px;
     width: fit-content;
 }
+
+@media (max-width: 700px) {
+    .secondary-info {
+      flex-direction: column;
+      align-items: center;  /* Optional: Center content on smaller screens */
+    }
+  }

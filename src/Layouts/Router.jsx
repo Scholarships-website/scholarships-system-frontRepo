@@ -42,6 +42,7 @@ import ApplicationDetails from '../Components/Advertiser/Applications/Applicatio
 import AcceptedScholarship from '../Components/Admin/Scholarships/AcceptedScholarship';
 import PendingScholarship from '../Components/Admin/Scholarships/PendingScholarship';
 import RejectedScholarship from '../Components/Admin/Scholarships/RejectedScholarship';
+import ScholarshipsComment from '../Components/Admin/Comments/ScholarshipsComment';
 export const router = createBrowserRouter([
     {
         path: "/studentDashboard",
@@ -161,7 +162,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "comments",
-                element: <Comments />,
+                element: <ScholarshipsComment />,
             },
             {
                 path: "addAdvertiser",
