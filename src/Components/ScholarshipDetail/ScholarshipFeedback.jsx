@@ -335,18 +335,60 @@ function ScholarshipFeedback({ id, status, endDate }) {
                                 </Box>
                             ) : (
                                 feedbacks && feedbacks.map((feedback, index) => (
-                                    <Box key={index} id="scholarship-details-description" sx={{ mt: 2, display: 'flex', alignItems: 'center' }}>
-                                        <Avatar sx={{ backgroundColor: getRandomColor(), mr: 2, width: "50px", height: "50px" }}>
-                                            {feedback.studentData?.fullname[0].toUpperCase()}
-                                        </Avatar>
-                                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                            <Typography variant="body1"><strong>{feedback.studentData?.fullname}</strong></Typography>
-                                            <Rating value={feedback.rating} readOnly />
-                                            <Typography variant="body2" sx={{ mt: 1 }}>
-                                                {feedback.content}
-                                            </Typography>
-                                        </Box>
+                                    <Box
+                                key={index}
+                                id="scholarship-details-description"
+                                sx={{ mt: 2, display: 'flex',flexDirection:'column',gap:'8px' }}
+                            >
+                                <div style={{display:'flex',alignItems:'center'}} >
+                                    <Avatar
+                                        sx={{ backgroundColor: getRandomColor(), mr: 2, width: "50px", height: "50px" }}
+                                    >
+                                        {feedback.studentData?.fullname[0].toUpperCase()}
+                                    </Avatar>
+                                    <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                                        <Typography variant="body1">
+                                            <strong>{feedback.studentData?.fullname}</strong>
+                                        </Typography>
+                                        <Rating value={feedback.rating} readOnly />
+                                        <Typography variant="body2" sx={{ mt: 1 }}>
+                                            {feedback.content}
+                                        </Typography>
                                     </Box>
+                                </div>
+                                {/* Actions: Like, Dislike, Report */}
+                                <div>
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            gap: 2,
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            justifyContent:'center'
+                                        }}
+                                    >
+                                        <button
+                                            onClick={() => handleLike(feedback._id)}
+                                            style={{ cursor: 'pointer', border: 'none', background: 'none', color: '#418447',display:'flex',alignItems:'center',gap:'5px' }}
+                                        >
+                                            <FontAwesomeIcon icon={faThumbsUp} size="2xs" /> <span style={{fontSize:'14px'}}>{feedback.likes}</span>
+                                        </button>
+                                        <button
+                                            onClick={() => handleDislike(feedback._id)}
+                                            style={{ cursor: 'pointer', border: 'none', background: 'none', color: '#418447',display:'flex',alignItems:'center',gap:'5px' }}
+                                        >
+                                            <FontAwesomeIcon icon={faThumbsDown} size="2xs" /><span style={{fontSize:'14px'}}> {feedback.dislikes}</span>
+                                        </button>
+                                        <button
+                                            onClick={() => handleReport(feedback._id)}
+                                            style={{ cursor: 'pointer', border: 'none', background: 'none', color: '#418447',display:'flex',alignItems:'center',gap:'5px' }}
+                                        >
+                                            <FontAwesomeIcon icon={faFlag} size="2xs" /> <span style={{fontSize:'14px'}}> Report</span>
+                                        </button>
+                                    </Box>
+                                </div>
+
+                            </Box>
                                 ))
                             )}
                         </Box>

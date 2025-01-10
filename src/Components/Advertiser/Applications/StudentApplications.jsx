@@ -181,10 +181,11 @@ const StudentApplications = () => {
               <tr className="bg-transparent">
                 <th scope="col">#</th>
                 <th scope="col">Applicant's Name</th>
-                <th scope="col" className="sortable-column d-none d-md-table-cell">Major / Field of Study</th>
+                {/* <th scope="col" className="sortable-column d-none d-md-table-cell">Major / Field of Study</th> */}
                 <th scope="col" className="sortable-column">GPA </th>
                 <th scope="col" className="sortable-column d-none d-md-table-cell">Application Date</th>
                 <th scope="col" className="d-none d-md-table-cell">Status</th>
+                <th scope="col" className="d-none d-md-table-cell">Evaluation</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -193,9 +194,10 @@ const StudentApplications = () => {
                 <tr key={index}>
                   <th scope="row"><Skeleton variant="text" width={20} /></th>
                   <td><Skeleton variant="text" width="30%" /></td>
+                  {/* <td className="d-none d-md-table-cell"><Skeleton variant="text" width="20%" /></td> */}
                   <td><Skeleton variant="text" width="20%" /></td>
-                  <td><Skeleton variant="text" width="20%" /></td>
-                  <td><Skeleton variant="text" width="20%" /></td>
+                  <td className="d-none d-md-table-cell"><Skeleton variant="text" width="20%" /></td>
+                  <td className="d-none d-md-table-cell"><Skeleton variant="text" width="20%" /></td>
                   <td className="d-none d-md-table-cell"><Skeleton variant="text" width="80%" /></td>
                   <td><Skeleton variant="rectangular" width={50} height={20} /></td>
                 </tr>
@@ -209,10 +211,11 @@ const StudentApplications = () => {
                 <tr className="bg-transparent">
                   <th scope="col">#</th>
                   <th scope="col">Applicant's Name</th>
-                  <th scope="col" className="d-none d-md-table-cell">Major / Stream</th>
+                  {/* <th scope="col" className="d-none d-md-table-cell">Major / Stream</th> */}
                   <th scope="col">GPA</th>
                   <th scope="col" className="d-none d-md-table-cell" >Application Date</th>
                   <th scope="col" className="d-none d-md-table-cell">Status</th>
+                  <th scope="col" className="d-none d-md-table-cell">Evaluation</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
@@ -223,12 +226,13 @@ const StudentApplications = () => {
                       <tr onClick={() => handleExpandRow(index)}>
                         <th scope="row">{(currentPage - 1) * itemsPerPage + index + 1}</th>
                         <td>{item.student.fullname}</td>
-                        <td className={`d-none d-md-table-cell`}>{item.application.major || item.application.stream} </td>
+                        {/* <td className={`d-none d-md-table-cell`}>{item.application.major || item.application.stream} </td> */}
                         <td>{item.application.GPA}</td>
                         <td className={`d-none d-md-table-cell`}>{moment(item.application.submitDate).format('YYYY-MM-DD HH:mm')}</td>
                         <td className={`d-none d-md-table-cell`}>
                           <span className={`status ${getStatusClass(item.application.status)}`}>{item.application.status}</span>
                         </td>
+                        <td className={`d-none d-md-table-cell`}>{item.application.evaluation || ' '}</td>
                         <td className="action d-none d-md-table-cell">
                           <div className='eyeIcon'>
                             <ul className="wishlist-menu">
@@ -261,9 +265,10 @@ const StudentApplications = () => {
                       {expandedRow === index && isSmallScreen && (
                         <tr className="expanded-row expanded-row-content">
                           <td colSpan="4" className="full-width-expanded ">
-                            <div><strong>Major:</strong> {item.major}</div>
-                            <div><strong>Application Date:</strong> {item.submitDate}</div>
-                            <div className={`left ${getStatusClass(item.status)}`}><strong>Status:</strong> {item.status}</div>
+                            {/* <div><strong>Major:</strong> {item.application.major || item.application.stream}</div> */}
+                            <div><strong>Application Date:</strong> {moment(item.application.submitDate).format('YYYY-MM-DD HH:mm')}</div>
+                            <div className={`left ${getStatusClass(item.application.status)}`}><strong>Status:</strong> {item.application.status}</div>
+                            <div><strong>Evaluation:</strong>{item.application.evaluation || ' '}</div>
                             <div className="dropdown d-md-none drop-down-buttons ">
                               <ul className=' expanded'>
                                 <div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import { Button, Typography, Box, Tab, Tabs } from '@mui/material';
+import { Button, Typography, Box, Tab, Tabs, Dialog, DialogTitle, DialogContent, TextField, DialogActions } from '@mui/material';
 import PageContainer from './PageContainer';
 import axios from 'axios';
 import GeneralInformation from './GeneralInformation';
@@ -11,6 +11,7 @@ import Identifiers from './Identifiers';
 import Attachments from './Attachments';
 import Swal from 'sweetalert2';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 
 const ApplicationDetails = () => {
   const { _id } = useParams();
@@ -19,10 +20,10 @@ const ApplicationDetails = () => {
 
 
   const location = useLocation();
-  const { seatsAvailable, acceptedCount,deadline } = location.state || {};
+  const { seatsAvailable, acceptedCount, deadline } = location.state || {};
   // console.log(seatsAvailable);
   // console.log(acceptedCount);
-
+  console.log(_id)
 
 
   useEffect(() => {
@@ -55,7 +56,7 @@ const ApplicationDetails = () => {
 
     // Check if the current date is before the deadline
     // console.log(currentDate < deadline)
-    
+
     if (currentDate < deadline) {
       Swal.fire({
         title: 'Cannot update before deadline',
@@ -213,40 +214,122 @@ const ApplicationDetails = () => {
   const handleTabChange = (event, newValue) => {
     setCurrentTab(newValue);
   };
+  const [open, setOpen] = useState(false);
+  const [evaluation, setEvaluation] = useState('');
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.patch(
+        `${import.meta.env.VITE_BASE_URL}/api/v1/applications/${_id}/evaluate`,
+        { evaluation }, // Request body
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      console.log("Application evaluated successfully:", response.data);
+      toast.success("Evaluation submitted successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      setOpen(false); // Close the modal
+      setEvaluation(''); // Clear the input field
+    } catch (error) {
+      console.error("Error evaluating application:", error);
+      toast.error(
+        error.response && error.response?.data
+          ? `Failed: ${error.response}`
+          : "An error occurred. Please try again.",
+        {
+          position: "top-right",
+          autoClose: 3000,
+        }
+      );
+    }
+    setOpen(false); // Close the modal after submission
+  };
+
 
   return (
     <PageContainer
       breadcrumbs={<Typography>Dashboard / Scholarships / Applications / Application Details</Typography>}
       actions={
-        application && application.status === "pending" && (
-          <Box>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "#4CAF50",
-                "&:hover": {
-                  backgroundColor: "#45a049",
-                },
-                marginRight: 2,
-              }}
-              onClick={() => handleStatusUpdate("accept", seatsAvailable, acceptedCount, deadline)}
-            >
-              Accept
-            </Button>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "#F44336",
-                "&:hover": {
-                  backgroundColor: "#e53935",
-                },
-              }}
-              onClick={() => handleStatusUpdate("reject", seatsAvailable, acceptedCount, deadline)}
-            >
-              Reject
-            </Button>
-          </Box>
-        )
+        <>
+          <>
+            {application && application.status === "pending" && (
+              <Box sx={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "#4CAF50",
+                    "&:hover": {
+                      backgroundColor: "#45a049",
+                    },
+                    // marginRight: 2,
+                  }}
+                  onClick={() => handleStatusUpdate("accept", seatsAvailable, acceptedCount, deadline)}
+                >
+                  Accept
+                </Button>
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "#F44336",
+                    "&:hover": {
+                      backgroundColor: "#e53935",
+                    },
+                  }}
+                  onClick={() => handleStatusUpdate("reject", seatsAvailable, acceptedCount, deadline)}
+                >
+                  Reject
+                </Button>
+              </Box>
+            )}
+            <Box>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "#2196F3",
+                  "&:hover": {
+                    backgroundColor: "#1976D2",
+                  },
+                  marginTop: '15px',
+                  width: '100%'
+                }}
+                onClick={handleOpen}
+              >Evaluate</Button>
+            </Box>
+            <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs" sx={{ overflow: 'hidden' }}>
+              <DialogTitle>Write Your Evaluation</DialogTitle>
+              <DialogContent>
+                <TextField
+                  fullWidth
+                  rows={4}
+                  label="Evaluation"
+                  variant="outlined"
+                  value={evaluation}
+                  onChange={(e) => setEvaluation(e.target.value)}
+                  autoFocus
+                  sx={{ marginTop: '10px' }}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  Cancel
+                </Button>
+                <Button onClick={handleSubmit} variant="contained" color="primary">
+                  Submit
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </>
+        </>
       }
     >
       <Box sx={{ width: "100%", mt: 4 }}>
