@@ -43,7 +43,7 @@ export default function SignUp() {
         console.log("Form is submitted:", finalDataToSend); // Check if this logs data when you submit
 
         try {
-            const { data } = await axios.post('http://localhost:3000/api/v1/students/register', finalDataToSend);
+            const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/students/register`, finalDataToSend);
             if (data.message === 'Signup successful!') {
                 setStudent(data.data);
                 toast.success('Sign up successfully!!', {

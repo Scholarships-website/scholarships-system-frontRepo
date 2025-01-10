@@ -39,7 +39,7 @@ const Sidebar = ({ scholarships, setFilteredScholarships }) => {
     useEffect(() => {
         const fetchFilterOptions = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/api/v1/scholarships');
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships`);
                 const { data } = response;
                 const uniqueOptions = {
                     Place_of_Study: [...new Set(data.map(item => item.Place_of_Study))],

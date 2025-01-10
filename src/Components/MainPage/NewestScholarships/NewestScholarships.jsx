@@ -15,7 +15,7 @@ const NewestScholarships = () => {
   useEffect(() => {
     const fetchScholarships = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/v1/scholarships');
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships`);
         setScholarships(response.data);
       } catch (error) {
         console.error("Error fetching scholarships:", error);

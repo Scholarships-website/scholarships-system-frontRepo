@@ -30,14 +30,14 @@ const ApplicationsList = ({ advertiserId }) => {
   const fetchScholarships = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/accept`);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/advertisers/${roleId}/scholarships/accept`);
       const scholarships = response.data;
   
       const scholarshipsWithCounts = await Promise.all(
         scholarships.map(async (scholarship) => {
           try {
             const res = await axios.get(
-              `http://localhost:3000/api/v1/scholarships/${scholarship._id}/Applied-students`,
+              `${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${scholarship._id}/Applied-students`,
               {
                 validateStatus: (status) => status === 200 || status === 404, // Handle 200 and 404 as valid statuses
               }

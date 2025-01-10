@@ -3,9 +3,6 @@ import '../Dashboard.css'
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComments, faEllipsisVertical, faMagnifyingGlass, faPenToSquare, faUserXmark } from '@fortawesome/free-solid-svg-icons';
-import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom';
-import ReportedComments from './ReportedComments';
 import { Avatar, Box, Modal, Pagination, Rating, Skeleton, Typography } from '@mui/material';
 const style = {
   position: 'absolute',
@@ -35,13 +32,13 @@ export default function Comments() {
     setLoading(true);
     try {
       // Step 1: Fetch the scholarships
-      const response = await axios.get(`http://localhost:3000/api/v1/scholarships`);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships`);
       const scholarships = response.data;
 
       // Step 2: Fetch feedbacks for each scholarship
       const scholarshipsWithFeedbacks = await Promise.all(scholarships.map(async (scholarship) => {
         try {
-          const feedbackResponse = await axios.get(`http://localhost:3000/api/v1/scholarships/${scholarship._id}/feedbacks`);
+          const feedbackResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${scholarship._id}/feedbacks`);
           const feedbacks = feedbackResponse.data;
 
           // Step 3: Check if feedbacks are valid
@@ -91,14 +88,14 @@ export default function Comments() {
   const viewFeedbacks = async (id) => {
     setLoadingFeedbacks(true);
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/scholarships/${id}/feedbacks`);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${id}/feedbacks`);
       const feedbacks = response.data;
 
       // Fetch student data for each feedback
       const feedbacksWithStudentData = await Promise.all(
         feedbacks.map(async (feedback) => {
           try {
-            const studentResponse = await axios.get(`http://localhost:3000/api/v1/getStudentDataFromId/${feedback.student_id}`);
+            const studentResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/getStudentDataFromId/${feedback.student_id}`);
             return {
               ...feedback,
               studentData: studentResponse.data,
@@ -157,19 +154,6 @@ export default function Comments() {
   };
 
 
-  // const fetchComments = async () => {
-  //     setLoading(true)
-  //     try {
-  //         const { data } = await axios.get(`http://localhost:3000/api/v1/feedbacks/`);
-  //         console.log(data)
-  //         setComments(data);
-  //         setLoading(false)
-  //     }
-  //     catch (error) {
-  //         console.log(error);
-  //         setLoading(false)
-  //     }
-  // };
   // const deleteComment = async (id) => {
   //     Swal.fire({
   //         title: "Are you sure?",
@@ -182,7 +166,7 @@ export default function Comments() {
   //     }).then(async (result) => {
   //         if (result.isConfirmed) {
   //             try {
-  //                 await axios.delete(`http://localhost:3000/api/v1/feedback/${id}`);
+  //                 await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/v1/feedback/${id}`);
   //                 // Remove the deleted comment
   //                 setComments((prevComments) => prevComments.filter((comment) => comment.id !== id));
   //                 Swal.fire({

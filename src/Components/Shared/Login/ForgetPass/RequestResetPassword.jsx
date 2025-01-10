@@ -11,7 +11,7 @@ function RequestResetPassword({ onNext }) {
         e.preventDefault();
         try {
             // Send email to backend API to trigger reset code
-            const response = await fetch('http://localhost:3000/api/v1/forgotPassword', {
+            const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/forgotPassword`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

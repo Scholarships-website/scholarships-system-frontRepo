@@ -42,7 +42,7 @@ function PendingScholarships() {
   const fetchPendingScholarships = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/pending`);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/advertisers/${roleId}/scholarships/pending`);
       setPendingScholarships(response.data);
       console.log(response.data);
     } catch (error) {
@@ -116,7 +116,7 @@ function PendingScholarships() {
   const viewDetails = async (id) => {
     setLoadingDetails(true);
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/admin/scholarships/pending/${id}`);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/scholarships/pending/${id}`);
       setScholarshipDetails(response.data);
       handleOpen();
       setLoadingDetails(false)
@@ -137,7 +137,7 @@ function PendingScholarships() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:3000/api/v1/scholarships/${id}`, {
+          await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${id}`, {
             headers: {
               Authorization: `Bearer ${userToken}`, // Include Bearer token in headers
             },

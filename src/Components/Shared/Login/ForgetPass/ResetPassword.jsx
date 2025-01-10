@@ -24,7 +24,7 @@ function ResetPassword() {
         onSubmit: async (values) => {
             try {
                 setIsLoading(true);
-                const response = await fetch(`http://localhost:3000/api/v1/resetPassword/${resetToken}`, {
+                const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/resetPassword/${resetToken}`, {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ newPassword: values.newPassword }),

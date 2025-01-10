@@ -47,7 +47,7 @@ function PendingScholarship() {
   // Fetch all scholarships
   const getOrganizationName = async (id) => {
     try {
-      const { data } = await axios.get(`http://localhost:3000/api/v1/advertisers/${id}`);
+      const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/advertisers/${id}`);
       return data.organization_name;
     } catch (error) {
       console.error("Error fetching organization name:", error);
@@ -58,7 +58,7 @@ function PendingScholarship() {
     setLoading(true);
     try {
       const [pendingRes] = await Promise.all([
-        axios.get(`http://localhost:3000/api/v1/admin/scholarhips/pending`),
+        axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/scholarhips/pending`),
       ]);
 
       const pendingScholarships = pendingRes.data;
@@ -99,7 +99,7 @@ function PendingScholarship() {
   //   }).then(async (result) => {
   //     if (result.isConfirmed) {
   //       try {
-  //         await axios.delete(`http://localhost:3000/api/v1/scholarships/${id}`, {
+  //         await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${id}`, {
   //           headers: {
   //             Authorization: `Bearer ${userToken}`, // Include Bearer token in headers
   //           },
@@ -139,7 +139,7 @@ function PendingScholarship() {
     if (result.isConfirmed) {
       try {
         const { data: acceptedScholarship } = await axios.patch(
-          `http://localhost:3000/api/v1/admin/scholarships/accept/${id}`,
+          `${import.meta.env.VITE_BASE_URL}/api/v1/admin/scholarships/accept/${id}`,
           {},
           {
             headers: {
@@ -180,7 +180,7 @@ function PendingScholarship() {
     if (result.isConfirmed) {
       try {
         await axios.patch(
-          `http://localhost:3000/api/v1/admin/scholarships/reject/${id}`,
+          `${import.meta.env.VITE_BASE_URL}/api/v1/admin/scholarships/reject/${id}`,
           {},
           {
             headers: {
@@ -262,7 +262,7 @@ function PendingScholarship() {
   const viewDetails = async (id) => {
     setLoadingDetails(true);
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/admin/scholarships/pending/${id}`);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/scholarships/pending/${id}`);
       setScholarshipDetails(response.data);
       // console.log(response.data);
       handleOpen();

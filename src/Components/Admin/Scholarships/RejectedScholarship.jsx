@@ -46,7 +46,7 @@ function RejectedScholarship() {
   // Fetch all scholarships
   const getOrganizationName = async (id) => {
     try {
-      const { data } = await axios.get(`http://localhost:3000/api/v1/advertisers/${id}`);
+      const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/advertisers/${id}`);
       return data.organization_name;
     } catch (error) {
       console.error("Error fetching organization name:", error);
@@ -57,7 +57,7 @@ function RejectedScholarship() {
     setLoading(true);
     try {
       const [rejectedRes] = await Promise.all([
-        axios.get(`http://localhost:3000/api/v1/admin/scholarhips/reject`),
+        axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/scholarhips/reject`),
       ]);
 
       const rejectedScholarships = rejectedRes.data;
@@ -100,7 +100,7 @@ function RejectedScholarship() {
   //   }).then(async (result) => {
   //     if (result.isConfirmed) {
   //       try {
-  //         await axios.delete(`http://localhost:3000/api/v1/scholarships/${id}`, {
+  //         await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${id}`, {
   //           headers: {
   //             Authorization: `Bearer ${userToken}`, // Include Bearer token in headers
   //           },
@@ -182,7 +182,7 @@ function RejectedScholarship() {
   const viewDetails = async (id) => {
     setLoadingDetails(true);
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/admin/scholarships/reject/${id}`);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/scholarships/reject/${id}`);
       setScholarshipDetails(response.data);
       // console.log(response.data);
       handleOpen();

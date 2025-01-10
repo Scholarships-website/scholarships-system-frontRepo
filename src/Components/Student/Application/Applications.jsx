@@ -24,7 +24,7 @@ function Applications() {
 
   const fetchApplicatins = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/students/${roleId}/applications`);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/students/${roleId}/applications`);
       const applicationIds = response.data;
       if (!Array.isArray(applicationIds) || applicationIds.length === 0) {
         console.log('No applications found for this student.');
@@ -34,7 +34,7 @@ function Applications() {
       }
       const applicationDetails = await Promise.all(
         applicationIds.map((applicationId) =>
-          axios.get(`http://localhost:3000/api/v1/students/applications/${applicationId}`)
+          axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/students/applications/${applicationId}`)
         )
       );
 
@@ -44,7 +44,7 @@ function Applications() {
       const scholarshipDetails = await Promise.all(
         applicationDetails.map((appResponse) => {
           const scholarshipId = appResponse.data.scholarship_id;
-          return axios.get(`http://localhost:3000/api/v1/scholarships/${scholarshipId}`);
+          return axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${scholarshipId}`);
         })
       );
 

@@ -34,9 +34,9 @@ export default function HomeAdvertiser() {
         const fetchData = async () => {
             try {
                 const [accepted, pending, rejected] = await Promise.all([
-                    axios.get(`http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/accept`),
-                    axios.get(`http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/pending`),
-                    axios.get(`http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/reject`),
+                    axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/advertisers/${roleId}/scholarships/accept`),
+                    axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/advertisers/${roleId}/scholarships/pending`),
+                    axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/advertisers/${roleId}/scholarships/reject`),
                 ]);
 
                 setData({

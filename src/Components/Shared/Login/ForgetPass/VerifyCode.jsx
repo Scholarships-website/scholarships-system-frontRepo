@@ -10,7 +10,7 @@ function VerifyCode({ email, onNext }) {
         e.preventDefault();
         try {
             // Send the code and email to backend for verification
-            const response = await axios.post('http://localhost:5000/api/v1/auth/verify-code', { email, code });
+            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/auth/verify-code`, { email, code });
             if (response.data.success) {
                 onNext(); // Go to reset password step
             }

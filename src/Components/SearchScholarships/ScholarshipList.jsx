@@ -24,7 +24,7 @@ const ScholarshipList = ({ scholarships, loading }) => {
   const fetchWishlist = async () => {
     setLoader(true);
     try {
-      const { data } = await axios.get(`http://localhost:3000/api/v1/students/${roleId}/wishlist`);
+      const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/students/${roleId}/wishlist`);
       setWishlist(data);
       console.log("wishlist:", data);
     } catch (error) {
@@ -66,7 +66,7 @@ const ScholarshipList = ({ scholarships, loading }) => {
       try {
         // Define the endpoint based on the action (add or remove)
         const action = isInWishlist ? 'delete' : 'add';
-        const endpoint = `http://localhost:3000/api/v1/students/wishlist/${scholarshipId}/${action}`;
+        const endpoint = `${import.meta.env.VITE_BASE_URL}/api/v1/students/wishlist/${scholarshipId}/${action}`;
 
         // Configuration for the request
         const config = {

@@ -26,7 +26,7 @@ const SearchScholarships = () => {
         const fetchScholarships = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:3000/api/v1/scholarships`);
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships`);
                 setScholarships(response.data);
                 setFilteredScholarships(response.data);
             }

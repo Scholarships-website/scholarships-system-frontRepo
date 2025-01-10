@@ -34,7 +34,7 @@ const AddFeedback = () => {
         onSubmit: async (values, { resetForm }) => {
             console.log('Submitting:', values);
             try {
-                const response = await axios.post('http://localhost:3000/api/v1/feedbacks/', {
+                const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/feedbacks/`, {
                     id: values.id,
                     content: values.content,
                     rating: values.rating,

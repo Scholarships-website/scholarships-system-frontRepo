@@ -22,55 +22,6 @@ export default function AddAdvertiser() {
     countryCode: '+970', // Default country code
   };
   const navigate = useNavigate();
-  // const onSubmit = async (values) => {
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('username', values.username);
-  //     formData.append('email', values.email);
-  //     formData.append('password', values.password);
-  //     formData.append('organization_name', values.organization_name);
-  //     formData.append('phoneNumber', `${values.countryCode}${values.phoneNumber}`);
-  //     const { data } = await axios.post(
-  //       `http://localhost:3000/api/v1/advertisers/register`,
-  //       formData, // Sending the users object directly
-  //       {
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           'Authorization': `Bearer ${userToken}`,
-  //         },
-  //       }
-  //     );
-  //     formik.resetForm();
-  //     toast.success(`Advertiser Added Successfully`, {
-  //       position: "top-right",
-  //       autoClose: true,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: "dark",
-  //     });
-  //     setTimeout(() => {
-  //       navigate('/dashboard/advertisers')
-  //     }, 2000);
-  //   }
-  //   catch (error) {
-  //     console.error('Error submitting form:', error);
-  //     console.log('Error response:', error.response);
-  //     toast.error('add advertiser failed: ' + error.response.data, {
-  //       position: "bottom-right",
-  //       autoClose: false,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: "light",
-  //       transition: Bounce,
-  //     });
-  //   }
-  // };
   const onSubmit = async (values) => {
     // Show confirmation dialog before submitting the form
     const result = await Swal.fire({
@@ -94,7 +45,7 @@ export default function AddAdvertiser() {
         formData.append('phoneNumber', `${values.countryCode}${values.phoneNumber}`);
 
         const { data } = await axios.post(
-          `http://localhost:3000/api/v1/advertisers/register`,
+          `${import.meta.env.VITE_BASE_URL}/api/v1/advertisers/register`,
           formData, // Sending the form data
           {
             headers: {

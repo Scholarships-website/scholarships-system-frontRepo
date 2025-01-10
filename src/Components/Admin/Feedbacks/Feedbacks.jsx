@@ -22,7 +22,7 @@ export default function Feedbacks() {
 
   const fetchFeedbacks = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:3000/api/v1/feedbacks`);
+      const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/feedbacks`);
       // console.log(data);
       setFeedbacks(data);
       setLoading(false);
@@ -52,7 +52,7 @@ export default function Feedbacks() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:3000/api/v1/feedbacks/${id}`);
+          await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/v1/feedbacks/${id}`);
           // Remove the deleted Feedback
           setFeedbacks((prevFeedbacks) => prevFeedbacks.filter((feedback) => feedback._id !== id));
           Swal.fire({

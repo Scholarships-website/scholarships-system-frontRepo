@@ -28,7 +28,7 @@ export default function UserContextProvider({ children }) {
     const getUserID = async () => {
         if (userToken) {
             try {
-                const { data } = await axios.get(`http://localhost:3000/api/v1/getUserInfoFromToken`, {
+                const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/getUserInfoFromToken`, {
                     headers: { 'Authorization': `Bearer ${userToken}` }
                 });
                 console.log('role id ' + data.RoleId);
@@ -36,7 +36,7 @@ export default function UserContextProvider({ children }) {
                 setRoleId(data.RoleId);
             } catch (error) {
                 console.error("Error fetching user ID:", error);
-                const { data } = await axios.post(`http://localhost:3000/api/v1/logout`);
+                const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/logout`);
                 console.log(data);
                 alert("Session expired. Please log in again.");
                 <Logout />;
@@ -62,7 +62,7 @@ export default function UserContextProvider({ children }) {
     const getUserInfo = async () => {
         if (userId) {
             try {
-                const { data } = await axios.get(`http://localhost:3000/api/v1/getUserInfo/${userId}`);
+                const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/getUserInfo/${userId}`);
                 console.log(data);
                 
                 if (data.role === 'student') {

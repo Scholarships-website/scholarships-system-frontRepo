@@ -27,9 +27,9 @@ export default function Scholarships() {
     setLoadingC(true);
     try {
       const [acceptedRes, pendingRes, rejectedRes] = await Promise.all([
-        axios.get(`http://localhost:3000/api/v1/scholarships`),
-        axios.get(`http://localhost:3000/api/v1/admin/scholarhips/pending`),
-        axios.get(`http://localhost:3000/api/v1/admin/scholarhips/reject`),
+        axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships`),
+        axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/scholarhips/pending`),
+        axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/scholarhips/reject`),
       ]);
       const acceptedScholarships = acceptedRes.data;
       const pendingScholarships = pendingRes.data;

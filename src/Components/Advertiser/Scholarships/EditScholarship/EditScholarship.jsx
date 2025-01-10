@@ -23,7 +23,7 @@ function EditScholarship() {
   //for pending scholarship!!!!
   const fetchScholarship = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/admin/scholarships/pending/${id}`);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/scholarships/pending/${id}`);
       console.log('Fetched Scholarship:', response.data);
       setScholarship(response.data);
     } catch (error) {
@@ -57,7 +57,7 @@ function EditScholarship() {
       }
       try {
         const response = await axios.patch(
-          `http://localhost:3000/api/v1/advertisers/scholarships/${id}/edit`,
+          `${import.meta.env.VITE_BASE_URL}/api/v1/advertisers/scholarships/${id}/edit`,
           uploadData,
           {
             headers: {

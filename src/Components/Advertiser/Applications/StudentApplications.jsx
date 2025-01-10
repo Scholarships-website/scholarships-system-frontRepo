@@ -35,7 +35,7 @@ const StudentApplications = () => {
   const viewDetails = async (id) => {
     setLoadingDetails(true);
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/scholarships/${id}`);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${id}`);
       setScholarshipName(response.data.scholarsip_name);
       setNumberOfSeats(response.data.number_of_seats_available);
       // console.log(response.data.deadline > Date());
@@ -52,13 +52,13 @@ const StudentApplications = () => {
       setLoading(true);
 
       // First API call to get all applied students for a scholarship
-      const response = await axios.get(`http://localhost:3000/api/v1/scholarships/${id}/Applied-students`);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${id}/Applied-students`);
       const appliedStudents = response.data;
 
       // Fetch the student details for each applied student
       const studentDetails = await Promise.all(
         appliedStudents.map((student) =>
-          axios.get(`http://localhost:3000/api/v1/getStudentDataFromId/${student.student_id}`)
+          axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/getStudentDataFromId/${student.student_id}`)
         )
       );
 

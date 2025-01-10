@@ -25,7 +25,7 @@ export default function Advertiser() {
 
   const fetchAdvertisers = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:3000/api/v1/advertisers/`);
+      const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/advertisers/`);
       // console.log(data);
       setAdvertiser(data);
       setLoading(false);
@@ -46,7 +46,7 @@ export default function Advertiser() {
   //   }).then(async (result) => {
   //     if (result.isConfirmed) {
   //       try {
-  //         await axios.delete(`http://localhost:3000/api/v1/advertisers/${id}`);
+  //         await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/v1/advertisers/${id}`);
   //         setAdvertiser((prevAdvertiser) => prevAdvertiser.filter((advertiser) => advertiser._id !== id));
   //         Swal.fire("Deleted!", "The advertiser has been deleted.", "success");
   //       } catch (error) {

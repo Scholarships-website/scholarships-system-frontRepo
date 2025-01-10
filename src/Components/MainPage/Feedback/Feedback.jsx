@@ -23,7 +23,7 @@ const Feedback = () => {
   const getFeedbacks = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:3000/api/v1/feedbacks');
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/feedbacks`);
       setFeedbacks(response.data);
     } catch (err) {
       setError(err.message);

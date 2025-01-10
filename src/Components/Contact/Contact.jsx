@@ -23,7 +23,7 @@ function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/v1/contact-us', formData);
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/contact-us`, formData);
       if (response.status === 200) {
         setIsSubmitted(true);
         document.body.classList.add("sent");

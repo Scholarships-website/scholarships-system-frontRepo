@@ -31,9 +31,9 @@ export default function Home() {
     const fetchData = async () => {
       try {
         const [studentsRes, advertisersRes, scholarshipsRes] = await Promise.all([
-          axios.get('http://localhost:3000/api/v1/students/'),
-          axios.get('http://localhost:3000/api/v1/advertisers/'),
-          axios.get('http://localhost:3000/api/v1/admin/scholarhips'),
+          axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/students/`),
+          axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/advertisers/`),
+          axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/scholarhips`),
         ]);
         // console.log(scholarshipsRes.data.pagination.totalScholarships);
         setData({

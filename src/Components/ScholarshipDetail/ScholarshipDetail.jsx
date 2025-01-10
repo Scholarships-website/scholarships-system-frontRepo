@@ -31,17 +31,17 @@ const ScholarshipDetail = () => {
   useEffect(() => {
     const fetchScholarship = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/v1/scholarships/${id}`);
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${id}`);
         setScholarship(response.data);
         setEndDate(response.data.End_Date)
-        const applicationsResponse = await axios.get(`http://localhost:3000/api/v1/students/${roleId}/applications`);
+        const applicationsResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/students/${roleId}/applications`);
         const applicationIds = applicationsResponse.data;
 
         let applied = false;
         for (let i = 0; i < applicationIds.length; i++) {
           const applicationId = applicationIds[i];
           // Fetch application details
-          const applicationDetailsResponse = await axios.get(`http://localhost:3000/api/v1/students/applications/${applicationId}`);
+          const applicationDetailsResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/students/applications/${applicationId}`);
           const applicationDetails = applicationDetailsResponse.data;
           // console.log(applicationDetails)
           // Check if the scholarship ID matches
@@ -67,7 +67,7 @@ const ScholarshipDetail = () => {
     const fetchSimilarScholarships = async () => {
       setSimilarLoading(true);
       try {
-        const response = await axios.get('http://localhost:3000/api/v1/scholarships');
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships`);
         const filteredScholarships = response.data.filter(item =>
           (item.type === scholarship?.type ||
             item.Place_of_Study === scholarship?.Place_of_Study ||

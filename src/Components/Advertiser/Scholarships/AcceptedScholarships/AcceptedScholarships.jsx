@@ -41,7 +41,7 @@ function AcceptedScholarships() {
   const fetchAcceptedScholarships = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/accept`);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/advertisers/${roleId}/scholarships/accept`);
       setAcceptedScholarships(response.data);
     } catch (error) {
       console.error("Error fetching scholarships:", error);
@@ -116,7 +116,7 @@ function AcceptedScholarships() {
   const viewDetails = async (id) => {
     setLoadingDetails(true);
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/scholarships/${id}`);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${id}`);
       setScholarshipDetails(response.data);
       handleOpen();
       setLoadingDetails(false)
@@ -137,7 +137,7 @@ function AcceptedScholarships() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:3000/api/v1/scholarships/${id}`, {
+          await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${id}`, {
             headers: {
               Authorization: `Bearer ${userToken}`, // Include Bearer token in headers
             },

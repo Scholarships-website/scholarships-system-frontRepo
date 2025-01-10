@@ -29,7 +29,7 @@ function Wishlist() {
   const fetchWishlist = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get(`http://localhost:3000/api/v1/students/${roleId}/wishlist`);
+      const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/students/${roleId}/wishlist`);
       setWishlist(data);
       console.log(data);
       if (data.length > 0) {
@@ -57,7 +57,7 @@ function Wishlist() {
 
     if (confirmResult.isConfirmed) {
       try {
-        const endpoint = `http://localhost:3000/api/v1/students/wishlist/${scholarshipId}/delete`;
+        const endpoint = `${import.meta.env.VITE_BASE_URL}/api/v1/students/wishlist/${scholarshipId}/delete`;
         const config = {
           headers: {
             Authorization: `Bearer ${userToken}`,
@@ -101,7 +101,7 @@ function Wishlist() {
     setLoadingDetails(true);
     try {
       const detailsPromises = wishlist.map((id) =>
-        axios.get(`http://localhost:3000/api/v1/scholarships/${id}`)
+        axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${id}`)
       );
       const responses = await Promise.all(detailsPromises);
 

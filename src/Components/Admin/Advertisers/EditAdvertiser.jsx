@@ -16,7 +16,7 @@ export default function EditAdvertiser() {
   // Fetch advertiser data from the API
   const fetchAdvertiser = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/advertisers/${id}`);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/advertisers/${id}`);
       setAdvertiser(response.data);
     } catch (error) {
       console.error('Error fetching advertiser:', error);
@@ -42,7 +42,7 @@ export default function EditAdvertiser() {
     if (result.isConfirmed) {
       try {
         const response = await axios.patch(
-          `http://localhost:3000/api/v1/admin/advertisers/edit/${id}`,
+          `${import.meta.env.VITE_BASE_URL}/api/v1/admin/advertisers/edit/${id}`,
           {
             id: updatedData.id,
             username: updatedData.username,

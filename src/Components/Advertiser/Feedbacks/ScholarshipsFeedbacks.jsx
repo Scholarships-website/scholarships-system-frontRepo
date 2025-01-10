@@ -35,13 +35,13 @@ function ScholarshipsFeedbacks() {
     setLoading(true);
     try {
       // Step 1: Fetch the scholarships
-      const response = await axios.get(`http://localhost:3000/api/v1/advertisers/${roleId}/scholarships/accept`);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/advertisers/${roleId}/scholarships/accept`);
       const scholarships = response.data;
 
       // Step 2: Fetch feedbacks for each scholarship
       const scholarshipsWithFeedbacks = await Promise.all(scholarships.map(async (scholarship) => {
         try {
-          const feedbackResponse = await axios.get(`http://localhost:3000/api/v1/scholarships/${scholarship._id}/feedbacks`);
+          const feedbackResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${scholarship._id}/feedbacks`);
           const feedbacks = feedbackResponse.data;
 
           // Step 3: Check if feedbacks are valid
@@ -104,14 +104,14 @@ function ScholarshipsFeedbacks() {
   const viewFeedbacks = async (id) => {
     setLoadingFeedbacks(true);
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/scholarships/${id}/feedbacks`);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${id}/feedbacks`);
       const feedbacks = response.data;
 
       // Fetch student data for each feedback
       const feedbacksWithStudentData = await Promise.all(
           feedbacks.map(async (feedback) => {
               try {
-                  const studentResponse = await axios.get(`http://localhost:3000/api/v1/getStudentDataFromId/${feedback.student_id}`);
+                  const studentResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/getStudentDataFromId/${feedback.student_id}`);
                   return {
                       ...feedback,
                       studentData: studentResponse.data,

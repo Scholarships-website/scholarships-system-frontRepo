@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { UserContext } from '../../../Context/UserContext'
+import React, { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../../../Context/UserContext';
 import Loading from '../../Shared/Loading/Loading';
 import { Skeleton } from '@mui/material';
-import "./HomeStudent.css"; // Add a separate CSS file for better organization
+import './HomeStudent.css'; // Your own CSS file
 import { Link } from 'react-router-dom';
 import ScholarshipCalendar from './ScholarshipCalendar';
 
@@ -10,6 +10,7 @@ function HomeStudent() {
   const { userData } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
 
+  // Dynamic CSS loading for ScholarshipCalendar only
   useEffect(() => {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
@@ -17,21 +18,23 @@ function HomeStudent() {
     document.head.appendChild(link);
 
     return () => {
-      // إزالة الأنماط عند الخروج من الصفحة
       document.head.removeChild(link);
     };
   }, []);
-  
+
   if (!userData) {
     return <Loading />;
   }
+
   return (
     <>
       <div className="homeStudent">
         <h2 className="d-flex align-items-center studentHeader">
-          Welcome <span style={{ textTransform: "uppercase", whiteSpace: "pre-wrap" }}> {userData.username}</span>
-          <img src="src/assets/img/hi.gif" alt="example-gif" width="40px" />
-          !
+          Welcome{' '}
+          <span style={{ textTransform: 'uppercase', whiteSpace: 'pre-wrap' }}>
+            {userData.username}
+          </span>
+          <img src="src/assets/img/hi.gif" alt="example-gif" width="40px" />!
         </h2>
         <div className="image-container">
           {loading ? (
@@ -46,10 +49,15 @@ function HomeStudent() {
               title="Lottie Animation"
             />
           )}
-        </div></div>
-      <ScholarshipCalendar />
+        </div>
+      </div>
+
+      {/* Wrap ScholarshipCalendar in a div to scope its styles */}
+      <div className="scholarship-calendar-container">
+        <ScholarshipCalendar />
+      </div>
     </>
-  )
+  );
 }
 
-export default HomeStudent
+export default HomeStudent;

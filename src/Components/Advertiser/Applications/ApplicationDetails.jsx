@@ -29,7 +29,7 @@ const ApplicationDetails = () => {
     const fetchApplicationAndStudent = async () => {
       try {
         // First API call to get the application details
-        const applicationResponse = await axios.get(`http://localhost:3000/api/v1/students/applications/${_id}`);
+        const applicationResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/students/applications/${_id}`);
         const applicationData = applicationResponse.data;
         setApplication(applicationData);
         // console.log('Application Data:', applicationData);
@@ -38,7 +38,7 @@ const ApplicationDetails = () => {
         const studentId = applicationData.student_id;
 
         // Second API call to get the student details using student_id
-        const studentResponse = await axios.get(`http://localhost:3000/api/v1/getStudentDataFromId/${studentId}`);
+        const studentResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/getStudentDataFromId/${studentId}`);
         setStudent(studentResponse.data);
         // console.log('Student Data:', studentData);
 
@@ -83,7 +83,7 @@ const ApplicationDetails = () => {
         }).then((result) => {
           if (result.isConfirmed) {
             // If confirmed, send the patch request to update the status
-            axios.patch(`http://localhost:3000/api/v1/applications/${_id}/${status}`)
+            axios.patch(`${import.meta.env.VITE_BASE_URL}/api/v1/applications/${_id}/${status}`)
               .then(() => {
                 setApplication(prev => ({ ...prev, status }));
 
@@ -134,7 +134,7 @@ const ApplicationDetails = () => {
         reverseButtons: true
       }).then((result) => {
         if (result.isConfirmed) {
-          axios.patch(`http://localhost:3000/api/v1/applications/${_id}/${status}`)
+          axios.patch(`${import.meta.env.VITE_BASE_URL}/api/v1/applications/${_id}/${status}`)
             .then(() => {
               setApplication(prev => ({ ...prev, status }));
 
@@ -173,7 +173,7 @@ const ApplicationDetails = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           // Send the patch request to update the status
-          axios.patch(`http://localhost:3000/api/v1/applications/${_id}/${status}`)
+          axios.patch(`${import.meta.env.VITE_BASE_URL}/api/v1/applications/${_id}/${status}`)
             .then(() => {
               setApplication(prev => ({ ...prev, status }));
 

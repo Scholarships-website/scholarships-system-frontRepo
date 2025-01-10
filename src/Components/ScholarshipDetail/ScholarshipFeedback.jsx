@@ -3,6 +3,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import { UserContext } from '../../Context/UserContext';
 import axios from 'axios';
+import { faFlag, faThumbsDown, faThumbsUp } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const style = {
     position: 'absolute',
@@ -45,7 +47,7 @@ function ScholarshipFeedback({ id, status, endDate }) {
             return;
         }
         try {
-            const response = await fetch('http://localhost:3000/api/v1/scholarships/feedbacks', {
+            const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/feedbacks`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -82,14 +84,14 @@ function ScholarshipFeedback({ id, status, endDate }) {
     const viewFeedbacks = async (id) => {
         setLoadingFeedbacks(true);
         try {
-            const response = await axios.get(`http://localhost:3000/api/v1/scholarships/${id}/feedbacks`);
+            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${id}/feedbacks`);
             const feedbacks = response.data;
 
             // Fetch student data for each feedback
             const feedbacksWithStudentData = await Promise.all(
                 feedbacks.map(async (feedback) => {
                     try {
-                        const studentResponse = await axios.get(`http://localhost:3000/api/v1/getStudentDataFromId/${feedback.student_id}`);
+                        const studentResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/getStudentDataFromId/${feedback.student_id}`);
                         return {
                             ...feedback,
                             studentData: studentResponse.data,
@@ -123,13 +125,13 @@ function ScholarshipFeedback({ id, status, endDate }) {
     const viewFeedbacksModal = async (id) => {
         setLoadingFeedbacksM(true);
         try {
-            const response = await axios.get(`http://localhost:3000/api/v1/scholarships/${id}/feedbacks`);
+            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${id}/feedbacks`);
             const feedbacks = response.data;
 
             const feedbacksWithStudentData = await Promise.all(
                 feedbacks.map(async (feedback) => {
                     try {
-                        const studentResponse = await axios.get(`http://localhost:3000/api/v1/getStudentDataFromId/${feedback.student_id}`);
+                        const studentResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/getStudentDataFromId/${feedback.student_id}`);
                         return {
                             ...feedback,
                             studentData: studentResponse.data,
@@ -183,6 +185,39 @@ function ScholarshipFeedback({ id, status, endDate }) {
         const randomIndex = Math.floor(Math.random() * basicColors.length);
         return basicColors[randomIndex];
     };
+
+    const handleLike = async (feedbackId) => {
+        try {
+            // await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/feedbacks/${feedbackId}/like`);
+            toast.success("Liked the feedback!");
+            // Optionally, update the feedbacks state to reflect the new like count
+        } catch (error) {
+            console.error("Error liking feedback:", error);
+            toast.error("Failed to like the feedback.");
+        }
+    };
+
+    const handleDislike = async (feedbackId) => {
+        try {
+            // await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/feedbacks/${feedbackId}/dislike`);
+            toast.success("Disliked the feedback!");
+        } catch (error) {
+            console.error("Error disliking feedback:", error);
+            toast.error("Failed to dislike the feedback.");
+        }
+    };
+
+    const handleReport = async (feedbackId) => {
+        try {
+            // await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/feedbacks/${feedbackId}/report`);
+            toast.success("Reported the feedback!");
+        } catch (error) {
+            console.error("Error reporting feedback:", error);
+            toast.error("Failed to report the feedback.");
+        }
+    };
+
+
     return (
         <div className='similar-scholarships feedbacks-details p-50'>
             <h2 className='feedback-header'>What Students Are Saying About This Scholarship </h2>
@@ -194,7 +229,7 @@ function ScholarshipFeedback({ id, status, endDate }) {
                     {console.log(loadingFeedbacks)}
                     {loadingFeedbacks ? (
                         <Box id="scholarship-details-skeleton" >
-                            
+
                             <Box sx={{ mt: 2 }}>
                                 <Skeleton variant="circular" width={70} height={70} sx={{ mr: 2 }} />
                                 <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
@@ -209,22 +244,56 @@ function ScholarshipFeedback({ id, status, endDate }) {
                             <Box
                                 key={index}
                                 id="scholarship-details-description"
-                                sx={{ mt: 2, display: 'flex', alignItems: 'center' }}
+                                sx={{ mt: 2, display: 'flex',flexDirection:'column',gap:'8px' }}
                             >
-                                <Avatar
-                                    sx={{ backgroundColor: getRandomColor(), mr: 2, width: "50px", height: "50px" }}
-                                >
-                                    {feedback.studentData?.fullname[0].toUpperCase()}
-                                </Avatar>
-                                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                    <Typography variant="body1">
-                                        <strong>{feedback.studentData?.fullname}</strong>
-                                    </Typography>
-                                    <Rating value={feedback.rating} readOnly />
-                                    <Typography variant="body2" sx={{ mt: 1 }}>
-                                        {feedback.content}
-                                    </Typography>
-                                </Box>
+                                <div style={{display:'flex',alignItems:'center'}} >
+                                    <Avatar
+                                        sx={{ backgroundColor: getRandomColor(), mr: 2, width: "50px", height: "50px" }}
+                                    >
+                                        {feedback.studentData?.fullname[0].toUpperCase()}
+                                    </Avatar>
+                                    <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                                        <Typography variant="body1">
+                                            <strong>{feedback.studentData?.fullname}</strong>
+                                        </Typography>
+                                        <Rating value={feedback.rating} readOnly />
+                                        <Typography variant="body2" sx={{ mt: 1 }}>
+                                            {feedback.content}
+                                        </Typography>
+                                    </Box>
+                                </div>
+                                {/* Actions: Like, Dislike, Report */}
+                                <div>
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            gap: 2,
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            justifyContent:'center'
+                                        }}
+                                    >
+                                        <button
+                                            onClick={() => handleLike(feedback._id)}
+                                            style={{ cursor: 'pointer', border: 'none', background: 'none', color: '#418447',display:'flex',alignItems:'center',gap:'5px' }}
+                                        >
+                                            <FontAwesomeIcon icon={faThumbsUp} size="2xs" /> <span style={{fontSize:'14px'}}>{feedback.likes}</span>
+                                        </button>
+                                        <button
+                                            onClick={() => handleDislike(feedback._id)}
+                                            style={{ cursor: 'pointer', border: 'none', background: 'none', color: '#418447',display:'flex',alignItems:'center',gap:'5px' }}
+                                        >
+                                            <FontAwesomeIcon icon={faThumbsDown} size="2xs" /><span style={{fontSize:'14px'}}> {feedback.dislikes}</span>
+                                        </button>
+                                        <button
+                                            onClick={() => handleReport(feedback._id)}
+                                            style={{ cursor: 'pointer', border: 'none', background: 'none', color: '#418447',display:'flex',alignItems:'center',gap:'5px' }}
+                                        >
+                                            <FontAwesomeIcon icon={faFlag} size="2xs" /> <span style={{fontSize:'14px'}}> Report</span>
+                                        </button>
+                                    </Box>
+                                </div>
+
                             </Box>
                         ))
                     ) : (

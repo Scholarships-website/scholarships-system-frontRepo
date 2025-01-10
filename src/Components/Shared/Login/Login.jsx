@@ -24,7 +24,7 @@ export default function Login() {
     const [user, setUser] = useState({});
     const onSubmit = async (users) => {
         try {
-            const { data } = await axios.post('http://localhost:3000/api/v1/login', users);
+            const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/login`, users);
             if (data.message === 'login successful!') {
                 const role = data.user.role;
                 setUser(data.data);

@@ -21,7 +21,7 @@ export default function Students() {
 
   const fetchStudents = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:3000/api/v1/students/`);
+      const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/students/`);
       setStudents(data);
     } catch (error) {
       console.log(error);
@@ -42,7 +42,7 @@ export default function Students() {
   //   }).then(async (result) => {
   //     if (result.isConfirmed) {
   //       try {
-  //         await axios.delete(`http://localhost:3000/api/v1/students/${id}`);
+  //         await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/v1/students/${id}`);
   //         setStudents((prevStudents) => prevStudents.filter((student) => student._id !== id));
   //         Swal.fire("Deleted!", "Student has been deleted.", "success");
   //       } catch (error) {

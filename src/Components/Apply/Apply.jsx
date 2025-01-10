@@ -91,12 +91,12 @@ const Apply = () => {
   useEffect(() => {
     const fetchApplicationDetails = async () => {
       try {
-        const applicationsResponse = await axios.get(`http://localhost:3000/api/v1/students/${roleId}/applications`);
+        const applicationsResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/students/${roleId}/applications`);
         const applicationIds = applicationsResponse.data;
 
         if (applicationIds.length > 0) {
           const firstApplicationId = applicationIds[0];
-          const applicationDetailsResponse = await axios.get(`http://localhost:3000/api/v1/students/applications/${firstApplicationId}`);
+          const applicationDetailsResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/students/applications/${firstApplicationId}`);
           setApplicationDetails(applicationDetailsResponse.data);
         }
         setLoading(false);
@@ -169,7 +169,7 @@ const Apply = () => {
         try {
           // Send the form data using axios
           const response = await axios.post(
-            `http://localhost:3000/api/v1/scholarships/${scholarship_id}/apply`,
+            `${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${scholarship_id}/apply`,
             formDataToSubmit,
             {
               headers: {
