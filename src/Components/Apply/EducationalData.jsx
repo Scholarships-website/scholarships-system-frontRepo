@@ -6,11 +6,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const EducationalData = ({currentStep, totalSteps, prevStep, formData, setFormData, saveStepData,nextStep,applicationDetails }) => {
   // Validation Schema
   const validationSchema = Yup.object({
-
     GPA: Yup.number()
       .required("GPA is required")
       .min(0, "GPA cannot be less than 0")
-      .max(4, "GPA cannot be more than 4"),
+      .max(100, "GPA cannot be more than 100"),
 
     Number_of_Siblings: Yup.number()
       .required("Number of siblings is required")
