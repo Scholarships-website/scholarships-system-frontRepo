@@ -13,7 +13,7 @@ const HealthStatus = ({ data }) => {
                         Family Disabilities:
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                        {application.Number_of_Disabilities_in_the_Family || "N/A"}
+                        {application.Number_of_Disabilities_in_the_Family || " 0 "}
                     </Typography>
                 </Box>
 
@@ -27,7 +27,7 @@ const HealthStatus = ({ data }) => {
                             ? application.Disabilities_description.map((item, index) => (
                                 <div key={index}>{item}</div>
                             ))
-                            : "N/A"}
+                            : " "}
                     </Typography>
                 </Box>
             </Box>

@@ -192,8 +192,17 @@ function Applications() {
                             <ul className="wishlist-menu">
                               <li>
                                 <div>
-                                  <Link to={`/scholarship-detail/${item.scholarship._id}`} className="details-scholarship-link">
+                                  {/* <Link to={`/scholarship-detail/${item.scholarship._id}`} className="details-scholarship-link">
                                     <button title="view details" className="mt-15px">
+                                      <FontAwesomeIcon icon={faEye} />
+                                    </button>
+                                  </Link> */}
+                                  <Link
+                                    to={`/studentDashboard/applications/${item.scholarship._id}/details/${item.application._id}`}
+                                    state={{  application: item.application }}
+                                    className="details-scholarship-link"
+                                  >
+                                    <button title="view the application">
                                       <FontAwesomeIcon icon={faEye} />
                                     </button>
                                   </Link>
@@ -219,12 +228,14 @@ function Applications() {
                               <ul className=' expanded'>
                                 <div>
                                   <li>
-                                    <Link to={`/scholarship-detail/${item.scholarship._id}`} className="details-scholarship-link">
-                                      <button title="view details" className="dropdown-item">
-                                        <FontAwesomeIcon icon={faEye} className="px-1" />
-                                        view details
-                                      </button>
-                                    </Link>
+                                    <Link
+                                    to={`/studentDashboard/applications/${item.scholarship._id}/details/${item.application._id}`}
+                                    className="details-scholarship-link"
+                                  >
+                                    <button title="view the application" className="dropdown-item">
+                                      <FontAwesomeIcon icon={faEye} className="px-1" />view details
+                                    </button>
+                                  </Link>
                                   </li>
                                 </div>
                               </ul>

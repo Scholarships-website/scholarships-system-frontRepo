@@ -18,31 +18,31 @@ const EducationalData = ({ data }) => {
         {/* Student Type */}
         <Box sx={{ width: "48%" }}>
           <Typography variant="body1" sx={{ fontWeight: "bold" }}>Student Type:</Typography>
-          <Typography variant="body2" color="textSecondary">{application.student_type || "N/A"}</Typography>
+          <Typography variant="body2" color="textSecondary">{application.student_type || " "}</Typography>
         </Box>
 
         {/* Academic Program */}
         <Box sx={{ width: "48%" }}>
           <Typography variant="body1" sx={{ fontWeight: "bold" }}>Academic Program:</Typography>
-          <Typography variant="body2" color="textSecondary">{application.academic_program || "N/A"}</Typography>
+          <Typography variant="body2" color="textSecondary">{application.academic_program || " "}</Typography>
         </Box>
 
         {/* College */}
         <Box sx={{ width: "48%" }}>
           <Typography variant="body1" sx={{ fontWeight: "bold" }}>College:</Typography>
-          <Typography variant="body2" color="textSecondary">{application.college || "N/A"}</Typography>
+          <Typography variant="body2" color="textSecondary">{application.college || " "}</Typography>
         </Box>
 
         {/* Specialization */}
         <Box sx={{ width: "48%" }}>
           <Typography variant="body1" sx={{ fontWeight: "bold" }}>Major:</Typography>
-          <Typography variant="body2" color="textSecondary">{application.major || "N/A"}</Typography>
+          <Typography variant="body2" color="textSecondary">{application.major || " "}</Typography>
         </Box>
 
         {/* Stream */}
         <Box sx={{ width: "48%" }}>
           <Typography variant="body1" sx={{ fontWeight: "bold" }}>Stream:</Typography>
-          <Typography variant="body2" color="textSecondary">{application.stream || "N/A"}</Typography>
+          <Typography variant="body2" color="textSecondary">{application.stream || " "}</Typography>
         </Box>
         {/* GPA */}
         <Box sx={{ width: "45%" }}>
@@ -50,7 +50,7 @@ const EducationalData = ({ data }) => {
             GPA:
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            {application.GPA || "N/A"}
+            {application.GPA || " "}
           </Typography>
         </Box>
 
@@ -60,7 +60,7 @@ const EducationalData = ({ data }) => {
             University Year:
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            {application.university_year || "N/A"}
+            {application.university_year || " "}
           </Typography>
         </Box>
 
@@ -70,7 +70,7 @@ const EducationalData = ({ data }) => {
             School Class:
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            {application.class_year || "N/A"}
+            {application.class_year || " "}
           </Typography>
         </Box>
 
@@ -80,7 +80,7 @@ const EducationalData = ({ data }) => {
             Siblings in University:
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            {application.Number_of_Siblings || "N/A"}
+            {application.Number_of_Siblings || " "}
           </Typography>
         </Box>
       </Box>

@@ -1,7 +1,6 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 const EducationalData = ({currentStep, totalSteps, prevStep, formData, setFormData, saveStepData,nextStep,applicationDetails }) => {
   // Validation Schema
@@ -56,7 +55,7 @@ const EducationalData = ({currentStep, totalSteps, prevStep, formData, setFormDa
     academic_program: applicationDetails?.academic_program || formData?.academic_program || "",
     college: applicationDetails?.college || formData?.college || "",
     major: applicationDetails?.major || formData?.major || "",
-    stream: applicationDetails?.stream || "",
+    stream: applicationDetails?.stream ||formData?.stream || "",
     GPA: applicationDetails?.GPA || formData?.GPA || "",
     university_year: applicationDetails?.university_year || formData?.university_year || "",
     class_year: applicationDetails?.class_year || formData?.class_year || "",

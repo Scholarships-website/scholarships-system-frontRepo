@@ -97,6 +97,14 @@
   background: #418447 !important;
   border:#418447 solid 1px !important ;
 }
+.css-1sd1ot5-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
+  color: #418447 !important ;
+}
+
+.css-1sd1ot5-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed {
+  color: #418447 !important ;
+}
+
 .upload-requirement {
   border: 1px solid #e74c3c;
   border-radius: 8px;

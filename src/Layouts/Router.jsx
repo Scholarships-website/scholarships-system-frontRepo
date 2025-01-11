@@ -43,6 +43,8 @@ import AcceptedScholarship from '../Components/Admin/Scholarships/AcceptedSchola
 import PendingScholarship from '../Components/Admin/Scholarships/PendingScholarship';
 import RejectedScholarship from '../Components/Admin/Scholarships/RejectedScholarship';
 import ScholarshipsComment from '../Components/Admin/Comments/ScholarshipsComment';
+import VeiwApp from '../Components/Student/Application/VeiwApp';
+import EditApp from '../Components/Student/Application/Edit/EditApp';
 export const router = createBrowserRouter([
     {
         path: "/studentDashboard",
@@ -63,6 +65,14 @@ export const router = createBrowserRouter([
             {
                 path: "wishlist",
                 element: <Wishlist />,
+            },
+            {
+                path: "applications/:id/details/:_id",
+                element: <VeiwApp />,
+            },
+            {
+                path: "applications/edit-application/:id",
+                element: <EditApp />,
             },
             {
                 path: "*",
@@ -88,19 +98,19 @@ export const router = createBrowserRouter([
             },
             {
                 path: "scholarship-advertiser/accepted",
-                element:<AcceptedScholarships />,
+                element: <AcceptedScholarships />,
             },
             {
                 path: "scholarship-advertiser/pending",
-                element:<PendingScholarships />,
+                element: <PendingScholarships />,
             },
             {
                 path: "scholarship-advertiser/rejected",
-                element:<RejectedScholarships />,
+                element: <RejectedScholarships />,
             },
             {
                 path: "post-scholarship",
-                element:<AddScholarships />,
+                element: <AddScholarships />,
             },
             {
                 path: "edit-scholarship/:id",
@@ -126,7 +136,7 @@ export const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <AdminLayout/>,
+        element: <AdminLayout />,
         children: [
             {
                 path: "",
@@ -146,15 +156,15 @@ export const router = createBrowserRouter([
             },
             {
                 path: "scholarships/accepted",
-                element:<AcceptedScholarship />,
+                element: <AcceptedScholarship />,
             },
             {
                 path: "scholarships/pending",
-                element:<PendingScholarship />,
+                element: <PendingScholarship />,
             },
             {
                 path: "scholarships/rejected",
-                element:<RejectedScholarship />,
+                element: <RejectedScholarship />,
             },
             {
                 path: "feedbacks",

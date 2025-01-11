@@ -62,7 +62,7 @@ export default function Comments() {
 
       // Step 5: Set the state with the scholarships combined with feedbacks
       setScholarships(scholarshipsWithFeedbacksOnly);
-      console.log(scholarshipsWithFeedbacksOnly); // Log the final result
+      // console.log(scholarshipsWithFeedbacksOnly); 
     } catch (error) {
       console.error("Error fetching scholarships:", error);
     } finally {
@@ -108,7 +108,7 @@ export default function Comments() {
       );
 
       setFeedbacks(feedbacksWithStudentData);
-      console.log("Feedbacks with student data:", feedbacksWithStudentData);
+      // console.log("Feedbacks with student data:", feedbacksWithStudentData);
       // setFeedbacks();
       handleOpen();
       setLoadingFeedbacks(false)
@@ -280,7 +280,7 @@ export default function Comments() {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="7">No Accepted Scholarships</td>
+                      <td colSpan="7">No Scholarships Comment</td>
                     </tr>
                   )}
                 </tbody>

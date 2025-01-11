@@ -2,8 +2,7 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-const Attachments = ({ currentStep, totalSteps, prevStep, formData, setFormData, saveStepData, nextStep, onSubmit, applicationDetails }) => {
-  // Validation Schema
+function Attachments({ currentStep, totalSteps, prevStep, formData, setFormData, saveStepData, nextStep, onSubmit, applicationDetails }) {
   const validationSchema = Yup.object({
     Student_ID_Image: Yup.mixed()
       .required("Student's ID image is required")
@@ -38,11 +37,11 @@ const Attachments = ({ currentStep, totalSteps, prevStep, formData, setFormData,
 
   // Initial Values
   const initialValues = {
-    Student_ID_Image: applicationDetails?.Student_ID_Image || formData?.Student_ID_Image || null,
-    Head_of_Household_ID_Image: applicationDetails?.Head_of_Household_ID_Image || formData?.Head_of_Household_ID_Image || null,
-    Mother_ID_Image: applicationDetails?.Mother_ID_Image || formData?.Mother_ID_Image || null,
-    Sibling_ID_Image: applicationDetails?.Sibling_ID_Image || formData?.Sibling_ID_Image || null,
-    Special_Cases_Report: applicationDetails?.Special_Cases_Report || formData?.Special_Cases_Report || null,
+    Student_ID_Image: formData?.Student_ID_Image || null,
+    Head_of_Household_ID_Image: formData?.Head_of_Household_ID_Image || null,
+    Mother_ID_Image: formData?.Mother_ID_Image || null,
+    Sibling_ID_Image: formData?.Sibling_ID_Image || null,
+    Special_Cases_Report: formData?.Special_Cases_Report || null,
   };
 
   // Submit Handler
@@ -59,7 +58,7 @@ const Attachments = ({ currentStep, totalSteps, prevStep, formData, setFormData,
   };
 
   return (
-    <div className="container">
+    <>
       <div className="upload-requirement">
         <p>
           <strong>Important:</strong> Please upload the following mandatory documents to submit your application:
@@ -164,9 +163,8 @@ const Attachments = ({ currentStep, totalSteps, prevStep, formData, setFormData,
           </Form>
         )}
       </Formik>
+    </>
+  )
+}
 
-    </div>
-  );
-};
-
-export default Attachments;
+export default Attachments

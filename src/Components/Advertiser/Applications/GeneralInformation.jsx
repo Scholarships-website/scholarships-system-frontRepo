@@ -32,19 +32,19 @@ const GeneralInformation = ({ data  }) => {
                     {/* Full Name */}
                     <Box sx={{ width: "48%" }}>
                         <Typography variant="body1" sx={{ fontWeight: "bold" }}>Full Name:</Typography>
-                        <Typography variant="body2" color="textSecondary">{studentData.fullname || "N/A"}</Typography>
+                        <Typography variant="body2" color="textSecondary">{studentData.fullname || " "}</Typography>
                     </Box>
 
                     {/* ID Number */}
                     <Box sx={{ width: "48%" }}>
                         <Typography variant="body1" sx={{ fontWeight: "bold" }}>ID Number:</Typography>
-                        <Typography variant="body2" color="textSecondary">{application.ID_Number || "N/A"}</Typography>
+                        <Typography variant="body2" color="textSecondary">{application.ID_Number || " "}</Typography>
                     </Box>
 
                     {/* Card Type */}
                     <Box sx={{ width: "48%" }}>
                         <Typography variant="body1" sx={{ fontWeight: "bold" }}>Card Type:</Typography>
-                        <Typography variant="body2" color="textSecondary">{application.Card_Type || "N/A"}</Typography>
+                        <Typography variant="body2" color="textSecondary">{application.Card_Type || " "}</Typography>
                     </Box>
 
                     {/* Date of Birth */}
@@ -56,37 +56,37 @@ const GeneralInformation = ({ data  }) => {
                     {/* Gender */}
                     <Box sx={{ width: "48%" }}>
                         <Typography variant="body1" sx={{ fontWeight: "bold" }}>Gender:</Typography>
-                        <Typography variant="body2" color="textSecondary">{studentData.gender || "N/A"}</Typography>
+                        <Typography variant="body2" color="textSecondary">{studentData.gender || " "}</Typography>
                     </Box>
 
                     {/* Marital Status */}
                     <Box sx={{ width: "48%" }}>
                         <Typography variant="body1" sx={{ fontWeight: "bold" }}>Marital Status:</Typography>
-                        <Typography variant="body2" color="textSecondary">{application.Martial_Status || "N/A"}</Typography>
+                        <Typography variant="body2" color="textSecondary">{application.Martial_Status || " "}</Typography>
                     </Box>
 
                     {/* Permanent Residence */}
                     <Box sx={{ width: "48%" }}>
                         <Typography variant="body1" sx={{ fontWeight: "bold" }}>Permanent Residence:</Typography>
-                        <Typography variant="body2" color="textSecondary">{application.Permanent_Residence || "N/A"}</Typography>
+                        <Typography variant="body2" color="textSecondary">{application.Permanent_Residence || " "}</Typography>
                     </Box>
 
                     {/* Province */}
                     <Box sx={{ width: "48%" }}>
                         <Typography variant="body1" sx={{ fontWeight: "bold" }}>Province:</Typography>
-                        <Typography variant="body2" color="textSecondary">{application.province || "N/A"}</Typography>
+                        <Typography variant="body2" color="textSecondary">{application.province || " "}</Typography>
                     </Box>
 
                     {/* Street */}
                     <Box sx={{ width: "48%" }}>
                         <Typography variant="body1" sx={{ fontWeight: "bold" }}>Street:</Typography>
-                        <Typography variant="body2" color="textSecondary">{application.street || "N/A"}</Typography>
+                        <Typography variant="body2" color="textSecondary">{application.street || " "}</Typography>
                     </Box>
 
                     {/* Phone Number */}
                     <Box sx={{ width: "48%" }}>
                         <Typography variant="body1" sx={{ fontWeight: "bold" }}>Phone Number:</Typography>
-                        <Typography variant="body2" color="textSecondary">{studentData.phoneNumber || "N/A"}</Typography>
+                        <Typography variant="body2" color="textSecondary">{studentData.phoneNumber || " "}</Typography>
                     </Box>
                 </Box>
             </CardContent>

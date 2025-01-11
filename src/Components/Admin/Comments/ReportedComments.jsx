@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import '../Dashboard.css'
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComments, faEllipsisVertical, faMagnifyingGlass, faPenToSquare, faUserXmark } from '@fortawesome/free-solid-svg-icons';
-import { Avatar, Box, Modal, Pagination, Rating, Skeleton, Typography } from '@mui/material';
+import { faComments, faEllipsisVertical, faMagnifyingGlass, faPenToSquare, faTrash, faUserXmark } from '@fortawesome/free-solid-svg-icons';
+import { Avatar, Box, Button, Modal, Pagination, Rating, Skeleton, Typography } from '@mui/material';
 import { Bounce, toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 const style = {
   position: 'absolute',
@@ -34,17 +35,17 @@ export default function ReportedComments() {
     setLoading(true);
     try {
       // Step 1: Fetch the scholarships
-      const response = await axios.get(`${process.env.BASE_URL}/api/v1/scholarships`);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships`);
       const scholarships = response.data;
 
       // Step 2: Fetch feedbacks reported for each scholarship
       const scholarshipsWithFeedbacks = await Promise.all(scholarships.map(async (scholarship) => {
         try {
           //${process.env.BASE_URL}/api/v1/scholarships/${scholarship._id}/feedbacks/reported
-          const feedbackResponse = await axios.get(`${process.env.BASE_URL}/api/v1/scholarships/${scholarship._id}/feedbacks`);
+          const feedbackResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${scholarship._id}/feedbacks/reported`);
           const feedbacks = feedbackResponse.data;
-
-          // Step 3: Check if feedbacks are valid
+          console.log(feedbacks)
+          // Step 3: Check if the feedback is reported are valid
           if (feedbacks && feedbacks !== "no feedbacks for this scholarship" && feedbacks.length > 0) {
             // Combine feedbacks with the scholarship object
             return {
@@ -91,15 +92,14 @@ export default function ReportedComments() {
   const viewFeedbacks = async (id) => {
     setLoadingFeedbacks(true);
     try {
-      //${process.env.BASE_URL}/api/v1/scholarships/${id}/feedbacks/reported
-      const response = await axios.get(`${process.env.BASE_URL}/api/v1/scholarships/${id}/feedbacks`);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${id}/feedbacks/reported`);
       const feedbacks = response.data;
 
       // Fetch student data for each feedback
       const feedbacksWithStudentData = await Promise.all(
         feedbacks.map(async (feedback) => {
           try {
-            const studentResponse = await axios.get(`${process.env.BASE_URL}/api/v1/getStudentDataFromId/${feedback.student_id}`);
+            const studentResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/getStudentDataFromId/${feedback.student_id}`);
             return {
               ...feedback,
               studentData: studentResponse.data,
@@ -157,37 +157,37 @@ export default function ReportedComments() {
     return basicColors[randomIndex];
   };
 
-  // const deleteReportedComment = async (id) => {
-  //     Swal.fire({
-  //         title: "Are you sure?",
-  //         text: "You won't be able to revert this!",
-  //         icon: "warning",
-  //         showCancelButton: true,
-  //         confirmButtonColor: "#3085d6",
-  //         cancelButtonColor: "#d33",
-  //         confirmButtonText: "Yes, delete it!",
-  //     }).then(async (result) => {
-  //         if (result.isConfirmed) {
-  //             try {
-  //                 await axios.delete(`${process.env.BASE_URL}/api/v1/feedback/${id}`);
-  //                 // Remove the deleted comment
-  //                 setReportedComments((prevReportedComments) => ReportedComments.filter((reportedComment) => reportedComments.id !== id));
-  //                 Swal.fire({
-  //                     title: "Deleted!",
-  //                     text: "comment has been deleted.",
-  //                     icon: "success",
-  //                 });
-  //             } catch (error) {
-  //                 console.error("Error deleting comment:", error);
-  //                 Swal.fire({
-  //                     title: "Error!",
-  //                     text: "There was a problem deleting the comment.",
-  //                     icon: "error",
-  //                 });
-  //             }
-  //         }
-  //     });
-  // };
+  const handleDeleteComment = async (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/feedbacks/${id}`);
+          // Remove the deleted comment
+          setFeedbacks((prevFeedbacks) => prevFeedbacks.filter((reportedComment) => reportedComment._id !== id));
+          Swal.fire({
+            title: "Deleted!",
+            text: "comment has been deleted.",
+            icon: "success",
+          });
+        } catch (error) {
+          console.error("Error deleting comment:", error);
+          Swal.fire({
+            title: "Error!",
+            text: "There was a problem deleting the comment.",
+            icon: "error",
+          });
+        }
+      }
+    });
+  };
   return (
     <>
       <div className="scholarships-admin scholarships-advertiser">
@@ -266,6 +266,13 @@ export default function ReportedComments() {
                                           <Typography variant="body2" sx={{ mt: 1 }}>
                                             {feedback.content}
                                           </Typography>
+                                          <Button
+                                            onClick={() => handleDeleteComment(feedback._id)}
+                                            sx={{ mt: 1, color: 'red', display: 'flex', alignItems: 'center' }}
+                                          >
+                                            <FontAwesomeIcon icon={faTrash} size="1x" sx={{ mr: 1 }} />
+                                            Delete
+                                          </Button>
                                         </Box>
                                       </Box>
                                     ))
@@ -279,7 +286,7 @@ export default function ReportedComments() {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="7">No Accepted Scholarships</td>
+                      <td colSpan="7">No Reported Comments</td>
                     </tr>
                   )}
                 </tbody>

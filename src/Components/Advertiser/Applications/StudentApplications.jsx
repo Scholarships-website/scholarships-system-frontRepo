@@ -151,7 +151,7 @@ const StudentApplications = () => {
                 <span className="details-bold">Available Seats:</span> {numberOfSeats}
               </p>
               {loading ? (
-                <div style={{display:'flex',gap:'30px'}}>
+                <div style={{ display: 'flex', gap: '30px' }}>
                   <Skeleton variant="text" width="234px" height="60px" />
                   <Skeleton variant="text" width="234px" height="60px" /></div>
               ) : (
@@ -232,8 +232,20 @@ const StudentApplications = () => {
                         <td className={`d-none d-md-table-cell`}>
                           <span className={`status ${getStatusClass(item.application.status)}`}>{item.application.status}</span>
                         </td>
-                        <td className={`d-none d-md-table-cell`}>{item.application.evaluation || ' '}</td>
-                        <td className="action d-none d-md-table-cell">
+                        <td className={`d-none d-md-table-cell`}>
+                          <span
+                            style={{
+                              display: "inline-block",
+                              padding: "5px 10px",
+                              borderRadius: "8px",
+                              backgroundColor: item.application.evaluation ? "#E8F5E9" : "#FFEBEE", // Light green for evaluated, light red for not
+                              color: item.application.evaluation ? "#4CAF50" : "#F44336",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {item.application.evaluation || "Not yet evaluated"}
+                          </span>
+                        </td>                        <td className="action d-none d-md-table-cell">
                           <div className='eyeIcon'>
                             <ul className="wishlist-menu">
                               <li>
@@ -267,8 +279,19 @@ const StudentApplications = () => {
                           <td colSpan="4" className="full-width-expanded ">
                             {/* <div><strong>Major:</strong> {item.application.major || item.application.stream}</div> */}
                             <div><strong>Application Date:</strong> {moment(item.application.submitDate).format('YYYY-MM-DD HH:mm')}</div>
+                            <div><strong>Evaluation:</strong><span
+                              style={{
+                                display: "inline-block",
+                                padding: "5px 10px",
+                                borderRadius: "8px",
+                                backgroundColor: item.application.evaluation ? "#E8F5E9" : "#FFEBEE", // Light green for evaluated, light red for not
+                                color: item.application.evaluation ? "#4CAF50" : "#F44336",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {item.application.evaluation || "Not yet evaluated"}
+                            </span></div>
                             <div className={`left ${getStatusClass(item.application.status)}`}><strong>Status:</strong> {item.application.status}</div>
-                            <div><strong>Evaluation:</strong>{item.application.evaluation || ' '}</div>
                             <div className="dropdown d-md-none drop-down-buttons ">
                               <ul className=' expanded'>
                                 <div>
