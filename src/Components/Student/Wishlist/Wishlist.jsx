@@ -104,7 +104,6 @@ function Wishlist() {
         axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${id}`)
       );
       const responses = await Promise.all(detailsPromises);
-
       const details = responses.map((response) => response.data);
       setWishlistDetails(details); // Store detailed data
       console.log("Wishlist Details:", details);
@@ -125,6 +124,7 @@ function Wishlist() {
     if (wishlist.length > 0) {
       fetchWishlistDetails();
     }
+    else setLoadingDetails(false)
   }, [wishlist]);
 
   const handleSearch = (event) => {
@@ -198,7 +198,7 @@ function Wishlist() {
         </form>
       </div>
       <div className="table-container ps-3">
-        {loadingDetails ? (
+        {loading && loadingDetails ? (
           <table className="table table-hover bg-transparent">
             <thead>
               <tr className="bg-transparent">

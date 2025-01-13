@@ -194,7 +194,15 @@ function ScholarshipsFeedbacks() {
     const randomIndex = Math.floor(Math.random() * basicColors.length);
     return basicColors[randomIndex];
   };
-
+  const getFixedColor = (name) => {
+    const colors = ['#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#2196F3', '#4CAF50', '#FF9800', '#795548'];
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash); // Generate hash
+    }
+    const index = Math.abs(hash) % colors.length; // Map hash to a color index
+    return colors[index];
+  };
   return (
     <>
       <ToastContainer
@@ -277,8 +285,8 @@ function ScholarshipsFeedbacks() {
                                   ) : (
                                     feedbacks && feedbacks.map((feedback, index) => (
                                       <Box key={index} id="scholarship-details-description" sx={{ mt: 2, display: 'flex', alignItems: 'center' }}>
-                                        <Avatar sx={{ backgroundColor: getRandomColor(), mr: 2, width: "50px", height: "50px" }}>
-                                          {feedback.studentData.fullname[0].toUpperCase()}
+                                        <Avatar sx={{ backgroundColor: getFixedColor(feedback.studentData?.fullname), mr: 2, width: "50px", height: "50px" }}>
+                                          {feedback.studentData?.fullname[0].toUpperCase()}
                                         </Avatar>
                                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                           <Typography variant="body1"><strong>{feedback.studentData.fullname}</strong></Typography>

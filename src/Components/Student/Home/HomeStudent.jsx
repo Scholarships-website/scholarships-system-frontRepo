@@ -30,11 +30,9 @@ function HomeStudent() {
     <>
       <div className="homeStudent">
         <h2 className="d-flex align-items-center studentHeader">
-          Welcome{' '}
-          <span style={{ textTransform: 'uppercase', whiteSpace: 'pre-wrap' }}>
-            {userData.username}
-          </span>
-          <img src="src/assets/img/hi.gif" alt="example-gif" width="40px" />!
+          Welcome&nbsp;
+          <span style={{ textTransform: 'uppercase' }}>{userData.username}</span>
+          &nbsp;<img src="src/assets/img/hi.gif" alt="example-gif" width="40px" />!
         </h2>
         <div className="image-container">
           {loading ? (
