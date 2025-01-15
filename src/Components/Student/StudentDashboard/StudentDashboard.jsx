@@ -60,14 +60,14 @@ function StudentDashboard(props) {
             title: 'Dashboard',
             icon: <DashboardIcon />,
         },
-        {
-            kind: 'divider',
-        },
-        {
-            segment: 'studentDashboard/profile',
-            title: 'Student Profile',
-            icon: <FontAwesomeIcon icon={faUser} />,
-        },
+        // {
+        //     kind: 'divider',
+        // },
+        // {
+        //     segment: 'studentDashboard/profile',
+        //     title: 'Student Profile',
+        //     icon: <FontAwesomeIcon icon={faUser} />,
+        // },
         {
             kind: 'divider',
         },

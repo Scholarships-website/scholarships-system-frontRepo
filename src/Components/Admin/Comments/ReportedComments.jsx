@@ -274,14 +274,14 @@ export default function ReportedComments() {
                                           <Typography variant="body2" sx={{ mt: 1 }}>
                                             {feedback.content}
                                           </Typography>
-                                          <Button
-                                            onClick={() => handleDeleteComment(feedback._id)}
-                                            sx={{ mt: 1, color: 'red', display: 'flex', alignItems: 'center' }}
-                                          >
-                                            <FontAwesomeIcon icon={faTrash} size="1x" sx={{ mr: 1 }} />
-                                            Delete
-                                          </Button>
+
                                         </Box>
+                                        <Button
+                                          onClick={() => handleDeleteComment(feedback._id)}
+                                          sx={{ mt: 1, color: 'red', display: 'flex', alignItems: 'center' }}
+                                        >
+                                          <FontAwesomeIcon icon={faTrash} size="1x" sx={{ mr: 1 }} />
+                                        </Button>
                                       </Box>
                                     ))
                                   )}

@@ -3,6 +3,7 @@ import axios from 'axios';
 import './ForgetPass.css';
 import { Skeleton } from '@mui/material';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
+import Navbar from '../../Navbar/Navbar'
 function RequestResetPassword({ onNext }) {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
@@ -79,9 +80,10 @@ function RequestResetPassword({ onNext }) {
                 theme="light"
                 transition={Bounce}
             />
-            <div className="logoContainer">
+            {/* <div className="logoContainer">
                 <a href="/"><img src="assets/img/logo.png" alt="logo" width="100px" /></a>
-            </div>
+            </div> */}
+            <Navbar />
             <div className='forgetContainer'>
                 {isLoading ?
                     (<Skeleton variant="rounded" width={500} height={500} />) :

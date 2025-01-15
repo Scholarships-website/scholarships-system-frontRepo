@@ -297,7 +297,6 @@ function AcceptedScholarships() {
                                               <Typography><strong>Key Personnel Details:</strong> {scholarshipDetails.key_personnel_details}</Typography>
                                               <Typography><strong>Approval Status:</strong> {scholarshipDetails.approval_status}</Typography>
                                               <Typography><strong>Website:</strong> <a href={scholarshipDetails.website_link} target="_blank" rel="noopener noreferrer">{scholarshipDetails.website_link}</a></Typography>
-                                              <Typography><strong>Application Form:</strong> <a href={scholarshipDetails.form_Link} target="_blank" rel="noopener noreferrer">{scholarshipDetails.form_Link}</a></Typography>
                                             </Box>
                                           )
                                         )}
@@ -384,7 +383,6 @@ function AcceptedScholarships() {
                                                 <Typography><strong>Key Personnel Details:</strong> {scholarshipDetails.key_personnel_details}</Typography>
                                                 <Typography><strong>Approval Status:</strong> {scholarshipDetails.approval_status}</Typography>
                                                 <Typography><strong>Website:</strong> <a href={scholarshipDetails.website_link} target="_blank" rel="noopener noreferrer">{scholarshipDetails.website_link}</a></Typography>
-                                                <Typography><strong>Application Form:</strong> <a href={scholarshipDetails.form_Link} target="_blank" rel="noopener noreferrer">{scholarshipDetails.form_Link}</a></Typography>
                                               </Box>
                                             )
                                           )}

@@ -14,6 +14,7 @@ import { UserContext } from "../../Context/UserContext";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import moment from "moment";
 
 const ScholarshipList = ({ scholarships, loading }) => {
   const [wishlist, setWishlist] = useState([]);
@@ -142,7 +143,7 @@ const ScholarshipList = ({ scholarships, loading }) => {
         Array.from(new Array(3)).map((_, index) => (
           <Card key={index} className="scholarship-item">
             <Skeleton variant="text" height={40} width="60%" />
-            <Skeleton variant="rectangular" height={200} />
+            <Skeleton variant="rounded" height={200} />
             <CardContent>
               <Skeleton variant="text" height={20} width="80%" />
               <Skeleton variant="text" height={20} width="50%" />
@@ -157,7 +158,7 @@ const ScholarshipList = ({ scholarships, loading }) => {
       ) : (
         scholarships.map((scholarship) => (
           <Card key={scholarship._id} className="scholarship-item">
-            <h2 className="card-header" style={{ color: "#418447" }}>
+            <h2 className="card-header" style={{ color: "#000",marginBottom:'15px',textAlign:'center' }}>
               {scholarship.scholarsip_name}
             </h2>
             <CardMedia
@@ -166,6 +167,7 @@ const ScholarshipList = ({ scholarships, loading }) => {
               image={scholarship.scholarship_picture}
               alt={scholarship.scholarsip_name}
               loading="lazy"
+              sx={{ borderRadius: '12px' }}
             />
             <CardContent>
               <Typography variant="body2" sx={{ color: "text.secondary" }}>
@@ -178,12 +180,7 @@ const ScholarshipList = ({ scholarships, loading }) => {
                 Place of Study: {scholarship.Place_of_Study}
               </Typography>
               <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                End date:{" "}
-                {new Date(scholarship.End_Date).toLocaleDateString("en-GB", {
-                  day: "2-digit",
-                  month: "2-digit",
-                  year: "numeric",
-                })}
+                Deadline:{moment(scholarship?.deadline).format('DD MMMM YYYY')}
               </Typography>
               <Typography variant="body2" sx={{ color: "text.secondary" }}>
                 Expenses Covered: {scholarship.expenses_coverd}

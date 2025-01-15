@@ -90,6 +90,7 @@ const Apply = () => {
 
 
   useEffect(() => {
+    setLoading(true);
     const fetchApplicationDetails = async () => {
       try {
         const applicationsResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/students/${roleId}/applications`);
@@ -122,6 +123,8 @@ const Apply = () => {
 
   const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, steps.length));
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
+
+
 
   const handleSubmit = async () => {
     // Display confirmation dialog using Swal
@@ -162,11 +165,21 @@ const Apply = () => {
           formDataToSubmit.append(key, value);
         });
 
-        // Append files from pdffiles
-        Object.entries(formData.pdffiles).forEach(([key, file]) => {
-          formDataToSubmit.append(key, file);
-        });
+ // Append files from pdffiles
+ Object.entries(formData.pdffiles).forEach(([key, file]) => {
+  if (file) {
+    console.log(`Appending file: ${key}`, file); // Log the file being appended
+    formDataToSubmit.append(key, file);
 
+  } else {
+    console.log(`File ${key} is null or undefined`); // Log if the file is missing
+  }
+});
+
+// Log FormData contents
+for (let [key, value] of formDataToSubmit.entries()) {
+  console.log(key, value);
+}
         try {
           // Send the form data using axios
           const response = await axios.post(
@@ -314,7 +327,14 @@ const Apply = () => {
       ),
     },
   ];
-
+  useEffect(() => {
+    if (currentStep === 6) { // Only trigger onSubmit on the Attachments step
+      const areFilesUploaded = Object.values(formData.pdffiles).some(file => file !== null);
+      if (areFilesUploaded) {
+        handleSubmit();
+      }
+    }
+  }, [formData.pdffiles, currentStep, handleSubmit]);
 
 
 

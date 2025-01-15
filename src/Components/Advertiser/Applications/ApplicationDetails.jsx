@@ -52,12 +52,8 @@ const ApplicationDetails = () => {
   }, [_id]);
 
   const handleStatusUpdate = (status, seatsAvailable, acceptedCount) => {
-    const currentDate = Date();
 
-    // Check if the current date is before the deadline
-    // console.log(currentDate < deadline)
-
-    if (currentDate < deadline) {
+    if (moment().startOf('day').isSameOrBefore(moment(deadline).startOf('day'))) {
       Swal.fire({
         title: 'Cannot update before deadline',
         text: 'You cannot change the application status before the deadline.',

@@ -45,7 +45,7 @@ function Attachments({ currentStep, totalSteps, prevStep, formData, setFormData,
   };
 
   // Submit Handler
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     console.log("Submitting form...");
     console.log(values);
     saveStepData({ stepKey: 'pdffiles', data: values });
@@ -54,7 +54,6 @@ function Attachments({ currentStep, totalSteps, prevStep, formData, setFormData,
       ...prev,
       pdffiles: values,
     }));
-    onSubmit();
   };
 
   return (

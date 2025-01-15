@@ -176,7 +176,7 @@ const ScholarshipDetail = () => {
               {renderField("Expenses Covered", `${scholarship?.expenses_coverd}`)}
               {renderField("Number of Seats Available", scholarship?.number_of_seats_available)}
               {renderField("Key Personnel", scholarship?.key_personnel_details)}
-              {renderField("Submission Date", new Date(scholarship?.submission_date).toLocaleDateString())}
+              {renderField("Submission Date", moment(scholarship?.submission_date).format('DD MMMM YYYY'))}
             </div>
 
             <div style={{ flex: '1 1 45%' }}>
@@ -186,8 +186,8 @@ const ScholarshipDetail = () => {
               </p>
               {renderField("Terms and Conditions", scholarship?.term_and_conditions)}
 
-              {renderField("Start Date", new Date(scholarship?.start_Date).toLocaleDateString())}
-              {renderField("End Date", new Date(scholarship?.End_Date).toLocaleDateString())}
+              {renderField("Start Date", moment(scholarship?.start_Date).format('DD MMMM YYYY'))}
+              {renderField("End Date", moment(scholarship?.End_Date).format('DD MMMM YYYY'))}
             </div>
 
             {/* Third div goes under the first two divs */}
@@ -195,13 +195,13 @@ const ScholarshipDetail = () => {
               {loading ? (
                 <Skeleton width="30%" height={40} style={{ margin: 'auto' }} />
               ) : (
-                renderField("Deadline", moment(scholarship?.deadline).format('DD/MM/YYYY'))
+                renderField("Deadline", moment(scholarship?.deadline).format('DD MMMM YYYY'))
               )}
 
               {loading ? (
                 <Skeleton width="30%" height={80} style={{ margin: 'auto' }} />
               ) : (
-                scholarship.number_of_seats_available > 0 && new Date() <= new Date(scholarship.deadline) && !hasApplied ? (
+                scholarship.number_of_seats_available > 0 && moment().startOf('day').isSameOrBefore(moment(scholarship.deadline).startOf('day'))  && !hasApplied ? (
                   <Link to={`/apply-for-scholarship/${scholarship._id}`} className="apply-button">Apply Now</Link>
                 ) : (
                   <p className="apply-closed" style={{ margin: 'auto' }}>Applications are closed.</p>
@@ -226,7 +226,7 @@ const ScholarshipDetail = () => {
                       <Skeleton variant="text" height={40} width="250px" />
                       <Skeleton variant="text" height={40} width="280px" />
                       <Skeleton variant="text" height={40} width="300px" />
-                      <Skeleton variant="text" height={60} width="50%" style={{margin:'auto'}} />
+                      <Skeleton variant="text" height={60} width="50%" style={{ margin: 'auto' }} />
                     </CardContent>
                   </Card>
                 ))

@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Input from '../../Input/Input'; // Assuming you have a reusable Input component
 import './ForgetPass.css';
 import { resetPassword } from '../../../../Validation/validation';
+import Navbar from '../../Navbar/Navbar';
 
 function ResetPassword() {
     const { resetToken } = useParams(); // Get token from URL
@@ -130,9 +131,10 @@ function ResetPassword() {
                 theme="light"
                 transition={Bounce}
             />
-            <div className="logoContainer">
+            {/* <div className="logoContainer">
                 <a href="/"><img src="/assets/img/logo.png" alt="logo" width="100px" /></a>
-            </div>
+            </div> */}
+            <Navbar/>
             <div className='forgetContainer'>
                 {isLoading ? (
                     <Skeleton variant="rounded" width={500} height={500} />

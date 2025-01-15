@@ -164,8 +164,8 @@ const Sidebar = ({ scholarships, setFilteredScholarships }) => {
                         ))}
                     </Box>
                     <Box className="filter-category">
-                        <Typography variant="body1">Scholarship Amount</Typography>
-                        <Slider
+                        {/* <Typography variant="body1">Scholarship Amount</Typography> */}
+                        {/* <Slider
                             value={amountRange}
                             min={minAmount}
                             max={maxAmount}
@@ -174,10 +174,10 @@ const Sidebar = ({ scholarships, setFilteredScholarships }) => {
                             marks
                             step={100}
                             className="custom-slider"
-                        />
-                        <Typography variant="caption">
+                        /> */}
+                        {/* <Typography variant="caption">
                             ${amountRange[0]} - ${amountRange[1]}
-                        </Typography>
+                        </Typography> */}
                     </Box>
                 </div>
             </Drawer>
@@ -231,8 +231,8 @@ const Sidebar = ({ scholarships, setFilteredScholarships }) => {
                     )}
                 </Box>
                 <Box className="filter-category">
-                    <Typography variant="body1">Scholarship Amount</Typography>
-                    <Slider
+                    {/* <Typography variant="body1">Scholarship Amount</Typography> */}
+                    {/* <Slider
                         value={amountRange}
                         min={minAmount}
                         max={maxAmount}
@@ -241,10 +241,10 @@ const Sidebar = ({ scholarships, setFilteredScholarships }) => {
                         marks
                         step={100}
                         className="custom-slider"
-                    />
-                    <Typography variant="caption">
+                    /> */}
+                    {/* <Typography variant="caption">
                         ${amountRange[0]} - ${amountRange[1]}
-                    </Typography>
+                    </Typography> */}
                 </Box>
             </Box>
         </div>

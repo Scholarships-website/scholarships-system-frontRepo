@@ -38,24 +38,29 @@ const Attachments = ({ currentStep, totalSteps, prevStep, formData, setFormData,
 
   // Initial Values
   const initialValues = {
-    Student_ID_Image: applicationDetails?.Student_ID_Image || formData?.Student_ID_Image || null,
-    Head_of_Household_ID_Image: applicationDetails?.Head_of_Household_ID_Image || formData?.Head_of_Household_ID_Image || null,
-    Mother_ID_Image: applicationDetails?.Mother_ID_Image || formData?.Mother_ID_Image || null,
-    Sibling_ID_Image: applicationDetails?.Sibling_ID_Image || formData?.Sibling_ID_Image || null,
-    Special_Cases_Report: applicationDetails?.Special_Cases_Report || formData?.Special_Cases_Report || null,
+    Student_ID_Image:formData?.Student_ID_Image || null,
+    Head_of_Household_ID_Image: formData?.Head_of_Household_ID_Image || null,
+    Mother_ID_Image: formData?.Mother_ID_Image || null,
+    Sibling_ID_Image: formData?.Sibling_ID_Image || null,
+    Special_Cases_Report: formData?.Special_Cases_Report || null,
   };
 
   // Submit Handler
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     console.log("Submitting form...");
-    console.log(values);
+    console.log("Form Values:", values);
+  
+    // Save step data
     saveStepData({ stepKey: 'pdffiles', data: values });
-
+  
+    // Update formData in the parent component
     setFormData((prev) => ({
       ...prev,
       pdffiles: values,
     }));
-    onSubmit();
+  
+    // Call the parent's onSubmit function
+    // await onSubmit();
   };
 
   return (
@@ -88,8 +93,11 @@ const Attachments = ({ currentStep, totalSteps, prevStep, formData, setFormData,
                   name="Student_ID_Image"
                   accept=".pdf"
                   className="form-control"
-                  onChange={(event) => setFieldValue("Student_ID_Image", event.currentTarget.files[0])}
-                />
+                  onChange={(event) => {
+                    const file = event.currentTarget.files[0];
+                    console.log("Selected file:", file); // Log the selected file
+                    setFieldValue("Student_ID_Image", file);
+                  }}                />
                 <ErrorMessage name="Student_ID_Image" component="div" className="text-danger" />
               </div>
 

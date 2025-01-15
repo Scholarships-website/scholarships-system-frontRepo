@@ -26,6 +26,7 @@ function Applications() {
     try {
       const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/students/${roleId}/applications`);
       const applicationIds = response.data;
+      console.log(response.data)
       if (!Array.isArray(applicationIds) || applicationIds.length === 0) {
         console.log('No applications found for this student.');
         setCombinedData([]); // Set an empty array if no applications are found

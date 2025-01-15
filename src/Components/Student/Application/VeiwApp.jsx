@@ -32,7 +32,7 @@ function VeiwApp() {
                 const applicationResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/students/applications/${_id}`);
                 const applicationData = applicationResponse.data;
                 setApplication(applicationData);
-                // console.log('Application Data:', applicationData);
+                console.log('Application Data:', applicationData);
 
                 // Extract student_id from the application data
                 const studentId = applicationData.student_id;

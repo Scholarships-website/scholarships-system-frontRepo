@@ -150,6 +150,7 @@ const EditApp = () => {
 
         // Append files from pdffiles
         Object.entries(formData.pdffiles).forEach(([key, file]) => {
+          if(file)
           formDataToSubmit.append(key, file);
         });
 
@@ -303,7 +304,14 @@ const EditApp = () => {
     },
   ];
 
-
+  useEffect(() => {
+    if (currentStep === 6) { // Only trigger onSubmit on the Attachments step
+      const areFilesUploaded = Object.values(formData.pdffiles).some(file => file !== null);
+      if (areFilesUploaded) {
+        handleSubmit();
+      }
+    }
+  }, [formData.pdffiles, currentStep, handleSubmit]);
 
 
   return (

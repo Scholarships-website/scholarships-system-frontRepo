@@ -29,6 +29,7 @@ const SearchScholarships = () => {
                 const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships`);
                 setScholarships(response.data);
                 setFilteredScholarships(response.data);
+                console.log(response.data)
             }
             catch (error) {
                 console.error("Error fetching scholarships:", error);

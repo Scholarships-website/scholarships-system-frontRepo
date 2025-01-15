@@ -198,8 +198,8 @@ function EditScholarship() {
           theme="light"
           transition={Bounce}
         />
-        <h2 className='ps-4 pt-4'>Edit Scholarship</h2>
-        <form onSubmit={formik.handleSubmit} className="row justify-content-center align-items-center w-75 ps-4 pt-5">
+        <h2 className='ps-4 pt-4' style={{textAlign:'center'}}>Edit Scholarship</h2>
+        <form onSubmit={formik.handleSubmit} className="row justify-content-center align-items-center w-75 ps-4 pt-5" style={{margin:'auto'}}>
           <div className="form-item col-md-5">
             <label className="form-label ps-2" htmlFor="id">ID <span className="text-danger"> * </span></label>
             <input
