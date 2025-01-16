@@ -36,7 +36,7 @@ function ScholarshipFeedback({ id, status, endDate }) {
   const [openWriteModal, setOpenWriteModal] = useState(false); // Second modal state
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0);
-  const { roleId, userToken } = useContext(UserContext);
+  const { roleId, userToken, studentData } = useContext(UserContext);
   const [isReported, setIsReported] = useState(false);
   const [openR, setOpenR] = useState(false);
   const [reason, setReason] = useState("");
@@ -46,62 +46,66 @@ function ScholarshipFeedback({ id, status, endDate }) {
   const [dislikedComments, setDisLikedComments] = useState({});
   const [isLoadingL, setIsLoadingL] = useState(false);
   // const [dislikes, setDisLikes] = useState(0);
-  const [hasDisLiked, setHasDisLiked] = useState(false);
   const [isLoadingD, setIsLoadingD] = useState(false);
   const [likes, setLikes] = useState({}); // To store likes count for each feedback
   const [dislikes, setDislikes] = useState({}); // To store dislikes count for each feedback
 
+  if (!studentData) {
+    // Show loading if studentData is not ready
+    return <p>Loading student data...</p>;
+  }
+
+  const reportedFeedbacks = studentData?.reportedFeedbacks || []; // Safely handle reportedFeedbacks
 
 
-  const handleLikeToggle = async (id) => {
-    setIsLoadingL(true);
-    setLikedComments((prevState) => ({
-      ...prevState,
-      [id]: !prevState[id],
-    }));
 
-    setLikes((prevLikes) => ({
-      ...prevLikes,
-      [id]: prevLikes[id] + 1,
-    }));
 
+  const handleLikeToggle = async (id, feedback) => {
     let response;
+    setIsLoadingL(true);
     try {
-      if (likedComments[id]) {
+      if (feedback.liked) {
         // Call the unlike endpoint
-        response = await axios.patch(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/feedbacks/${id}/likes/remove`,
+        response = await axios.patch(
+          `${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/feedbacks/${id}/likes/remove`,
           {},
           {
             headers: {
               Authorization: `Bearer ${userToken}`,
             },
-          });
+          }
+        );
+        // Update the local state immediately
         setLikes((prevLikes) => ({
           ...prevLikes,
-          [id]: prevLikes[id] - 1, // Revert increment
-        })); console.log(response.data)
+          [id]: prevLikes[id] - 1, // Decrement like count
+        }));
+        feedback.liked = false; // Update the liked status
         toast.success("Like removed!");
       } else {
         // Call the like endpoint
-        response = await axios.patch(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/feedbacks/${id}/likes/add`,
+        response = await axios.patch(
+          `${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/feedbacks/${id}/likes/add`,
           {},
           {
             headers: {
-              Authorization: `Bearer ${userToken}`, // Include the token in the Authorization header
+              Authorization: `Bearer ${userToken}`,
             },
-          });
+          }
+        );
+        // Update the local state immediately
+        setLikes((prevLikes) => ({
+          ...prevLikes,
+          [id]: prevLikes[id] + 1, // Increment like count
+        }));
+        feedback.liked = true; // Update the liked status
         toast.success("Liked successfully!");
-        console.log(response.data)
       }
     } catch (error) {
-      setLikes((prevLikes) => ({
-        ...prevLikes,
-        [id]: prevLikes[id] - 1, // Revert increment
-      }));
       console.error("Error toggling like:", error);
       toast.error("Failed to toggle like.");
     } finally {
-      setIsLoadingL(false); // Re-enable the button
+      setIsLoadingL(false);
     }
   };
 
@@ -177,11 +181,11 @@ function ScholarshipFeedback({ id, status, endDate }) {
       } else {
         const errorData = await response.json();
         console.error("Error submitting feedback:", errorData);
-        toast.error("Failed to submit feedback. Please try again.");
+        toast.error(errorData.message);
       }
     } catch (error) {
       console.error("Error:", error);
-      toast.error("An error occurred. Please try again later.");
+      toast.error(`${error.message}`);
     }
     handleCloseWriteModal(); // Close the modal after submission
   };
@@ -189,18 +193,28 @@ function ScholarshipFeedback({ id, status, endDate }) {
 
   useEffect(() => {
     viewFeedbacks(id);
-  }, []);
+  }, [feedbacks?.length]);
+
   const viewFeedbacks = async (id) => {
     setLoadingFeedbacks(true);
     try {
       const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/${id}/feedbacks`);
       const feedbacks = response.data;
 
-      // Fetch student data for each feedback
+      if (feedbacks === "no feedbacks for this scholarship") {
+        setFeedbacks([]);
+        setLikes({});
+        setDislikes({});
+        return; // Exit early if no feedbacks
+      }
+
+      // Fetch student data for each feedback in parallel
       const feedbacksWithStudentData = await Promise.all(
         feedbacks.map(async (feedback) => {
           try {
-            const studentResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/getStudentDataFromId/${feedback.student_id}`);
+            const studentResponse = await axios.get(
+              `${import.meta.env.VITE_BASE_URL}/api/v1/getStudentDataFromId/${feedback.student_id}`
+            );
             return {
               ...feedback,
               studentData: studentResponse.data,
@@ -212,33 +226,43 @@ function ScholarshipFeedback({ id, status, endDate }) {
         })
       );
 
+      feedbacksWithStudentData.forEach(feedback => {
+        feedback.reported = feedback.studentData.reportedFeedbacks.includes(feedback._id);
+        feedback.liked = feedback.studentData.likedFeedbacks.includes(feedback._id);
+        feedback.disliked = feedback.studentData.dislikedFeedbacks.includes(feedback._id);
+
+      });
+
+      console.log(feedbacksWithStudentData);
       setFeedbacks(feedbacksWithStudentData);
-      const initialLikes = feedbacksWithStudentData.reduce((acc, feedback) => {
-        acc[feedback._id] = feedback.likes;
-        return acc;
-      }, {});
-      const initialDislikes = feedbacksWithStudentData.reduce((acc, feedback) => {
-        acc[feedback._id] = feedback.dislikes;
-        return acc;
-      }, {});
+
+      // Initialize likes and dislikes
+      const initialLikes = {};
+      const initialDislikes = {};
+      feedbacksWithStudentData.forEach((feedback) => {
+        initialLikes[feedback._id] = feedback.likes;
+        initialDislikes[feedback._id] = feedback.dislikes;
+      });
+
       setLikes(initialLikes);
       setDislikes(initialDislikes);
-      // console.log()
-      // console.log("Feedbacks with student data:", feedbacksWithStudentData);
     } catch (error) {
-      toast.error(error.response?.data || "An error occurred while fetching feedbacks.", {
-        position: "bottom-right",
-        autoClose: false,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      console.error("Error fetching feedbacks:", error);
+      toast.error(
+        error.response?.data || "An error occurred while fetching feedbacks.",
+        {
+          position: "bottom-right",
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        }
+      );
     } finally {
-      // Ensure loading is set to false regardless of success or failure
       setLoadingFeedbacks(false);
     }
   };
@@ -316,20 +340,12 @@ function ScholarshipFeedback({ id, status, endDate }) {
     return basicColors[randomIndex];
   };
 
-  const handleDislike = async (id) => {
+  const handleDislike = async (id, feedback) => {
     setIsLoadingD(true);
-    setDisLikedComments((prevState) => ({
-      ...prevState,
-      [id]: !prevState[id],
-    }));
-    setDislikes((prevDislikes) => ({
-      ...prevDislikes,
-      [id]: prevDislikes[id] + 1, // Increment the specific feedback's dislike count
-    }));
+    let response;
     try {
-      if (dislikedComments[id]) {
-        // Call the unlike endpoint
-        await axios.patch(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/feedbacks/${id}/dislikes/remove`,
+      if (feedback.disliked) {
+        response = await axios.patch(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/feedbacks/${id}/dislikes/remove`,
           {},
           {
             headers: {
@@ -340,23 +356,26 @@ function ScholarshipFeedback({ id, status, endDate }) {
           ...prevDislikes,
           [id]: prevDislikes[id] - 1, // Revert increment
         }));
+        feedback.disliked = false;
         toast.success("Dislike removed!");
       } else {
         // Call the like endpoint
-        await axios.patch(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/feedbacks/${id}/dislikes/add`,
+        response = await axios.patch(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/feedbacks/${id}/dislikes/add`,
           {},
           {
             headers: {
               Authorization: `Bearer ${userToken}`, // Include the token in the Authorization header
             },
           });
+          setDislikes((prevDislikes) => ({
+            ...prevDislikes,
+            [id]: prevDislikes[id] + 1,
+          }));
+          feedback.disliked = true;
         toast.success("Disliked successfully!");
       }
     } catch (error) {
-      setDislikes((prevDislikes) => ({
-        ...prevDislikes,
-        [id]: prevDislikes[id] - 1, // Revert increment
-      }));
+
       console.error("Error toggling dislike:", error);
       toast.error("Failed to toggle dislike.");
     } finally {
@@ -430,22 +449,33 @@ function ScholarshipFeedback({ id, status, endDate }) {
                     }}
                   >
                     <button
-                      onClick={() => handleLikeToggle(feedback._id)} // Pass the specific feedback id
-                      style={{ cursor: 'pointer', border: 'none', background: 'none', color: '#418447', display: 'flex', alignItems: 'center', gap: '5px' }}
-                      disabled={isLoadingL} // Disable the button while loading
+                      onClick={() => handleLikeToggle(feedback._id, feedback)}
+                      style={{
+                        cursor: 'pointer',
+                        border: 'none',
+                        background: 'none',
+                        color: '#418447',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '5px',
+                      }}
+                      disabled={isLoadingL} 
                     >
                       <FontAwesomeIcon
-                        icon={likedComments[feedback._id] ? solidThumbsUp : regularThumbsUp} // Use feedback._id to track the like state
+                        icon={feedback.liked ? solidThumbsUp : regularThumbsUp} 
                         size="2xs"
                       />
-                      <span style={{ fontSize: '14px' }}>{likes[feedback._id] || feedback.likes}</span>
+                      <span style={{ fontSize: '14px' }}>
+                        {likes[feedback._id] ?? feedback.likes}
+                      </span>
                     </button>
                     <button
-                      onClick={() => handleDislike(feedback._id)}
+                      onClick={() => handleDislike(feedback._id, feedback)}
                       style={{ cursor: 'pointer', border: 'none', background: 'none', color: '#418447', display: 'flex', alignItems: 'center', gap: '5px' }}
+                      disabled={isLoadingD} 
                     >
                       <FontAwesomeIcon
-                        icon={dislikedComments[feedback._id] ? solidThumbsDown : regularThumbsDown}
+                        icon={feedback.disliked ? solidThumbsDown : regularThumbsDown}
                         size="2xs"
                       />
                       <span style={{ fontSize: '14px' }}> {dislikes[feedback._id] || feedback.dislikes}</span>
@@ -453,10 +483,10 @@ function ScholarshipFeedback({ id, status, endDate }) {
                     <button
                       onClick={() => handleOpenDialog(feedback._id)}
                       style={{
-                        cursor: isReported ? 'not-allowed' : 'pointer',
+                        cursor: feedback.reported ? 'not-allowed' : 'pointer',
                         border: 'none',
                         background: 'none',
-                        color: isReported ? '#999' : '#418447',
+                        color: feedback.reported ? '#999' : '#418447',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '5px'
@@ -489,7 +519,6 @@ function ScholarshipFeedback({ id, status, endDate }) {
                     </Dialog>
                   </Box>
                 </div>
-
               </Box>
             ))
           ) : (
@@ -587,10 +616,10 @@ function ScholarshipFeedback({ id, status, endDate }) {
                         <button
                           onClick={() => handleOpenDialog(feedback._id)}
                           style={{
-                            cursor: isReported ? 'not-allowed' : 'pointer',
+                            cursor: feedback.reported ? 'not-allowed' : 'pointer',
                             border: 'none',
                             background: 'none',
-                            color: isReported ? '#999' : '#418447',
+                            color: feedback.reported ? '#999' : '#418447',
                             display: 'flex',
                             alignItems: 'center',
                             gap: '5px'
