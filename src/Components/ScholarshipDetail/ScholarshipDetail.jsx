@@ -43,7 +43,7 @@ const ScholarshipDetail = () => {
           // Fetch application details
           const applicationDetailsResponse = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/students/applications/${applicationId}`);
           const applicationDetails = applicationDetailsResponse.data;
-          // console.log(applicationDetails)
+          // console.log(applicationDetailsResponse.data)
           // Check if the scholarship ID matches
           if (applicationDetails.scholarship_id === id) {
             applied = true;

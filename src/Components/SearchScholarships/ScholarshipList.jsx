@@ -45,6 +45,7 @@ const ScholarshipList = ({ scholarships, loading }) => {
       fetchWishlist();
     }
   }, [roleId]);
+
   const handleWishlistToggle = async (scholarshipId) => {
     // Check if the scholarship ID is in the wishlist
     const isInWishlist = wishlist.includes(scholarshipId);
@@ -105,7 +106,6 @@ const ScholarshipList = ({ scholarships, loading }) => {
 
           await fetchWishlist();
         } else {
-          // Show error toast notification for unexpected status codes
           toast.error('Something went wrong. Please try again.', {
             position: 'bottom-right',
             autoClose: false,
