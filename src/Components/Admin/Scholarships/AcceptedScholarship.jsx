@@ -60,11 +60,11 @@ function AcceptedScholarship() {
     setLoading(true);
     try {
       const [acceptedRes] = await Promise.all([
-        axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships`),
+        axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/`),
       ]);
 
       const acceptedScholarships = acceptedRes.data;
-
+      console.log(acceptedRes.data);
       const allScholarships = [...acceptedScholarships];
 
       // Fetch all organization names in parallel for all scholarships

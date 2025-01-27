@@ -4,7 +4,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComments, faEllipsisVertical, faMagnifyingGlass, faPenToSquare, faTrash, faUserXmark } from '@fortawesome/free-solid-svg-icons';
 import { Avatar, Box, Button, Modal, Pagination, Rating, Skeleton, Typography } from '@mui/material';
-import { Bounce, toast } from 'react-toastify';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 
 const style = {
@@ -106,7 +106,7 @@ export default function ReportedComments() {
             };
           } catch (error) {
             console.error(`Error fetching student data for feedback ID: ${feedback.id}`, error);
-            return { ...feedback, studentData: null }; // Handle missing student data gracefully
+            return { ...feedback, studentData: null };
           }
         })
       );
@@ -132,30 +132,7 @@ export default function ReportedComments() {
     }
   };
 
-  const getRandomColor = () => {
-    // List of basic colors (avoiding white and light colors)
-    const basicColors = [
-      '#FF0000', // Red
-      '#00FF00', // Green
-      '#0000FF', // Blue
-      '#FFFF00', // Yellow
-      '#FF6347', // Tomato
-      '#8B0000', // Dark Red
-      '#00008B', // Dark Blue
-      '#228B22', // Forest Green
-      '#FFD700', // Gold
-      '#A52A2A', // Brown
-      '#800080', // Purple
-      '#808000', // Olive
-      '#D2691E', // Chocolate
-      '#4B0082', // Indigo
-      '#2F4F4F', // Dark Slate Gray
-    ];
 
-    // Randomly select a color from the list
-    const randomIndex = Math.floor(Math.random() * basicColors.length);
-    return basicColors[randomIndex];
-  };
   const getFixedColor = (name) => {
     const colors = ['#F44336', '#E91E63', '#9C27B0', '#3F51B5', '#2196F3', '#4CAF50', '#FF9800', '#795548'];
     let hash = 0;
@@ -166,35 +143,68 @@ export default function ReportedComments() {
     return colors[index];
   };
   const handleDeleteComment = async (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/feedbacks/${id}`);
-          // Remove the deleted comment
-          setFeedbacks((prevFeedbacks) => prevFeedbacks.filter((reportedComment) => reportedComment._id !== id));
-          Swal.fire({
-            title: "Deleted!",
-            text: "comment has been deleted.",
-            icon: "success",
-          });
-        } catch (error) {
-          console.error("Error deleting comment:", error);
-          Swal.fire({
-            title: "Error!",
-            text: "There was a problem deleting the comment.",
-            icon: "error",
-          });
-        }
-      }
-    });
+    // Swal.fire({
+    //   title: "Are you sure?",
+    //   text: "You won't be able to revert this!",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#3085d6",
+    //   cancelButtonColor: "#d33",
+    //   confirmButtonText: "Yes, delete it!",
+    // }).then(async (result) => {
+    //   if (result.isConfirmed) {
+    try {
+      await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/feedbacks/${id}`);
+      setFeedbacks((prevFeedbacks) => {
+        if (!Array.isArray(prevFeedbacks)) return [];
+        return prevFeedbacks.filter(
+          (reportedComment) => reportedComment._id !== id
+        )
+      });
+      toast.success("Comment has been deleted.");
+      // Swal.fire({
+      //   title: "Deleted!",
+      //   text: "comment has been deleted.",
+      //   icon: "success",
+      // });
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+      // Swal.fire({
+      //   title: "Error!",
+      //   text: "There was a problem deleting the comment.",
+      //   icon: "error",
+      // });
+      toast.error("There was a problem deleting the comment.");
+
+    }
+  }
+
+  const confirmDelete = (commentId) => {
+    toast(
+      ({ closeToast }) => (
+        <div>
+          <p>Are you sure you want to delete this comment?</p>
+          <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+            <button
+              onClick={() => {
+                handleDeleteComment(commentId); // Call the delete function
+                closeToast(); // Close the toast
+              }}
+              style={{ color: "white", backgroundColor: "red", border: "none", padding: "5px 10px", borderRadius: "5px" }}
+            >
+              Delete
+            </button>
+            <button
+              onClick={closeToast}
+              style={{ color: "white", backgroundColor: "gray", border: "none", padding: "5px 10px", borderRadius: "5px" }}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      ),
+      { closeOnClick: false, closeButton: false }
+    );
   };
   return (
     <>
@@ -277,7 +287,7 @@ export default function ReportedComments() {
 
                                         </Box>
                                         <Button
-                                          onClick={() => handleDeleteComment(feedback._id)}
+                                          onClick={() => confirmDelete(feedback._id)}
                                           sx={{ mt: 1, color: 'red', display: 'flex', alignItems: 'center' }}
                                         >
                                           <FontAwesomeIcon icon={faTrash} size="1x" sx={{ mr: 1 }} />
@@ -287,6 +297,17 @@ export default function ReportedComments() {
                                   )}
                                 </Box>
                               </Modal>
+                              <ToastContainer
+                                position="top-right"
+                                autoClose={20000}
+                                hideProgressBar={false}
+                                newestOnTop={true}
+                                closeOnClick
+                                pauseOnFocusLoss={false}
+                                pauseOnHover
+                                theme="light"
+                                progressStyle={{ backgroundColor: "green" }}
+                              />
                             </div>
                           </td>
                         </tr>

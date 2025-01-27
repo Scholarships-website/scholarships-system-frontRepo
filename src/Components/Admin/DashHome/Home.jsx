@@ -39,7 +39,7 @@ export default function Home() {
         setData({
           studentsCount: studentsRes.data.length,
           advertisersCount: advertisersRes.data.length,
-          scholarshipsCount: scholarshipsRes.data.pagination.totalScholarships,
+          scholarshipsCount: scholarshipsRes.data.length,
         });
       } catch (error) {
         console.error("Error fetching data:", error);

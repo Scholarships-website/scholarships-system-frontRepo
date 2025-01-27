@@ -5,7 +5,7 @@ import { UserContext } from '../../Context/UserContext';
 import axios from 'axios';
 import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFlagCheckered } from '@fortawesome/free-solid-svg-icons';
+import { faFlagCheckered, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsUp as solidThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsUp as regularThumbsUp } from '@fortawesome/free-regular-svg-icons';
 import { faThumbsDown as solidThumbsDown } from '@fortawesome/free-solid-svg-icons';
@@ -69,7 +69,6 @@ function ScholarshipFeedback({ id, status, endDate }) {
   if (!studentData) {
     return <p>Loading student data...</p>;
   }
-
   const viewFeedbacks = async (id) => {
     setLoadingFeedbacks(true);
     try {
@@ -83,40 +82,39 @@ function ScholarshipFeedback({ id, status, endDate }) {
         setDislikes({});
         return; // Exit early if no feedbacks
       }
-      if(response.data.length == 0)
-      return;
-      if(response.data.length > 0)
-      {
-      const feedbacksWithStudentData = await Promise.all(
-        feedbacks?.map(async (feedback) => {
-          try {
-            const studentResponse = await axios.get(
-              `${import.meta.env.VITE_BASE_URL}/api/v1/getStudentDataFromId/${feedback.student_id}`
-            );
-            return {
-              ...feedback,
-              studentData: studentResponse.data,
-            };
-          } catch (error) {
-            console.error(`Error fetching student data for feedback ID: ${feedback.id}`, error);
-            return { ...feedback, studentData: null }; // Handle missing student data gracefully
-          }
-        })
-      );
-      console.log(feedbacksWithStudentData);
-      setFeedbacks(feedbacksWithStudentData);
+      if (response.data.length == 0)
+        return;
+      if (response.data.length > 0) {
+        const feedbacksWithStudentData = await Promise.all(
+          feedbacks?.map(async (feedback) => {
+            try {
+              const studentResponse = await axios.get(
+                `${import.meta.env.VITE_BASE_URL}/api/v1/getStudentDataFromId/${feedback.student_id}`
+              );
+              return {
+                ...feedback,
+                studentData: studentResponse.data,
+              };
+            } catch (error) {
+              console.error(`Error fetching student data for feedback ID: ${feedback.id}`, error);
+              return { ...feedback, studentData: null }; // Handle missing student data gracefully
+            }
+          })
+        );
+        console.log(feedbacksWithStudentData);
+        setFeedbacks(feedbacksWithStudentData);
 
-      // Initialize likes and dislikes
-      const initialLikes = {};
-      const initialDislikes = {};
-      feedbacksWithStudentData.forEach((feedback) => {
-        initialLikes[feedback._id] = feedback.likes;
-        initialDislikes[feedback._id] = feedback.dislikes;
-      });
+        // Initialize likes and dislikes
+        const initialLikes = {};
+        const initialDislikes = {};
+        feedbacksWithStudentData.forEach((feedback) => {
+          initialLikes[feedback._id] = feedback.likes;
+          initialDislikes[feedback._id] = feedback.dislikes;
+        });
 
-      setLikes(initialLikes);
-      setDislikes(initialDislikes);
-    }
+        setLikes(initialLikes);
+        setDislikes(initialDislikes);
+      }
     } catch (error) {
       console.error("Error fetching feedbacks:", error);
       toast.error(
@@ -137,10 +135,48 @@ function ScholarshipFeedback({ id, status, endDate }) {
       setLoadingFeedbacks(false);
     }
   };
+  const handleDeleteComment = async (id) => {
+    Swal.fire({
+      title: "Are you sure you want to delete your comment ?",
+      text: "You won't be able to revert this! ",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/feedbacks/${id}`);
+          // Remove the deleted comment
+          setFeedbacks((prevFeedbacks) => {
+            if (!Array.isArray(prevFeedbacks)) return [];
+            return prevFeedbacks.filter(
+              (Comment) => Comment._id !== id
+            );
+          });
+          Swal.fire({
+            title: "Deleted!",
+            text: "comment has been deleted.",
+            icon: "success",
+          });
+          await viewFeedbacks(id);
+        } catch (error) {
+          console.error("Error deleting comment:", error);
+          Swal.fire({
+            title: "Error!",
+            text: "There was a problem deleting the comment.",
+            icon: "error",
+          });
+        }
+      }
+    });
+  };
+
 
   const handleLikeToggle = async (_id, feedback) => {
     let response;
-    const liked = SData.includes(_id); // Determine if the ID is already liked
+    const liked = SData?.includes(_id); // Determine if the ID is already liked
     console.log('liked?', liked);
     setIsLoadingL(true);
     try {
@@ -273,7 +309,7 @@ function ScholarshipFeedback({ id, status, endDate }) {
         handleCloseWriteModal(); // Close the modal after successful submission
         setComment('');          // Clear the comment input
         setRating(0);            // Reset rating
-        await viewFeedbacks();
+        await viewFeedbacks(id);
       } else {
         const errorData = await response.json();
         console.error("Error submitting feedback:", errorData);
@@ -285,7 +321,6 @@ function ScholarshipFeedback({ id, status, endDate }) {
     }
     handleCloseWriteModal(); // Close the modal after submission
   };
-
 
   useEffect(() => {
     viewFeedbacks(id);
@@ -346,7 +381,7 @@ function ScholarshipFeedback({ id, status, endDate }) {
   const handleDislike = async (_id, feedback) => {
     setIsLoadingD(true);
     let response;
-    const disliked = SDislike.includes(_id); // Determine if the ID is already liked
+    const disliked = SDislike?.includes(_id); // Determine if the ID is already liked
     console.log('disliked?', disliked);
     try {
       if (disliked) {
@@ -517,13 +552,30 @@ function ScholarshipFeedback({ id, status, endDate }) {
                           alignItems: 'center',
                           gap: '5px'
                         }}
-                        disabled={SReprted.includes(feedback._id)} // Properly set the disabled attribute
-                        aria-label={SReprted.includes(feedback._id) ? 'Report button disabled' : 'Report feedback'} // Dynamic aria-label
-                        title={SReprted.includes(feedback._id) ? 'You have already reported this feedback' : 'Click to report feedback'}
-                        >
+                        disabled={SReprted?.includes(feedback._id)}
+                        aria-label={SReprted?.includes(feedback._id) ? 'Report button disabled' : 'Report feedback'} // Dynamic aria-label
+                        title={SReprted?.includes(feedback._id) ? 'You have already reported this feedback' : 'Click to report feedback'}
+                      >
                         <FontAwesomeIcon icon={SReprted?.includes(feedback._id) ? faFlagCheckered : faFlag} size="2xs" />
-                        <span style={{ fontSize: '14px' }}> {'Report'}</span>
+                        <span style={{ fontSize: '14px' }}> {SReprted?.includes(feedback._id) ? 'Reported' : 'Report'}</span>
                       </button>
+                      {roleId === feedback.student_id && (
+                        <button
+                          className="delete-button"
+                          onClick={() => handleDeleteComment(feedback._id)}
+                          style={{
+                            border: 'none',
+                            background: 'none',
+                            color: 'red',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '5px',
+                          }}
+                          title='delete your feedback '
+                        >
+                          <FontAwesomeIcon icon={faTrash} size="2xs" />
+                        </button>
+                      )}
                       <Dialog open={openR} onClose={handleCloseR} fullWidth maxWidth="xs">
                         <DialogTitle>Report Feedback</DialogTitle>
                         <DialogContent>
@@ -623,19 +675,30 @@ function ScholarshipFeedback({ id, status, endDate }) {
                         }}
                       >
                         <button
-                          onClick={() => handleLikeToggle(feedback._id)} // Pass the specific feedback id
-                          style={{ cursor: 'pointer', border: 'none', background: 'none', color: '#418447', display: 'flex', alignItems: 'center', gap: '5px' }}
-                          disabled={isLoadingL} // Disable the button while loading
+                          onClick={() => handleLikeToggle(feedback._id, feedback)} // Pass the specific feedback id
+                          style={{
+                            cursor: 'pointer',
+                            border: 'none',
+                            background: 'none',
+                            color: '#418447',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '5px',
+                          }}
+                          disabled={isLoadingL}
                         >
                           <FontAwesomeIcon
                             icon={SData?.includes(feedback._id) ? solidThumbsUp : regularThumbsUp}
                             size="2xs"
                           />
-                          <span style={{ fontSize: '14px' }}>{likes[feedback._id] || feedback.likes}</span> {/* Display the number of likes */}
+                          <span style={{ fontSize: '14px' }}>
+                            {likes[feedback._id] ?? feedback.likes}
+                          </span>
                         </button>
                         <button
-                          onClick={() => handleDislike(feedback._id)}
+                          onClick={() => handleDislike(feedback._id, feedback)}
                           style={{ cursor: 'pointer', border: 'none', background: 'none', color: '#418447', display: 'flex', alignItems: 'center', gap: '5px' }}
+                          disabled={isLoadingD}
                         >
                           <FontAwesomeIcon
                             icon={SDislike?.includes(feedback._id) ? solidThumbsDown : regularThumbsDown}
@@ -654,10 +717,30 @@ function ScholarshipFeedback({ id, status, endDate }) {
                             alignItems: 'center',
                             gap: '5px'
                           }}
+                          disabled={SReprted?.includes(feedback._id)}
+                          aria-label={SReprted?.includes(feedback._id) ? 'Report button disabled' : 'Report feedback'} // Dynamic aria-label
+                          title={SReprted?.includes(feedback._id) ? 'You have already reported this feedback' : 'Click to report feedback'}
                         >
-                          <FontAwesomeIcon icon={faFlag} size="2xs" />
-                          <span style={{ fontSize: '14px' }}> {'Report'}</span>
+                          <FontAwesomeIcon icon={SReprted?.includes(feedback._id) ? faFlagCheckered : faFlag} size="2xs" />
+                          <span style={{ fontSize: '14px' }}> {SReprted?.includes(feedback._id) ? 'Reported' : 'Report'}</span>
                         </button>
+                        {roleId === feedback.student_id && (
+                        <button
+                          className="delete-button"
+                          onClick={() => handleDeleteComment(feedback._id)}
+                          style={{
+                            border: 'none',
+                            background: 'none',
+                            color: 'red',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '5px',
+                          }}
+                          title='delete your feedback '
+                        >
+                          <FontAwesomeIcon icon={faTrash} size="2xs" />
+                        </button>
+                      )}
                         <Dialog open={openR} onClose={handleCloseR} fullWidth maxWidth="xs">
                           <DialogTitle>Report Feedback</DialogTitle>
                           <DialogContent>
