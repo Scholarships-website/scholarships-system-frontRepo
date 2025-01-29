@@ -31,6 +31,7 @@ export default function UserContextProvider({ children }) {
                 const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/getUserInfoFromToken`, {
                     headers: { 'Authorization': `Bearer ${userToken}` }
                 });
+                console.log(data);
                 console.log('role id ' + data.RoleId);
                 setUserId(data.userId);
                 setRoleId(data.RoleId);
@@ -68,7 +69,8 @@ export default function UserContextProvider({ children }) {
                 if (data.role === 'student') {
                     // Fetch student-specific data if the role is student
                     await getStudentDataFromId();
-                }setUserData(data);
+                }
+                setUserData(data);
             } catch (error) {
                 console.error("Error fetching user data:", error);
             }

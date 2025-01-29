@@ -10,20 +10,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('');
-    const { userToken, setUserToken,userData } = useContext(UserContext);
+    const { userToken, setUserToken, userData } = useContext(UserContext);
     const navigate = useNavigate();
-    const isLoggedIn = userToken !== null;
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const rolePath = userData.role === 'admin' ? '/dashboard' 
-    : userData.role === 'advertiser' ? '/advertiserDashboard' 
-    : userData.role === 'student' ? '/studentDashboard' 
-    : '/';
+    const rolePath = userData.role === 'admin' ? '/dashboard'
+        : userData.role === 'advertiser' ? '/advertiserDashboard'
+            : userData.role === 'student' ? '/studentDashboard'
+                : '/';
 
     const handleAboutClick = () => {
         setMenuOpen(false);
         // Navigate to home page
         navigate('/');
-        
+
         // Use a timeout to allow the navigation to complete before scrolling
         setTimeout(() => {
             const aboutSection = document.getElementById('about');
@@ -36,6 +36,7 @@ const Navbar = () => {
     const handleLogout = () => {
         setUserToken(null);
         localStorage.removeItem('userToken');
+        setIsLoggedIn(false);
         toast.success('Logged out successfully!', {
             position: "bottom-right",
             autoClose: 3000,
@@ -53,6 +54,14 @@ const Navbar = () => {
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
+    useEffect(() => {
+        if (localStorage.getItem('userToken') != null) {
+            setIsLoggedIn(true);
+        }
+        else {
+            setIsLoggedIn(false);
+        }
+    }, [userToken])
 
     useEffect(() => {
         const handleScroll = () => {

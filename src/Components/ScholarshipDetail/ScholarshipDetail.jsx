@@ -202,7 +202,7 @@ const ScholarshipDetail = () => {
                 <Skeleton width="30%" height={80} style={{ margin: 'auto' }} />
               ) : (
                 scholarship.number_of_seats_available > 0 && moment().startOf('day').isSameOrBefore(moment(scholarship.deadline).startOf('day'))  && !hasApplied ? (
-                  <Link to={`/apply-for-scholarship/${scholarship._id}`} className="apply-button">Apply Now</Link>
+                  <Link to={`/studentDashboard/apply-for-scholarship/${scholarship._id}`} className="apply-button">Apply Now</Link>
                 ) : (
                   <p className="apply-closed" style={{ margin: 'auto' }}>Applications are closed.</p>
                 )

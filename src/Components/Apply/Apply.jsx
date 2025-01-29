@@ -340,7 +340,6 @@ for (let [key, value] of formDataToSubmit.entries()) {
 
   return (
     <>
-      <Navbar />
       <div className="apply-container mt-5">
         <header className="apply-header">
           <h1>Scholarship Application</h1>

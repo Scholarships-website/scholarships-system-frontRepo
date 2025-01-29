@@ -75,6 +75,10 @@ export const router = createBrowserRouter([
                 element: <EditApp />,
             },
             {
+                path: 'apply-for-scholarship/:scholarship_id',
+                element: <Apply />,
+            },
+            {
                 path: "*",
                 element: <h2>Page not found — Student Dashboard</h2>,
             },
@@ -224,8 +228,5 @@ export const router = createBrowserRouter([
         path: '/contact-us',
         element: <Contact />,
     },
-    {
-        path: '/apply-for-scholarship/:scholarship_id',
-        element: <Apply />,
-    },
+    
 ]);

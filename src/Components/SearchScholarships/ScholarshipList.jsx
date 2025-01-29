@@ -120,16 +120,30 @@ const ScholarshipList = ({ scholarships, loading }) => {
       } catch (error) {
         // Log and notify the user of errors
         console.error('Error toggling wishlist item:', error);
-        toast.error('An error occurred. Please check your connection and try again.', {
-          position: 'bottom-right',
-          autoClose: false,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        });
+        if (error.status === 401) {
+          toast.error('You need to log in to your account to add scholarships to your wishlist.', {
+            position: 'bottom-right',
+            autoClose: false,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          });
+        }
+        else {
+          toast.error('An error occurred. Please check your connection and try again.', {
+            position: 'bottom-right',
+            autoClose: false,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          });
+        }
       }
     } else {
       Swal.fire('Cancelled', 'No changes were made to your wishlist.', 'info');
@@ -158,7 +172,7 @@ const ScholarshipList = ({ scholarships, loading }) => {
       ) : (
         scholarships.map((scholarship) => (
           <Card key={scholarship._id} className="scholarship-item">
-            <h2 className="card-header" style={{ color: "#000",marginBottom:'15px',textAlign:'center' }}>
+            <h2 className="card-header" style={{ color: "#000", marginBottom: '15px', textAlign: 'center' }}>
               {scholarship.scholarsip_name}
             </h2>
             <CardMedia
@@ -181,6 +195,11 @@ const ScholarshipList = ({ scholarships, loading }) => {
               </Typography>
               <Typography variant="body2" sx={{ color: "text.secondary" }}>
                 Deadline:{moment(scholarship?.deadline).format('DD MMMM YYYY')}
+                <span>
+                  {scholarship.number_of_seats_available <= 0 || !moment().startOf('day').isSameOrBefore(moment(scholarship.deadline).startOf('day')) ? (
+                    <span style={{ color:'#721c24' , marginLeft:'10px',fontWeight:'bold',backgroundColor:'#f8d7da',padding:'5px',borderRadius:'8px' }}>closed</span>
+                  ) : ''}
+                </span>
               </Typography>
               <Typography variant="body2" sx={{ color: "text.secondary" }}>
                 Expenses Covered: {scholarship.expenses_coverd}

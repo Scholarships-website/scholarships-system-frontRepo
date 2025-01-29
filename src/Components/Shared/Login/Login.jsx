@@ -46,10 +46,10 @@ export default function Login() {
                 setTimeout(() => {
                     switch (role) {
                         case 'admin':
-                            navigate('/dashboard');
+                            navigate('/');
                             break;
                         case 'advertiser':
-                            navigate('/AdvertiserDashboard');
+                            navigate('/');
                             break;
                         case 'student':
                             navigate('/');
