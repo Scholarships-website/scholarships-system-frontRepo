@@ -162,20 +162,10 @@ export default function ReportedComments() {
         )
       });
       toast.success("Comment has been deleted.");
-      // Swal.fire({
-      //   title: "Deleted!",
-      //   text: "comment has been deleted.",
-      //   icon: "success",
-      // });
+      await fetchScholarships();
     } catch (error) {
       console.error("Error deleting comment:", error);
-      // Swal.fire({
-      //   title: "Error!",
-      //   text: "There was a problem deleting the comment.",
-      //   icon: "error",
-      // });
       toast.error("There was a problem deleting the comment.");
-
     }
   }
 

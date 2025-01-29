@@ -326,7 +326,6 @@ export default function SignUp() {
                                         required
                                     />
                                 </div>
-
                             </div>
                             {/* Phone Input */}
                             <div className="row">

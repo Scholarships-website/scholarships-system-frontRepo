@@ -49,6 +49,7 @@ function ScholarshipFeedback({ id, status, endDate }) {
   const [SData, setSData] = useState([]);
   const [SDislike, setSDislike] = useState([]);
   const [SReprted, setSReported] = useState([]);
+  const [isComment, setIsComment] = useState(false);
 
   const fetchStudentDate = async () => {
     setLoader(true);
@@ -91,6 +92,13 @@ function ScholarshipFeedback({ id, status, endDate }) {
               const studentResponse = await axios.get(
                 `${import.meta.env.VITE_BASE_URL}/api/v1/getStudentDataFromId/${feedback.student_id}`
               );
+              if (studentResponse.data.scholarships_feedbacks?.includes(feedback._id)) {
+                setIsComment(true);
+                // console.log(isComment + 'is comment?? ');
+              }
+              else {
+                setIsComment(false);
+              }
               return {
                 ...feedback,
                 studentData: studentResponse.data,
@@ -173,11 +181,14 @@ function ScholarshipFeedback({ id, status, endDate }) {
     });
   };
 
-
   const handleLikeToggle = async (_id, feedback) => {
     let response;
     const liked = SData?.includes(_id); // Determine if the ID is already liked
-    console.log('liked?', liked);
+    // console.log('liked?', liked);
+
+    if(SDislike?.includes(_id)){
+      await handleDislike(_id);
+    }
     setIsLoadingL(true);
     try {
       if (liked) {
@@ -263,9 +274,8 @@ function ScholarshipFeedback({ id, status, endDate }) {
         reporter_id: reporterId,
         reason: reason,
       });
-
       toast.success("Reported the feedback successfully!");
-      // setIsReported(true); // Mark feedback as reported
+      await viewFeedbacks(id);
       handleCloseR();
     } catch (error) {
       console.error("Error reporting feedback:", error);
@@ -309,12 +319,12 @@ function ScholarshipFeedback({ id, status, endDate }) {
         handleCloseWriteModal(); // Close the modal after successful submission
         setComment('');          // Clear the comment input
         setRating(0);            // Reset rating
-        await viewFeedbacks(id);
       } else {
         const errorData = await response.json();
         console.error("Error submitting feedback:", errorData);
         toast.error(errorData.message);
       }
+      await viewFeedbacks(id);
     } catch (error) {
       console.error("Error:", error);
       toast.error(`${error.message}`);
@@ -381,8 +391,11 @@ function ScholarshipFeedback({ id, status, endDate }) {
   const handleDislike = async (_id, feedback) => {
     setIsLoadingD(true);
     let response;
-    const disliked = SDislike?.includes(_id); // Determine if the ID is already liked
-    console.log('disliked?', disliked);
+    const disliked = SDislike?.includes(_id); // Determine if the ID is already disliked
+    // console.log('disliked?', disliked);
+    if(SData?.includes(_id)){
+      await handleLikeToggle(_id);
+    }
     try {
       if (disliked) {
         response = await axios.patch(`${import.meta.env.VITE_BASE_URL}/api/v1/scholarships/feedbacks/${_id}/dislikes/remove`,
@@ -615,9 +628,15 @@ function ScholarshipFeedback({ id, status, endDate }) {
               </button>
             )}
             {status === 'accept' && new Date() > new Date(endDate) && (
-              <button className='btn feedbacks-btn' onClick={handleOpenWriteModal}>
-                Add Your Feedback
-              </button>
+              <div title={isComment ? 'You already commented on this scholarship' : 'Add your comment'}>
+                <button
+                  className='btn feedbacks-btn'
+                  onClick={handleOpenWriteModal}
+                  disabled={isComment}
+                >
+                  Add Your Feedback
+                </button>
+              </div>
             )}
           </div>
           <Modal
@@ -725,22 +744,22 @@ function ScholarshipFeedback({ id, status, endDate }) {
                           <span style={{ fontSize: '14px' }}> {SReprted?.includes(feedback._id) ? 'Reported' : 'Report'}</span>
                         </button>
                         {roleId === feedback.student_id && (
-                        <button
-                          className="delete-button"
-                          onClick={() => handleDeleteComment(feedback._id)}
-                          style={{
-                            border: 'none',
-                            background: 'none',
-                            color: 'red',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '5px',
-                          }}
-                          title='delete your feedback '
-                        >
-                          <FontAwesomeIcon icon={faTrash} size="2xs" />
-                        </button>
-                      )}
+                          <button
+                            className="delete-button"
+                            onClick={() => handleDeleteComment(feedback._id)}
+                            style={{
+                              border: 'none',
+                              background: 'none',
+                              color: 'red',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '5px',
+                            }}
+                            title='delete your feedback '
+                          >
+                            <FontAwesomeIcon icon={faTrash} size="2xs" />
+                          </button>
+                        )}
                         <Dialog open={openR} onClose={handleCloseR} fullWidth maxWidth="xs">
                           <DialogTitle>Report Feedback</DialogTitle>
                           <DialogContent>

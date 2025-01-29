@@ -13,81 +13,79 @@ const PhoneInput = ({
   countryCode,
   required = false,
   colSize = 'col-md-12',
-
 }) => {
+  // Handle input change for both country code and phone number
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // If countryCode is selected, combine it with phoneNumber
     if (name === 'countryCode') {
-      const phoneInput = document.querySelector('.phone-number-input');
-      const fullPhoneNumber = `${value}${phoneInput.value}`;
+      onChange({
+        target: {
+          name: 'countryCode',
+          value,
+        },
+      });
+
+      // Ensure we update the phone number state correctly
       onChange({
         target: {
           name: 'phoneNumber',
-          value: fullPhoneNumber,
+          value: value + (value ? value.replace(/^\+\d+/, '') : ''),
         },
       });
     } else {
-      onChange(e);
+      // Only update the phone number, keeping the country code separate
+      onChange({
+        target: {
+          name: 'phoneNumber',
+          value: value.replace(/^\+\d+/, ''), // Remove any accidental country codes
+        },
+      });
     }
   };
 
   return (
     <>
       <div className={`phone-input-container form-floating ${colSize} mb-3`}>
+        {/* Country Code Select */}
         <select
           className="country-code-dropdown form-control"
           onChange={handleChange}
           onBlur={onBlur}
           name="countryCode"
-          defaultValue={countryCode}
-          colSize='col-md-12'
+          value={countryCode} // Controlled input
         >
           <option value="+970">+970</option>
           <option value="+972">+972</option>
         </select>
 
+        {/* Phone Number Input */}
         <input
           type="text"
           name="phoneNumber"
           id={id}
-          value={value}
+          value={value.replace(/^\+\d+/, '')} // Ensure only phone number is displayed
           onChange={handleChange}
           onBlur={onBlur}
-          className={`phone-number-input form-control ${errors.phoneNumber && touched.phoneNumber ? 'input-error' : ''
-            }`}
+          className={`phone-number-input form-control ${
+            errors.phoneNumber && touched.phoneNumber ? 'input-error' : ''
+          }`}
           placeholder="Enter phone number"
-          colSize = 'col-md-12'
         />
 
+        {/* Label with Required Asterisk */}
         <label htmlFor={id}>
           {title}
           {required && (
-            <span
-              className="text-danger"
-              style={{
-                position: 'absolute',
-                right: '15px',
-                top: '20px',
-              }}
-            >
+            <span className="text-danger" style={{ position: 'absolute', right: '15px', top: '20px' }}>
               *
             </span>
           )}
         </label>
-        <div>
-          <br />
-        </div>
-        
-      
       </div>
-      
-      {errors.phoneNumber && touched.phoneNumber && (
-        <div className="error-message text-danger">{errors.phoneNumber}</div>
-      )}
 
-      
+      {/* Error Message */}
+      {errors.phoneNumber && touched.phoneNumber && <div className="error-message text-danger">{errors.phoneNumber}</div>}
     </>
   );
 };
