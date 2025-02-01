@@ -13,7 +13,6 @@ const Navbar = () => {
     const { userToken, setUserToken, userData } = useContext(UserContext);
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
     const rolePath = userData.role === 'admin' ? '/dashboard'
         : userData.role === 'advertiser' ? '/advertiserDashboard'
             : userData.role === 'student' ? '/studentDashboard'

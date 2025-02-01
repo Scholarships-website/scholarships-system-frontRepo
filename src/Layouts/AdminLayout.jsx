@@ -6,9 +6,7 @@ export default function AdminLayout() {
 
     return (
         <AdminRoute>
-            <div>
                 <Dashboard />
-            </div>
         </AdminRoute>
     )
 }

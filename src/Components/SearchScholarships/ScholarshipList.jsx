@@ -100,7 +100,7 @@ const ScholarshipList = ({ scholarships, loading }) => {
               pauseOnHover: true,
               draggable: true,
               progress: undefined,
-              theme: 'dark',
+              theme: 'light',
             }
           );
 
@@ -172,7 +172,7 @@ const ScholarshipList = ({ scholarships, loading }) => {
       ) : (
         scholarships.map((scholarship) => (
           <Card key={scholarship._id} className="scholarship-item">
-            <h2 className="card-header" style={{ color: "#000", marginBottom: '15px', textAlign: 'center' }}>
+            <h2 className="card-header"  style={{ color: "#000", marginBottom: '15px', textAlign: 'center',direction: "rtl"}}>
               {scholarship.scholarsip_name}
             </h2>
             <CardMedia

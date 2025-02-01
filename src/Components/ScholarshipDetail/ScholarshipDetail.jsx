@@ -161,7 +161,7 @@ const ScholarshipDetail = () => {
             </div>
             <div className="scholarship-info">
               <div className="basic-info">
-                {loading ? <Skeleton width="60%" /> : <h1>{scholarship.scholarsip_name}</h1>}
+                {loading ? <Skeleton width="60%" /> : <h1 style={{direction: "rtl"}}>{scholarship.scholarsip_name}</h1>}
                 {renderField("Brief Description", scholarship?.brief_descrition)}
                 {renderField("Eligibility Criteria", scholarship?.eligbility_criteria)}
                 {renderField("Place of Study", scholarship?.Place_of_Study)}

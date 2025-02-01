@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const features = [
     { title: "Find Scholarships Easily", description: "Search and filter scholarships based on your field, location, GPA, and more." },
     { title: "Simple Application Process", description: "Apply to scholarships with just a few clicks and track your progress." },
-    { title: "Manage Your Profile", description: "Keep all your personal and academic information in one place." },
     { title: "Save Your Favorites", description: "Bookmark scholarships you're interested in for easy access later." },
     { title: "For Providers", description: "Post scholarship opportunities and review applications effortlessly." },
     { title: "Secure & Reliable", description: "Enjoy a secure platform with user-friendly management tools for students, providers, and admins." },

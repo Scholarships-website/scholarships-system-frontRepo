@@ -7,9 +7,11 @@ import Navbar from '../../Navbar/Navbar'
 function RequestResetPassword({ onNext }) {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             // Send email to backend API to trigger reset code
             const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/forgotPassword`, {
@@ -28,15 +30,14 @@ function RequestResetPassword({ onNext }) {
                 throw new Error(data.message);
             }
             toast.success('Email sent successfully!', {
-                position: "bottom-right",
-                autoClose: false,
+                position: 'bottom-right',
+                autoClose: true,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "light",
-                transition: Bounce,
+                theme: 'light',
             });
         } catch (error) {
             let errorMessage = error.message || 'An error occurred';
@@ -46,16 +47,18 @@ function RequestResetPassword({ onNext }) {
             }
             // console.log(errorMessage);
             toast.error(errorMessage, {
-                position: "bottom-right",
-                autoClose: false,
+                position: 'bottom-right',
+                autoClose: true,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "light",
-                transition: Bounce,
+                theme: 'light',
             });
+        }
+        finally {
+            setLoading(false);
         }
     };
     const [isLoading, setIsLoading] = useState(true);
@@ -67,22 +70,7 @@ function RequestResetPassword({ onNext }) {
     }, []);
     return (
         <>
-        <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-                transition={Bounce}
-            />
-            {/* <div className="logoContainer">
-                <a href="/"><img src="assets/img/logo.png" alt="logo" width="100px" /></a>
-            </div> */}
+            {/* <ToastContainer /> */}
             <Navbar />
             <div className='forgetContainer'>
                 {isLoading ?
@@ -101,7 +89,9 @@ function RequestResetPassword({ onNext }) {
                             required
                         />
                         {error && <p>{error}</p>}
-                        <button type="submit">Reset Password</button>
+                        <button type="submit" disabled={loading}>
+                            {loading ? "Processing..." : "Reset Password"}
+                        </button>
                     </form>
                 </div>
             </div>

@@ -6,9 +6,7 @@ import AdvertiserRoute from '../Components/Auth/ProtectedRoutes/AdvertiserRoute'
 function AdvertiserLayout() {
     return (
         <AdvertiserRoute>
-            <div>
                 <AdvertiserDashboard />
-            </div>
         </AdvertiserRoute>
     )
 }

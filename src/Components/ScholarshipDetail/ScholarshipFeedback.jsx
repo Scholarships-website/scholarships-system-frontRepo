@@ -92,9 +92,10 @@ function ScholarshipFeedback({ id, status, endDate }) {
               const studentResponse = await axios.get(
                 `${import.meta.env.VITE_BASE_URL}/api/v1/getStudentDataFromId/${feedback.student_id}`
               );
-              if (studentResponse.data.scholarships_feedbacks?.includes(feedback._id)) {
+              if (studentData?.scholarships_feedbacks?.includes(feedback._id)) {
+                console.log(studentData);
                 setIsComment(true);
-                // console.log(isComment + 'is comment?? ');
+                console.log(isComment + 'is comment?? ');
               }
               else {
                 setIsComment(false);

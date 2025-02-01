@@ -307,7 +307,7 @@ function ScholarshipsFeedbacks() {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="7">No Accepted Scholarships</td>
+                      <td colSpan="7">No  Scholarship Feedbacks</td>
                     </tr>
                   )}
                 </tbody>
