@@ -132,19 +132,19 @@ export const addScholarship = Yup.object({
       .min(1, 'There should be at least 1 seat available')
       .typeError('Please enter a valid number'),
 
-   // scholarship_picture: Yup.mixed()
-   //    .required('Scholarship Picture is required')
-   //    .test(
-   //       'fileType',
-   //       'Only JPEG, JPG, and PNG files are allowed',
-   //       (value) => {
-   //          console.log('File:', value);  // Log the entire file object
-   //          console.log('File type:', value && value.type); // Log the file type specifically
+   scholarship_picture: Yup.mixed()
+      .required('Scholarship Picture is required')
+      .test(
+         'fileType',
+         'Only JPEG, JPG, and PNG files are allowed',
+         (value) => {
+            console.log('File:', value);  // Log the entire file object
+            console.log('File type:', value && value.type); // Log the file type specifically
 
-   //          // Check if the type is one of the allowed types
-   //          return value && ['image/jpeg', 'image/png', 'image/jpg'].includes(value.type);
-   //       }
-   //    )
+            // Check if the type is one of the allowed types
+            return value && ['image/jpeg', 'image/png', 'image/jpg'].includes(value.type);
+         }
+      )
 });
 export const editScholarship = Yup.object({
    scholarsip_name: Yup.string()
@@ -209,19 +209,19 @@ export const editScholarship = Yup.object({
       .min(1, 'There should be at least 1 seat available')
       .typeError('Please enter a valid number'),
 
-   // scholarship_picture: Yup.mixed()
-   //    .required('Scholarship Picture is required')
-   //    .test(
-   //       'fileType',
-   //       'Only JPEG, JPG, and PNG files are allowed',
-   //       (value) => {
-   //          console.log('File:', value);  // Log the entire file object
-   //          console.log('File type:', value && value.type); // Log the file type specifically
+   scholarship_picture: Yup.mixed()
+      .required('Scholarship Picture is required')
+      .test(
+         'fileType',
+         'Only JPEG, JPG, and PNG files are allowed',
+         (value) => {
+            console.log('File:', value);  // Log the entire file object
+            console.log('File type:', value && value.type); // Log the file type specifically
 
-   //          // Check if the type is one of the allowed types
-   //          return value && ['image/jpeg', 'image/png', 'image/jpg'].includes(value.type);
-   //       }
-   //    )
+            // Check if the type is one of the allowed types
+            return value && ['image/jpeg', 'image/png', 'image/jpg'].includes(value.type);
+         }
+      )
 });
 export const resetPassword = Yup.object({
    newPassword: Yup.string()

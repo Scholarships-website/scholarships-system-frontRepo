@@ -247,7 +247,7 @@ const ScholarshipDetail = () => {
                       <strong>Brief Description: </strong>{scholarship.brief_descrition}
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      <strong>Place of Study:</strong>  {scholarship.type}
+                      <strong>Type:</strong>  {scholarship.type}
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                       <strong>Language of Study:</strong> {scholarship.language_Of_Study}
